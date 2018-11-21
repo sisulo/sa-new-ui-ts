@@ -1,0 +1,73 @@
+<!--<script src="../../../../WEB/sub-content-loader.js"></script>-->
+<aside class="main-sidebar">
+
+  <!-- sidebar: style can be found in sidebar.less -->
+  <section class="sidebar">
+    <div class="top-part-menu">
+      <ul id="dash-link" class="sidebar-menu">
+        <li><a href=""><i class="fa fa-dashboard"></i><span>Main dashboard</span></a></li>
+      </ul>
+      <!-- Sidebar Menu.ts -->
+      <ul id="dash-menu" class="sidebar-menu" data-widget="tree">
+
+        <li class="treeview">
+          <a href="#"><i class="fa fa-area-chart"></i><span>Global Statistics</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a [routerLink]="hrefEncode('http://sa-admin.local/001%20Performance%20Statistics/index.html')">Performance Statistics</a></li>
+            <li><a [routerLink]="hrefEncode('http://sa-admin.local/002%20Capacity%20Statistics/Capacity%20Statistics.html')">Capacity Statistics</a></li>
+          </ul>
+        </li>
+        <li class="header">STORAGE ARRAYS</li>
+        <!-- search form (Optional) -->
+        <form action="#" method="get" class="sidebar-form" autocomplete="off">
+          <div class="input-group">
+            <input [(ngModel)]="searchExpression" (input)="search()" type="text" name="searchExp" class="form-control" placeholder="Search..." id="menu-search-input" />
+            <span class="input-group-btn">
+              <button type="button" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+        </form>
+        <!-- /.search form -->
+      </ul>
+    </div>
+    <div class="central-part-menu">
+      <ul id="main-menu" class="sidebar-menu" data-widget="tree">
+        <li *ngFor="let menuItem of filteredItems" class="treeview">
+          <a href="#"><i class="fa fa-gears"></i><span>{{menuItem.label}}</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+          </a>
+          <ul class="treeview-menu">
+            <li *ngFor="let link of menuItem.items" class="treeview">
+              <a href="#"><i class="fa fa-gears"></i><span>{{link.name}}</span>
+                <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+              </a>
+              <ul class="treeview-menu">
+                <li [class.active]="isActiveLink(link.id, 0)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '1%20Dash%20Board/Dash%20Board.html')" (click)="activate(link.id, 0)">Dash Board</a></li>
+                <li [class.active]="isActiveLink(link.id, 1)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '2%20Server%20Board/index.html')" (click)="activate(link.id, 1)">Server board</a></li>
+                <li [class.active]="isActiveLink(link.id, 2)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '4%20DP%20Pool%20Board%20and%20SLA/index.html')" (click)="activate(link.id, 2)">DP Pool Board and SLA</a></li>
+                <li [class.active]="isActiveLink(link.id, 3)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '7%20Deep%20Analysis/index.html')" (click)="activate(link.id, 3)">Deep Analysis</a></li>
+                <li [class.active]="isActiveLink(link.id, 4)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '8%20Cache%20Board/index.html')" (click)="activate(link.id, 4)">Cache Board</a></li>
+                <li [class.active]="isActiveLink(link.id, 5)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '8%20CHA%20Adapters%20Board/index.html')" (click)="activate(link.id, 5)">CHA Adapters Board</a></li>
+                <li [class.active]="isActiveLink(link.id, 6)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '8%20Trends/Trends.html')" (click)="activate(link.id, 6)">Trends</a></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="bottom-part-menu">
+
+    </div>
+    <!-- /.sidebar-menu -->
+  </section>
+  <!-- /.sidebar -->
+</aside>
