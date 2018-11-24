@@ -3,7 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  iframeBaseUrl: 'http://static-web.local/',
+  metricsBaseUrl: 'http://sa-admin.local/'
 };
 
 /*

@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuService} from '../menu.service';
-import {MenuItem} from '../models/MenuItem';
 import {MenuTree} from '../models/MenuTree';
-import {forEach} from '@angular/router/src/utils/collection';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-side-menu',
@@ -14,7 +13,20 @@ export class SideMenuComponent implements OnInit {
   items: MenuTree[];
   filteredItems: MenuTree[];
   searchExpression: string;
-  private activated: ActiveLink = null;
+  activeLink = [];
+  poolMetricLinks = [
+    {id: 1, linkPart: '1%20Dash%20Board/Dash%20Board.html', name: 'Dashboard'},
+    {id: 2, linkPart: '2%20Server%20Board/index.html', name: 'Server board'},
+    {id: 3, linkPart: '4%20DP%20Pool%20Board%20and%20SLA/index.html', name: 'DP Pool Board and SLA'},
+    {id: 4, linkPart: '7%20Deep%20Analysis/index.html', name: 'Deep Analysis'},
+    {id: 5, linkPart: '8%20Cache%20Board/index.html', name: 'Cache Board'},
+    {id: 6, linkPart: '8%20CHA%20Adapters%20Board/index.html', name: 'CHA Adapters Board'},
+    {id: 7, linkPart: '8%20Trends/Trends.html', name: 'Trends'}
+  ];
+  globalStatisticsLinks = [
+    {id: 1, linkPart: '001%20Performance%20Statistics/index.html', name: 'Performance Statistics'},
+    {id: 2, linkPart: '002%20Capacity%20Statistics/Capacity%20Statistics.html', name: 'Capacity Statistics'}
+  ];
 
   constructor(private menuService: MenuService) {
   }
@@ -55,26 +67,22 @@ export class SideMenuComponent implements OnInit {
     return '/iframe/' + btoa(url);
   }
 
-  activate(id: String, linkNumber: number): void {
-    this.activated = new ActiveLink(id, linkNumber);
+  getPoolMetricLink(linkPart: string) {
+    return this.hrefEncode(environment.iframeBaseUrl + linkPart);
   }
 
-  isActiveLink(id, linkNumber): boolean {
-    if (this.activated === null) {
+  isHighlighted(poolId: string, linkId: string): boolean {
+    if (this.activeLink.length === 0) {
       return false;
     }
-    if (this.activated.id === id && this.activated.linkNumber === linkNumber) {
+    if (poolId === this.activeLink[0] && this.activeLink[1] === linkId) {
       return true;
     }
     return false;
   }
-}
 
-class ActiveLink {
-  id: String;
-  linkNumber: number;
-  constructor(id: String, linkNumber: number) {
-    this.id = id;
-    this.linkNumber = linkNumber;
+  highlight(poolId: string, linkId: string): void {
+    this.activeLink = [poolId, linkId];
   }
 }
+

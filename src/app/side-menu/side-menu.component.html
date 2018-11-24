@@ -17,8 +17,10 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a [routerLink]="hrefEncode('http://sa-admin.local/001%20Performance%20Statistics/index.html')">Performance Statistics</a></li>
-            <li><a [routerLink]="hrefEncode('http://sa-admin.local/002%20Capacity%20Statistics/Capacity%20Statistics.html')">Capacity Statistics</a></li>
+            <li *ngFor="let globalLink of globalStatisticsLinks"
+                (click)="highlight(null, globalLink.id)"
+                [class.active]="isHighlighted(null, globalLink.id)"
+            ><a [routerLink]="'/performance-statistics'">{{globalLink.name}}</a></li>
           </ul>
         </li>
         <li class="header">STORAGE ARRAYS</li>
@@ -51,13 +53,7 @@
               </span>
               </a>
               <ul class="treeview-menu">
-                <li [class.active]="isActiveLink(link.id, 0)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '1%20Dash%20Board/Dash%20Board.html')" (click)="activate(link.id, 0)">Dash Board</a></li>
-                <li [class.active]="isActiveLink(link.id, 1)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '2%20Server%20Board/index.html')" (click)="activate(link.id, 1)">Server board</a></li>
-                <li [class.active]="isActiveLink(link.id, 2)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '4%20DP%20Pool%20Board%20and%20SLA/index.html')" (click)="activate(link.id, 2)">DP Pool Board and SLA</a></li>
-                <li [class.active]="isActiveLink(link.id, 3)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '7%20Deep%20Analysis/index.html')" (click)="activate(link.id, 3)">Deep Analysis</a></li>
-                <li [class.active]="isActiveLink(link.id, 4)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '8%20Cache%20Board/index.html')" (click)="activate(link.id, 4)">Cache Board</a></li>
-                <li [class.active]="isActiveLink(link.id, 5)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '8%20CHA%20Adapters%20Board/index.html')" (click)="activate(link.id, 5)">CHA Adapters Board</a></li>
-                <li [class.active]="isActiveLink(link.id, 6)"><a [routerLink]="hrefEncode('http://sa-admin.local/' + link.id + '8%20Trends/Trends.html')" (click)="activate(link.id, 6)">Trends</a></li>
+                <li *ngFor="let poolLink of poolMetricLinks" (click)="highlight(link.id, poolLink.id)" [class.active]="isHighlighted(link.id, poolLink.id)"><a [routerLink]="getPoolMetricLink(link.id + poolLink.linkPart)">{{poolLink.name}}</a></li>
               </ul>
             </li>
           </ul>
