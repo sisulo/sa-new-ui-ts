@@ -18,7 +18,9 @@ export class IframeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe((params: ParamMap) => this.url = this.sanitizer.bypassSecurityTrustResourceUrl(atob(params.get('url'))));
+    this.route.paramMap.subscribe(
+      (params: ParamMap) => this.url = this.sanitizer.bypassSecurityTrustResourceUrl(atob(params.get('url')))
+    );
   }
 
 }

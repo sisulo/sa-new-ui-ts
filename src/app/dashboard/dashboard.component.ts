@@ -49,7 +49,7 @@ export class DashboardComponent implements OnInit {
         },
         markerLabelStyle : {
           initial: {
-            display:"inline"
+            display: 'inline'
           }
         },
 
