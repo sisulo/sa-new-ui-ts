@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {InfraMetric} from '../models/metrics/InfraMetric';
+import {InfraMetric} from '../../models/metrics/InfraMetric';
 
 @Component({
   selector: 'app-knob',

@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {IframeComponent} from './iframe/iframe.component';
-import {DashboardComponent} from './dashboard/dashboard.component';
-// import {TabComponent} from './tab/tab.component';
+import {IframeComponent} from './components/iframe/iframe.component';
+import {DashboardComponent} from './components/dashboard/dashboard.component';
+import {PerformanceStatisticsComponent} from './components/performance-statistics/performance-statistics.component';
 
 const routes: Routes = [
   {path: '', component: DashboardComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'iframe/:url', component: IframeComponent},
-  // {path: 'performance-statistics', component: TabComponent}
+  {path: 'performance-statistics', component: PerformanceStatisticsComponent}
 ];
 
 @NgModule({

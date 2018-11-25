@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MetricService} from '../metric.service';
-import {InfraMetric} from '../models/metrics/InfraMetric';
+import {MetricService} from '../../metric.service';
+import {InfraMetric} from '../../models/metrics/InfraMetric';
 declare var jquery: any;
 declare var $: any;
 @Component({
