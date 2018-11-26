@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuService} from '../../menu.service';
 import {MenuTree} from '../../models/MenuTree';
 import {environment} from '../../../environments/environment';
+import {MetricService} from '../../metric.service';
+import {Datacenter} from '../../models/Datacenter';
+import {MenuItem} from '../../models/MenuItem';
 
 @Component({
   selector: 'app-side-menu',
@@ -28,15 +30,14 @@ export class SideMenuComponent implements OnInit {
     {id: 2, linkPart: '002%20Capacity%20Statistics/Capacity%20Statistics.html', name: 'Capacity Statistics'}
   ];
 
-  constructor(private menuService: MenuService) {
+  constructor(private metricService: MetricService) {
   }
 
   ngOnInit() {
-    this.menuService.getData().subscribe(menu => {
-      this.items = menu.items;
-      this.filteredItems = menu.items;
+    this.metricService.getDatacenters().subscribe(data => {
+      this.items = this.convertMenu(data.datacenters);
+      this.filteredItems = this.items;
     });
-    this.filteredItems = this.items;
   }
 
   search(): void {
@@ -46,7 +47,6 @@ export class SideMenuComponent implements OnInit {
     }
     let filteredTree = null;
     this.filteredItems = [];
-    // console.log(this.searchExpression);
     for (const tree of this.items) {
       for (const item of tree.items) {
         if (item.name.indexOf(this.searchExpression) > -1) {
@@ -67,8 +67,9 @@ export class SideMenuComponent implements OnInit {
     return '/iframe/' + btoa(url);
   }
 
-  getPoolMetricLink(linkPart: string) {
-    return this.hrefEncode(environment.iframeBaseUrl + linkPart);
+  getPoolMetricLink(systemId: number, linkPart: string) {
+    const systemPrefix = systemId.toString().length === 1 ? '0' + systemId : systemId;
+    return this.hrefEncode(environment.iframeBaseUrl + systemPrefix + linkPart);
   }
 
   isHighlighted(poolId: string, linkId: string): boolean {
@@ -83,6 +84,18 @@ export class SideMenuComponent implements OnInit {
 
   highlight(poolId: string, linkId: string): void {
     this.activeLink = [poolId, linkId];
+  }
+
+  private convertMenu(data: Datacenter[]): MenuTree[] {
+    const menu: MenuTree[] = [];
+    for (const datacenter of data) {
+      const items: MenuItem[] = [];
+      for (const system of datacenter.systems) {
+        items.push(new MenuItem(system.id, system.name));
+      }
+      menu.push(new MenuTree(datacenter.label, items));
+    }
+    return menu;
   }
 }
 

@@ -1,6 +1,4 @@
-import {SystemMetric} from './metrics/SystemMetric';
-
 export class System {
+  id: number;
   name: string;
-  metrics: SystemMetric[];
 }

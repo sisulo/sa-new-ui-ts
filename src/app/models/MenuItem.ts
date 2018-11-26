@@ -1,9 +1,9 @@
 export class MenuItem {
-  id: string;
+  id: number;
   name: string;
 
 
-  constructor(label: string, url: string, id: string) {
+  constructor(id: number, label: string) {
     this.name = label;
     // this.url = url;
     this.id = id;

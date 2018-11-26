@@ -8,4 +8,5 @@ export class MenuTree {
     this.label = label;
     this.items = items;
   }
+
 }

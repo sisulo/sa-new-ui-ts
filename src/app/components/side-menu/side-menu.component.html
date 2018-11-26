@@ -53,7 +53,7 @@
               </span>
               </a>
               <ul class="treeview-menu">
-                <li *ngFor="let poolLink of poolMetricLinks" (click)="highlight(link.id, poolLink.id)" [class.active]="isHighlighted(link.id, poolLink.id)"><a [routerLink]="getPoolMetricLink(link.id + poolLink.linkPart)">{{poolLink.name}}</a></li>
+                <li *ngFor="let poolLink of poolMetricLinks" (click)="highlight(link.id, poolLink.id)" [class.active]="isHighlighted(link.id, poolLink.id)"><a [routerLink]="getPoolMetricLink(link.id, poolLink.linkPart)">{{poolLink.name}}</a></li>
               </ul>
             </li>
           </ul>
