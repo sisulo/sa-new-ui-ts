@@ -1,6 +1,5 @@
-import {Datacenter} from './metrics/Datacenter';
+import {Datacenter} from './Datacenter';
 
 export class DatacenterDto {
-  count: number;
   datacenters: Datacenter[];
 }

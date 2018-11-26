@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MetricService} from '../../metric.service';
 import {InfraMetric} from '../../models/metrics/InfraMetric';
+
 declare var jquery: any;
 declare var $: any;
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -22,9 +24,15 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.metricService.getInfrastructureStats().subscribe(stats => {
       this.metrics = stats.metrics;
-      this.datacenters = stats.datacentersCount;
-      this.registeredSystems = stats.registeredSystemsCount;
     });
+    this.metricService.getDatacenters().subscribe(
+      data => {
+        this.datacenters = data.datacenters.length;
+        this.registeredSystems = data.datacenters.reduce((previousValue, currentValue) => {
+          return previousValue + currentValue.systems.length;
+        }, 0);
+      }
+    );
     this.getMap();
   }
 
@@ -34,7 +42,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getMap(): void {
-    $(function(){
+    $(function () {
       $('#world-map-markers').vectorMap({
         map: 'world_mill_en',
         scaleColors: ['#C8EEFF', '#0071A4'],
@@ -47,7 +55,7 @@ export class DashboardComponent implements OnInit {
             stroke: '#383f47',
           }
         },
-        markerLabelStyle : {
+        markerLabelStyle: {
           initial: {
             display: 'inline'
           }

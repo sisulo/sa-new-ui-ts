@@ -1,7 +1,7 @@
-import {System} from './System';
+import {SystemDetail} from './SystemDetail';
 
 export class PerformanceStatisticsDto {
   id: string;
   label: string;
-  systems: System[];
+  systems: SystemDetail[];
 }

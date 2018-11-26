@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MetricService} from '../../metric.service';
-import {Datacenter} from '../../models/metrics/Datacenter';
+import {Datacenter} from '../../models/Datacenter';
 import {System} from '../../models/System';
+import {SystemDetail} from '../../models/SystemDetail';
 
 @Component({
   selector: 'app-tab',
@@ -12,7 +13,7 @@ export class PerformanceStatisticsComponent implements OnInit {
   dtOptions: DataTables.Settings[] = [];
   datacenters: Datacenter[];
   currentTab: string;
-  data: System[]; // Todo caching data by datacenters
+  data: SystemDetail[]; // Todo caching data by datacenters
 
   constructor(private metricService: MetricService) {
   }
@@ -52,7 +53,7 @@ export class PerformanceStatisticsComponent implements OnInit {
     return this.currentTab;
   }
 
-  getTableData(id: string): System[] {
+  getTableData(id: string): SystemDetail[] {
     this.metricService.getPerformanceStatistics(id).subscribe(
       data => {
         this.data = data.systems;
