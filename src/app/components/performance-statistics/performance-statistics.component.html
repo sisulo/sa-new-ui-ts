@@ -19,11 +19,11 @@
         <div class="tab-content">
           <div *ngFor="let datacenter of datacenters" class="tab-pane" [id]="datacenter.id" [class.active]="datacenter.id === getCurrentTab()">
             <table datatable [dtOptions]="dtOptions" class="dataTable display">
-              <tbody>
-              <tr *ngFor="let system of data;let i = index" [class.even]="i%2 === 0" [class.even]="i%2 === 1">
-                <td>{{ system.name }}</td>
-                <td *ngFor="let metric of system.metrics">{{metric.value}} {{metric.unit}} <span class="peak"><i class="fa fa-exclamation"></i> {{metric.peak}} {{metric.unit}}</span></td>
-              </tr>
+              <tbody *ngIf="data.length > 0">
+                <tr *ngFor="let system of data;let i = index" [class.even]="i%2 === 0" [class.even]="i%2 === 1">
+                  <td>{{ system.name }}</td>
+                  <td *ngFor="let metric of system.metrics">{{metric.value}} {{metric.unit}} <span class="peak"><i class="fa fa-exclamation"></i> {{metric.peak}} {{metric.unit}}</span></td>
+                </tr>
               </tbody>
             </table>
           </div>
