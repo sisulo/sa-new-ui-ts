@@ -24,8 +24,8 @@ export class MetricService {
     return this.http.get<DatacenterDto>(url);
   }
 
-  getPerformanceStatistics(id: string): Observable<PerformanceStatisticsDto> {
-    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/Performance_statistics.json';
+    getPerformanceStatistics(id: number): Observable<PerformanceStatisticsDto> {
+    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/performance.json';
     return this.http.get<PerformanceStatisticsDto>(url);
   }
 }

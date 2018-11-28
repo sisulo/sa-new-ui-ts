@@ -4,5 +4,5 @@ export class InfraMetric {
   value: number;
   unit: string;
   peak: number;
-  label: string;
+  name: string;
 }

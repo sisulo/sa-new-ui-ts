@@ -15,7 +15,6 @@ export class SideMenuComponent implements OnInit {
   items: MenuTree[];
   filteredItems: MenuTree[];
   searchExpression: string;
-  activeLink = [];
   poolMetricLinks = [
     {id: 1, linkPart: '1%20Dash%20Board/Dash%20Board.html', name: 'Dashboard'},
     {id: 2, linkPart: '2%20Server%20Board/index.html', name: 'Server board'},
@@ -26,8 +25,8 @@ export class SideMenuComponent implements OnInit {
     {id: 7, linkPart: '8%20Trends/Trends.html', name: 'Trends'}
   ];
   globalStatisticsLinks = [
-    {id: 1, linkPart: '001%20Performance%20Statistics/index.html', name: 'Performance Statistics'},
-    {id: 2, linkPart: '002%20Capacity%20Statistics/Capacity%20Statistics.html', name: 'Capacity Statistics'}
+    {id: 1, linkPart: '/global-statistics/performance', name: 'Performance Statistics'},
+    {id: 2, linkPart: '/global-statistics', name: 'Capacity Statistics'}
   ];
 
   constructor(private metricService: MetricService) {
@@ -70,20 +69,6 @@ export class SideMenuComponent implements OnInit {
   getPoolMetricLink(systemId: number, linkPart: string) {
     const systemPrefix = systemId.toString().length === 1 ? '0' + systemId : systemId;
     return this.hrefEncode(environment.iframeBaseUrl + systemPrefix + linkPart);
-  }
-
-  isHighlighted(poolId: string, linkId: string): boolean {
-    if (this.activeLink.length === 0) {
-      return false;
-    }
-    if (poolId === this.activeLink[0] && this.activeLink[1] === linkId) {
-      return true;
-    }
-    return false;
-  }
-
-  highlight(poolId: string, linkId: string): void {
-    this.activeLink = [poolId, linkId];
   }
 
   private convertMenu(data: Datacenter[]): MenuTree[] {

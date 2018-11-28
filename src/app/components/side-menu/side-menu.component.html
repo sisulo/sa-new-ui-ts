@@ -18,9 +18,7 @@
           </a>
           <ul class="treeview-menu">
             <li *ngFor="let globalLink of globalStatisticsLinks"
-                (click)="highlight(null, globalLink.id)"
-                [class.active]="isHighlighted(null, globalLink.id)"
-            ><a [routerLink]="'/performance-statistics'">{{globalLink.name}}</a></li>
+            ><a [routerLink]="[globalLink.linkPart]" routerLinkActive="active">{{globalLink.name}}</a></li>
           </ul>
         </li>
         <li class="header">STORAGE ARRAYS</li>
@@ -53,7 +51,7 @@
               </span>
               </a>
               <ul class="treeview-menu">
-                <li *ngFor="let poolLink of poolMetricLinks" (click)="highlight(link.id, poolLink.id)" [class.active]="isHighlighted(link.id, poolLink.id)"><a [routerLink]="getPoolMetricLink(link.id, poolLink.linkPart)">{{poolLink.name}}</a></li>
+                <li *ngFor="let poolLink of poolMetricLinks"><a [routerLink]="getPoolMetricLink(link.id, poolLink.linkPart)" routerLinkActive="active">{{poolLink.name}}</a></li>
               </ul>
             </li>
           </ul>

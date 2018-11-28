@@ -1,7 +1,7 @@
 import {System} from './System';
 
 export class Datacenter {
-  id: string;
+  id: number;
   label: string;
   systems: System[];
   latitude: number;

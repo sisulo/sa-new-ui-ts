@@ -1,0 +1,28 @@
+<div class="tab-pane" *ngIf="data.length > 0">
+  <table class="table table-striped" [mfData]="tableData" #mf="mfDataTable">
+    <thead>
+    <tr>
+      <th>
+        <mfDefaultSorter by="name">System</mfDefaultSorter>
+      </th>
+      <th><mfDefaultSorter by="workload">Workload</mfDefaultSorter></th>
+      <th><mfDefaultSorter by="transfer">Transfer</mfDefaultSorter></th>
+      <th><mfDefaultSorter by="response">Response</mfDefaultSorter></th>
+      <th><mfDefaultSorter by="cpu">CPU</mfDefaultSorter></th>
+      <th><mfDefaultSorter by="hdd">HDD</mfDefaultSorter></th>
+      <th><mfDefaultSorter by="write_pending">Write Pending</mfDefaultSorter></th>
+    </tr>
+    </thead>
+    <tbody >
+    <tr *ngFor="let system of mf.data;let i = index;">
+      <td>{{ system.name }} </td>
+      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'Workload')"></app-unit-formatter></td>
+      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'Transfer')"></app-unit-formatter></td>
+      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'Response')"></app-unit-formatter></td>
+      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'CPU')"></app-unit-formatter></td>
+      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'HDD')"></app-unit-formatter></td>
+      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'Write Pending')"></app-unit-formatter></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
