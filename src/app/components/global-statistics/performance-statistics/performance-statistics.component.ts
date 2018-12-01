@@ -29,7 +29,6 @@ export class PerformanceStatisticsComponent implements OnInit {
         if (id === 0) {
           id = 1;
         }
-        console.log('PS ' + id);
         this.data = this.getTableData(id);
         this.bus.announceDatacenter(id);
       }
@@ -48,7 +47,6 @@ export class PerformanceStatisticsComponent implements OnInit {
       data => {
         this.data = data.systems;
         this.tableData = this.data.map(system => this.convertToTableData(system));
-        console.log(this.tableData);
       },
       error => {
         console.log(error);

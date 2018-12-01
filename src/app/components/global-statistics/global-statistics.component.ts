@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Datacenter} from '../../models/Datacenter';
 import {MetricService} from '../../metric.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from './bus.service';
+import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
+import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
 
 @Component({
   selector: 'app-global-statistics',
@@ -13,11 +15,13 @@ export class GlobalStatisticsComponent implements OnInit {
 
   datacenters: Datacenter[];
   currentTab: number;
+  context: string;
 
   constructor(
     private metricService: MetricService,
     private bus: BusService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
   }
 
@@ -26,6 +30,10 @@ export class GlobalStatisticsComponent implements OnInit {
       id => {
         this.getDatacenters(id);
       }
+    );
+    this.route.url.subscribe(
+      url => this.loadContext()
+
     );
   }
 
@@ -45,5 +53,25 @@ export class GlobalStatisticsComponent implements OnInit {
         this.currentTab = currentTab;
       }
     );
+  }
+
+  private loadContext() {
+    if (this.route.children.length > 0) {
+      const childComponent = this.route.children[0].component;
+      let componentName = '';
+      if (typeof childComponent !== 'string') {
+        componentName = childComponent.name;
+      }
+      switch (componentName) {
+        case CapacityStatisticsComponent.name:
+          this.context = 'capacity';
+          break;
+        case PerformanceStatisticsComponent.name:
+          this.context = 'performance';
+          break;
+        default:
+          throw new Error('Unknown context');
+      }
+    }
   }
 }

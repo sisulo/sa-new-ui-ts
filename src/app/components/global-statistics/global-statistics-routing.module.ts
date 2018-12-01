@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {GlobalStatisticsComponent} from './global-statistics.component';
 import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
+import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
 
 const routes: Routes = [
   {
@@ -10,11 +11,10 @@ const routes: Routes = [
     children: [
       {path: ':id/performance', component: PerformanceStatisticsComponent},
       {path: 'performance', component: PerformanceStatisticsComponent},
-      {path: 'capacity', component: PerformanceStatisticsComponent}
+      {path: ':id/capacity', component: CapacityStatisticsComponent},
+      {path: 'capacity', component: CapacityStatisticsComponent}
     ]
   }
-  // {path: '', NotFound}
-
 ];
 
 @NgModule({

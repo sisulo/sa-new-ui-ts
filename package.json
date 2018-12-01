@@ -23,7 +23,6 @@
     "@types/d3": "^5.0.1",
     "@xmlking/ngx-knob": "^0.1.0",
     "angular-6-datatable": "^0.8.0",
-    "angular-datatables": "^7.0.0",
     "angular2-knob": "^1.1.15",
     "core-js": "^2.5.4",
     "d3": "^5.7.0",

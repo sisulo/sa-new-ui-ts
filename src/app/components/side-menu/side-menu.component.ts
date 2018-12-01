@@ -26,7 +26,7 @@ export class SideMenuComponent implements OnInit {
   ];
   globalStatisticsLinks = [
     {id: 1, linkPart: '/global-statistics/performance', name: 'Performance Statistics'},
-    {id: 2, linkPart: '/global-statistics', name: 'Capacity Statistics'}
+    {id: 2, linkPart: '/global-statistics/capacity', name: 'Capacity Statistics'}
   ];
 
   constructor(private metricService: MetricService) {
