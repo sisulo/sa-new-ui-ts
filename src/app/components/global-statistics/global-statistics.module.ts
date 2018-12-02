@@ -4,19 +4,21 @@ import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statis
 import {GlobalStatisticsComponent} from './global-statistics.component';
 import {CommonModule} from '@angular/common';
 import {GlobalStatisticsRoutingModule} from './global-statistics-routing.module';
-import {DataTableModule} from 'angular-6-datatable';
 import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
+import {SaCommonModule} from '../../common/sa-common.module';
+import {DataTableModule} from 'angular-6-datatable';
 
 @NgModule({
   declarations: [
     GlobalStatisticsComponent,
     CapacityStatisticsComponent,
     PerformanceStatisticsComponent,
-    UnitFormatterComponent
+    UnitFormatterComponent,
   ],
   imports: [
     CommonModule,
     GlobalStatisticsRoutingModule,
+    SaCommonModule,
     DataTableModule
   ]
 })

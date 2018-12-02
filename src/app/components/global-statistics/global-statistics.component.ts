@@ -13,7 +13,7 @@ import {PerformanceStatisticsComponent} from './performance-statistics/performan
 })
 export class GlobalStatisticsComponent implements OnInit {
 
-  datacenters: Datacenter[];
+  dataCenters: Datacenter[];
   currentTab: number;
   context: string;
 
@@ -33,7 +33,6 @@ export class GlobalStatisticsComponent implements OnInit {
     );
     this.route.url.subscribe(
       url => this.loadContext()
-
     );
   }
 
@@ -49,7 +48,7 @@ export class GlobalStatisticsComponent implements OnInit {
   getDatacenters(currentTab: number) {
     this.metricService.getDatacenters().subscribe(
       data => {
-        this.datacenters = data.datacenters;
+        this.dataCenters = data.datacenters;
         this.currentTab = currentTab;
       }
     );

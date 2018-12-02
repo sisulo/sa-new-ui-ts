@@ -1,4 +1,4 @@
-import {SystemDetail} from './SystemDetail';
+import {SystemDetail} from '../SystemDetail';
 
 export class PerformanceStatisticsDto {
   id: string;

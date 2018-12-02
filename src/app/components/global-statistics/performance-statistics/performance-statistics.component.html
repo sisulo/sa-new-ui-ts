@@ -14,14 +14,9 @@
     </tr>
     </thead>
     <tbody >
-    <tr *ngFor="let system of mf.data;let i = index;">
+    <tr *ngFor="let system of mf.data">
       <td>{{ system.name }} </td>
-      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'Workload')"></app-unit-formatter></td>
-      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'Transfer')"></app-unit-formatter></td>
-      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'Response')"></app-unit-formatter></td>
-      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'CPU')"></app-unit-formatter></td>
-      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'HDD')"></app-unit-formatter></td>
-      <td><app-unit-formatter [metric]="getMetricObject(system.name, 'Write Pending')"></app-unit-formatter></td>
+      <td *ngFor="let metricType of displayedMetrics"><app-unit-formatter [metric]="getMetricObject(system.name, metricType)"></app-unit-formatter></td>
     </tr>
     </tbody>
   </table>

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Infrastructure} from './models/metrics/Infrastructure';
+import {InfrastructureDto} from './models/metrics/InfrastructureDto';
 import {environment} from '../environments/environment';
-import {DatacenterDto} from './models/DatacenterDto';
-import {PerformanceStatisticsDto} from './models/PerformanceStatisticsDto';
-import {CapacityStatisticsDto} from './models/CapacityStatisticsDto';
+import {DatacenterDto} from './models/dtos/DatacenterDto';
+import {PerformanceStatisticsDto} from './models/dtos/PerformanceStatisticsDto';
+import {CapacityStatisticsDto} from './models/dtos/CapacityStatisticsDto';
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,9 @@ export class MetricService {
   constructor(private http: HttpClient) {
   }
 
-  getInfrastructureStats(): Observable<Infrastructure> {
+  getInfrastructureStats(): Observable<InfrastructureDto> {
     const url = environment.metricsBaseUrl + 'infrastructureMetric.json';
-    return this.http.get<Infrastructure>(url);
+    return this.http.get<InfrastructureDto>(url);
   }
 
   getDatacenters(): Observable<DatacenterDto> {

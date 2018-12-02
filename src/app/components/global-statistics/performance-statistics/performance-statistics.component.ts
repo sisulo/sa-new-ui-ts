@@ -4,6 +4,7 @@ import {SystemDetail} from '../../../models/SystemDetail';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from '../bus.service';
 import {SystemMetric} from '../../../models/metrics/SystemMetric';
+import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
 
 @Component({
   selector: 'app-tab',
@@ -13,6 +14,14 @@ import {SystemMetric} from '../../../models/metrics/SystemMetric';
 export class PerformanceStatisticsComponent implements OnInit {
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
+  displayedMetrics: SystemMetricType[] = [
+    SystemMetricType.WORKLOAD,
+    SystemMetricType.TRANSFER,
+    SystemMetricType.RESPONSE,
+    SystemMetricType.CPU,
+    SystemMetricType.HDD,
+    SystemMetricType.WRITE_PENDING
+  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -60,17 +69,18 @@ export class PerformanceStatisticsComponent implements OnInit {
   convertToTableData(rawData: SystemDetail): {} {
     const result = {};
     for (const metric of rawData.metrics) {
-      result[metric.name.toLowerCase().replace(' ', '_')] = metric.value;
+      result[metric.type] = metric.value;
     }
     result['name'] = rawData.name;
+    console.log(result);
     return result;
   }
 
-  getMetricObject(systemName: string, metricName: string): SystemMetric {
+  getMetricObject(systemName: string, type: SystemMetricType): SystemMetric {
     return this.data
       .find(system => system.name === systemName).metrics
       .find(data => {
-          return data.name === metricName;
+          return data.type === type;
         }
       );
   }

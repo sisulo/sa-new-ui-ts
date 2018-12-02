@@ -15,11 +15,11 @@
     <div class="col-md-12">
       <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-          <li *ngFor="let datacenter of datacenters"
-              [class.active]="isCurrentTab(datacenter.id)">
-            <a (click)="activeTab(datacenter.id)"
-               [routerLink]="'./'+ datacenter.id + '/' + context">
-              {{datacenter.label}}
+          <li *ngFor="let dataCenter of dataCenters"
+              [class.active]="isCurrentTab(dataCenter.id)">
+            <a (click)="activeTab(dataCenter.id)"
+               [routerLink]="'./'+ dataCenter.id + '/' + context">
+              {{dataCenter.label}}
             </a>
           </li>
         </ul>

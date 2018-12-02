@@ -24,10 +24,8 @@ export class SideMenuComponent implements OnInit {
     {id: 6, linkPart: '8%20CHA%20Adapters%20Board/index.html', name: 'CHA Adapters Board'},
     {id: 7, linkPart: '8%20Trends/Trends.html', name: 'Trends'}
   ];
-  globalStatisticsLinks = [
-    {id: 1, linkPart: '/global-statistics/performance', name: 'Performance Statistics'},
-    {id: 2, linkPart: '/global-statistics/capacity', name: 'Capacity Statistics'}
-  ];
+  globalStatisticsLinks = [];
+  private defaultDataCenter: number;
 
   constructor(private metricService: MetricService) {
   }
@@ -35,8 +33,23 @@ export class SideMenuComponent implements OnInit {
   ngOnInit() {
     this.metricService.getDatacenters().subscribe(data => {
       this.items = this.convertMenu(data.datacenters);
+      this.setDefaultDataCenter(data.datacenters);
       this.filteredItems = this.items;
     });
+  }
+
+  private setDefaultDataCenter(dataCenters: Datacenter[]) {
+    if (dataCenters.length > 0) {
+      this.defaultDataCenter = dataCenters[0].id;
+      this.setGlobalStatisticsLinks();
+    }
+  }
+
+  private setGlobalStatisticsLinks() {
+    this.globalStatisticsLinks = [
+      {id: 1, linkPart: `/global-statistics/${this.defaultDataCenter}/performance`, name: 'Performance Statistics'},
+      {id: 2, linkPart: `/global-statistics/${this.defaultDataCenter}/capacity`, name: 'Capacity Statistics'}
+    ];
   }
 
   search(): void {
@@ -73,12 +86,12 @@ export class SideMenuComponent implements OnInit {
 
   private convertMenu(data: Datacenter[]): MenuTree[] {
     const menu: MenuTree[] = [];
-    for (const datacenter of data) {
+    for (const dataCenter of data) {
       const items: MenuItem[] = [];
-      for (const system of datacenter.systems) {
+      for (const system of dataCenter.systems) {
         items.push(new MenuItem(system.id, system.name));
       }
-      menu.push(new MenuTree(datacenter.label, items));
+      menu.push(new MenuTree(dataCenter.label, items));
     }
     return menu;
   }

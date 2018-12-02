@@ -1,3 +1,7 @@
-<span>{{metric.value}} {{metric.unit}}
-  <span class="peak"><i class="fa fa-exclamation"></i>{{metric.peak}} {{metric.unit}}</span>
-</span>
+<div class="metric-value label label-primary">
+  {{metric.value}} {{metric.unit}}
+</div>
+<div class="peak label label-warning">
+  <span><i class="glyphicon glyphicon-exclamation-sign"></i>{{metric.peak}} {{metric.unit}}</span>
+</div>
+

@@ -4,6 +4,7 @@ import {MetricService} from '../../../metric.service';
 import {BusService} from '../bus.service';
 import {SystemPool} from '../../../models/SystemPool';
 import {SystemMetric} from '../../../models/metrics/SystemMetric';
+import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
 
 @Component({
   selector: 'app-capacity-statistics',
@@ -42,6 +43,7 @@ export class CapacityStatisticsComponent implements OnInit {
         }
         this.data = this.getTableData(id);
         this.bus.announceDatacenter(id);
+        this.selectedPools = [];
       }
     );
     this.bus.datacenterAnnouncement$.subscribe(
@@ -93,13 +95,15 @@ export class CapacityStatisticsComponent implements OnInit {
     };
     this.selectedPools.forEach(
       poolName => {
-        const physicalCapacity = this.getMetricByName(this.poolMetrics[poolName], 'Physical capacity');
+        const metrics: SystemMetric[] = this.poolMetrics[poolName];
+        const physicalCapacity = this.getMetricByName(metrics, SystemMetricType.PHYSICAL_CAPACITY);
+
         this.summarizedValues.physicalCapacity += physicalCapacity;
-        this.summarizedValues.physicalSubstitution += this.getMetricByName(this.poolMetrics[poolName], 'Physical subs') * physicalCapacity;
-        this.summarizedValues.availableCapacity += this.getMetricByName(this.poolMetrics[poolName], 'Available capacity');
-        this.summarizedValues.logicalUsed += this.getMetricByName(this.poolMetrics[poolName], 'Logical used') * physicalCapacity;
-        this.summarizedValues.physicalUsed += this.getMetricByName(this.poolMetrics[poolName], 'Physical used') * physicalCapacity;
-        this.summarizedValues.compressionRatio += this.getMetricByName(this.poolMetrics[poolName], 'Compression ratio') * physicalCapacity;
+        this.summarizedValues.physicalSubstitution += this.getMetricByName(metrics, SystemMetricType.PHYSICAL_SUBS) * physicalCapacity;
+        this.summarizedValues.availableCapacity += this.getMetricByName(metrics, SystemMetricType.AVAILABLE_CAPACITY);
+        this.summarizedValues.logicalUsed += this.getMetricByName(metrics, SystemMetricType.LOGICAL_USAGE) * physicalCapacity;
+        this.summarizedValues.physicalUsed += this.getMetricByName(metrics, SystemMetricType.PHYSICAL_USAGE) * physicalCapacity;
+        this.summarizedValues.compressionRatio += this.getMetricByName(metrics, SystemMetricType.COMPRESS_RATIO) * physicalCapacity;
 
       }
     );
@@ -111,19 +115,9 @@ export class CapacityStatisticsComponent implements OnInit {
     console.log(this.summarizedValues);
   }
 
-  getMetricByName(metrics: SystemMetric[], name: string) {
+  getMetricByName(metrics: SystemMetric[], type: SystemMetricType) {
     return metrics
-      .find(metric => metric.name === name)
+      .find(metric => metric.type === type)
       .value;
   }
-
-  // getMetricObject(systemName: string, metricName: string): SystemMetric {
-  //   return this.data
-  //     .find(system => system.name === systemName).pools
-  //     .find(data => {
-  //         return data.name === metricName;
-  //       }
-  //     );
-  // }
-
 }

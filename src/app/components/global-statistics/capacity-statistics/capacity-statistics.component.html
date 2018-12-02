@@ -1,29 +1,42 @@
 <div class="tab-pane" *ngIf="data.length > 0">
-  <table class="table table-striped" [mfData]="tableData" #mf="mfDataTable">
-    <thead>
-    <tr>
-      <th style="width:10px"></th>
-      <th>
-        System
-      </th>
-      <th>Physical Subs</th>
-      <th>Physical Capacity</th>
-      <th>Available Capacity</th>
-      <th>Logical Used</th>
-      <th>Physical Used</th>
-      <th>Compression Ratio</th>
-    </tr>
-    </thead>
-    <tbody *ngFor="let system of mf.data;let i = index;">
-      <tr>
-        <td colspan="7">{{ system.name }}</td>
-      </tr>
-      <tr *ngFor="let pool of mf.data[i].pools">
-        <td><input type="checkbox" [name]="pool.name" (click)="selectPool(pool.name)"></td>
-        <td>{{pool.name}}</td>
-        <td *ngFor="let metric of pool.metrics">{{metric.value}} {{metric.unit}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+  <div class="row">
+    <div class="col-md-10">
+      <table class="table table-striped" [mfData]="tableData" #mf="mfDataTable">
+        <thead class="thead-light">
+        <tr>
+          <th style="width:10px"></th>
+          <th>
+            System
+          </th>
+          <th>Physical Subs</th>
+          <th>Physical Capacity</th>
+          <th>Available Capacity</th>
+          <th>Logical Used</th>
+          <th>Physical Used</th>
+          <th>Compression Ratio</th>
+        </tr>
+        </thead>
+        <tbody *ngFor="let system of mf.data;let i = index;">
+          <tr>
+            <td colspan="8">{{ system.name }}</td>
+          </tr>
+          <tr *ngFor="let pool of mf.data[i].pools">
+            <td><input type="checkbox" [name]="pool.name" (click)="selectPool(pool.name)"></td>
+            <td>{{pool.name}}</td>
+            <td *ngFor="let metric of pool.metrics">{{metric.value}} {{metric.unit}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-2" *ngIf="selectedPools.length > 0">
+      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.physicalSubstitution, unit: '%', label: 'Physical substitution'}"></app-knob>
+      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.physicalCapacity, unit: 'TB', label: 'Physical capacity'}"></app-knob>
+      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.availableCapacity, unit: 'TB', label: 'Available capacity'}"></app-knob>
+      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.logicalUsed, unit: '%', label: 'Logically used'}"></app-knob>
+      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.physicalUsed, unit: '%', label: 'Physically used'}"></app-knob>
+      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.compressionRatio, unit: '', label: 'Compression ratio'}"></app-knob>
+    </div>
+  </div>
 </div>

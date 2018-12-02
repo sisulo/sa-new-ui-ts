@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MetricService} from '../../metric.service';
-import {InfraMetric} from '../../models/metrics/InfraMetric';
+import {Metric} from '../../models/metrics/Metric';
 
 declare var jquery: any;
 declare var $: any;
@@ -15,7 +15,7 @@ export class DashboardComponent implements OnInit {
   constructor(private metricService: MetricService) {
   }
 
-  metrics: InfraMetric[] = [];
+  metrics: Metric[] = [];
   datacenters;
   registeredSystems;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];

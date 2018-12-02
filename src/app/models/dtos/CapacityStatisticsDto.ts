@@ -1,4 +1,4 @@
-import {SystemPool} from './SystemPool';
+import {SystemPool} from '../SystemPool';
 
 export class CapacityStatisticsDto {
   id: number;

@@ -9,9 +9,8 @@ import {SideMenuComponent} from './components/side-menu/side-menu.component';
 import {FormsModule} from '@angular/forms';
 import {IframeComponent} from './components/iframe/iframe.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {KnobModule} from '@xmlking/ngx-knob';
-import {KnobComponent} from './components/knob/knob.component';
 import {GlobalStatisticsModule} from './components/global-statistics/global-statistics.module';
+import {SaCommonModule} from './common/sa-common.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +19,6 @@ import {GlobalStatisticsModule} from './components/global-statistics/global-stat
     SideMenuComponent,
     IframeComponent,
     DashboardComponent,
-    KnobComponent,
   ],
   imports: [
     GlobalStatisticsModule,
@@ -28,7 +26,7 @@ import {GlobalStatisticsModule} from './components/global-statistics/global-stat
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    KnobModule
+    SaCommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,10 @@
 .peak {
   display: block;
-  font-size: 10px;
+  font-size: 11px;
   font-style: italic;
+}
+.metric-value {
+  display: block;
+  font-weight: bold;
+  font-size:15px;
 }
