@@ -9,7 +9,7 @@ const routes: Routes = [
   {path: 'iframe/:url', component: IframeComponent},
   {
     path: 'global-statistics',
-    loadChildren: './components/global-statistics/global-statistics.module#GlobalStatisticsModule',
+    loadChildren: './global-statistics/global-statistics.module#GlobalStatisticsModule',
   },
   {path: '', component: DashboardComponent},
 ];

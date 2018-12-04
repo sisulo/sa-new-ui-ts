@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {MetricService} from '../../../metric.service';
-import {SystemDetail} from '../../../models/SystemDetail';
+import {MetricService} from '../../metric.service';
+import {SystemDetail} from '../../models/SystemDetail';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from '../bus.service';
-import {SystemMetric} from '../../../models/metrics/SystemMetric';
-import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
+import {SystemMetric} from '../../models/metrics/SystemMetric';
+import {SystemMetricType} from '../../models/metrics/SystemMetricType';
 
 @Component({
   selector: 'app-tab',

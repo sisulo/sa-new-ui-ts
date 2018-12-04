@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Datacenter} from '../../models/Datacenter';
-import {MetricService} from '../../metric.service';
+import {Datacenter} from '../models/Datacenter';
+import {MetricService} from '../metric.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from './bus.service';
 import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';

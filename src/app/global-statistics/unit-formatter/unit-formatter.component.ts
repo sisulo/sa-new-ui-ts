@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SystemMetric} from '../../../models/metrics/SystemMetric';
+import {SystemMetric} from '../../models/metrics/SystemMetric';
 
 @Component({
   selector: 'app-unit-formatter',

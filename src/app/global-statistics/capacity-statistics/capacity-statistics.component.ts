@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {MetricService} from '../../../metric.service';
+import {MetricService} from '../../metric.service';
 import {BusService} from '../bus.service';
-import {SystemPool} from '../../../models/SystemPool';
-import {SystemMetric} from '../../../models/metrics/SystemMetric';
-import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
+import {SystemPool} from '../../models/SystemPool';
+import {SystemMetric} from '../../models/metrics/SystemMetric';
+import {SystemMetricType} from '../../models/metrics/SystemMetricType';
 
 @Component({
   selector: 'app-capacity-statistics',

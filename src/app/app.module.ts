@@ -9,7 +9,7 @@ import {SideMenuComponent} from './components/side-menu/side-menu.component';
 import {FormsModule} from '@angular/forms';
 import {IframeComponent} from './components/iframe/iframe.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
-import {GlobalStatisticsModule} from './components/global-statistics/global-statistics.module';
+import {GlobalStatisticsModule} from './global-statistics/global-statistics.module';
 import {SaCommonModule} from './common/sa-common.module';
 
 @NgModule({
