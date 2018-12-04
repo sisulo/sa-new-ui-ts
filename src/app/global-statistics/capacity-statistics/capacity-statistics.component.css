@@ -1,0 +1,6 @@
+tr.collapsed ~ tr.collapsable {
+  display: none;
+}
+.btn-sm {
+  margin-right: 5px;
+}

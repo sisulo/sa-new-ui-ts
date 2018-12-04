@@ -17,6 +17,7 @@ export class CapacityStatisticsComponent implements OnInit {
   tableData = [];
   selectedPools = [];
   poolMetrics = [];
+  collapsedRows = [];
   summarizedValues = {
     physicalSubstitution: 0,
     physicalCapacity: 0,
@@ -44,6 +45,7 @@ export class CapacityStatisticsComponent implements OnInit {
         this.data = this.getTableData(id);
         this.bus.announceDatacenter(id);
         this.selectedPools = [];
+        this.collapsedRows = [];
       }
     );
     this.bus.datacenterAnnouncement$.subscribe(
@@ -71,6 +73,10 @@ export class CapacityStatisticsComponent implements OnInit {
       }
     );
     return this.data;
+  }
+
+  isSelectedPool(poolName: string): boolean {
+    return this.selectedPools.findIndex(pool => pool === poolName) > -1;
   }
 
   selectPool(poolName: string): void {
@@ -119,5 +125,49 @@ export class CapacityStatisticsComponent implements OnInit {
     return metrics
       .find(metric => metric.type === type)
       .value;
+  }
+
+  addCollapsed(systemName: string) {
+    const index = this.collapsedRows.findIndex(name => name === systemName);
+    if (index > -1) {
+      this.collapsedRows.splice(index, 1);
+    } else {
+      this.collapsedRows.push(systemName);
+    }
+    console.log(this.collapsedRows);
+  }
+
+  isCollapsed(systemName: string): boolean {
+    return this.collapsedRows.findIndex(value => value === systemName) > -1;
+  }
+
+  collapseAll() {
+    if (this.isCollapseAll()) {
+      this.collapsedRows = [];
+    } else {
+      this.collapsedRows = this.data.map(value => value.name);
+    }
+  }
+
+  isCollapseAll(): boolean {
+    return this.collapsedRows.length === this.data.length;
+  }
+
+  isSelectedAll(): boolean {
+    return this.selectedPools.length === this.data.reduce((previousValue, currentValue) => {
+      return previousValue + currentValue.pools.length;
+    }, 0);
+  }
+
+  selectAll() {
+    if (this.isSelectedAll()) {
+      this.selectedPools = [];
+    } else {
+      this.selectedPools = [];
+      this.data.forEach(system => system.pools.forEach(
+        pool => this.selectedPools.push(pool.name)
+      ));
+    }
+    this.computeSummaries();
   }
 }
