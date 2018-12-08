@@ -4,3 +4,18 @@ tr.collapsed ~ tr.collapsable {
 .btn-sm {
   margin-right: 5px;
 }
+table {
+  position: relative;
+}
+
+table>tbody>tr:hover, .highlightColumn {
+  /*padding: 20px;*/
+  background-color: #ffa !important;
+}
+
+th {
+  position: sticky;
+  top: 50px;
+  background-color: #ffffff;
+  z-index: 10;
+}

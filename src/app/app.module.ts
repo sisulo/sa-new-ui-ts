@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {Component, NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -11,6 +11,7 @@ import {IframeComponent} from './components/iframe/iframe.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {GlobalStatisticsModule} from './global-statistics/global-statistics.module';
 import {SaCommonModule} from './common/sa-common.module';
+import { WebStorageModule } from 'ngx-store';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {SaCommonModule} from './common/sa-common.module';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SaCommonModule
+    SaCommonModule,
+    WebStorageModule
   ],
   providers: [],
   bootstrap: [AppComponent]

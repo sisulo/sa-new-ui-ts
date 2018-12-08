@@ -5,6 +5,11 @@ import {BusService} from '../bus.service';
 import {SystemPool} from '../../models/SystemPool';
 import {SystemMetric} from '../../models/metrics/SystemMetric';
 import {SystemMetricType} from '../../models/metrics/SystemMetricType';
+import {LocalStorage} from 'ngx-store';
+
+class SelectedItems {
+  [key: string]: Array<string>;
+}
 
 @Component({
   selector: 'app-capacity-statistics',
@@ -15,9 +20,10 @@ export class CapacityStatisticsComponent implements OnInit {
 
   data: SystemPool[] = []; // Todo caching data by datacenters
   tableData = [];
-  selectedPools = [];
+  currentDatacenterId = 0;
+  @LocalStorage() selectedPools: SelectedItems = {};
   poolMetrics = [];
-  collapsedRows = [];
+  @LocalStorage() collapsedRows: SelectedItems = {};
   summarizedValues = {
     physicalSubstitution: 0,
     physicalCapacity: 0,
@@ -26,6 +32,7 @@ export class CapacityStatisticsComponent implements OnInit {
     physicalUsed: 0,
     compressionRatio: 0
   };
+  private currentColumn = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,15 +49,27 @@ export class CapacityStatisticsComponent implements OnInit {
         if (id === 0) {
           id = 1;
         }
+        this.currentDatacenterId = id;
         this.data = this.getTableData(id);
         this.bus.announceDatacenter(id);
-        this.selectedPools = [];
-        this.collapsedRows = [];
+        if (!this.collapsedRows.hasOwnProperty(this.currentDatacenterId)) {
+          this.collapsedRows[this.currentDatacenterId] = [];
+        }
+
+        if (!this.selectedPools.hasOwnProperty(this.currentDatacenterId)) {
+          this.selectedPools[this.currentDatacenterId] = [];
+        }
       }
     );
     this.bus.datacenterAnnouncement$.subscribe(
       id => {
         this.data = this.getTableData(id);
+        if (!this.selectedPools.hasOwnProperty(this.currentDatacenterId)) {
+          this.selectedPools[this.currentDatacenterId] = [];
+        }
+        if (!this.collapsedRows.hasOwnProperty(this.currentDatacenterId)) {
+          this.collapsedRows[this.currentDatacenterId] = [];
+        }
       }
     );
 
@@ -66,6 +85,7 @@ export class CapacityStatisticsComponent implements OnInit {
           });
         });
         this.tableData = this.data;
+        this.computeSummaries();
       },
       error => {
         console.log(error);
@@ -76,16 +96,24 @@ export class CapacityStatisticsComponent implements OnInit {
   }
 
   isSelectedPool(poolName: string): boolean {
-    return this.selectedPools.findIndex(pool => pool === poolName) > -1;
+    return this.selectedPools[this.currentDatacenterId].findIndex(pool => pool === poolName) > -1;
   }
 
   selectPool(poolName: string): void {
-    const index = this.selectedPools.findIndex(pool => pool === poolName);
-    if (index >= 0) {
-      this.selectedPools.splice(index, 1);
-    } else {
-      this.selectedPools.push(poolName);
+
+    if (this.selectedPools[this.currentDatacenterId] === undefined) {
+      this.selectedPools[this.currentDatacenterId] = [];
     }
+
+    const index = this.selectedPools[this.currentDatacenterId].findIndex(pool => pool === poolName);
+
+    if (index >= 0) {
+      this.selectedPools[this.currentDatacenterId].splice(index, 1);
+    } else {
+      this.selectedPools[this.currentDatacenterId].push(poolName);
+    }
+    // @ts-ignore
+    this.selectedPools.save();
     this.computeSummaries();
   }
 
@@ -99,7 +127,7 @@ export class CapacityStatisticsComponent implements OnInit {
       physicalUsed: 0,
       compressionRatio: 0
     };
-    this.selectedPools.forEach(
+    this.selectedPools[this.currentDatacenterId].forEach(
       poolName => {
         const metrics: SystemMetric[] = this.poolMetrics[poolName];
         const physicalCapacity = this.getMetricByName(metrics, SystemMetricType.PHYSICAL_CAPACITY);
@@ -122,52 +150,70 @@ export class CapacityStatisticsComponent implements OnInit {
   }
 
   getMetricByName(metrics: SystemMetric[], type: SystemMetricType) {
-    return metrics
-      .find(metric => metric.type === type)
-      .value;
+    const metric = metrics.find(item => item.type === type);
+    if (metric === undefined) {
+      return null;
+    }
+    return metric.value;
   }
 
   addCollapsed(systemName: string) {
-    const index = this.collapsedRows.findIndex(name => name === systemName);
-    if (index > -1) {
-      this.collapsedRows.splice(index, 1);
-    } else {
-      this.collapsedRows.push(systemName);
+    if (!this.collapsedRows.hasOwnProperty(this.currentDatacenterId)) {
+      this.collapsedRows[this.currentDatacenterId] = [];
     }
-    console.log(this.collapsedRows);
+    const index = this.collapsedRows[this.currentDatacenterId].findIndex(name => name === systemName);
+    if (index > -1) {
+      this.collapsedRows[this.currentDatacenterId].splice(index, 1);
+    } else {
+      this.collapsedRows[this.currentDatacenterId].push(systemName);
+    }
+    // @ts-ignore
+    this.collapsedRows.save();
   }
 
   isCollapsed(systemName: string): boolean {
-    return this.collapsedRows.findIndex(value => value === systemName) > -1;
+    return this.collapsedRows[this.currentDatacenterId].findIndex(value => value === systemName) > -1;
   }
 
   collapseAll() {
     if (this.isCollapseAll()) {
-      this.collapsedRows = [];
+      this.collapsedRows[this.currentDatacenterId] = [];
     } else {
-      this.collapsedRows = this.data.map(value => value.name);
+      this.collapsedRows[this.currentDatacenterId] = this.data.map(value => value.name);
     }
+    // @ts-ignore
+    this.collapsedRows.save();
   }
 
   isCollapseAll(): boolean {
-    return this.collapsedRows.length === this.data.length;
+    return this.collapsedRows[this.currentDatacenterId].length === this.data.length;
   }
 
   isSelectedAll(): boolean {
-    return this.selectedPools.length === this.data.reduce((previousValue, currentValue) => {
+    return this.selectedPools[this.currentDatacenterId].length === this.data.reduce((previousValue, currentValue) => {
       return previousValue + currentValue.pools.length;
     }, 0);
   }
 
   selectAll() {
     if (this.isSelectedAll()) {
-      this.selectedPools = [];
+      this.selectedPools[this.currentDatacenterId] = [];
     } else {
-      this.selectedPools = [];
+      this.selectedPools[this.currentDatacenterId] = [];
       this.data.forEach(system => system.pools.forEach(
-        pool => this.selectedPools.push(pool.name)
+        pool => this.selectedPools[this.currentDatacenterId].push(pool.name)
       ));
     }
+    // @ts-ignore
+    this.selectedPools.save();
     this.computeSummaries();
+  }
+
+  setCurrentColumn(column: number) {
+    this.currentColumn = column;
+  }
+
+  isCurrentCoulumn(column: number) {
+    return column === this.currentColumn;
   }
 }

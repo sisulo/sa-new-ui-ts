@@ -26,13 +26,13 @@ section.container-fluid {
     margin-bottom: 10px;
 }
 .top-part-menu {
-    position: absolute; 
+    position: absolute;
     top: 50px;
     height: 200px; /*Height of top frame div*/
     overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
 }
 .central-part-menu {
-    position: fixed; 
+    position: fixed;
     top: 250px; /*Set top value to HeightOfTopFrameDiv*/
     width: 230px;
     bottom:1px;
@@ -40,10 +40,10 @@ section.container-fluid {
 }
 .bottom-part-menu{
     top: auto;
-    bottom: 0; 
+    bottom: 0;
     height: 110px; /*Height of bottom frame div*/
     overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
-    
+
 }
 
 /*****
@@ -56,15 +56,15 @@ section.container-fluid {
 
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #f1f1f1; 
+    background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #1e5474; 
+    background: #1e5474;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #3c8dbc; 
+    background: #3c8dbc;
 }

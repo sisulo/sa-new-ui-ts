@@ -6,6 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - install node.js on server/local machine
 npm install -g @angular/cli
+npm install typings --save --global
 ## Installation steps on production
 
 1. git pull sa-new-ui-ts

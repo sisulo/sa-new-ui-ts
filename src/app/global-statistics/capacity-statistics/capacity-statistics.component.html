@@ -2,8 +2,10 @@
 
   <div class="row">
     <div class="col-md-12">
-      <button type="button" class="btn btn-sm" value="Collapse" (click)="collapseAll()">{{isCollapseAll() ? 'Expand All' : 'Collapse All'}}</button>
-      <button type="button" class="btn btn-sm" value="SelectAll" (click)="selectAll()">{{isSelectedAll() ? 'Deselect All' : 'Select All'}}</button>
+      <button type="button" class="btn btn-sm" value="Collapse"
+              (click)="collapseAll()">{{isCollapseAll() ? 'Expand All' : 'Collapse All'}}</button>
+      <button type="button" class="btn btn-sm" value="SelectAll"
+              (click)="selectAll()">{{isSelectedAll() ? 'Deselect All' : 'Select All'}}</button>
     </div>
 
   </div>
@@ -16,34 +18,58 @@
           <th>
             System
           </th>
-          <th>Physical Subs</th>
-          <th>Physical Capacity</th>
-          <th>Available Capacity</th>
-          <th>Logical Used</th>
-          <th>Physical Used</th>
-          <th>Compression Ratio</th>
+          <th [class.highlightColumn]="isCurrentCoulumn(0)">Physical Subs</th>
+          <th [class.highlightColumn]="isCurrentCoulumn(1)">Physical Capacity</th>
+          <th [class.highlightColumn]="isCurrentCoulumn(2)">Available Capacity</th>
+          <th [class.highlightColumn]="isCurrentCoulumn(3)">Logical Used</th>
+          <th [class.highlightColumn]="isCurrentCoulumn(4)">Physical Used</th>
+          <th [class.highlightColumn]="isCurrentCoulumn(5)">Compression Ratio</th>
         </tr>
         </thead>
         <tbody *ngFor="let system of mf.data;let i = index;">
-          <tr (click)="addCollapsed(system.name)" [class.collapsed]="isCollapsed(system.name)">
-            <td colspan="8">{{ system.name }}</td>
-          </tr>
-          <tr *ngFor="let pool of mf.data[i].pools" class="collapsable">
-            <td><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)" (click)="selectPool(pool.name)"></td>
-            <td>{{pool.name}}</td>
-            <td *ngFor="let metric of pool.metrics">{{metric.value}} {{metric.unit}}
-            </td>
-          </tr>
+        <tr (click)="addCollapsed(system.name)" [class.collapsed]="isCollapsed(system.name)">
+          <!--<tr (click)="addCollapsed(system.name)">-->
+          <td colspan="8">{{ system.name }}</td>
+        </tr>
+        <tr *ngFor="let pool of mf.data[i].pools" class="collapsable">
+          <td><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)"
+                     (click)="selectPool(pool.name)"></td>
+          <td>{{pool.name}}</td>
+          <td *ngFor="let metric of pool.metrics; let column=index;" (mouseout)="setCurrentColumn(-1)"
+              (mouseover)="setCurrentColumn(column)"
+              [class.highlightColumn]="isCurrentCoulumn(column)">{{metric.value}} {{metric.unit}}
+          </td>
+        </tr>
         </tbody>
       </table>
     </div>
-    <div class="col-md-2" *ngIf="selectedPools.length > 0">
-      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.physicalSubstitution, unit: '%', label: 'Physical substitution'}"></app-knob>
-      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.physicalCapacity, unit: 'TB', label: 'Physical capacity'}"></app-knob>
-      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.availableCapacity, unit: 'TB', label: 'Available capacity'}"></app-knob>
-      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.logicalUsed, unit: '%', label: 'Logically used'}"></app-knob>
-      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.physicalUsed, unit: '%', label: 'Physically used'}"></app-knob>
-      <app-knob [sizeType]="'small'" [metric]="{value: summarizedValues.compressionRatio, unit: '', label: 'Compression ratio'}"></app-knob>
+  </div>
+  <div class="row" style="position:sticky; bottom:0px; background-color: white">
+    <div class="col-md-12" *ngIf="selectedPools[currentDatacenterId].length > 0">
+      <div class="col-md-2">
+        <app-knob [sizeType]="'small'"
+                  [metric]="{value: summarizedValues.physicalSubstitution, unit: '%', label: 'Physical substitution'}"></app-knob>
+      </div>
+      <div class="col-md-2">
+        <app-knob [sizeType]="'small'"
+                  [metric]="{value: summarizedValues.physicalCapacity, unit: 'TB', label: 'Physical capacity'}"></app-knob>
+      </div>
+      <div class="col-md-2">
+        <app-knob [sizeType]="'small'"
+                  [metric]="{value: summarizedValues.availableCapacity, unit: 'TB', label: 'Available capacity'}"></app-knob>
+      </div>
+      <div class="col-md-2">
+        <app-knob [sizeType]="'small'"
+                  [metric]="{value: summarizedValues.logicalUsed, unit: '%', label: 'Logically used'}"></app-knob>
+      </div>
+      <div class="col-md-2">
+        <app-knob [sizeType]="'small'"
+                  [metric]="{value: summarizedValues.physicalUsed, unit: '%', label: 'Physically used'}"></app-knob>
+      </div>
+      <div class="col-md-2">
+        <app-knob [sizeType]="'small'"
+                  [metric]="{value: summarizedValues.compressionRatio, unit: '', label: 'Compression ratio'}"></app-knob>
+      </div>
     </div>
   </div>
 </div>
