@@ -7,6 +7,7 @@ import {GlobalStatisticsRoutingModule} from './global-statistics-routing.module'
 import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
 import {SaCommonModule} from '../common/sa-common.module';
 import {DataTableModule} from 'angular-6-datatable';
+import {AggregatedStatisticsComponent} from './aggregated-statistics/aggregated-statistics.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import {DataTableModule} from 'angular-6-datatable';
     CapacityStatisticsComponent,
     PerformanceStatisticsComponent,
     UnitFormatterComponent,
+    AggregatedStatisticsComponent
   ],
   imports: [
     CommonModule,

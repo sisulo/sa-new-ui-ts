@@ -19,7 +19,7 @@ import { WebStorageModule } from 'ngx-store';
     HeaderComponent,
     SideMenuComponent,
     IframeComponent,
-    DashboardComponent,
+    DashboardComponent
   ],
   imports: [
     GlobalStatisticsModule,

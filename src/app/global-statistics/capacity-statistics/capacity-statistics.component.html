@@ -10,66 +10,41 @@
 
   </div>
   <div class="row">
-    <div class="col-md-10">
-      <table class="table table-striped" [mfData]="tableData" #mf="mfDataTable">
+    <div class="col-md-12">
+      <table class="table table-striped" [mfData]="data" #mf="mfDataTable">
         <thead class="thead-light">
         <tr>
           <th style="width:10px"></th>
           <th>
             System
           </th>
-          <th [class.highlightColumn]="isCurrentCoulumn(0)">Physical Subs</th>
-          <th [class.highlightColumn]="isCurrentCoulumn(1)">Physical Capacity</th>
-          <th [class.highlightColumn]="isCurrentCoulumn(2)">Available Capacity</th>
-          <th [class.highlightColumn]="isCurrentCoulumn(3)">Logical Used</th>
-          <th [class.highlightColumn]="isCurrentCoulumn(4)">Physical Used</th>
-          <th [class.highlightColumn]="isCurrentCoulumn(5)">Compression Ratio</th>
+          <th [class.highlightColumn]="isCurrentColumn(0)">Physical Subs</th>
+          <th [class.highlightColumn]="isCurrentColumn(1)">Physical Capacity</th>
+          <th [class.highlightColumn]="isCurrentColumn(2)">Available Capacity</th>
+          <th [class.highlightColumn]="isCurrentColumn(3)">Logical Used</th>
+          <th [class.highlightColumn]="isCurrentColumn(4)">Physical Used</th>
+          <th [class.highlightColumn]="isCurrentColumn(5)">Compression Ratio</th>
         </tr>
         </thead>
         <tbody *ngFor="let system of mf.data;let i = index;">
         <tr (click)="addCollapsed(system.name)" [class.collapsed]="isCollapsed(system.name)">
-          <!--<tr (click)="addCollapsed(system.name)">-->
           <td colspan="8">{{ system.name }}</td>
         </tr>
         <tr *ngFor="let pool of mf.data[i].pools" class="collapsable">
           <td><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)"
-                     (click)="selectPool(pool.name)"></td>
+                     (click)="selectPool(pool.name, system.name)"></td>
           <td>{{pool.name}}</td>
           <td *ngFor="let metric of pool.metrics; let column=index;" (mouseout)="setCurrentColumn(-1)"
               (mouseover)="setCurrentColumn(column)"
-              [class.highlightColumn]="isCurrentCoulumn(column)">{{metric.value}} {{metric.unit}}
+              [class.highlightColumn]="isCurrentColumn(column)">{{metric.value}} {{metric.unit}}
           </td>
         </tr>
         </tbody>
       </table>
     </div>
   </div>
-  <div class="row" style="position:sticky; bottom:0px; background-color: white">
-    <div class="col-md-12" *ngIf="selectedPools[currentDatacenterId].length > 0">
-      <div class="col-md-2">
-        <app-knob [sizeType]="'small'"
-                  [metric]="{value: summarizedValues.physicalSubstitution, unit: '%', label: 'Physical substitution'}"></app-knob>
-      </div>
-      <div class="col-md-2">
-        <app-knob [sizeType]="'small'"
-                  [metric]="{value: summarizedValues.physicalCapacity, unit: 'TB', label: 'Physical capacity'}"></app-knob>
-      </div>
-      <div class="col-md-2">
-        <app-knob [sizeType]="'small'"
-                  [metric]="{value: summarizedValues.availableCapacity, unit: 'TB', label: 'Available capacity'}"></app-knob>
-      </div>
-      <div class="col-md-2">
-        <app-knob [sizeType]="'small'"
-                  [metric]="{value: summarizedValues.logicalUsed, unit: '%', label: 'Logically used'}"></app-knob>
-      </div>
-      <div class="col-md-2">
-        <app-knob [sizeType]="'small'"
-                  [metric]="{value: summarizedValues.physicalUsed, unit: '%', label: 'Physically used'}"></app-knob>
-      </div>
-      <div class="col-md-2">
-        <app-knob [sizeType]="'small'"
-                  [metric]="{value: summarizedValues.compressionRatio, unit: '', label: 'Compression ratio'}"></app-knob>
-      </div>
-    </div>
+  <div *ngIf="selectedPools[currentDataCenterId].length > 0" class="row" style="position:sticky; bottom:0px; background-color: white">
+    <app-aggregated-statistics [filter]="selectedPools[currentDataCenterId]"
+                               [metrics]="poolMetrics" [dataCenterId]="currentDataCenterId"></app-aggregated-statistics>
   </div>
 </div>
