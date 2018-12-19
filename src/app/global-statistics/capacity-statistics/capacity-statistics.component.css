@@ -19,3 +19,14 @@ th {
   background-color: #ffffff;
   z-index: 10;
 }
+
+table.capacity-table {
+  table-layout: fixed;
+
+}
+tr.sticky td {
+  position: sticky;
+  bottom: 0px;
+  background-color: #ffffff;
+  z-index: 10;
+}

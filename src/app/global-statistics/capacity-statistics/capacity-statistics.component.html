@@ -11,7 +11,7 @@
   </div>
   <div class="row">
     <div class="col-md-12">
-      <table class="table table-striped" [mfData]="data" #mf="mfDataTable">
+      <table class="table table-striped capacity-table" [mfData]="data" #mf="mfDataTable">
         <thead class="thead-light">
         <tr>
           <th style="width:10px"></th>
@@ -27,8 +27,17 @@
         </tr>
         </thead>
         <tbody *ngFor="let system of mf.data;let i = index;">
-        <tr (click)="addCollapsed(system.name)" [class.collapsed]="isCollapsed(system.name)">
+        <tr *ngIf="this.getSystemStatistics(system.name) == undefined">
           <td colspan="8">{{ system.name }}</td>
+        </tr>
+        <tr *ngIf="this.getSystemStatistics(system.name) !== undefined" (click)="addCollapsed(system.name)" [class.collapsed]="isCollapsed(system.name)">
+          <td colspan="2">{{ system.name }}</td>
+          <td>{{this.getSystemStatistics(system.name).physicalSubstitution.toFixed(2)}}</td>
+          <td>{{this.getSystemStatistics(system.name).physicalCapacity.toFixed(2)}}</td>
+          <td>{{this.getSystemStatistics(system.name).availableCapacity.toFixed(2)}}</td>
+          <td>{{this.getSystemStatistics(system.name).logicalUsed.toFixed(2)}}</td>
+          <td>{{this.getSystemStatistics(system.name).physicalUsed.toFixed(2)}}</td>
+          <td>{{this.getSystemStatistics(system.name).compressionRatio.toFixed(2)}}</td>
         </tr>
         <tr *ngFor="let pool of mf.data[i].pools" class="collapsable">
           <td><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)"
@@ -40,11 +49,19 @@
           </td>
         </tr>
         </tbody>
+        <tbody *ngIf="this.getSystemStatistics('all') !== undefined" >
+          <tr class="sticky">
+            <td></td>
+            <td></td>
+            <td>{{this.getSystemStatistics('all').physicalSubstitution.toFixed(2)}}</td>
+            <td>{{this.getSystemStatistics('all').physicalCapacity.toFixed(2)}}</td>
+            <td>{{this.getSystemStatistics('all').availableCapacity.toFixed(2)}}</td>
+            <td>{{this.getSystemStatistics('all').logicalUsed.toFixed(2)}}</td>
+            <td>{{this.getSystemStatistics('all').physicalUsed.toFixed(2)}}</td>
+            <td>{{this.getSystemStatistics('all').compressionRatio.toFixed(2)}}</td>
+          </tr>
+        </tbody>
       </table>
     </div>
-  </div>
-  <div *ngIf="selectedPools[currentDataCenterId].length > 0" class="row" style="position:sticky; bottom:0px; background-color: white">
-    <app-aggregated-statistics [filter]="selectedPools[currentDataCenterId]"
-                               [metrics]="poolMetrics" [dataCenterId]="currentDataCenterId"></app-aggregated-statistics>
   </div>
 </div>

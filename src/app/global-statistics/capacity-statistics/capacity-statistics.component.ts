@@ -5,6 +5,7 @@ import {BusService} from '../bus.service';
 import {SystemPool} from '../../models/SystemPool';
 import {LocalStorage} from 'ngx-store';
 import {AggregatedStatisticsService} from './aggregated-statistics.service';
+import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
 
 export class ItemKey {
   systemName: string;
@@ -27,7 +28,8 @@ export class CapacityStatisticsComponent implements OnInit {
 
   data: SystemPool[] = []; // Todo caching data by dataCenters
   currentDataCenterId = 0;
-  poolMetrics = [];
+  poolMetrics = {};
+  aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
   @LocalStorage() selectedPools: SelectedItems = {};
   @LocalStorage() collapsedRows: CollapsedItems = {};
   private currentColumn = -1;
@@ -57,7 +59,17 @@ export class CapacityStatisticsComponent implements OnInit {
         this.internalInit(id);
       }
     );
+    this.aggregateService.aggregatedStatistics$.subscribe(
+      stats => {
+        console.log(stats);
+        this.aggregatedStats = stats;
+      }
+    );
 
+  }
+
+  getSystemStatistics(systemName: string): SystemAggregatedStatistics {
+    return this.aggregatedStats.find(stats => stats.system === systemName);
   }
 
   internalInit(id: number): void {
@@ -80,7 +92,7 @@ export class CapacityStatisticsComponent implements OnInit {
             this.poolMetrics[pool.name] = pool.metrics;
           });
         });
-        console.log(this.data);
+        this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
       },
       error => {
         console.log(error);
@@ -109,7 +121,7 @@ export class CapacityStatisticsComponent implements OnInit {
     }
     // @ts-ignore
     this.selectedPools.save();
-    this.aggregateService.announceFilter(this.selectedPools[this.currentDataCenterId]);
+    this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
   }
 
   addCollapsed(systemName: string) {
@@ -161,7 +173,7 @@ export class CapacityStatisticsComponent implements OnInit {
     }
     // @ts-ignore
     this.selectedPools.save();
-    this.aggregateService.announceFilter(this.selectedPools[this.currentDataCenterId]);
+    this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
   }
 
   setCurrentColumn(column: number) {
