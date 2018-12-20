@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
 import {ItemKey} from './capacity-statistics.component';
-import {SystemAggregatedStatistics} from '../aggregated-statistics/aggregated-statistics.component';
-import {WeightedArithmeticMean} from '../utils/WeightedArithmeticMean';
+import {SystemAggregatedStatistics, WeightedArithmeticMean} from '../utils/WeightedArithmeticMean';
 
 @Injectable({
   providedIn: 'root'

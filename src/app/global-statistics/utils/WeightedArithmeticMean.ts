@@ -32,6 +32,9 @@ export class WeightedArithmeticMean {
   partiallySummarizedValues: SystemAggregatedStatistics[] = [];
 
   computeSummaries(inputMetrics: {}, filter: Array<ItemKey>): SystemAggregatedStatistics[] {
+    if (filter.length === 0) {
+      return [];
+    }
     this.systemSummarizedValues = new Array<SystemAggregatedStatistics>();
     this.partiallySummarizedValues = [];
     filter.forEach(

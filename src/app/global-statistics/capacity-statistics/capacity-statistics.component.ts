@@ -176,6 +176,9 @@ export class CapacityStatisticsComponent implements OnInit {
     this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
   }
 
+  isPartiallySelected() {
+    return this.selectedPools[this.currentDataCenterId].length > 0;
+  }
   setCurrentColumn(column: number) {
     this.currentColumn = column;
   }

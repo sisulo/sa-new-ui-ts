@@ -7,12 +7,25 @@ tr.collapsed ~ tr.collapsable {
 table {
   position: relative;
 }
-
 table>tbody>tr:hover, .highlightColumn {
   /*padding: 20px;*/
   background-color: #ffa !important;
 }
+th.highlightColumn {
+  color:#3b3b3a !important;
+}
+table.capacity-table {
+  table-layout: fixed;
 
+}
+table.capacity-table {
+  border: 3px solid #8AB7CB;
+}
+table.capacity-table thead tr>th{
+  background-color: #8AB7CB;
+  color:white;
+}
+/*Display header on top of page when scrolling and aggregated stats at the bottom of screen*/
 th {
   position: sticky;
   top: 50px;
@@ -20,13 +33,18 @@ th {
   z-index: 10;
 }
 
-table.capacity-table {
-  table-layout: fixed;
-
-}
 tr.sticky td {
   position: sticky;
   bottom: 0px;
   background-color: #ffffff;
   z-index: 10;
+}
+
+tbody.system-header>tr:first-child>td {
+  background-color: #30667E;
+  color:white;
+}
+
+.select-all i {
+  font-size:15px;
 }
