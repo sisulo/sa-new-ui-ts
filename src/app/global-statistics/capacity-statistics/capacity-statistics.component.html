@@ -1,24 +1,20 @@
 <div class="tab-pane" *ngIf="data.length > 0">
-
-  <div class="row">
-    <div class="col-md-12">
-      <button type="button" class="btn btn-sm" value="Collapse"
-              (click)="collapseAll()">{{isCollapseAll() ? 'Expand All' : 'Collapse All'}}</button>
-    </div>
-
-  </div>
   <div class="row">
     <div class="col-md-12">
       <table class="table table-striped capacity-table" [mfData]="data" #mf="mfDataTable">
         <thead>
         <tr>
-          <th style="width:30px">
+          <th style="width:50px">
             <span class="select-all">
               <i *ngIf="isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>
               <i *ngIf="isPartiallySelected() && !isSelectedAll()" class="fa fa-fw fa-minus-square-o"
                  (click)="selectAll()"></i>
               <i *ngIf="(!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"
                  (click)="selectAll()"></i>
+              <i class="fa"
+                 [ngClass]="isCollapseAll() ? 'fa-plus':'fa-minus'"
+                 (click)="collapseAll()"
+                 [title]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
             </span>
           </th>
           <th>
@@ -33,18 +29,27 @@
         </tr>
         </thead>
         <tbody class="system-header" *ngFor="let system of mf.data;let i = index;">
-        <tr *ngIf="this.getSystemStatistics(system.name) == undefined">
-          <td colspan="8">{{ system.name }}</td>
+        <tr *ngIf="this.getSystemStatistics(system.name) == undefined" [class.collapsed]="isCollapsed(system.name)">
+          <td colspan="7">{{ system.name }}</td>
+          <td>
+            <i class="fa expand-collapse pull-right"
+               [ngClass]="isCollapsed(system.name) ? 'fa-plus':'fa-minus'"
+               (click)="addCollapsed(system.name)" [title]="isCollapsed(system.name) ? 'Expand':'Collapse'">
+            </i>
+          </td>
         </tr>
-        <tr *ngIf="this.getSystemStatistics(system.name) !== undefined" (click)="addCollapsed(system.name)"
-            [class.collapsed]="isCollapsed(system.name)">
+        <tr *ngIf="this.getSystemStatistics(system.name) !== undefined" [class.collapsed]="isCollapsed(system.name)">
           <td colspan="2">{{ system.name }}</td>
           <td>{{this.getSystemStatistics(system.name).physicalSubstitution.toFixed(2)}}</td>
           <td>{{this.getSystemStatistics(system.name).physicalCapacity.toFixed(2)}}</td>
           <td>{{this.getSystemStatistics(system.name).availableCapacity.toFixed(2)}}</td>
           <td>{{this.getSystemStatistics(system.name).logicalUsed.toFixed(2)}}</td>
           <td>{{this.getSystemStatistics(system.name).physicalUsed.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics(system.name).compressionRatio.toFixed(2)}}</td>
+          <td>{{this.getSystemStatistics(system.name).compressionRatio.toFixed(2)}}
+            <i class="fa expand-collapse pull-right" [ngClass]="isCollapsed(system.name) ? 'fa-plus':'fa-minus'"
+               (click)="addCollapsed(system.name)"
+               [title]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i>
+          </td>
         </tr>
         <tr *ngFor="let pool of mf.data[i].pools" class="collapsable">
           <td><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)"

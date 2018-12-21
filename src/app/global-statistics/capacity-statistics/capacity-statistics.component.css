@@ -19,10 +19,10 @@ table.capacity-table {
 
 }
 table.capacity-table {
-  border: 3px solid #8AB7CB;
+  border: 3px solid #30667E;
 }
 table.capacity-table thead tr>th{
-  background-color: #8AB7CB;
+  background-color: #30667E;
   color:white;
 }
 /*Display header on top of page when scrolling and aggregated stats at the bottom of screen*/
@@ -41,10 +41,17 @@ tr.sticky td {
 }
 
 tbody.system-header>tr:first-child>td {
-  background-color: #30667E;
+  background-color: #8AB7CB;
   color:white;
 }
 
 .select-all i {
   font-size:15px;
+}
+.expand-collapse {
+  font-size: 13px;
+}
+.expand-collapse:hover {
+  color: #dddddd;
+  font-size: 17px;
 }
