@@ -16,7 +16,6 @@ th.highlightColumn {
 }
 table.capacity-table {
   table-layout: fixed;
-
 }
 table.capacity-table {
   border: 3px solid #30667E;
@@ -43,6 +42,7 @@ tr.sticky td {
 tbody.system-header>tr:first-child>td {
   background-color: #8AB7CB;
   color:white;
+  margin-top:10px;
 }
 
 .select-all i {
@@ -55,3 +55,4 @@ tbody.system-header>tr:first-child>td {
   color: #dddddd;
   font-size: 17px;
 }
+
