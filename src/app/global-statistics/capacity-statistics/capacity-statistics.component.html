@@ -1,10 +1,9 @@
 <div class="tab-pane" *ngIf="data.length > 0">
-  <div class="row">
-    <div class="col-md-12">
-      <table class="table table-striped capacity-table" [mfData]="data" #mf="mfDataTable">
-        <thead>
-        <tr>
-          <th style="width:50px">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-1">
             <span class="select-all">
               <i *ngIf="isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>
               <i *ngIf="isPartiallySelected() && !isSelectedAll()" class="fa fa-fw fa-minus-square-o"
@@ -16,64 +15,63 @@
                  (click)="collapseAll()"
                  [title]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
             </span>
-          </th>
-          <th>
+          </div>
+          <div class="col-md-2">
             System
-          </th>
-          <th [class.highlightColumn]="isCurrentColumn(0)">Physical Subs</th>
-          <th [class.highlightColumn]="isCurrentColumn(1)">Physical Capacity</th>
-          <th [class.highlightColumn]="isCurrentColumn(2)">Available Capacity</th>
-          <th [class.highlightColumn]="isCurrentColumn(3)">Logical Used</th>
-          <th [class.highlightColumn]="isCurrentColumn(4)">Physical Used</th>
-          <th [class.highlightColumn]="isCurrentColumn(5)">Compression Ratio</th>
-        </tr>
-        </thead>
-        <tbody class="system-header" *ngFor="let system of mf.data;let i = index;">
-        <tr *ngIf="this.getSystemStatistics(system.name) == undefined" [class.collapsed]="isCollapsed(system.name)">
-          <td colspan="7">{{ system.name }}</td>
-          <td>
-            <i class="fa expand-collapse pull-right"
-               [ngClass]="isCollapsed(system.name) ? 'fa-plus':'fa-minus'"
-               (click)="addCollapsed(system.name)" [title]="isCollapsed(system.name) ? 'Expand':'Collapse'">
-            </i>
-          </td>
-        </tr>
-        <tr *ngIf="this.getSystemStatistics(system.name) !== undefined" [class.collapsed]="isCollapsed(system.name)">
-          <td colspan="2">{{ system.name }}</td>
-          <td>{{this.getSystemStatistics(system.name).physicalSubstitution.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics(system.name).physicalCapacity.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics(system.name).availableCapacity.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics(system.name).logicalUsed.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics(system.name).physicalUsed.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics(system.name).compressionRatio.toFixed(2)}}
-            <i class="fa expand-collapse pull-right" [ngClass]="isCollapsed(system.name) ? 'fa-plus':'fa-minus'"
-               (click)="addCollapsed(system.name)"
-               [title]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i>
-          </td>
-        </tr>
-        <tr *ngFor="let pool of mf.data[i].pools" class="collapsable">
-          <td><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)"
-                     (click)="selectPool(pool.name, system.name)"></td>
-          <td>{{pool.name}}</td>
-          <td *ngFor="let metric of pool.metrics; let column=index;" (mouseout)="setCurrentColumn(-1)"
-              (mouseover)="setCurrentColumn(column)"
-              [class.highlightColumn]="isCurrentColumn(column)">{{metric.value}} {{metric.unit}}
-          </td>
-        </tr>
-        </tbody>
-        <tbody *ngIf="this.getSystemStatistics('all') !== undefined">
-        <tr class="sticky">
-          <td></td>
-          <td></td>
-          <td>{{this.getSystemStatistics('all').physicalSubstitution.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics('all').physicalCapacity.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics('all').availableCapacity.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics('all').logicalUsed.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics('all').physicalUsed.toFixed(2)}}</td>
-          <td>{{this.getSystemStatistics('all').compressionRatio.toFixed(2)}}</td>
-        </tr>
-        </tbody>
-      </table>
+          </div>
+          <div class="col" [class.highlightColumn]="isCurrentColumn(0)">Physical Subs</div>
+          <div class="col" [class.highlightColumn]="isCurrentColumn(1)">Physical Capacity</div>
+          <div class="col" [class.highlightColumn]="isCurrentColumn(2)">Available Capacity</div>
+          <div class="col" [class.highlightColumn]="isCurrentColumn(3)">Logical Used</div>
+          <div class="col" [class.highlightColumn]="isCurrentColumn(4)">Physical Used</div>
+          <div class="col" [class.highlightColumn]="isCurrentColumn(5)">Compression Ratio</div>
+        </div>
+        <div class="system-header" *ngFor="let system of data;let i = index;">
+          <div class="row" *ngIf="this.getSystemStatistics(system.name) == undefined"
+               [class.collapsed]="isCollapsed(system.name)">
+            <div class="col-md-3">{{ system.name }}</div>
+            <div class="col-filler">
+              <i class="fa expand-collapse pull-right"
+                 [ngClass]="isCollapsed(system.name) ? 'fa-plus':'fa-minus'"
+                 (click)="addCollapsed(system.name)" [title]="isCollapsed(system.name) ? 'Expand':'Collapse'">
+              </i>
+            </div>
+          </div>
+          <div class="row" *ngIf="this.getSystemStatistics(system.name) !== undefined"
+               [class.collapsed]="isCollapsed(system.name)">
+            <div class="col-md-3">{{ system.name }}</div>
+            <div class="col">{{this.getSystemStatistics(system.name).physicalSubstitution.toFixed(2)}}</div>
+            <div class="col">{{this.getSystemStatistics(system.name).physicalCapacity.toFixed(2)}}</div>
+            <div class="col">{{this.getSystemStatistics(system.name).availableCapacity.toFixed(2)}}</div>
+            <div class="col">{{this.getSystemStatistics(system.name).logicalUsed.toFixed(2)}}</div>
+            <div class="col">{{this.getSystemStatistics(system.name).physicalUsed.toFixed(2)}}</div>
+            <div class="col">{{this.getSystemStatistics(system.name).compressionRatio.toFixed(2)}}
+              <i class="fa expand-collapse pull-right" [ngClass]="isCollapsed(system.name) ? 'fa-plus':'fa-minus'"
+                 (click)="addCollapsed(system.name)"
+                 [title]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i>
+            </div>
+          </div>
+          <div *ngFor="let pool of data[i].pools" class="row collapsable">
+            <div class="col-md-1"><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)"
+                                         (click)="selectPool(pool.name, system.name)"></div>
+            <div class="col-md-2">{{pool.name}}</div>
+            <div [ngClass]="'col'" *ngFor="let metric of pool.metrics; let column=index;"
+                 (mouseout)="setCurrentColumn(-1)"
+                 (mouseover)="setCurrentColumn(column)"
+                 [class.highlightColumn]="isCurrentColumn(column)">{{metric.value}} {{metric.unit}}
+            </div>
+          </div>
+        </div>
+        <div class="row sticky" *ngIf="this.getSystemStatistics('all') !== undefined">
+          <div class="col-md-3"></div>
+          <div class="col">{{this.getSystemStatistics('all').physicalSubstitution.toFixed(2)}}</div>
+          <div class="col">{{this.getSystemStatistics('all').physicalCapacity.toFixed(2)}}</div>
+          <div class="col">{{this.getSystemStatistics('all').availableCapacity.toFixed(2)}}</div>
+          <div class="col">{{this.getSystemStatistics('all').logicalUsed.toFixed(2)}}</div>
+          <div class="col">{{this.getSystemStatistics('all').physicalUsed.toFixed(2)}}</div>
+          <div class="col">{{this.getSystemStatistics('all').compressionRatio.toFixed(2)}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

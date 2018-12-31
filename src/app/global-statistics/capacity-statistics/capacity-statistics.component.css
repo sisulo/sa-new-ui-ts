@@ -1,29 +1,29 @@
-tr.collapsed ~ tr.collapsable {
+div.collapsed ~ div.collapsable {
   display: none;
 }
-.btn-sm {
-  margin-right: 5px;
-}
-table {
-  position: relative;
-}
-table>tbody>tr:hover, .highlightColumn {
+
+div.collapsable:hover > div, .highlightColumn {
   /*padding: 20px;*/
   background-color: #ffa !important;
 }
-th.highlightColumn {
-  color:#3b3b3a !important;
+
+.col {
+  width:12%;
+  float: left;
 }
-table.capacity-table {
-  table-layout: fixed;
+.col-filler {
+  width:97%;
 }
+
 table.capacity-table {
   border: 3px solid #30667E;
 }
-table.capacity-table thead tr>th{
+
+table.capacity-table thead tr > th {
   background-color: #30667E;
-  color:white;
+  color: white;
 }
+
 /*Display header on top of page when scrolling and aggregated stats at the bottom of screen*/
 th {
   position: sticky;
@@ -32,25 +32,28 @@ th {
   z-index: 10;
 }
 
-tr.sticky td {
+div.sticky {
   position: sticky;
   bottom: 0px;
   background-color: #ffffff;
   z-index: 10;
 }
 
-tbody.system-header>tr:first-child>td {
+.system-header > div:first-child > div {
   background-color: #8AB7CB;
-  color:white;
-  margin-top:10px;
+  color: white;
+  margin-top: 10px;
+  height: 20px;
 }
 
 .select-all i {
-  font-size:15px;
+  font-size: 15px;
 }
+
 .expand-collapse {
-  font-size: 13px;
+  padding-right: 15px;
 }
+
 .expand-collapse:hover {
   color: #dddddd;
   font-size: 17px;
