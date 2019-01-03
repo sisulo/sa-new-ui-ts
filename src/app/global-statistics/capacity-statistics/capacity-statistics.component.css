@@ -4,7 +4,9 @@ div.collapsed ~ div.collapsable {
 
 div.collapsable:hover > div, .highlightColumn {
   /*padding: 20px;*/
-  background-color: #ffa !important;
+  background-color: #E9FCE9 !important;
+  color:#3A738C;
+  font-weight: bold;
 }
 
 .col {
@@ -12,7 +14,15 @@ div.collapsable:hover > div, .highlightColumn {
   float: left;
 }
 .col-filler {
-  width:97%;
+  width:100%;
+}
+
+.col-val {
+  height:30px;
+}
+
+.system-header > div.collapsable:nth-of-type(odd) {
+  background-color: #f0f0f0;
 }
 
 table.capacity-table {
@@ -35,15 +45,25 @@ th {
 div.sticky {
   position: sticky;
   bottom: 0px;
-  background-color: #ffffff;
+  /*background-color: #97E397;*/
+  /*border-top: 5px #C2F2C2 solid;*/
+  /*border-top-left-radius: 5px;*/
+  /*border-top-right-radius: 5px;*/
   z-index: 10;
 }
 
-.system-header > div:first-child > div {
-  background-color: #8AB7CB;
-  color: white;
+.system-header > div:first-child {
+  background-color: #E8F4F9;
+  color: #3A738C;
+  padding: 10px 0px 10px 0px;
+  border-bottom: 3px solid #eaeaea;
   margin-top: 10px;
-  height: 20px;
+
+  /*height: 20px;*/
+}
+
+.system-header > div:first-child > div.col:last-child{
+  width: 15%;
 }
 
 .select-all i {
@@ -55,7 +75,61 @@ div.sticky {
 }
 
 .expand-collapse:hover {
-  color: #dddddd;
+  color: #5C91A8;
   font-size: 17px;
 }
 
+div.agg-vals {
+  margin-top: 25px;
+}
+.agg-vals > .col{
+  border: 5px #5C91A8 solid;
+  border-right-width: 2px;
+  border-top-width: 5px;
+  border-bottom-width: 5px;
+  border-color: #5C91A8;
+  font-weight: bold;
+
+}
+.agg-name {
+  background-color: #3A738C;
+  color: white;
+  font-size:11px;
+  text-decoration: #0b97c4 dotted;
+  /*height: 50px;*/
+  padding:5px;
+  /*border: 5px #5C91A8 solid;*/
+  /*border-right-width: 2px;*/
+  /*border-top-width: 5px;*/
+  /*border-bottom-width: 5px;*/
+  /*border-color: #5C91A8;*/
+}
+
+.agg-vals .agg-value {
+  padding: 5px;
+  font-size: 12px;
+  background-color: #DF9E56;
+  color: white;
+}
+div.capacity-header {
+  background-color: #3c8dbc;
+  padding: 10px 0px 10px 0px;
+  font-size: 15px;
+  color:white;
+  font-weight: bolder;
+}
+.system-name{
+  font-size: 16px;
+  font-weight: bold;
+}
+.pool-name{
+  font-size: 14px;
+  font-style: italic;
+}
+.metric-value {
+  font-size:14px;
+  font-weight: bold;
+}
+.metric-unit {
+  font-size:8px;
+}

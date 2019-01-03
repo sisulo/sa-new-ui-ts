@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <div class="row">
+        <div class="row capacity-header">
           <div class="col-md-1">
             <span class="select-all">
               <i *ngIf="isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>
@@ -29,7 +29,7 @@
         <div class="system-header" *ngFor="let system of data;let i = index;">
           <div class="row" *ngIf="this.getSystemStatistics(system.name) == undefined"
                [class.collapsed]="isCollapsed(system.name)">
-            <div class="col-md-3">{{ system.name }}</div>
+            <div class="col-md-3"><span class="system-name">{{ system.name }}</span></div>
             <div class="col-filler">
               <i class="fa expand-collapse pull-right"
                  [ngClass]="isCollapsed(system.name) ? 'fa-plus':'fa-minus'"
@@ -39,7 +39,7 @@
           </div>
           <div class="row" *ngIf="this.getSystemStatistics(system.name) !== undefined"
                [class.collapsed]="isCollapsed(system.name)">
-            <div class="col-md-3">{{ system.name }}</div>
+            <div class="col-md-3"><span class="system-name">{{ system.name }}</span></div>
             <div class="col">{{this.getSystemStatistics(system.name).physicalSubstitution.toFixed(2)}}</div>
             <div class="col">{{this.getSystemStatistics(system.name).physicalCapacity.toFixed(2)}}</div>
             <div class="col">{{this.getSystemStatistics(system.name).availableCapacity.toFixed(2)}}</div>
@@ -52,24 +52,42 @@
             </div>
           </div>
           <div *ngFor="let pool of data[i].pools" class="row collapsable">
-            <div class="col-md-1"><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)"
+            <div class="col-val col-md-1"><input type="checkbox" [name]="pool.name" [checked]="isSelectedPool(pool.name)"
                                          (click)="selectPool(pool.name, system.name)"></div>
-            <div class="col-md-2">{{pool.name}}</div>
-            <div [ngClass]="'col'" *ngFor="let metric of pool.metrics; let column=index;"
+            <div class="col-val col-md-2"><span class="pool-name">{{pool.name}}</span></div>
+            <div [ngClass]="'col-val col'" *ngFor="let metric of pool.metrics; let column=index;"
                  (mouseout)="setCurrentColumn(-1)"
                  (mouseover)="setCurrentColumn(column)"
-                 [class.highlightColumn]="isCurrentColumn(column)">{{metric.value}} {{metric.unit}}
+                 [class.highlightColumn]="isCurrentColumn(column)"><span class="metric-value">{{metric.value}}</span> <span class="metric-unit">{{metric.unit}}</span>
             </div>
           </div>
         </div>
-        <div class="row sticky" *ngIf="this.getSystemStatistics('all') !== undefined">
+        <div class="row sticky agg-vals" *ngIf="this.getSystemStatistics('all') !== undefined">
           <div class="col-md-3"></div>
-          <div class="col">{{this.getSystemStatistics('all').physicalSubstitution.toFixed(2)}}</div>
-          <div class="col">{{this.getSystemStatistics('all').physicalCapacity.toFixed(2)}}</div>
-          <div class="col">{{this.getSystemStatistics('all').availableCapacity.toFixed(2)}}</div>
-          <div class="col">{{this.getSystemStatistics('all').logicalUsed.toFixed(2)}}</div>
-          <div class="col">{{this.getSystemStatistics('all').physicalUsed.toFixed(2)}}</div>
-          <div class="col">{{this.getSystemStatistics('all').compressionRatio.toFixed(2)}}</div>
+          <div class="col">
+            <div class="agg-name">Physical Subscription</div>
+            <div class="agg-value">{{this.getSystemStatistics('all').physicalSubstitution.toFixed(2)}}</div>
+          </div>
+          <div class="col">
+            <div class="agg-name">Physical Capacity</div>
+            <div class="agg-value">{{this.getSystemStatistics('all').physicalCapacity.toFixed(2)}}</div>
+          </div>
+          <div class="col">
+            <div class="agg-name">Available Capacity</div>
+            <div class="agg-value">{{this.getSystemStatistics('all').availableCapacity.toFixed(2)}}</div>
+          </div>
+          <div class="col">
+            <div class="agg-name">Logical Used</div>
+            <div class="agg-value">{{this.getSystemStatistics('all').logicalUsed.toFixed(2)}}</div>
+          </div>
+          <div class="col">
+            <div class="agg-name">Physical Used</div>
+            <div class="agg-value">{{this.getSystemStatistics('all').physicalUsed.toFixed(2)}}</div>
+          </div>
+          <div class="col">
+            <div class="agg-name">Compression ratio</div>
+            <div class="agg-value">{{this.getSystemStatistics('all').compressionRatio.toFixed(2)}}</div>
+          </div>
         </div>
       </div>
     </div>
