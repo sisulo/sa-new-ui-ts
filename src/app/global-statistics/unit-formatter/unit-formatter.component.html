@@ -1,7 +1,8 @@
-<div class="metric-value label label-primary">
-  {{metric.value}} {{metric.unit}}
+<div class="metric-value">
+  <span tooltip="Average value" hide-delay="0"><i class="fa fa-area-chart bg-aqua"></i>{{metric.value}} {{metric.unit}}</span>
 </div>
-<div class="peak label label-warning">
-  <span><i class="glyphicon glyphicon-exclamation-sign"></i>{{metric.peak}} {{metric.unit}}</span>
+<div class="peak">
+  <span tooltip="Peak" hide-delay="0"><i class="fa fa-line-chart bg-red-active"></i><span class="text-red">{{metric.peak}} {{metric.unit}}</span></span>
+  <!--<span><i class="blue-curve"></i>{{metric.peak}} {{metric.unit}}</span>-->
 </div>
 

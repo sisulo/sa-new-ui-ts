@@ -7,6 +7,7 @@ import {GlobalStatisticsRoutingModule} from './global-statistics-routing.module'
 import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
 import {SaCommonModule} from '../common/sa-common.module';
 import {DataTableModule} from 'angular-6-datatable';
+import {TooltipModule} from 'ng2-tooltip-directive';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {DataTableModule} from 'angular-6-datatable';
     CommonModule,
     GlobalStatisticsRoutingModule,
     SaCommonModule,
-    DataTableModule
+    DataTableModule,
+    TooltipModule
   ]
 })
 export class GlobalStatisticsModule {

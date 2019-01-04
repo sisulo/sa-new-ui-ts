@@ -13,6 +13,7 @@ import {GlobalStatisticsModule} from './global-statistics/global-statistics.modu
 import {SaCommonModule} from './common/sa-common.module';
 import {WebStorageModule} from 'ngx-store';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TooltipModule} from 'ng2-tooltip-directive';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     HttpClientModule,
     SaCommonModule,
     WebStorageModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    TooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]
