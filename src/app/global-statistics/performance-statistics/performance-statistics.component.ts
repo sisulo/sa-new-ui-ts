@@ -10,7 +10,7 @@ import {PeriodService} from '../../period.service';
 @Component({
   selector: 'app-tab',
   templateUrl: './performance-statistics.component.html',
-  styleUrls: ['./performance-statistics.component.css']
+  styleUrls: ['./performance-statistics.component.css'],
 })
 export class PerformanceStatisticsComponent implements OnInit {
   currentPeriod: PeriodType = PeriodType.DAY;
@@ -51,12 +51,13 @@ export class PerformanceStatisticsComponent implements OnInit {
         this.data = this.getTableData(id);
       }
     );
-    this.periodService.periodAnnoucement$.subscribe(
+    this.periodService.periodAnnouncement$.subscribe(
       period => {
         this.currentPeriod = period
         this.getTableData(this.currentDatacenter);
       }
     );
+    this.periodService.announceEnablePeriod(true);
   }
 
 

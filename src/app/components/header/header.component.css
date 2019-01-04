@@ -1,0 +1,10 @@
+.active {
+  /*background-color: #1ABB9C;*/
+
+  border-bottom: 2px #1ABB9C solid;
+}
+
+.btn {
+  padding-bottom: 13px;
+  padding-top: 13px;
+}

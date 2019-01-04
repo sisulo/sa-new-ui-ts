@@ -14,10 +14,12 @@
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
     </a>
-    <div class="btn-group">
-      <button type="button" class="btn btn-info" [class.active]="isCurrentPeriod(0)" (click)="setCurrentPeriod(0)">Last Day</button>
-      <button type="button" class="btn btn-info" [class.active]="isCurrentPeriod(1)" (click)="setCurrentPeriod(1)">Last Week</button>
-      <button type="button" class="btn btn-info" [class.active]="isCurrentPeriod(2)" (click)="setCurrentPeriod(2)">Last Month</button>
-    </div>
+    <ul [@openClose]="enable ? 'true' : 'false'"
+        (@openClose.start)="onAnimationEvent($event)"
+        class="nav navbar-nav navbar-left">
+      <li [class.active]="isCurrentPeriod(0)"><a class="btn" (click)="setCurrentPeriod(0)">Last Day</a></li>
+      <li [class.active]="isCurrentPeriod(1)"><a class="btn" (click)="setCurrentPeriod(1)">Last Week</a></li>
+      <li [class.active]="isCurrentPeriod(2)"><a class="btn" (click)="setCurrentPeriod(2)">Last Month</a></li>
+    </ul>
   </nav>
 </header>

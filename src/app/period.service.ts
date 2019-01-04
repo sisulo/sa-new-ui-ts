@@ -9,14 +9,20 @@ export class PeriodService {
 
   // Observable string sources
   private periodAnnoucement = new Subject<PeriodType>();
+  private periodEnableAnnoucement = new Subject<boolean>();
 
   // Observable string streams
-  periodAnnoucement$ = this.periodAnnoucement.asObservable();
+  periodAnnouncement$ = this.periodAnnoucement.asObservable();
 
+  periodEnableAnnouncement = this.periodEnableAnnoucement.asObservable();
 
   // Service message commands
   announcePeriod(id: PeriodType) {
     this.periodAnnoucement.next(id);
+  }
+
+  announceEnablePeriod(enable: boolean) {
+    this.periodEnableAnnoucement.next(enable);
   }
 
 }

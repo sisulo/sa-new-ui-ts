@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {GlobalStatisticsComponent} from './global-statistics.component';
 import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
 import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
+import {HeaderComponent} from '../components/header/header.component';
 
 const routes: Routes = [
   {

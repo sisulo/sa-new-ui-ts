@@ -6,11 +6,13 @@ import {SystemPool} from '../../models/SystemPool';
 import {LocalStorage} from 'ngx-store';
 import {AggregatedStatisticsService} from './aggregated-statistics.service';
 import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
+import {PeriodService} from '../../period.service';
 
 export class ItemKey {
   systemName: string;
   poolName: string;
 }
+
 class SelectedItems {
   [key: string]: Array<ItemKey>;
 }
@@ -39,7 +41,8 @@ export class CapacityStatisticsComponent implements OnInit {
     private router: Router,
     private metricService: MetricService,
     private bus: BusService,
-    private aggregateService: AggregatedStatisticsService
+    private aggregateService: AggregatedStatisticsService,
+    private periodService: PeriodService
   ) {
   }
 
@@ -65,7 +68,7 @@ export class CapacityStatisticsComponent implements OnInit {
         this.aggregatedStats = stats;
       }
     );
-
+    this.periodService.announceEnablePeriod(false);
   }
 
   getSystemStatistics(systemName: string): SystemAggregatedStatistics {
@@ -179,6 +182,7 @@ export class CapacityStatisticsComponent implements OnInit {
   isPartiallySelected() {
     return this.selectedPools[this.currentDataCenterId].length > 0;
   }
+
   setCurrentColumn(column: number) {
     this.currentColumn = column;
   }

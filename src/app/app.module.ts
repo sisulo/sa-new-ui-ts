@@ -11,7 +11,8 @@ import {IframeComponent} from './components/iframe/iframe.component';
 import {DashboardComponent} from './components/dashboard/dashboard.component';
 import {GlobalStatisticsModule} from './global-statistics/global-statistics.module';
 import {SaCommonModule} from './common/sa-common.module';
-import { WebStorageModule } from 'ngx-store';
+import {WebStorageModule} from 'ngx-store';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { WebStorageModule } from 'ngx-store';
     FormsModule,
     HttpClientModule,
     SaCommonModule,
-    WebStorageModule
+    WebStorageModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
