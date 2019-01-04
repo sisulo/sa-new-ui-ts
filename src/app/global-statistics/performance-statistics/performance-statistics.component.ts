@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {MetricService} from '../../metric.service';
+import {MetricService, PeriodType} from '../../metric.service';
 import {SystemDetail} from '../../models/SystemDetail';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from '../bus.service';
 import {SystemMetric} from '../../models/metrics/SystemMetric';
 import {SystemMetricType} from '../../models/metrics/SystemMetricType';
+import {PeriodService} from '../../period.service';
 
 @Component({
   selector: 'app-tab',
@@ -12,6 +13,8 @@ import {SystemMetricType} from '../../models/metrics/SystemMetricType';
   styleUrls: ['./performance-statistics.component.css']
 })
 export class PerformanceStatisticsComponent implements OnInit {
+  currentPeriod: PeriodType = PeriodType.DAY;
+  currentDatacenter = 0;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
   displayedMetrics: SystemMetricType[] = [
@@ -27,7 +30,8 @@ export class PerformanceStatisticsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private metricService: MetricService,
-    private bus: BusService
+    private bus: BusService,
+    private periodService: PeriodService
   ) {
   }
 
@@ -47,12 +51,18 @@ export class PerformanceStatisticsComponent implements OnInit {
         this.data = this.getTableData(id);
       }
     );
-
+    this.periodService.periodAnnoucement$.subscribe(
+      period => {
+        this.currentPeriod = period
+        this.getTableData(this.currentDatacenter);
+      }
+    );
   }
 
 
   getTableData(id: number): SystemDetail[] {
-    this.metricService.getPerformanceStatistics(id).subscribe(
+    this.currentDatacenter = id;
+    this.metricService.getPerformanceStatistics(id, this.currentPeriod).subscribe(
       data => {
         this.data = data.systems;
         this.tableData = this.data.map(system => this.convertToTableData(system));
@@ -84,4 +94,6 @@ export class PerformanceStatisticsComponent implements OnInit {
         }
       );
   }
+
+
 }

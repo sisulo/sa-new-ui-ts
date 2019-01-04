@@ -7,6 +7,12 @@ import {DatacenterDto} from './models/dtos/DatacenterDto';
 import {PerformanceStatisticsDto} from './models/dtos/PerformanceStatisticsDto';
 import {CapacityStatisticsDto} from './models/dtos/CapacityStatisticsDto';
 
+export enum PeriodType {
+  DAY = 0,
+  WEEK,
+  MONTH
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,13 +31,28 @@ export class MetricService {
     return this.http.get<DatacenterDto>(url);
   }
 
-  getPerformanceStatistics(id: number): Observable<PerformanceStatisticsDto> {
-    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/performance.json';
+  getPerformanceStatistics(id: number, period: PeriodType): Observable<PerformanceStatisticsDto> {
+    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/performance' + this.getSuffix(period) + '.json';
     return this.http.get<PerformanceStatisticsDto>(url);
   }
 
   getCapacityStatistics(id: number): Observable<CapacityStatisticsDto> {
     const url = environment.metricsBaseUrl + 'datacenter/' + id + '/capacity.json';
     return this.http.get<CapacityStatisticsDto>(url);
+  }
+
+  private getSuffix(period: PeriodType) {
+    let suffix = '';
+    switch (period) {
+      case PeriodType.WEEK:
+        suffix = '-weekly';
+        break;
+      case PeriodType.MONTH:
+        suffix = '-monthly';
+        break;
+      default:
+        suffix = '';
+    }
+    return suffix;
   }
 }

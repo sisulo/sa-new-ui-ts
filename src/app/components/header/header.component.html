@@ -14,5 +14,10 @@
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
     </a>
+    <div class="btn-group">
+      <button type="button" class="btn btn-info" [class.active]="isCurrentPeriod(0)" (click)="setCurrentPeriod(0)">Last Day</button>
+      <button type="button" class="btn btn-info" [class.active]="isCurrentPeriod(1)" (click)="setCurrentPeriod(1)">Last Week</button>
+      <button type="button" class="btn btn-info" [class.active]="isCurrentPeriod(2)" (click)="setCurrentPeriod(2)">Last Month</button>
+    </div>
   </nav>
 </header>
