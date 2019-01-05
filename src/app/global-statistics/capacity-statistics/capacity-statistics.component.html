@@ -48,9 +48,9 @@
           <!---->
           <div *ngFor="let pool of data[i].pools" class="capacity-pools row collapsable"
                [class.selectedRow]="isSelectedPool(pool.name)">
-            <div class="col-val col-control"><input type="checkbox" [name]="pool.name"
-                                                    [checked]="isSelectedPool(pool.name)"
-                                                    (click)="selectPool(pool.name, system.name)"></div>
+            <div class="col-val col-control"><i
+              [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
+              (click)="selectPool(pool.name, system.name)"></i></div>
             <div class="col-val col-md-2"><span class="pool-name">{{pool.name}}</span></div>
             <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
                  (mouseout)="setCurrentColumn(-1)"
