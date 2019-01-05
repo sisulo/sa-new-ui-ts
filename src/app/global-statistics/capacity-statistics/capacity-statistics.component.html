@@ -2,29 +2,34 @@
   <div class="container-fluid">
     <div class="row">
       <div class="capacity-table col-md-12">
+        <!--
+          TOP TABLE ROW
+        -->
         <div class="row capacity-header">
           <div class="col-control">
-              <i *ngIf="isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>
-              <i *ngIf="isPartiallySelected() && !isSelectedAll()" class="fa fa-fw fa-minus-square-o"
-                 (click)="selectAll()"></i>
-              <i *ngIf="(!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"
-                 (click)="selectAll()"></i>
-              <i class="fa"
-                 [ngClass]="isCollapseAll() ? 'fa-plus':'fa-minus'"
-                 (click)="collapseAll()"
-                 [title]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
+            <i *ngIf="isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>
+            <i *ngIf="isPartiallySelected() && !isSelectedAll()" class="fa fa-fw fa-minus-square-o"
+               (click)="selectAll()"></i>
+            <i *ngIf="(!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"
+               (click)="selectAll()"></i>
+            <i class="fa"
+               [ngClass]="isCollapseAll() ? 'fa-plus':'fa-minus'"
+               (click)="collapseAll()"
+               [title]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
           </div>
           <div class="col-md-2">
             System
           </div>
-          <div class="col" [class.highlightColumn]="isCurrentColumn(0)">Physical Subs</div>
-          <div class="col" [class.highlightColumn]="isCurrentColumn(1)">Physical Capacity</div>
-          <div class="col" [class.highlightColumn]="isCurrentColumn(2)">Available Capacity</div>
-          <div class="col" [class.highlightColumn]="isCurrentColumn(3)">Logical Used</div>
-          <div class="col" [class.highlightColumn]="isCurrentColumn(4)">Physical Used</div>
-          <div class="col" [class.highlightColumn]="isCurrentColumn(5)">Compression Ratio</div>
+          <div class="col" *ngFor="let type of types;let column=index"
+               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}}</div>
         </div>
+        <!--
+          SYSTEM PART
+        -->
         <div class="system-header" *ngFor="let system of data;let i = index;">
+          <!--
+            SYSTEM LABEL
+          -->
           <div class="row"
                [class.collapsed]="isCollapsed(system.name)">
             <div class="col-control"><i class="fa expand-collapse"
@@ -33,52 +38,38 @@
                                         [tooltip]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i></div>
             <div class="col-md-2"><span class="system-name">{{ system.name }}</span></div>
             <div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">
-              <div class="col">{{this.getSystemStatistics(system.name).physicalSubstitution.toFixed(2)}}</div>
-              <div class="col">{{this.getSystemStatistics(system.name).physicalCapacity.toFixed(2)}}</div>
-              <div class="col">{{this.getSystemStatistics(system.name).availableCapacity.toFixed(2)}}</div>
-              <div class="col">{{this.getSystemStatistics(system.name).logicalUsed.toFixed(2)}}</div>
-              <div class="col">{{this.getSystemStatistics(system.name).physicalUsed.toFixed(2)}}</div>
-              <div class="col">{{this.getSystemStatistics(system.name).compressionRatio.toFixed(2)}}</div>
+              <div *ngFor="let type of types"
+                   [tooltip]="getColumnLabel(type)" hide-delay="0" show-delay="300"
+                   class="col">{{this.getSystemStatistics(system.name).getValue(type).toFixed(2)}}</div>
             </div>
           </div>
-          <div *ngFor="let pool of data[i].pools" class="capacity-pools row collapsable" [class.selectedRow]="isSelectedPool(pool.name)">
+          <!---->
+          <!--POOL ROWS-->
+          <!---->
+          <div *ngFor="let pool of data[i].pools" class="capacity-pools row collapsable"
+               [class.selectedRow]="isSelectedPool(pool.name)">
             <div class="col-val col-control"><input type="checkbox" [name]="pool.name"
                                                     [checked]="isSelectedPool(pool.name)"
                                                     (click)="selectPool(pool.name, system.name)"></div>
             <div class="col-val col-md-2"><span class="pool-name">{{pool.name}}</span></div>
-            <div [ngClass]="'col-val col'" *ngFor="let metric of pool.metrics; let column=index;"
+            <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
                  (mouseout)="setCurrentColumn(-1)"
                  (mouseover)="setCurrentColumn(column)"
-                 [class.highlightColumn]="isCurrentColumn(column)"><span class="metric-value">{{metric.value}}</span>
-              <span class="metric-unit">{{metric.unit}}</span>
+                 [class.highlightColumn]="isCurrentColumn(column)" [tooltip]="getColumnLabel(type)" hide-delay="0"
+                 show-delay="500"><span
+              class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
+              <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
             </div>
           </div>
         </div>
+        <!--
+          AGGREGATED VALUES
+        -->
         <div class="row sticky agg-vals" *ngIf="this.getSystemStatistics('all') !== undefined">
           <div class="col-md-3"></div>
-          <div class="col">
-            <div class="agg-name">Physical Subscription</div>
-            <div class="agg-value">{{this.getSystemStatistics('all').physicalSubstitution.toFixed(2)}}</div>
-          </div>
-          <div class="col">
-            <div class="agg-name">Physical Capacity</div>
-            <div class="agg-value">{{this.getSystemStatistics('all').physicalCapacity.toFixed(2)}}</div>
-          </div>
-          <div class="col">
-            <div class="agg-name">Available Capacity</div>
-            <div class="agg-value">{{this.getSystemStatistics('all').availableCapacity.toFixed(2)}}</div>
-          </div>
-          <div class="col">
-            <div class="agg-name">Logical Used</div>
-            <div class="agg-value">{{this.getSystemStatistics('all').logicalUsed.toFixed(2)}}</div>
-          </div>
-          <div class="col">
-            <div class="agg-name">Physical Used</div>
-            <div class="agg-value">{{this.getSystemStatistics('all').physicalUsed.toFixed(2)}}</div>
-          </div>
-          <div class="col">
-            <div class="agg-name">Compression ratio</div>
-            <div class="agg-value">{{this.getSystemStatistics('all').compressionRatio.toFixed(2)}}</div>
+          <div class="col" *ngFor="let type of types">
+            <div class="agg-name">{{getColumnLabel(type)}}</div>
+            <div class="agg-value">{{this.getSystemStatistics('all').getValue(type).toFixed(2)}}</div>
           </div>
         </div>
       </div>

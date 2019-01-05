@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MenuTree} from '../../models/MenuTree';
+import {MenuTree} from '../../common/models/MenuTree';
 import {environment} from '../../../environments/environment';
 import {MetricService} from '../../metric.service';
-import {Datacenter} from '../../models/Datacenter';
-import {MenuItem} from '../../models/MenuItem';
+import {Datacenter} from '../../common/models/Datacenter';
+import {MenuItem} from '../../common/models/MenuItem';
 
 @Component({
   selector: 'app-side-menu',

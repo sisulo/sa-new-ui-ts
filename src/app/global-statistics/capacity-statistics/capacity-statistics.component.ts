@@ -2,11 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../metric.service';
 import {BusService} from '../bus.service';
-import {SystemPool} from '../../models/SystemPool';
+import {SystemPool} from '../../common/models/SystemPool';
 import {LocalStorage} from 'ngx-store';
 import {AggregatedStatisticsService} from './aggregated-statistics.service';
 import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
 import {PeriodService} from '../../period.service';
+import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
+import {System} from '../../common/models/System';
+import {SystemMetric} from '../../common/models/metrics/SystemMetric';
+
 
 export class ItemKey {
   systemName: string;
@@ -20,7 +24,9 @@ class SelectedItems {
 class CollapsedItems {
   [key: string]: Array<string>;
 }
-
+class MetricLabels {
+  [key: string]: string;
+}
 @Component({
   selector: 'app-capacity-statistics',
   templateUrl: './capacity-statistics.component.html',
@@ -28,6 +34,8 @@ class CollapsedItems {
 })
 export class CapacityStatisticsComponent implements OnInit {
 
+  labelMetrics: {} = {};
+  types = [];
   data: SystemPool[] = []; // Todo caching data by dataCenters
   currentDataCenterId = 0;
   poolMetrics = {};
@@ -44,6 +52,19 @@ export class CapacityStatisticsComponent implements OnInit {
     private aggregateService: AggregatedStatisticsService,
     private periodService: PeriodService
   ) {
+    this.types.push(SystemMetricType.PHYSICAL_SUBS);
+    this.types.push(SystemMetricType.PHYSICAL_CAPACITY);
+    this.types.push(SystemMetricType.AVAILABLE_CAPACITY);
+    this.types.push(SystemMetricType.LOGICAL_USAGE);
+    this.types.push(SystemMetricType.PHYSICAL_USAGE);
+    this.types.push(SystemMetricType.COMPRESS_RATIO);
+
+    this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical capacity';
+    this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
+    this.labelMetrics[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
+    this.labelMetrics[SystemMetricType.LOGICAL_USAGE] = 'Logical Used';
+    this.labelMetrics[SystemMetricType.PHYSICAL_USAGE] = 'Physical Used';
+    this.labelMetrics[SystemMetricType.COMPRESS_RATIO] = 'Compression Ratio';
   }
 
   ngOnInit(): void {
@@ -189,5 +210,13 @@ export class CapacityStatisticsComponent implements OnInit {
 
   isCurrentColumn(column: number) {
     return column === this.currentColumn;
+  }
+
+  getColumnLabel(type: SystemMetricType) {
+    return this.labelMetrics[type];
+  }
+
+  getMetric(metrics: SystemMetric[], metricName: SystemMetricType): SystemMetric {
+    return metrics.find(metric => metric.type === metricName);
   }
 }

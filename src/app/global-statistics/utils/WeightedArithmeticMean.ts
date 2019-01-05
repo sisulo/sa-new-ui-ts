@@ -1,5 +1,5 @@
-import {SystemMetric} from '../../models/metrics/SystemMetric';
-import {SystemMetricType} from '../../models/metrics/SystemMetricType';
+import {SystemMetric} from '../../common/models/metrics/SystemMetric';
+import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {ItemKey} from '../capacity-statistics/capacity-statistics.component';
 
 class AggregatedStatistics {
@@ -25,6 +25,22 @@ export class SystemAggregatedStatistics extends AggregatedStatistics {
     this.system = systemName;
   }
 
+  getValue(name: SystemMetricType) {
+    switch (name) {
+      case SystemMetricType.PHYSICAL_SUBS:
+        return this.physicalSubstitution;
+      case SystemMetricType.PHYSICAL_CAPACITY:
+        return this.physicalCapacity;
+      case SystemMetricType.AVAILABLE_CAPACITY:
+        return this.availableCapacity;
+      case SystemMetricType.LOGICAL_USAGE:
+        return this.logicalUsed;
+      case SystemMetricType.PHYSICAL_USAGE:
+        return this.physicalUsed;
+      case SystemMetricType.COMPRESS_RATIO:
+        return this.compressionRatio;
+    }
+  }
 }
 
 export class WeightedArithmeticMean {

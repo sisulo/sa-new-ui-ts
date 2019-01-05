@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {MetricService, PeriodType} from '../../metric.service';
-import {SystemDetail} from '../../models/SystemDetail';
+import {SystemDetail} from '../../common/models/SystemDetail';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from '../bus.service';
-import {SystemMetric} from '../../models/metrics/SystemMetric';
-import {SystemMetricType} from '../../models/metrics/SystemMetricType';
+import {SystemMetric} from '../../common/models/metrics/SystemMetric';
+import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {PeriodService} from '../../period.service';
 
 @Component({

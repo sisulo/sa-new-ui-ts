@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Datacenter} from '../models/Datacenter';
+import {Datacenter} from '../common/models/Datacenter';
 import {MetricService} from '../metric.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from './bus.service';

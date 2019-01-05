@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {InfrastructureDto} from './models/metrics/InfrastructureDto';
+import {InfrastructureDto} from './common/models/metrics/InfrastructureDto';
 import {environment} from '../environments/environment';
-import {DatacenterDto} from './models/dtos/DatacenterDto';
-import {PerformanceStatisticsDto} from './models/dtos/PerformanceStatisticsDto';
-import {CapacityStatisticsDto} from './models/dtos/CapacityStatisticsDto';
+import {DatacenterDto} from './common/models/dtos/DatacenterDto';
+import {PerformanceStatisticsDto} from './common/models/dtos/PerformanceStatisticsDto';
+import {CapacityStatisticsDto} from './common/models/dtos/CapacityStatisticsDto';
 
 export enum PeriodType {
   DAY = 0,
