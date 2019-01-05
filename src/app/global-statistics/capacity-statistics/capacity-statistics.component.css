@@ -1,3 +1,4 @@
+/****** Behavior *****/
 div.collapsed ~ div.collapsable {
   display: none;
 }
@@ -5,51 +6,65 @@ div.collapsed ~ div.collapsable {
 div.collapsable:hover > div, .highlightColumn {
   /*padding: 20px;*/
   background-color: #E9FCE9 !important;
-  color:#3A738C;
+  color: #3A738C;
+  font-weight: bold;
+}
+.selectedRow > .col-val{
+  /*padding: 20px;*/
+  background-color: #BEECD1 !important;
+  color: #3A738C;
   font-weight: bold;
 }
 
-.col {
-  width:12%;
+/*** Layout table ***/
+.col-control {
+  width: 5%;
   float: left;
 }
+
+.col {
+  width: 12%;
+  float: left;
+}
+
 .col-filler {
-  width:100%;
+  width: 100%;
 }
 
 .col-val {
-  height:30px;
+  height: 30px;
 }
 
-.system-header > div.collapsable:nth-of-type(odd) {
+/*** Capacity header ***/
+
+div.capacity-header {
+  background-color: #3c8dbc;
+  padding: 10px 0px 10px 0px;
+  font-size: 15px;
+  color: white;
+  font-weight: bolder;
+}
+
+div.capacity-header > div {
+  text-align: center;
+}
+
+.capacity-pools > div,
+.system-header > div.row > div,
+.system-header > div.row > div.ignore > div {
+  text-align: center;
+  border-right: 1px #c8c8c8 solid;
+}
+
+/**** System header ****/
+
+.system-header > div.collapsable:nth-of-type(odd) > .col-val {
   background-color: #f0f0f0;
 }
 
-table.capacity-table {
-  border: 3px solid #30667E;
-}
-
-table.capacity-table thead tr > th {
-  background-color: #30667E;
-  color: white;
-}
-
-/*Display header on top of page when scrolling and aggregated stats at the bottom of screen*/
-th {
-  position: sticky;
-  top: 50px;
-  background-color: #ffffff;
-  z-index: 10;
-}
-
-div.sticky {
-  position: sticky;
-  bottom: 0px;
-  /*background-color: #97E397;*/
-  /*border-top: 5px #C2F2C2 solid;*/
-  /*border-top-left-radius: 5px;*/
-  /*border-top-right-radius: 5px;*/
-  z-index: 10;
+.system-header > div:first-child > div.col:last-child {
+  /*width: 15%;*/
+  border-right: none;
 }
 
 .system-header > div:first-child {
@@ -62,13 +77,20 @@ div.sticky {
   /*height: 20px;*/
 }
 
-.system-header > div:first-child > div.col:last-child{
-  width: 15%;
-}
-
-.select-all i {
+.col-control i {
   font-size: 15px;
 }
+
+div.sticky {
+  position: sticky;
+  bottom: 0px;
+  /*background-color: #97E397;*/
+  /*border-top: 5px #C2F2C2 solid;*/
+  /*border-top-left-radius: 5px;*/
+  /*border-top-right-radius: 5px;*/
+  z-index: 10;
+}
+
 
 .expand-collapse {
   padding-right: 15px;
@@ -82,7 +104,8 @@ div.sticky {
 div.agg-vals {
   margin-top: 25px;
 }
-.agg-vals > .col{
+
+.agg-vals > .col {
   border: 5px #5C91A8 solid;
   border-right-width: 2px;
   border-top-width: 5px;
@@ -91,13 +114,14 @@ div.agg-vals {
   font-weight: bold;
 
 }
+
 .agg-name {
   background-color: #3A738C;
   color: white;
-  font-size:11px;
+  font-size: 11px;
   text-decoration: #0b97c4 dotted;
   /*height: 50px;*/
-  padding:5px;
+  padding: 5px;
   /*border: 5px #5C91A8 solid;*/
   /*border-right-width: 2px;*/
   /*border-top-width: 5px;*/
@@ -111,25 +135,23 @@ div.agg-vals {
   background-color: #DF9E56;
   color: white;
 }
-div.capacity-header {
-  background-color: #3c8dbc;
-  padding: 10px 0px 10px 0px;
-  font-size: 15px;
-  color:white;
-  font-weight: bolder;
-}
-.system-name{
+
+
+.system-name {
   font-size: 16px;
   font-weight: bold;
 }
-.pool-name{
+
+.pool-name {
   font-size: 14px;
   font-style: italic;
 }
+
 .metric-value {
-  font-size:14px;
+  font-size: 14px;
   font-weight: bold;
 }
+
 .metric-unit {
-  font-size:8px;
+  font-size: 8px;
 }
