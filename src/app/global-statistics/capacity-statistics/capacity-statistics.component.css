@@ -2,10 +2,12 @@
 div.collapsed ~ div.collapsable {
   display: none;
 }
-
-div.collapsable:hover > div, .highlightColumn {
+div.capacity-header > div.col.highlightColumn {
+  text-decoration: #E8F4F9 underline;
+}
+div.collapsable:hover > div, .system-header .highlightColumn {
   /*padding: 20px;*/
-  background-color: #E9FCE9 !important;
+  background-color: #E8F4F9 !important;
   color: #3A738C;
   font-weight: bold;
 }
@@ -34,6 +36,7 @@ div.collapsable:hover > div, .highlightColumn {
 
 .col-val {
   height: 30px;
+  padding-right: 2px;
 }
 
 /*** Capacity header ***/
@@ -69,8 +72,8 @@ div.capacity-header > div {
 }
 
 .system-header > div:first-child {
-  background-color: #E8F4F9;
-  color: #3A738C;
+  background-color: #BBD9E6;
+  color: #35516a;
   padding: 10px 0px 10px 0px;
   border-bottom: 3px solid #eaeaea;
   margin-top: 10px;
