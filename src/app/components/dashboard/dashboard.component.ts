@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MetricService} from '../../metric.service';
 import {Metric} from '../../common/models/metrics/Metric';
+import {System} from '../../common/models/System';
+import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 
 declare var jquery: any;
 declare var $: any;
@@ -14,7 +16,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(private metricService: MetricService) {
   }
-
+  metricLabels = {};
   metrics: Metric[] = [];
   datacenters;
   registeredSystems;
@@ -22,6 +24,12 @@ export class DashboardComponent implements OnInit {
   currentColor = 0;
 
   ngOnInit() {
+    this.metricLabels[SystemMetricType.WORKLOAD] = 'Workload';
+    this.metricLabels[SystemMetricType.RESPONSE] = 'Response';
+    this.metricLabels[SystemMetricType.HDD] = 'HDD';
+    this.metricLabels[SystemMetricType.TRANSFER] = 'Transfer';
+    this.metricLabels[SystemMetricType.CPU] = 'CPU';
+
     this.metricService.getInfrastructureStats().subscribe(stats => {
       this.metrics = stats.metrics;
     });
@@ -34,6 +42,10 @@ export class DashboardComponent implements OnInit {
       }
     );
     this.getMap();
+  }
+
+  getMetricLabel(type: SystemMetricType) {
+      return this.metricLabels[type];
   }
 
   getColor(): string {

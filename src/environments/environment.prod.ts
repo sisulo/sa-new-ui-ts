@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: false,
+  iframeBaseUrl: 'http://static-web.local/',
+  metricsBaseUrl: 'http://sa-admin.local/api/'
 };

@@ -10,6 +10,7 @@ import {Metric} from '../../models/metrics/Metric';
 export class KnobSaComponent implements OnInit {
 
   @Input() metric: Metric;
+  @Input() label: string;
   @Input() color = '#225bb7';
   @Input() sizeType = 'medium';
   knOptions = {};
@@ -18,6 +19,7 @@ export class KnobSaComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.metric);
     switch (this.sizeType) {
       case 'medium':
 

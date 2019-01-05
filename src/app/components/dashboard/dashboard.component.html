@@ -10,7 +10,7 @@
       <div class="box-body">
         <div class="row">
           <div *ngFor="let metric of metrics" class="col-xs-6 col-sm-3 col-md-3 col-lg-2 text-center">
-            <app-knob *ngIf="metric" [sizeType]="'medium'" [metric]="metric" [color]="getColor()"></app-knob>
+            <app-knob *ngIf="metric" [sizeType]="'medium'" [metric]="metric" [label]="getMetricLabel(metric.type)" [color]="getColor()"></app-knob>
           </div>
         </div>
         <!-- /.row -->
