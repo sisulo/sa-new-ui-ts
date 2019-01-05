@@ -186,6 +186,10 @@ export class CapacityStatisticsComponent implements OnInit {
     }, 0);
   }
 
+  getSelectedCount(): number {
+    return this.selectedPools[this.currentDataCenterId].length;
+  }
+
   selectAll() {
     if (this.isSelectedAll()) {
       this.selectedPools[this.currentDataCenterId] = [];

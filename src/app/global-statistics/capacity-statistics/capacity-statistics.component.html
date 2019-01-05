@@ -66,7 +66,12 @@
           AGGREGATED VALUES
         -->
         <div class="row sticky agg-vals" *ngIf="this.getSystemStatistics('all') !== undefined">
-          <div class="col-md-3"></div>
+          <div class="col-control"></div>
+          <div class="col-md-1"></div>
+          <div class="col">
+            <div class="agg-name"># selected pools</div>
+            <div class="agg-value">{{getSelectedCount()}}</div>
+          </div>
           <div class="col" *ngFor="let type of types">
             <div class="agg-name">{{getColumnLabel(type)}}</div>
             <div class="agg-value">{{this.getSystemStatistics('all').getValue(type).toFixed(2)}}</div>

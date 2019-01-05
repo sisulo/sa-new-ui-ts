@@ -2,18 +2,18 @@
 div.collapsed ~ div.collapsable {
   display: none;
 }
+
 div.capacity-header > div.col.highlightColumn {
   text-decoration: #E8F4F9 underline;
 }
+
 div.collapsable:hover > div, .system-header .highlightColumn {
-  /*padding: 20px;*/
   background-color: #E8F4F9 !important;
   color: #3A738C;
   font-weight: bold;
 }
 
 .selectedRow > .col-val {
-  /*padding: 20px;*/
   background-color: #BEECD1 !important;
   color: #3A738C;
   font-weight: bold;
@@ -21,7 +21,7 @@ div.collapsable:hover > div, .system-header .highlightColumn {
 
 /*** Layout table ***/
 .col-control {
-  width: 5%;
+  width: 40px;
   float: left;
 }
 
@@ -67,7 +67,6 @@ div.capacity-header > div {
 }
 
 .system-header > div:first-child > div.col:last-child {
-  /*width: 15%;*/
   border-right: none;
 }
 
@@ -77,8 +76,6 @@ div.capacity-header > div {
   padding: 10px 0px 10px 0px;
   border-bottom: 3px solid #eaeaea;
   margin-top: 10px;
-
-  /*height: 20px;*/
 }
 
 .col-control i {
@@ -88,10 +85,6 @@ div.capacity-header > div {
 div.sticky {
   position: sticky;
   bottom: 0px;
-  /*background-color: #97E397;*/
-  /*border-top: 5px #C2F2C2 solid;*/
-  /*border-top-left-radius: 5px;*/
-  /*border-top-right-radius: 5px;*/
   z-index: 10;
 }
 
@@ -104,40 +97,31 @@ div.sticky {
   color: #5C91A8;
   font-size: 17px;
 }
+
 /*** Aggregated values widget ***/
 div.agg-vals {
   margin-top: 25px;
 }
 
 .agg-vals > .col {
-  border: 5px #5C91A8 solid;
-  border-right-width: 2px;
-  border-top-width: 5px;
-  border-bottom-width: 5px;
-  border-color: #5C91A8;
+  border: 1px #5C91A8 solid;
   font-weight: bold;
+  text-align: center;
 
 }
 
 .agg-name {
-  background-color: #3A738C;
+  background-color: #3c8dbc;
   color: white;
   font-size: 11px;
-  text-decoration: #0b97c4 dotted;
-  /*height: 50px;*/
   padding: 5px;
-  /*border: 5px #5C91A8 solid;*/
-  /*border-right-width: 2px;*/
-  /*border-top-width: 5px;*/
-  /*border-bottom-width: 5px;*/
-  /*border-color: #5C91A8;*/
 }
 
 .agg-vals .agg-value {
   padding: 5px;
   font-size: 12px;
-  background-color: #DF9E56;
-  color: white;
+  background-color: white;
+  /*color: white;*/
 }
 
 
