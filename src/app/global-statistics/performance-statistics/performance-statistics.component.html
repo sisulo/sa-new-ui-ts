@@ -15,8 +15,10 @@
     </thead>
     <tbody >
     <tr *ngFor="let system of mf.data">
-      <td>{{ system.name }} </td>
-      <td *ngFor="let metricType of displayedMetrics"><app-unit-formatter [metric]="getMetricObject(system.name, metricType)"></app-unit-formatter></td>
+      <td><i *ngIf="isAlertingSystem(system.name)" class="fa fa-warning bg-yellow-active pull-right"></i>{{ system.name }} </td>
+      <td *ngFor="let metricType of displayedMetrics">
+        <app-unit-formatter [metric]="getMetricObject(system.name, metricType)" [isAlert]="isAlertingMetric(system.name, metricType)"></app-unit-formatter>
+      </td>
     </tr>
     </tbody>
   </table>

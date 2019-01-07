@@ -17,6 +17,8 @@ export class PerformanceStatisticsComponent implements OnInit {
   currentDatacenter = 0;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
+  alertingSystems = [];
+  alertsDefinition = [];
   displayedMetrics: SystemMetricType[] = [
     SystemMetricType.WORKLOAD,
     SystemMetricType.TRANSFER,
@@ -53,11 +55,14 @@ export class PerformanceStatisticsComponent implements OnInit {
     );
     this.periodService.periodAnnouncement$.subscribe(
       period => {
-        this.currentPeriod = period
+        this.currentPeriod = period;
         this.getTableData(this.currentDatacenter);
       }
     );
     this.periodService.announceEnablePeriod(true);
+
+    this.alertsDefinition.push({type: SystemMetricType.CPU, threshold: 80});
+    this.alertsDefinition.push({type: SystemMetricType.WRITE_PENDING, threshold: 30});
   }
 
 
@@ -83,17 +88,51 @@ export class PerformanceStatisticsComponent implements OnInit {
       result[metric.type] = metric.value;
     }
     result['name'] = rawData.name;
-    console.log(result);
     return result;
   }
 
   getMetricObject(systemName: string, type: SystemMetricType): SystemMetric {
-    return this.data
-      .find(system => system.name === systemName).metrics
-      .find(data => {
-          return data.type === type;
+    if (this.data.length > 0) {
+      const metric = this.data
+        .find(system => system.name === systemName).metrics
+        .find(data => {
+            return data.type === type;
+          }
+        );
+      return metric;
+    }
+    return null;
+  }
+
+
+  isAlertingSystem(systemName: string) {
+    if (this.data.length > 0) {
+      return this.alertsDefinition
+        .find(
+          (definition) => {
+            const metricFound = this.getMetricObject(systemName, definition.type);
+            if (metricFound !== undefined) {
+              return metricFound.value > definition.threshold;
+            } else {
+              return false;
+            }
+          }
+        ) !== undefined;
+    }
+    return false;
+  }
+
+  isAlertingMetric(systemName: string, type: SystemMetricType) {
+    if (this.data.length > 0) {
+      const metric = this.getMetricObject(systemName, type);
+      if (metric != null) {
+        const definition = this.alertsDefinition.find((definitionObj) => type === definitionObj.type);
+        if (definition !== undefined) {
+          return metric.value > definition.threshold;
         }
-      );
+      }
+    }
+    return false;
   }
 
 
