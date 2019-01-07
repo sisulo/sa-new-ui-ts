@@ -17,7 +17,6 @@ export class PerformanceStatisticsComponent implements OnInit {
   currentDatacenter = 0;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
-  alertingSystems = [];
   alertsDefinition = [];
   displayedMetrics: SystemMetricType[] = [
     SystemMetricType.WORKLOAD,

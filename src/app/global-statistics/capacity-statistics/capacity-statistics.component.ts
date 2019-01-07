@@ -10,6 +10,7 @@ import {PeriodService} from '../../period.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {System} from '../../common/models/System';
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
+import {SystemDetail} from '../../common/models/SystemDetail';
 
 
 export class ItemKey {
@@ -24,9 +25,11 @@ class SelectedItems {
 class CollapsedItems {
   [key: string]: Array<string>;
 }
+
 class MetricLabels {
   [key: string]: string;
 }
+
 @Component({
   selector: 'app-capacity-statistics',
   templateUrl: './capacity-statistics.component.html',
@@ -40,6 +43,7 @@ export class CapacityStatisticsComponent implements OnInit {
   currentDataCenterId = 0;
   poolMetrics = {};
   aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
+  alertsDefinition = [];
   @LocalStorage() selectedPools: SelectedItems = {};
   @LocalStorage() collapsedRows: CollapsedItems = {};
   private currentColumn = -1;
@@ -59,12 +63,7 @@ export class CapacityStatisticsComponent implements OnInit {
     this.types.push(SystemMetricType.PHYSICAL_USAGE);
     this.types.push(SystemMetricType.COMPRESS_RATIO);
 
-    this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical capacity';
-    this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
-    this.labelMetrics[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
-    this.labelMetrics[SystemMetricType.LOGICAL_USAGE] = 'Logical Used';
-    this.labelMetrics[SystemMetricType.PHYSICAL_USAGE] = 'Physical Used';
-    this.labelMetrics[SystemMetricType.COMPRESS_RATIO] = 'Compression Ratio';
+
   }
 
   ngOnInit(): void {
@@ -90,6 +89,14 @@ export class CapacityStatisticsComponent implements OnInit {
       }
     );
     this.periodService.announceEnablePeriod(false);
+    this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: 30});
+
+    this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical capacity';
+    this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
+    this.labelMetrics[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
+    this.labelMetrics[SystemMetricType.LOGICAL_USAGE] = 'Logical Used';
+    this.labelMetrics[SystemMetricType.PHYSICAL_USAGE] = 'Physical Used';
+    this.labelMetrics[SystemMetricType.COMPRESS_RATIO] = 'Compression Ratio';
   }
 
   getSystemStatistics(systemName: string): SystemAggregatedStatistics {
@@ -222,5 +229,42 @@ export class CapacityStatisticsComponent implements OnInit {
 
   getMetric(metrics: SystemMetric[], metricName: SystemMetricType): SystemMetric {
     return metrics.find(metric => metric.type === metricName);
+  }
+
+  getSystemPools(systemName): SystemPool {
+    return this.data.find(system => system.name = systemName);
+  }
+
+  isAlertingSystem(systemName: string): boolean {
+    if (this.data.length > 0) {
+      return this.alertsDefinition
+        .find(
+          definition => {
+            const systemPool = this.getSystemPools(systemName);
+            if (systemPool !== undefined) {
+              return systemPool.pools.find(pool => this.checkAlert(pool, definition)) !== undefined;
+            }
+            return false;
+          }
+        ) !== undefined;
+    }
+    return false;
+  }
+
+  isAlertingPool(systemPool: SystemDetail) {
+    return this.alertsDefinition
+      .find(definition => {
+        return this.checkAlert(systemPool, definition);
+      }) !== undefined;
+  }
+
+  checkAlert(systemPool: SystemDetail, definition): boolean {
+    if (systemPool !== null) {
+      const metric = this.getMetric(systemPool.metrics, definition.type);
+      if (metric != null) {
+        return metric.value > definition.threshold;
+      }
+    }
+    return false;
   }
 }
