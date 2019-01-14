@@ -10,12 +10,18 @@ import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 export class UnitFormatterComponent implements OnInit {
 
   @Input() metric: SystemMetric;
-  @Input() isAlert = false;
+  // @Input() isAlert = false;
+  @Input() metricLabel = '';
+  @Input() alertMessage = '';
 
   constructor() { }
 
   ngOnInit() {
 
 
+  }
+
+  isAlert(): boolean {
+    return this.alertMessage !== '';
   }
 }

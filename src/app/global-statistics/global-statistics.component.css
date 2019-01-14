@@ -1,0 +1,178 @@
+/****** Behavior *****/
+div.collapsed ~ div.collapsable {
+  display: none;
+}
+
+div.capacity-header > div.col.highlightColumn {
+  text-decoration: #E8F4F9 underline;
+}
+
+div.collapsable:hover, .capacity-pools .highlightColumn {
+  background-color: #E8F4F9 !important;
+  color: #3A738C;
+  font-weight: bold;
+}
+
+.selectedRow {
+  background-color: #BEECD1 !important;
+  color: #3A738C;
+  font-weight: bold;
+}
+
+/*** Layout table ***/
+.col-control {
+  width: 40px;
+  float: left;
+}
+
+.col {
+  width: 12%;
+  float: left;
+}
+
+.col-filler {
+  width: 100%;
+}
+
+/*** Capacity header ***/
+
+div.capacity-header {
+  border: 3px #eaeaea solid;
+  font-size: 15px;
+  color: #3c8dbc;
+  font-weight: bolder;
+}
+
+div.capacity-header > div {
+  border-right: 1px #eaeaea solid;
+  padding: 10px 0px 10px 0px;
+}
+
+div.capacity-header > div {
+  text-align: center;
+}
+
+div.capacity-header > div.col-control {
+  color: #333;
+}
+
+.capacity-pools > div,
+.system-header > div.row > div[class^="col"],
+.system-header > div.row > div.ignore > div {
+  text-align: center;
+  border-right: 1px #eaeaea solid;
+  margin:2px 0px 2px 0px;
+}
+/**** System header ****/
+.system-header > div {
+  border-left: 3px solid #eaeaea;
+  border-right: 3px solid #eaeaea;
+}
+div.capacity-pools.collapsable:nth-of-type(odd) {
+  background-color: #f0f0f0;
+}
+
+.system-header > div:first-child > div.col:last-child {
+  border-right: none;
+}
+
+div.system-header {
+  margin-bottom: 2em;
+}
+
+.system-header > div:first-child {
+  /*background-color: #BBD9E6;*/
+  color: #35516a;
+  /*padding: 10px 0px 10px 0px;*/
+  border-top: 3px solid #eaeaea;
+  border-bottom: 3px solid #eaeaea;
+  /*margin-top: 10px;*/
+}
+
+.system-header > div:first-child > div,
+.system-header > div.row > div.ignore > div {
+  /*margin: 10px 0px 10px 0px;*/
+  height: 25px;
+}
+
+.capacity-pools div.col-control {
+  height: 30px;
+}
+.capacity-pools > div i {
+  margin-top:0.1em;
+}
+.system-header > div:last-child {
+  /*margin: 10px 0px 10px 0px;*/
+  border-bottom: 3px solid #eaeaea;
+}
+div.col-control {
+  min-height: 1px;
+}
+
+.col-control i {
+  font-size: 15px;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+div.sticky {
+  position: sticky;
+  bottom: 0px;
+  z-index: 10;
+}
+
+
+.expand-collapse {
+  padding-right: 15px;
+}
+
+.expand-collapse:hover {
+  color: #5C91A8;
+  font-size: 17px;
+}
+
+/*** Aggregated values widget ***/
+div.agg-vals {
+  margin-top: 25px;
+}
+
+.agg-vals > .col {
+  border: 1px #5C91A8 solid;
+  font-weight: bold;
+  text-align: center;
+
+}
+
+.agg-name {
+  background-color: #3c8dbc;
+  color: white;
+  font-size: 11px;
+  padding: 5px;
+}
+
+.agg-vals .agg-value {
+  padding: 5px;
+  font-size: 12px;
+  background-color: white;
+  /*color: white;*/
+}
+
+
+.system-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.pool-name {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.metric-value {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.metric-unit {
+  font-size: 8px;
+}

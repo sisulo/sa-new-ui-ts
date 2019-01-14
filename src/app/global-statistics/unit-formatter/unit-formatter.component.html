@@ -1,8 +1,9 @@
 <div class="metric-value">
-  <span tooltip="Average value" hide-delay="0"><i class="fa fa-area-chart bg-aqua"></i>{{metric.value}} {{metric.unit}}</span><i *ngIf="isAlert" class="fa fa-warning bg-yellow-active pull-right"></i>
+  <span *ngIf="isAlert()" tooltip="{{alertMessage}}" hide-delay="0" class="text-alert">{{metric.value}} {{metric.unit}}</span>
+  <span *ngIf="!isAlert()" tooltip="{{metricLabel}} average" hide-delay="0">{{metric.value}} {{metric.unit}}</span>
 </div>
 <div class="peak">
-  <span tooltip="Peak" hide-delay="0"><i class="fa fa-line-chart bg-red-active"></i><span class="text-red">{{metric.peak}} {{metric.unit}}</span></span>
+  <span tooltip="{{metricLabel}} peak" hide-delay="0"><span class="text-danger"><i class="fa fa-arrow-up"></i>{{metric.peak}} {{metric.unit}}</span></span>
   <!--<span><i class="blue-curve"></i>{{metric.peak}} {{metric.unit}}</span>-->
 </div>
 

@@ -1,36 +1,30 @@
 .peak {
   display: block;
-  font-size: 14px;
+  font-size: 10px;
   font-style: italic;
 }
 .peak i, .metric-value i {
-
   margin-right: 10px;
-  padding: 0.25em;
+}
+
+.peak i {
+  padding:0px;
+  border-top-width: 1px;
+  border-top-style: solid;
 }
 .metric-value {
   display: block;
   font-weight: 600;
-  font-size:15px;
-  border-bottom: 2px #00c0ef solid;
+  font-size:14px;
+  /*border-bottom: 2px #00c0ef solid;*/
   margin-bottom: 2px;
 }
 
 .metric-value i {
   background-color: #00c0ef;
-  /*margin-right: 10px;*/
-  /*padding: 0.25em;*/
 }
 
-/*i.blue-curve  {*/
-  /*background-image: url("../../../assets/css/img/peak.png");*/
-  /*background-size: 30px;*/
-  /*background-repeat: no-repeat;*/
-  /*height: 30px;*/
-  /*position: relative;*/
-  /*top: 0px;*/
-  /*!* size: 46px; *!*/
-  /*width: 30px;*/
-  /*line-height: 1px;*/
-  /*display: inline-block;*/
-/*}*/
+.text-alert {
+  /*color: #900020;*/
+  color: #db8b0b;
+}

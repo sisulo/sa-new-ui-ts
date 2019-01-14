@@ -8,9 +8,9 @@ import {AggregatedStatisticsService} from './aggregated-statistics.service';
 import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
 import {PeriodService} from '../../period.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
-import {System} from '../../common/models/System';
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SystemDetail} from '../../common/models/SystemDetail';
+import {DivTable} from '../div-table/div-table';
 
 
 export class ItemKey {
@@ -33,11 +33,10 @@ class MetricLabels {
 @Component({
   selector: 'app-capacity-statistics',
   templateUrl: './capacity-statistics.component.html',
-  styleUrls: ['./capacity-statistics.component.css']
+  styleUrls: ['./capacity-statistics.component.css', '../global-statistics.component.css']
 })
-export class CapacityStatisticsComponent implements OnInit {
+export class CapacityStatisticsComponent extends DivTable implements OnInit {
 
-  labelMetrics: {} = {};
   types = [];
   data: SystemPool[] = []; // Todo caching data by dataCenters
   currentDataCenterId = 0;
@@ -46,7 +45,6 @@ export class CapacityStatisticsComponent implements OnInit {
   alertsDefinition = [];
   @LocalStorage() selectedPools: SelectedItems = {};
   @LocalStorage() collapsedRows: CollapsedItems = {};
-  private currentColumn = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,6 +54,7 @@ export class CapacityStatisticsComponent implements OnInit {
     private aggregateService: AggregatedStatisticsService,
     private periodService: PeriodService
   ) {
+    super();
     this.types.push(SystemMetricType.PHYSICAL_SUBS);
     this.types.push(SystemMetricType.PHYSICAL_CAPACITY);
     this.types.push(SystemMetricType.AVAILABLE_CAPACITY);
@@ -213,22 +212,6 @@ export class CapacityStatisticsComponent implements OnInit {
 
   isPartiallySelected() {
     return this.selectedPools[this.currentDataCenterId].length > 0;
-  }
-
-  setCurrentColumn(column: number) {
-    this.currentColumn = column;
-  }
-
-  isCurrentColumn(column: number) {
-    return column === this.currentColumn;
-  }
-
-  getColumnLabel(type: SystemMetricType) {
-    return this.labelMetrics[type];
-  }
-
-  getMetric(metrics: SystemMetric[], metricName: SystemMetricType): SystemMetric {
-    return metrics.find(metric => metric.type === metricName);
   }
 
   getSystemPools(systemName): SystemPool {

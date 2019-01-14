@@ -1,25 +1,30 @@
 <div class="tab-pane" *ngIf="data.length > 0">
-  <table class="table table-striped table-bordered" [mfData]="tableData" #mf="mfDataTable">
-    <thead>
-    <tr>
-      <th>
-        <mfDefaultSorter by="name">System</mfDefaultSorter>
-      </th>
-      <th><mfDefaultSorter by="workload">Workload</mfDefaultSorter></th>
-      <th><mfDefaultSorter by="transfer">Transfer</mfDefaultSorter></th>
-      <th><mfDefaultSorter by="response">Response</mfDefaultSorter></th>
-      <th><mfDefaultSorter by="cpu">CPU</mfDefaultSorter></th>
-      <th><mfDefaultSorter by="hdd">HDD</mfDefaultSorter></th>
-      <th><mfDefaultSorter by="write_pending">Write Pending</mfDefaultSorter></th>
-    </tr>
-    </thead>
-    <tbody >
-    <tr *ngFor="let system of mf.data">
-      <td><i *ngIf="isAlertingSystem(system.name)" class="fa fa-warning bg-yellow-active pull-right"></i>{{ system.name }} </td>
-      <td *ngFor="let metricType of displayedMetrics">
-        <app-unit-formatter [metric]="getMetricObject(system.name, metricType)" [isAlert]="isAlertingMetric(system.name, metricType)"></app-unit-formatter>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="capacity-table col-md-12">
+        <!--
+          TOP TABLE ROW
+        -->
+        <div class="row capacity-header">
+          <div class="col-control">A</div>
+          <div class="col">System</div>
+          <div class="col" *ngFor="let type of types;let column=index"
+               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}}</div>
+        </div>
+          <!--POOL ROWS-->
+          <!---->
+          <div *ngFor="let system of data" class="capacity-pools row collapsable">
+            <div class="col-val col-control">
+              <i *ngIf="isAlertingSystem(system.name)" tooltip="Warning for one or more metrics" class="fas fa-exclamation-circle bg-yellow-active"></i>
+            </div>
+            <div class="col-val col">{{system.name}}</div>
+            <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
+                 (mouseout)="setCurrentColumn(-1)"
+                 (mouseover)="setCurrentColumn(column)"
+                 [class.highlightColumn]="isCurrentColumn(column)"><app-unit-formatter [metric]="getMetricObject(system.name, type)" [metricLabel]="getColumnLabel(type)" [alertMessage]="getAlertMessage(system.name, type)"></app-unit-formatter>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
 </div>

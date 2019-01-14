@@ -6,26 +6,19 @@ import {BusService} from '../bus.service';
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {PeriodService} from '../../period.service';
+import {DivTable} from '../div-table/div-table';
 
 @Component({
   selector: 'app-tab',
   templateUrl: './performance-statistics.component.html',
-  styleUrls: ['./performance-statistics.component.css'],
+  styleUrls: ['./performance-statistics.component.css', '../global-statistics.component.css'],
 })
-export class PerformanceStatisticsComponent implements OnInit {
+export class PerformanceStatisticsComponent extends DivTable implements OnInit {
   currentPeriod: PeriodType = PeriodType.DAY;
   currentDatacenter = 0;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
   alertsDefinition = [];
-  displayedMetrics: SystemMetricType[] = [
-    SystemMetricType.WORKLOAD,
-    SystemMetricType.TRANSFER,
-    SystemMetricType.RESPONSE,
-    SystemMetricType.CPU,
-    SystemMetricType.HDD,
-    SystemMetricType.WRITE_PENDING
-  ];
 
   constructor(
     private route: ActivatedRoute,
@@ -34,6 +27,21 @@ export class PerformanceStatisticsComponent implements OnInit {
     private bus: BusService,
     private periodService: PeriodService
   ) {
+    super();
+
+    this.types.push(SystemMetricType.WORKLOAD);
+    this.types.push(SystemMetricType.TRANSFER);
+    this.types.push(SystemMetricType.RESPONSE);
+    this.types.push(SystemMetricType.CPU);
+    this.types.push(SystemMetricType.HDD);
+    this.types.push(SystemMetricType.WRITE_PENDING);
+
+    this.labelMetrics[SystemMetricType.WORKLOAD] = 'Workload';
+    this.labelMetrics[SystemMetricType.TRANSFER] = 'Transfer';
+    this.labelMetrics[SystemMetricType.RESPONSE] = 'Response';
+    this.labelMetrics[SystemMetricType.CPU] = 'CPU';
+    this.labelMetrics[SystemMetricType.HDD] = 'HDD';
+    this.labelMetrics[SystemMetricType.WRITE_PENDING] = 'Write Pending';
   }
 
   ngOnInit(): void {
@@ -134,5 +142,17 @@ export class PerformanceStatisticsComponent implements OnInit {
     return false;
   }
 
+  getAlertDefinition(type: SystemMetricType) {
+    return this.alertsDefinition.find((definitionObj) => type === definitionObj.type);
+  }
 
+  getAlertMessage(systemName: string, type: SystemMetricType): string {
+    if (this.isAlertingMetric(systemName, type)) {
+      const alertDefinition = this.getAlertDefinition(type);
+      const metric = this.getMetricObject(systemName, type);
+      return this.getColumnLabel(type) + ' is over ' + alertDefinition.threshold + metric.unit + ' in system ' + systemName;
+    } else {
+      return '';
+    }
+  }
 }
