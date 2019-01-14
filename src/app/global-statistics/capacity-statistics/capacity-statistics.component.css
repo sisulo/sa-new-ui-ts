@@ -42,26 +42,37 @@ div.collapsable:hover > div, .system-header .highlightColumn {
 /*** Capacity header ***/
 
 div.capacity-header {
-  background-color: #3c8dbc;
-  padding: 10px 0px 10px 0px;
+  border: 3px #eaeaea solid;
   font-size: 15px;
-  color: white;
+  color: #3c8dbc;
   font-weight: bolder;
+}
+
+div.capacity-header > div {
+  border-right: 1px #eaeaea solid;
+  padding: 10px 0px 10px 0px;
 }
 
 div.capacity-header > div {
   text-align: center;
 }
 
-.capacity-pools > div,
-.system-header > div.row > div,
-.system-header > div.row > div.ignore > div {
-  text-align: center;
-  border-right: 1px #c8c8c8 solid;
+div.capacity-header > div.col-control {
+  color: #333;
 }
 
-/**** System header ****/
-
+.capacity-pools > div,
+.system-header > div.row > div[class^="col"],
+.system-header > div.row > div.ignore > div {
+  text-align: center;
+  border-right: 1px #eaeaea solid;
+  margin:2px 0px 2px 0px;
+}
+  /**** System header ****/
+.system-header > div {
+  border-left: 3px solid #eaeaea;
+  border-right: 3px solid #eaeaea;
+}
 .system-header > div.collapsable:nth-of-type(odd) > .col-val {
   background-color: #f0f0f0;
 }
@@ -70,16 +81,43 @@ div.capacity-header > div {
   border-right: none;
 }
 
+div.system-header {
+  margin-bottom: 2em;
+}
+
 .system-header > div:first-child {
-  background-color: #BBD9E6;
+  /*background-color: #BBD9E6;*/
   color: #35516a;
-  padding: 10px 0px 10px 0px;
+  /*padding: 10px 0px 10px 0px;*/
+  border-top: 3px solid #eaeaea;
   border-bottom: 3px solid #eaeaea;
-  margin-top: 10px;
+  /*margin-top: 10px;*/
+}
+
+.system-header > div:first-child > div,
+.system-header > div.row > div.ignore > div {
+  /*margin: 10px 0px 10px 0px;*/
+  height: 25px;
+}
+
+.capacity-pools div.col-control {
+  height: 30px;
+}
+.capacity-pools > div i {
+  margin-top:0.1em;
+}
+.system-header > div:last-child {
+  /*margin: 10px 0px 10px 0px;*/
+  border-bottom: 3px solid #eaeaea;
+}
+div.col-control {
+  min-height: 1px;
 }
 
 .col-control i {
   font-size: 15px;
+  padding: 3px;
+  border-radius: 10px;
 }
 
 div.sticky {

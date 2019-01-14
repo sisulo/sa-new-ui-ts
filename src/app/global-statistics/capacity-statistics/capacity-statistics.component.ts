@@ -63,7 +63,14 @@ export class CapacityStatisticsComponent implements OnInit {
     this.types.push(SystemMetricType.PHYSICAL_USAGE);
     this.types.push(SystemMetricType.COMPRESS_RATIO);
 
+    this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: 30});
 
+    this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical Capacity';
+    this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
+    this.labelMetrics[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
+    this.labelMetrics[SystemMetricType.LOGICAL_USAGE] = 'Logical Used';
+    this.labelMetrics[SystemMetricType.PHYSICAL_USAGE] = 'Physical Used';
+    this.labelMetrics[SystemMetricType.COMPRESS_RATIO] = 'Compression Ratio';
   }
 
   ngOnInit(): void {
@@ -89,14 +96,7 @@ export class CapacityStatisticsComponent implements OnInit {
       }
     );
     this.periodService.announceEnablePeriod(false);
-    this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: 30});
 
-    this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical capacity';
-    this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
-    this.labelMetrics[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
-    this.labelMetrics[SystemMetricType.LOGICAL_USAGE] = 'Logical Used';
-    this.labelMetrics[SystemMetricType.PHYSICAL_USAGE] = 'Physical Used';
-    this.labelMetrics[SystemMetricType.COMPRESS_RATIO] = 'Compression Ratio';
   }
 
   getSystemStatistics(systemName: string): SystemAggregatedStatistics {
