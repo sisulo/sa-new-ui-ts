@@ -38,7 +38,7 @@
                                         (click)="addCollapsed(system.name)"
                                         [tooltip]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i></div>
             <div class="col-control">
-              <i *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation-circle bg-yellow-active "></i>
+              <i tooltip="Warning for one or more metrics"  *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation-circle bg-yellow-active "></i>
             </div>
             <div class="col-md-2"><span class="system-name">{{ system.name }}</span></div>
             <div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">
@@ -56,16 +56,18 @@
               [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
               (click)="selectPool(pool.name, system.name)"></i></div>
             <div class="col-val col-control">
-              <i *ngIf="isAlertingPool(pool)" class="fas fa-exclamation-circle bg-yellow-active"></i>
+              <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation-circle bg-yellow-active"></i>
             </div>
             <div class="col-val col-md-2"><span class="pool-name">{{pool.name}}</span></div>
             <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
                  (mouseout)="setCurrentColumn(-1)"
                  (mouseover)="setCurrentColumn(column)"
-                 [class.highlightColumn]="isCurrentColumn(column)" [tooltip]="getColumnLabel(type)" hide-delay="0"
-                 show-delay="500"><span
-              class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
-              <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
+                 [class.highlightColumn]="isCurrentColumn(column)" [tooltip]="getMetricTooltip(pool, type)" hide-delay="0"
+                 show-delay="500">
+              <span [className]="getAlertType(pool, type)">
+                <span class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
+                <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
+              </span>
             </div>
           </div>
         </div>

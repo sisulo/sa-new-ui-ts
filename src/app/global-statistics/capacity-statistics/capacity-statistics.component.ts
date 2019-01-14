@@ -8,7 +8,6 @@ import {AggregatedStatisticsService} from './aggregated-statistics.service';
 import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
 import {PeriodService} from '../../period.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
-import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SystemDetail} from '../../common/models/SystemDetail';
 import {DivTable} from '../div-table/div-table';
 
@@ -62,7 +61,8 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
     this.types.push(SystemMetricType.PHYSICAL_USAGE);
     this.types.push(SystemMetricType.COMPRESS_RATIO);
 
-    this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: 30});
+    this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'alert-amber', min: 80, max: 85}});
+    this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'alert-red', min: 85, max: 10000}});
 
     this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical Capacity';
     this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
@@ -245,9 +245,47 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
     if (systemPool !== null) {
       const metric = this.getMetric(systemPool.metrics, definition.type);
       if (metric != null) {
-        return metric.value > definition.threshold;
+        return metric.value > definition.threshold.min && metric.value <= definition.threshold.max;
       }
     }
     return false;
+  }
+
+  getAlertType(systemPool: SystemDetail, type: SystemMetricType) {
+    const alertDefinition = this.alertsDefinition
+      .find(definition => {
+        return this.checkAlert(systemPool, definition) && definition.type === type;
+      });
+    if (alertDefinition === undefined) {
+      return 'alert-ok';
+    } else {
+      console.log(alertDefinition.threshold.alertType);
+      return alertDefinition.threshold.alertType;
+    }
+  }
+
+  getOccuredAlert(systemPool: SystemDetail, type: SystemMetricType) {
+    return this.alertsDefinition
+      .find(definition => {
+        return this.checkAlert(systemPool, definition) && definition.type === type;
+      });
+  }
+
+  getAlertMessage(systemPool: SystemDetail, type: SystemMetricType) {
+
+    const alertDefinition = this.getOccuredAlert(systemPool, type);
+
+    if (alertDefinition !== undefined) {
+      return this.getColumnLabel(type) + ' is over ' + alertDefinition.threshold.min + ' for ' + systemPool.name;
+    }
+    return '';
+
+  }
+  getMetricTooltip(systemPool: SystemDetail, type: SystemMetricType) {
+    const tooltip = this.getAlertMessage(systemPool, type);
+    if (tooltip === '') {
+      return this.getColumnLabel(type) + ' average';
+    }
+    return tooltip;
   }
 }

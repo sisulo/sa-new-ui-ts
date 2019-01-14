@@ -38,7 +38,12 @@
   height: 30px;
   padding-right: 2px;
 }
-
+.alert-red {
+  color:#900020;
+}
+.alert-amber {
+  color:#db8b0b;
+}
 /*!*** Capacity header ***!*/
 
 /*div.capacity-header {*/
