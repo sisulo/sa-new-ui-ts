@@ -17,12 +17,12 @@
             <i *ngIf="(!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"
                (click)="selectAll()"></i>
           </div>
-          <div class="col-control">A</div>
+          <div class="col-control"></div>
           <div class="col-label">
             System
           </div>
           <div class="col" *ngFor="let type of types;let column=index"
-               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}}</div>
+               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="text-muted fa " [ngClass]="getSortIconClass(type)" (click)="setSort(type)"></i></div>
         </div>
         <!--
           SYSTEM PART
@@ -38,7 +38,7 @@
                                         (click)="addCollapsed(system.name)"
                                         [tooltip]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i></div>
             <div class="col-val col-control">
-              <i tooltip="Warning for one or more metrics"  *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation-circle bg-yellow-active "></i>
+              <i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation text-orange"></i>
             </div>
             <div class="col-val col-label"><span class="system-name">{{ system.name }}</span></div>
             <div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">
@@ -56,7 +56,7 @@
               [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
               (click)="selectPool(pool.name, system.name)"></i></div>
             <div class="col-val col-control">
-              <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation-circle bg-yellow-active"></i>
+              <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation text-orange"></i>
             </div>
             <div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>
             <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"

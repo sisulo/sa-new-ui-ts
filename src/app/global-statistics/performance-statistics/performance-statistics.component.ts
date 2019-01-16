@@ -6,7 +6,8 @@ import {BusService} from '../bus.service';
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {PeriodService} from '../../period.service';
-import {DivTable} from '../div-table/div-table';
+import {DivTable, SortType} from '../div-table/div-table';
+import {SystemPool} from '../../common/models/SystemPool';
 
 @Component({
   selector: 'app-tab',
@@ -154,5 +155,37 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     } else {
       return '';
     }
+  }
+
+  getData() {
+    return this.data;
+  }
+
+  setData(data) {
+    this.data = data;
+  }
+
+  recalculateSorting(data: SystemDetail[], sortType, sortColumn) {
+    const dataReturned = data.sort(
+        (poolA, poolB) => {
+          if (sortType === SortType.ASC) {
+            return this.compare(poolA, poolB, sortColumn);
+          } else {
+            return this.compare(poolB, poolA, sortColumn);
+          }
+        }
+      );
+    return dataReturned;
+  }
+
+  compare(poolA, poolB, sortColumn) {
+    if (poolA.metrics.find(metric => metric.type === sortColumn).value
+      > poolB.metrics.find(metric => metric.type === sortColumn).value) {
+      return 1;
+    } else if (poolA.metrics.find(metric => metric.type === sortColumn).value
+      < poolB.metrics.find(metric => metric.type === sortColumn).value) {
+      return -1;
+    }
+    return 0;
   }
 }

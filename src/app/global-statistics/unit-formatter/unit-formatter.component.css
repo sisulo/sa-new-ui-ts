@@ -11,6 +11,7 @@
   padding:0px;
   border-top-width: 1px;
   border-top-style: solid;
+  font-size: 8px;
 }
 .metric-value {
   display: block;
@@ -20,11 +21,15 @@
   margin-bottom: 2px;
 }
 
-.metric-value i {
-  background-color: #00c0ef;
-}
-
 .text-alert {
   /*color: #900020;*/
   color: #db8b0b;
+}
+
+.metric-value .metric-unit {
+  font-size: 10px;
+}
+
+.peak .metric-unit {
+  font-size: 9px;
 }

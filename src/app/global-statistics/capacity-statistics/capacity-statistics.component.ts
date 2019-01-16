@@ -9,7 +9,7 @@ import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
 import {PeriodService} from '../../period.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemDetail} from '../../common/models/SystemDetail';
-import {DivTable} from '../div-table/div-table';
+import {DivTable, SortType} from '../div-table/div-table';
 
 
 export class ItemKey {
@@ -36,12 +36,22 @@ class MetricLabels {
 })
 export class CapacityStatisticsComponent extends DivTable implements OnInit {
 
-  types = [];
+  types = [
+    SystemMetricType.PHYSICAL_SUBS,
+    SystemMetricType.PHYSICAL_CAPACITY,
+    SystemMetricType.AVAILABLE_CAPACITY,
+    SystemMetricType.LOGICAL_USAGE,
+    SystemMetricType.PHYSICAL_USAGE,
+    SystemMetricType.COMPRESS_RATIO
+  ];
   data: SystemPool[] = []; // Todo caching data by dataCenters
   currentDataCenterId = 0;
   poolMetrics = {};
   aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
-  alertsDefinition = [];
+  alertsDefinition = [
+    {type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-orange', min: 80, max: 85}},
+    {type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-red', min: 85, max: 10000}}
+  ];
   @LocalStorage() selectedPools: SelectedItems = {};
   @LocalStorage() collapsedRows: CollapsedItems = {};
 
@@ -54,15 +64,15 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
     private periodService: PeriodService
   ) {
     super();
-    this.types.push(SystemMetricType.PHYSICAL_SUBS);
-    this.types.push(SystemMetricType.PHYSICAL_CAPACITY);
-    this.types.push(SystemMetricType.AVAILABLE_CAPACITY);
-    this.types.push(SystemMetricType.LOGICAL_USAGE);
-    this.types.push(SystemMetricType.PHYSICAL_USAGE);
-    this.types.push(SystemMetricType.COMPRESS_RATIO);
+    // this.types.push(SystemMetricType.PHYSICAL_SUBS);
+    // this.types.push(SystemMetricType.PHYSICAL_CAPACITY);
+    // this.types.push(SystemMetricType.AVAILABLE_CAPACITY);
+    // this.types.push(SystemMetricType.LOGICAL_USAGE);
+    // this.types.push(SystemMetricType.PHYSICAL_USAGE);
+    // this.types.push(SystemMetricType.COMPRESS_RATIO);
 
-    this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'alert-amber', min: 80, max: 85}});
-    this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'alert-red', min: 85, max: 10000}});
+    // this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-orange', min: 80, max: 85}});
+    // this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-red', min: 85, max: 10000}});
 
     this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical Capacity';
     this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
@@ -90,7 +100,6 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
     );
     this.aggregateService.aggregatedStatistics$.subscribe(
       stats => {
-        console.log(stats);
         this.aggregatedStats = stats;
       }
     );
@@ -116,7 +125,8 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
   getTableData(id: number): SystemPool[] {
     this.metricService.getCapacityStatistics(id).subscribe(
       data => {
-        this.data = data.systems;
+        this.data = this.recalculateSorting(data.systems, SortType.ASC, null);
+        // this.data = data.systems;
         this.data.forEach(system => {
           system.pools.forEach(pool => {
             this.poolMetrics[pool.name] = pool.metrics;
@@ -215,7 +225,7 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
   }
 
   getSystemPools(systemName): SystemPool {
-    return this.data.find(system => system.name = systemName);
+    return this.data.find(system => system.name === systemName);
   }
 
   isAlertingSystem(systemName: string): boolean {
@@ -259,7 +269,6 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
     if (alertDefinition === undefined) {
       return 'alert-ok';
     } else {
-      console.log(alertDefinition.threshold.alertType);
       return alertDefinition.threshold.alertType;
     }
   }
@@ -281,11 +290,63 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
     return '';
 
   }
+
   getMetricTooltip(systemPool: SystemDetail, type: SystemMetricType) {
     const tooltip = this.getAlertMessage(systemPool, type);
     if (tooltip === '') {
-      return this.getColumnLabel(type) + ' average';
+      return this.getColumnLabel(type);
     }
     return tooltip;
+  }
+
+  getData() {
+    return this.data;
+  }
+
+  setData(data: SystemPool[]) {
+    this.data = data;
+  }
+
+  recalculateSorting(data: SystemPool[], sortType, sortColumn): SystemPool[] {
+    let dataReturned = [];
+
+    if (sortColumn === null) {
+      dataReturned = data.map(system => {
+        system.pools = system.pools.sort((poolA, poolB) => this.compare(poolA.name, poolB.name));
+        return system;
+      });
+      dataReturned = dataReturned.sort(
+        (systemA, systemB) => {
+          return this.compare(systemA.name, systemB.name);
+        }
+      );
+    } else {
+      dataReturned = data.map(system => {
+        system.pools = system.pools.sort(
+          (poolA, poolB) => {
+            if (sortType === SortType.ASC) {
+              return this.compare(this.findMetric(poolA, sortColumn).value, this.findMetric(poolB, sortColumn).value);
+            } else {
+              return this.compare(this.findMetric(poolB, sortColumn).value, this.findMetric(poolA, sortColumn).value);
+            }
+          }
+        );
+        return system;
+      });
+    }
+    return dataReturned;
+  }
+
+  findMetric(pool: SystemDetail, metricType: SystemMetricType) {
+    return pool.metrics.find(metric => metric.type === metricType);
+  }
+
+  compare(valueA, valueB) {
+    if (valueA > valueB) {
+      return 1;
+    } else if (valueA < valueB) {
+      return -1;
+    }
+    return 0;
   }
 }

@@ -6,18 +6,18 @@
           TOP TABLE ROW
         -->
         <div class="row table-header">
-          <div class="col-control">A</div>
+          <div class="col-control"></div>
           <div class="col">System</div>
           <div class="col" *ngFor="let type of types;let column=index"
-               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}}</div>
+               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="text-muted fa " [ngClass]="getSortIconClass(type)" (click)="setSort(type)"></i></div>
         </div>
           <!--POOL ROWS-->
           <!---->
           <div *ngFor="let system of data" class="table-data row collapsable">
             <div class="col-val col-control">
-              <i *ngIf="isAlertingSystem(system.name)" tooltip="Warning for one or more metrics" class="fas fa-exclamation-circle bg-yellow-active"></i>
+              <i *ngIf="isAlertingSystem(system.name)" tooltip="Warning for one or more metrics" class="fas fa-exclamation text-orange"></i>
             </div>
-            <div class="col-val col">{{system.name}}</div>
+            <div class="col-val col"><span class="system-name">{{system.name}}</span></div>
             <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
                  (mouseout)="setCurrentColumn(-1)"
                  (mouseover)="setCurrentColumn(column)"
