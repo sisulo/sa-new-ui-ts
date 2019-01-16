@@ -11,19 +11,12 @@ import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemDetail} from '../../common/models/SystemDetail';
 import {DivTable, SortType} from '../div-table/div-table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {DivTableGrouped} from '../div-table/div-table-grouped';
 
 
 export class ItemKey {
   systemName: string;
   poolName: string;
-}
-
-class SelectedItems {
-  [key: string]: Array<ItemKey>;
-}
-
-class CollapsedItems {
-  [key: string]: Array<string>;
 }
 
 class MetricLabels {
@@ -36,8 +29,8 @@ class MetricLabels {
   styleUrls: ['./capacity-statistics.component.css', '../global-statistics.component.css'],
   animations: [
     trigger('slideInOut', [
-      state('true', style({ height: '0px', display: 'none', opacity: 0})),
-      state('false', style({ height: '*', opacity: 1})),
+      state('true', style({height: '0px', display: 'none', opacity: 0})),
+      state('false', style({height: '*', opacity: 1})),
       transition('1 => 0', animate('500ms ease-in')),
       transition('0 => 1', animate('500ms ease-out'))
     ]),
@@ -51,7 +44,7 @@ class MetricLabels {
     ])
   ]
 })
-export class CapacityStatisticsComponent extends DivTable implements OnInit {
+export class CapacityStatisticsComponent extends DivTableGrouped implements OnInit {
 
   types = [
     SystemMetricType.PHYSICAL_SUBS,
@@ -62,35 +55,24 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
     SystemMetricType.COMPRESS_RATIO
   ];
   data: SystemPool[] = []; // Todo caching data by dataCenters
-  currentDataCenterId = 0;
+
   poolMetrics = {};
   aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
   alertsDefinition = [
     {type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-orange', min: 80, max: 85}},
     {type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-red', min: 85, max: 10000}}
   ];
-  @LocalStorage() selectedPools: SelectedItems = {};
-  @LocalStorage() collapsedRows: CollapsedItems = {};
+
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private metricService: MetricService,
-    private bus: BusService,
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected periodService: PeriodService,
+    protected metricService: MetricService,
+    protected bus: BusService,
     private aggregateService: AggregatedStatisticsService,
-    private periodService: PeriodService
   ) {
-    super();
-    // this.types.push(SystemMetricType.PHYSICAL_SUBS);
-    // this.types.push(SystemMetricType.PHYSICAL_CAPACITY);
-    // this.types.push(SystemMetricType.AVAILABLE_CAPACITY);
-    // this.types.push(SystemMetricType.LOGICAL_USAGE);
-    // this.types.push(SystemMetricType.PHYSICAL_USAGE);
-    // this.types.push(SystemMetricType.COMPRESS_RATIO);
-
-    // this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-orange', min: 80, max: 85}});
-    // this.alertsDefinition.push({type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-red', min: 85, max: 10000}});
-
+    super(route, router, periodService, metricService, bus);
     this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical Capacity';
     this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
     this.labelMetrics[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
@@ -126,17 +108,6 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
 
   getSystemStatistics(systemName: string): SystemAggregatedStatistics {
     return this.aggregatedStats.find(stats => stats.system === systemName);
-  }
-
-  internalInit(id: number): void {
-    this.currentDataCenterId = id;
-    this.data = this.getTableData(id);
-    if (!this.selectedPools.hasOwnProperty(this.currentDataCenterId)) {
-      this.selectedPools[this.currentDataCenterId] = [];
-    }
-    if (!this.collapsedRows.hasOwnProperty(this.currentDataCenterId)) {
-      this.collapsedRows[this.currentDataCenterId] = [];
-    }
   }
 
   getTableData(id: number): SystemPool[] {
@@ -179,38 +150,6 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
     // @ts-ignore
     this.selectedPools.save();
     this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
-  }
-
-  addCollapsed(systemName: string) {
-    if (!this.collapsedRows.hasOwnProperty(this.currentDataCenterId)) {
-      this.collapsedRows[this.currentDataCenterId] = [];
-    }
-    const index = this.collapsedRows[this.currentDataCenterId].findIndex(name => name === systemName);
-    if (index > -1) {
-      this.collapsedRows[this.currentDataCenterId].splice(index, 1);
-    } else {
-      this.collapsedRows[this.currentDataCenterId].push(systemName);
-    }
-    // @ts-ignore
-    this.collapsedRows.save();
-  }
-
-  isCollapsed(systemName: string): boolean {
-    return this.collapsedRows[this.currentDataCenterId].findIndex(value => value === systemName) > -1;
-  }
-
-  collapseAll() {
-    if (this.isCollapseAll()) {
-      this.collapsedRows[this.currentDataCenterId] = [];
-    } else {
-      this.collapsedRows[this.currentDataCenterId] = this.data.map(value => value.name);
-    }
-    // @ts-ignore
-    this.collapsedRows.save();
-  }
-
-  isCollapseAll(): boolean {
-    return this.collapsedRows[this.currentDataCenterId].length === this.data.length;
   }
 
   isSelectedAll(): boolean {
@@ -297,24 +236,9 @@ export class CapacityStatisticsComponent extends DivTable implements OnInit {
       });
   }
 
-  getAlertMessage(systemPool: SystemDetail, type: SystemMetricType) {
 
-    const alertDefinition = this.getOccuredAlert(systemPool, type);
 
-    if (alertDefinition !== undefined) {
-      return this.getColumnLabel(type) + ' is over ' + alertDefinition.threshold.min + ' for ' + systemPool.name;
-    }
-    return '';
 
-  }
-
-  getMetricTooltip(systemPool: SystemDetail, type: SystemMetricType) {
-    const tooltip = this.getAlertMessage(systemPool, type);
-    if (tooltip === '') {
-      return this.getColumnLabel(type);
-    }
-    return tooltip;
-  }
 
   getData() {
     return this.data;

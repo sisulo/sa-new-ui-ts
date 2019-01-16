@@ -40,6 +40,14 @@ export class MetricService {
     const url = environment.metricsBaseUrl + 'datacenter/' + id + '/capacity.json';
     return this.http.get<CapacityStatisticsDto>(url);
   }
+  getDpSlaStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
+    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/dp-sla' + this.getSuffix(period) + '.json';
+    return this.http.get<CapacityStatisticsDto>(url);
+  }
+  getAdaptersStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
+    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/adapters' + this.getSuffix(period) + '.json';
+    return this.http.get<CapacityStatisticsDto>(url);
+  }
 
   private getSuffix(period: PeriodType) {
     let suffix = '';

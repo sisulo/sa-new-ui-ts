@@ -12,6 +12,9 @@ export abstract class DivTable {
 
   types: SystemMetricType[] = [];
   labelMetrics: {} = {};
+
+  currentDataCenterId = 0;
+
   private currentColumn = -1;
 
   isCurrentColumn(column: number) {

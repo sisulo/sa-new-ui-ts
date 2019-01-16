@@ -6,8 +6,9 @@ import {CommonModule} from '@angular/common';
 import {GlobalStatisticsRoutingModule} from './global-statistics-routing.module';
 import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
 import {SaCommonModule} from '../common/sa-common.module';
-import {DataTableModule} from 'angular-6-datatable';
 import {TooltipModule} from 'ng2-tooltip-directive';
+import { DpSlaComponent } from './dp-sla/dp-sla.component';
+import { AdaptersComponent } from './adapters/adapters.component';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,13 @@ import {TooltipModule} from 'ng2-tooltip-directive';
     CapacityStatisticsComponent,
     PerformanceStatisticsComponent,
     UnitFormatterComponent,
+    DpSlaComponent,
+    AdaptersComponent,
   ],
   imports: [
     CommonModule,
     GlobalStatisticsRoutingModule,
     SaCommonModule,
-    DataTableModule,
     TooltipModule
   ]
 })

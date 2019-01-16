@@ -16,7 +16,6 @@ import {SystemPool} from '../../common/models/SystemPool';
 })
 export class PerformanceStatisticsComponent extends DivTable implements OnInit {
   currentPeriod: PeriodType = PeriodType.DAY;
-  currentDatacenter = 0;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
   alertsDefinition = [];
@@ -64,7 +63,7 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     this.periodService.periodAnnouncement$.subscribe(
       period => {
         this.currentPeriod = period;
-        this.getTableData(this.currentDatacenter);
+        this.getTableData(this.currentDataCenterId);
       }
     );
     this.periodService.announceEnablePeriod(true);
@@ -75,7 +74,7 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
 
 
   getTableData(id: number): SystemDetail[] {
-    this.currentDatacenter = id;
+    this.currentDataCenterId = id;
     this.metricService.getPerformanceStatistics(id, this.currentPeriod).subscribe(
       data => {
         this.data = data.systems;

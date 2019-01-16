@@ -3,7 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {GlobalStatisticsComponent} from './global-statistics.component';
 import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
 import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
-import {HeaderComponent} from '../components/header/header.component';
+import {DpSlaComponent} from './dp-sla/dp-sla.component';
+import {AdaptersComponent} from './adapters/adapters.component';
 
 const routes: Routes = [
   {
@@ -13,7 +14,11 @@ const routes: Routes = [
       {path: ':id/performance', component: PerformanceStatisticsComponent},
       {path: 'performance', component: PerformanceStatisticsComponent},
       {path: ':id/capacity', component: CapacityStatisticsComponent},
-      {path: 'capacity', component: CapacityStatisticsComponent}
+      {path: 'capacity', component: CapacityStatisticsComponent},
+      {path: ':id/dp-sla', component: DpSlaComponent},
+      {path: 'dp-sla', component: DpSlaComponent},
+      {path: ':id/adapters', component: AdaptersComponent},
+      {path: 'adapters', component: AdaptersComponent}
     ]
   }
 ];

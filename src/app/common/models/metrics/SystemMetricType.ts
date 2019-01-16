@@ -11,4 +11,8 @@ export enum SystemMetricType {
   HDD = 'hdd',
   CPU = 'cpu',
   WRITE_PENDING = 'write_pending',
+  SLA_EVENTS = 'sla_events',
+  OUT_OF_SLA_TIME = 'out_of_sla_time',
+  DISBALANCE_EVENTS = 'disbalance_events',
+  INFO = 'info',
 }

@@ -5,6 +5,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from './bus.service';
 import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
 import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
+import {DpSlaComponent} from './dp-sla/dp-sla.component';
+import {AdaptersComponent} from './adapters/adapters.component';
 
 @Component({
   selector: 'app-global-statistics',
@@ -67,6 +69,12 @@ export class GlobalStatisticsComponent implements OnInit {
           break;
         case PerformanceStatisticsComponent.name:
           this.context = 'performance';
+          break;
+        case DpSlaComponent.name:
+          this.context = 'dpSla';
+          break;
+        case AdaptersComponent.name:
+          this.context = 'adapters';
           break;
         default:
           throw new Error('Unknown context');
