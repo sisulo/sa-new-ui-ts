@@ -10,6 +10,7 @@ import {PeriodService} from '../../period.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemDetail} from '../../common/models/SystemDetail';
 import {DivTable, SortType} from '../div-table/div-table';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 
 export class ItemKey {
@@ -32,7 +33,23 @@ class MetricLabels {
 @Component({
   selector: 'app-capacity-statistics',
   templateUrl: './capacity-statistics.component.html',
-  styleUrls: ['./capacity-statistics.component.css', '../global-statistics.component.css']
+  styleUrls: ['./capacity-statistics.component.css', '../global-statistics.component.css'],
+  animations: [
+    trigger('slideInOut', [
+      state('true', style({ height: '0px', display: 'none', opacity: 0})),
+      state('false', style({ height: '*', opacity: 1})),
+      transition('1 => 0', animate('500ms ease-in')),
+      transition('0 => 1', animate('500ms ease-out'))
+    ]),
+    trigger('iconRotate', [
+      state('false', style({transform: 'rotate(0deg)'})),
+      state('true', style({transform: 'rotate(90deg)'})),
+      transition('1 => 0', animate('500ms')),
+      transition(':enter', animate('0ms')),
+      transition(':leave', animate('0ms')),
+      transition('0 => 1', animate('500ms'))
+    ])
+  ]
 })
 export class CapacityStatisticsComponent extends DivTable implements OnInit {
 

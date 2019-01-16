@@ -31,10 +31,10 @@
           <!--
             SYSTEM LABEL
           -->
-          <div class="table-group-label row"
-               [class.collapsed]="isCollapsed(system.name)">
+          <div class="table-group-label row">
             <div class="col-val col-control"><i class="fa expand-collapse"
-                                        [ngClass]="isCollapsed(system.name) ? 'fa-angle-left':'fa-angle-down'"
+                                                [@iconRotate] = 'isCollapsed(system.name)'
+                                                [ngClass]="'fa-angle-down'"
                                         (click)="addCollapsed(system.name)"
                                         [tooltip]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i></div>
             <div class="col-val col-control">
@@ -51,7 +51,7 @@
           <!--POOL ROWS-->
           <!---->
           <div *ngFor="let pool of data[i].pools" class="table-data row collapsable"
-               [class.selectedRow]="isSelectedPool(pool.name)">
+               [class.selectedRow]="isSelectedPool(pool.name)" [@slideInOut]="isCollapsed(system.name)">
             <div class="col-val col-control"><i
               [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
               (click)="selectPool(pool.name, system.name)"></i></div>
