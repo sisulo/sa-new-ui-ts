@@ -3,11 +3,11 @@ div.collapsed ~ div.collapsable {
   display: none;
 }
 
-div.capacity-header > div.col.highlightColumn {
+div.table-header > div.col.highlightColumn {
   text-decoration: #E8F4F9 underline;
 }
 
-div.collapsable:hover, .capacity-pools .highlightColumn {
+div.collapsable:hover, .table-data .highlightColumn {
   background-color: #E8F4F9 !important;
   color: #3A738C;
   font-weight: bold;
@@ -22,65 +22,66 @@ div.collapsable:hover, .capacity-pools .highlightColumn {
 /*** Layout table ***/
 .col-control {
   width: 40px;
-  float: left;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .col {
   width: 12%;
-  float: left;
+  display: inline-block;
+  vertical-align: middle;
 }
 
-.col-filler {
-  width: 100%;
+.col-label {
+  width: 15%;
+  display: inline-block;
+  /*width: 100%;*/
 }
 
-/*** Capacity header ***/
+/*** Table header ***/
 
-div.capacity-header {
+div.table-header {
   border: 3px #eaeaea solid;
   font-size: 15px;
   color: #3c8dbc;
   font-weight: bolder;
 }
 
-div.capacity-header > div {
+div.table-header > div {
   border-right: 1px #eaeaea solid;
   padding: 10px 0px 10px 0px;
 }
 
-div.capacity-header > div {
+div.table-header > div {
   text-align: center;
 }
 
-div.capacity-header > div.col-control {
+div.table-header > div.col-control {
   color: #333;
 }
 
-.capacity-pools > div,
-.system-header > div.row > div[class^="col"],
-.system-header > div.row > div.ignore > div {
+
+.table-group-header > div.table-group-label.row > div[class^="col"],
+.table-group-header > div.table-group-label.row > div.ignore > div {
   text-align: center;
   border-right: 1px #eaeaea solid;
-  margin:2px 0px 2px 0px;
+  margin: 2px 0px 2px 0px;
+  /*display: inline-block;*/
+  float: left;
 }
-/**** System header ****/
-.system-header > div {
+
+/**** Data group header ****/
+.table-group-header > .table-group-label,
+.table-data {
   border-left: 3px solid #eaeaea;
   border-right: 3px solid #eaeaea;
 }
-div.capacity-pools.collapsable:nth-of-type(odd) {
-  background-color: #f0f0f0;
-}
 
-.system-header > div:first-child > div.col:last-child {
-  border-right: none;
-}
-
-div.system-header {
+div.table-group-header {
   margin-bottom: 2em;
 }
 
-.system-header > div:first-child {
+.table-group-header > div:first-child {
   /*background-color: #BBD9E6;*/
   color: #35516a;
   /*padding: 10px 0px 10px 0px;*/
@@ -89,22 +90,34 @@ div.system-header {
   /*margin-top: 10px;*/
 }
 
-.system-header > div:first-child > div,
-.system-header > div.row > div.ignore > div {
-  /*margin: 10px 0px 10px 0px;*/
-  height: 25px;
+.table-group-header > div:first-child > div.col:last-child {
+  border-right: none;
 }
 
-.capacity-pools div.col-control {
-  height: 30px;
-}
-.capacity-pools > div i {
-  margin-top:0.1em;
-}
-.system-header > div:last-child {
+/**** Table data ****/
+.table-data:last-child {
   /*margin: 10px 0px 10px 0px;*/
   border-bottom: 3px solid #eaeaea;
 }
+
+div.table-data.collapsable:nth-of-type(odd) {
+  background-color: #f0f0f0;
+}
+
+.table-data > div {
+  text-align: center;
+  border-right: 1px #eaeaea solid;
+  margin: 2px 0px 2px 0px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: auto;
+}
+
+
+.table-data > div i {
+  margin-top: 0.1em;
+}
+
 div.col-control {
   min-height: 1px;
 }
@@ -131,48 +144,3 @@ div.sticky {
   font-size: 17px;
 }
 
-/*** Aggregated values widget ***/
-div.agg-vals {
-  margin-top: 25px;
-}
-
-.agg-vals > .col {
-  border: 1px #5C91A8 solid;
-  font-weight: bold;
-  text-align: center;
-
-}
-
-.agg-name {
-  background-color: #3c8dbc;
-  color: white;
-  font-size: 11px;
-  padding: 5px;
-}
-
-.agg-vals .agg-value {
-  padding: 5px;
-  font-size: 12px;
-  background-color: white;
-  /*color: white;*/
-}
-
-
-.system-name {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.pool-name {
-  font-size: 14px;
-  font-style: italic;
-}
-
-.metric-value {
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.metric-unit {
-  font-size: 8px;
-}

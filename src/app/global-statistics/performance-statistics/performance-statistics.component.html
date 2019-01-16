@@ -5,7 +5,7 @@
         <!--
           TOP TABLE ROW
         -->
-        <div class="row capacity-header">
+        <div class="row table-header">
           <div class="col-control">A</div>
           <div class="col">System</div>
           <div class="col" *ngFor="let type of types;let column=index"
@@ -13,7 +13,7 @@
         </div>
           <!--POOL ROWS-->
           <!---->
-          <div *ngFor="let system of data" class="capacity-pools row collapsable">
+          <div *ngFor="let system of data" class="table-data row collapsable">
             <div class="col-val col-control">
               <i *ngIf="isAlertingSystem(system.name)" tooltip="Warning for one or more metrics" class="fas fa-exclamation-circle bg-yellow-active"></i>
             </div>

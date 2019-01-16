@@ -35,7 +35,8 @@
 /*}*/
 
 .col-val {
-  height: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   padding-right: 2px;
 }
 .alert-red {
@@ -44,6 +45,53 @@
 .alert-amber {
   color:#db8b0b;
 }
+
+/*** Aggregated values widget ***/
+div.agg-vals {
+  margin-top: 25px;
+}
+
+.agg-vals > .col {
+  border: 1px #5C91A8 solid;
+  font-weight: bold;
+  text-align: center;
+
+}
+
+.agg-name {
+  background-color: #3c8dbc;
+  color: white;
+  font-size: 11px;
+  padding: 5px;
+}
+
+.agg-vals .agg-value {
+  padding: 5px;
+  font-size: 12px;
+  background-color: white;
+  /*color: white;*/
+}
+
+
+.system-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.pool-name {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.metric-value {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.metric-unit {
+  font-size: 8px;
+}
+
 /*!*** Capacity header ***!*/
 
 /*div.capacity-header {*/
