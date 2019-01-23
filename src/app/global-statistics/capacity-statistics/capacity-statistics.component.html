@@ -22,7 +22,8 @@
             System
           </div>
           <div class="col" *ngFor="let type of types;let column=index"
-               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="text-muted fa " [ngClass]="getSortIconClass(type)" (click)="setSort(type)"></i></div>
+               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}}
+            <i class="text-muted fa " [ngClass]="getSortIconClass(type)" (click)="setSort(type)"></i></div>
         </div>
         <!--
           SYSTEM PART

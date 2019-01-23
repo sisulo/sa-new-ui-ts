@@ -59,8 +59,8 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
   poolMetrics = {};
   aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
   alertsDefinition = [
-    {type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-orange', min: 80, max: 85}},
-    {type: SystemMetricType.PHYSICAL_SUBS, threshold: {alertType: 'text-red', min: 85, max: 10000}}
+    {type: SystemMetricType.PHYSICAL_USAGE, threshold: {alertType: 'text-orange', min: 80, max: 90}},
+    {type: SystemMetricType.PHYSICAL_USAGE, threshold: {alertType: 'text-red', min: 90, max: 10000}}
   ];
 
 
@@ -211,7 +211,7 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     if (systemPool !== null) {
       const metric = this.getMetric(systemPool.metrics, definition.type);
       if (metric != null) {
-        return metric.value > definition.threshold.min && metric.value <= definition.threshold.max;
+        return metric.value > definition.threshold.min && metric.value < definition.threshold.max;
       }
     }
     return false;

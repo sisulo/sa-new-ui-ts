@@ -1,17 +1,17 @@
 .peak {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   font-style: italic;
 }
 .peak i, .metric-value i {
-  margin-right: 10px;
+  margin-right: 5px;
 }
 
 .peak i {
   padding:0px;
-  border-top-width: 1px;
-  border-top-style: solid;
-  font-size: 8px;
+  /*border-top-width: 1px;*/
+  /*border-top-style: solid;*/
+  font-size: 12px;
 }
 .metric-value {
   display: block;
