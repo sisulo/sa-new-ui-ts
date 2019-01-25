@@ -17,9 +17,11 @@
             <i *ngIf="(!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"
                (click)="selectAll()"></i>
           </div>
-          <div class="col-control"></div>
-          <div class="col-label">
-            System
+          <div class="col-control">
+            <i tooltip="Alerts" class="fas fa-exclamation text-orange"></i>
+          </div>
+          <div class="col-label" >
+            System <i class="text-muted fa " [ngClass]="getSortIconClass(null)" (click)="setSort(null)"></i>
           </div>
           <div class="col" *ngFor="let type of types;let column=index"
                [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}}

@@ -247,15 +247,24 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
 
   recalculateSorting(data: SystemPool[], sortType, sortColumn): SystemPool[] {
     let dataReturned = [];
-
+    console.log(sortColumn);
+    console.log(sortType);
     if (sortColumn === null) {
       dataReturned = data.map(system => {
-        system.pools = system.pools.sort((poolA, poolB) => this.compare(poolA.name, poolB.name));
+        if (sortType === SortType.ASC) {
+          system.pools = system.pools.sort((poolA, poolB) => this.compare(poolA.name, poolB.name));
+        } else {
+          system.pools = system.pools.sort((poolA, poolB) => this.compare(poolB.name, poolA.name));
+        }
         return system;
       });
       dataReturned = dataReturned.sort(
         (systemA, systemB) => {
-          return this.compare(systemA.name, systemB.name);
+          if (sortType === SortType.ASC) {
+            return this.compare(systemA.name, systemB.name);
+          } else {
+            return this.compare(systemB.name, systemA.name);
+          }
         }
       );
     } else {

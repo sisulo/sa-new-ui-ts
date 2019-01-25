@@ -114,14 +114,18 @@ div.table-data.collapsable:nth-of-type(odd) {
   margin-top: 0.1em;
 }
 
-div.col-control {
-  min-height: 1px;
-}
+/*div.col-control {*/
+  /*min-height: 1px;*/
+/*}*/
 
 .col-control i {
   font-size: 11px;
   padding: 3px;
-  border-radius: 5px;
+}
+.col-control:after {
+  content: "";
+  font-size: 11px;
+  padding: 3px;
 }
 
 div.sticky {
@@ -143,4 +147,8 @@ div.sticky {
   font-size: 14px;
   text-decoration: #0b3e6f underline;
   font-weight: 600;
+}
+
+div.no-border {
+  border-right: 0px !important;
 }
