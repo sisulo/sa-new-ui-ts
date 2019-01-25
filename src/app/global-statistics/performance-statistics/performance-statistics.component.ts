@@ -7,7 +7,6 @@ import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {PeriodService} from '../../period.service';
 import {DivTable, SortType} from '../div-table/div-table';
-import {SystemPool} from '../../common/models/SystemPool';
 
 @Component({
   selector: 'app-tab',
@@ -166,23 +165,33 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
 
   recalculateSorting(data: SystemDetail[], sortType, sortColumn) {
     const dataReturned = data.sort(
-        (poolA, poolB) => {
+      (poolA, poolB) => {
+        if (sortColumn === null) {
           if (sortType === SortType.ASC) {
-            return this.compare(poolA, poolB, sortColumn);
+            return this.compare(poolA.name, poolB.name);
           } else {
-            return this.compare(poolB, poolA, sortColumn);
+            return this.compare(poolB.name, poolA.name);
+          }
+        } else {
+          if (sortType === SortType.ASC) {
+            return this.compare(this.findMetric(poolA, sortColumn).value, this.findMetric(poolB, sortColumn).value);
+          } else {
+            return this.compare(this.findMetric(poolB, sortColumn).value, this.findMetric(poolA, sortColumn).value);
           }
         }
-      );
+      }
+    );
     return dataReturned;
   }
 
-  compare(poolA, poolB, sortColumn) {
-    if (poolA.metrics.find(metric => metric.type === sortColumn).value
-      > poolB.metrics.find(metric => metric.type === sortColumn).value) {
+  findMetric(pool: SystemDetail, metricType: SystemMetricType) {
+    return pool.metrics.find(metric => metric.type === metricType);
+  }
+
+  compare(valueA, valueB) {
+    if (valueA > valueB) {
       return 1;
-    } else if (poolA.metrics.find(metric => metric.type === sortColumn).value
-      < poolB.metrics.find(metric => metric.type === sortColumn).value) {
+    } else if (valueA < valueB) {
       return -1;
     }
     return 0;

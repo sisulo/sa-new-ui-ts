@@ -7,7 +7,7 @@
         -->
         <div class="row table-header">
           <div class="col-control"></div>
-          <div class="col">System</div>
+          <div class="col">System <i class="text-muted fa " [ngClass]="getSortIconClass(null)" (click)="setSort(null)"></i></div>
           <div class="col" *ngFor="let type of types;let column=index"
                [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="text-muted fa " [ngClass]="getSortIconClass(type)" (click)="setSort(type)"></i>
             <br/><i class="fa fa-angle-up text-red"></i> <span class="text-muted">Peak</span> <i class='fa fa-sort text-muted'></i>
