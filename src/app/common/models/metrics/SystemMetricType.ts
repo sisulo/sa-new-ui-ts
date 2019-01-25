@@ -14,5 +14,8 @@ export enum SystemMetricType {
   SLA_EVENTS = 'sla_events',
   OUT_OF_SLA_TIME = 'out_of_sla_time',
   DISBALANCE_EVENTS = 'disbalance_events',
+  PREDICTION_L1 = 'Prediction_L1',
+  PREDICTION_L2 = 'Prediction_L2',
+  PREDICTION_L3 = 'Prediction_L3',
   INFO = 'info',
 }

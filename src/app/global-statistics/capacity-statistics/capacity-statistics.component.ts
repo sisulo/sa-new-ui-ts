@@ -52,7 +52,10 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     SystemMetricType.AVAILABLE_CAPACITY,
     SystemMetricType.LOGICAL_USAGE,
     SystemMetricType.PHYSICAL_USAGE,
-    SystemMetricType.COMPRESS_RATIO
+    SystemMetricType.COMPRESS_RATIO,
+    SystemMetricType.PREDICTION_L1,
+    SystemMetricType.PREDICTION_L2,
+    SystemMetricType.PREDICTION_L3
   ];
   data: SystemPool[] = []; // Todo caching data by dataCenters
 
@@ -79,6 +82,9 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     this.labelMetrics[SystemMetricType.LOGICAL_USAGE] = 'Logical Used';
     this.labelMetrics[SystemMetricType.PHYSICAL_USAGE] = 'Physical Used';
     this.labelMetrics[SystemMetricType.COMPRESS_RATIO] = 'Compression Ratio';
+    this.labelMetrics[SystemMetricType.PREDICTION_L1] = 'L1';
+    this.labelMetrics[SystemMetricType.PREDICTION_L2] = 'L2';
+    this.labelMetrics[SystemMetricType.PREDICTION_L3] = 'L3';
   }
 
   ngOnInit(): void {
