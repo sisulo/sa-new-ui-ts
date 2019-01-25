@@ -3,13 +3,12 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../metric.service';
 import {BusService} from '../bus.service';
 import {SystemPool} from '../../common/models/SystemPool';
-import {LocalStorage} from 'ngx-store';
 import {AggregatedStatisticsService} from './aggregated-statistics.service';
 import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
 import {PeriodService} from '../../period.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemDetail} from '../../common/models/SystemDetail';
-import {DivTable, SortType} from '../div-table/div-table';
+import {SortType} from '../div-table/div-table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {DivTableGrouped} from '../div-table/div-table-grouped';
 
@@ -46,6 +45,7 @@ class MetricLabels {
 })
 export class CapacityStatisticsComponent extends DivTableGrouped implements OnInit {
 
+  dataWidth = 80;
   types = [
     SystemMetricType.PHYSICAL_SUBS,
     SystemMetricType.PHYSICAL_CAPACITY,
@@ -237,9 +237,6 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
   }
 
 
-
-
-
   getData() {
     return this.data;
   }
@@ -289,5 +286,9 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
       return -1;
     }
     return 0;
+  }
+
+  getWidth() {
+    return 'width: ' + this.dataWidth / this.types.length + '%';
   }
 }

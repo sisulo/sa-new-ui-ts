@@ -19,19 +19,19 @@ div.collapsable:hover, .table-data .highlightColumn {
 
 /*** Layout table ***/
 .col-control {
-  width: 40px;
+  width: 3.5%;
   display: inline-block;
   vertical-align: middle;
 }
 
 .col {
-  width: 12.9%;
+  /*width: 13.33%;*/
   display: inline-block;
   vertical-align: middle;
 }
 
 .col-label {
-  width: 15%;
+  width: 13%;
   display: inline-block;
   /*width: 100%;*/
 }

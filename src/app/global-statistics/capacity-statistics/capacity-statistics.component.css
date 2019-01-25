@@ -9,6 +9,9 @@
 .alert-amber {
   color:#db8b0b;
 }
+.col {
+  width: 13.33%;
+}
 
 /*** Aggregated values widget ***/
 div.agg-vals {
