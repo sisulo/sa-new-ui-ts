@@ -302,8 +302,4 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     }
     return 0;
   }
-
-  getWidth() {
-    return 'width: ' + this.dataWidth / this.types.length + '%';
-  }
 }

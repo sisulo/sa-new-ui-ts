@@ -6,9 +6,9 @@ td i {
   padding: 0.25em;
 }
 .col {
-  width: 13.33%;
+  width: 13.78%;
 }
 .table-data.row {
-  margin: 20px 0px 20px 0px;
-  border: 3px gray solid;
+  margin: 20px -15px 20px -15px;
+  border: 3px #EAEAEA solid;
 }

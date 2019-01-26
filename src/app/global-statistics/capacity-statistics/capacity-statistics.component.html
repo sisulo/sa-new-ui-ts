@@ -53,7 +53,7 @@
           <!---->
           <!--POOL ROWS-->
           <!---->
-          <div *ngFor="let pool of data[i].pools" class="table-data row collapsable"
+          <div *ngFor="let pool of data[i].pools" class="table-data row striped-row collapsable"
                [class.selectedRow]="isSelectedPool(pool.name)" [@slideInOut]="isCollapsed(system.name)">
             <div class="col-val col-control"><i
               [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"

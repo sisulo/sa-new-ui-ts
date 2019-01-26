@@ -18,6 +18,7 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
   alertsDefinition = [];
+  sortByPeak = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -163,6 +164,20 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     this.data = data;
   }
 
+  setPeakSort(column, isPeak) {
+    this.sortByPeak = isPeak;
+    super.setSort(column);
+  }
+
+  getPeakSortIconClass(column: SystemMetricType, isPeak: boolean) {
+    const classIcon = this.getSortIconClass(column);
+    if (isPeak === this.sortByPeak) {
+      return classIcon;
+    } else {
+      return 'fa-sort';
+    }
+  }
+
   recalculateSorting(data: SystemDetail[], sortType, sortColumn) {
     const dataReturned = data.sort(
       (poolA, poolB) => {
@@ -174,9 +189,17 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
           }
         } else {
           if (sortType === SortType.ASC) {
-            return this.compare(this.findMetric(poolA, sortColumn).value, this.findMetric(poolB, sortColumn).value);
+            if (this.sortByPeak === true) {
+              return this.compare(this.findMetric(poolA, sortColumn).peak, this.findMetric(poolB, sortColumn).peak);
+            } else {
+              return this.compare(this.findMetric(poolA, sortColumn).value, this.findMetric(poolB, sortColumn).value);
+            }
           } else {
-            return this.compare(this.findMetric(poolB, sortColumn).value, this.findMetric(poolA, sortColumn).value);
+            if (this.sortByPeak === true) {
+              return this.compare(this.findMetric(poolB, sortColumn).peak, this.findMetric(poolA, sortColumn).peak);
+            } else {
+              return this.compare(this.findMetric(poolB, sortColumn).value, this.findMetric(poolA, sortColumn).value);
+            }
           }
         }
       }

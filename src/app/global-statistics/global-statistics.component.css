@@ -97,7 +97,7 @@ div.table-group-header {
   border-bottom: 3px solid #EAEAEA;
 }
 
-div.table-data.collapsable:nth-of-type(odd) {
+div.table-data.striped-row:nth-of-type(odd) {
   background-color: #F0F0F0;
 }
 
