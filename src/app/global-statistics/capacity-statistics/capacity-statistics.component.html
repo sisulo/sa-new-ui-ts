@@ -41,7 +41,7 @@
                                         (click)="addCollapsed(system.name)"
                                         [tooltip]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i></div>
             <div class="col-val col-control">
-              <i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation text-orange"></i>
+              <i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation" [ngClass]="getSystemAlertType(system.name)"></i>
             </div>
             <div class="col-val col-label"><span class="system-name">{{ system.name }}</span></div>
             <div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">
@@ -60,7 +60,7 @@
                 [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
                 (click)="selectPool(pool.name, system.name)"></i></div>
               <div class="col-val col-control">
-                <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation text-orange"></i>
+                <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation" [ngClass]="getPoolAlertType(pool)"></i>
               </div>
               <div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>
               <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"

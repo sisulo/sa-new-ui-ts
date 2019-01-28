@@ -54,9 +54,10 @@
                  (mouseout)="setCurrentColumn(-1)"
                  (mouseover)="setCurrentColumn(column)"
                  [class.highlightColumn]="isCurrentColumn(column)" hide-delay="0"
+
                  show-delay="500">
               <span>
-                <span class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
+                <span class="metric-value">{{getFormattedMetric(pool.metrics, type)}}</span>
                 <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
               </span>
             </div>

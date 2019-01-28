@@ -7,6 +7,8 @@ import {BusService} from '../bus.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemPool} from '../../common/models/SystemPool';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {DateUtil} from '../utils/DateUtils';
+import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 
 
 @Component({
@@ -101,4 +103,11 @@ export class DpSlaComponent extends DivTableGrouped implements OnInit {
     return this.data;
   }
 
+  getFormattedMetric(metrics: SystemMetric[], type: SystemMetricType) {
+    if (type === SystemMetricType.OUT_OF_SLA_TIME) {
+      return DateUtil.transform(this.getMetric(metrics, type).value);
+    } else {
+      return this.getMetric(metrics, type).value;
+    }
+  }
 }

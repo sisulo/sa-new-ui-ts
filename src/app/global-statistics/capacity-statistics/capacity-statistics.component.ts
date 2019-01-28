@@ -190,6 +190,26 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     return this.data.find(system => system.name === systemName);
   }
 
+  getSystemAlertType(systemName: string): string {
+    const alertDef = this.alertsDefinition
+      .sort((alertA, alertB) => this.compare(alertB.threshold.alertType, alertA.threshold.alertType))
+      .find(
+        definition => {
+          const systemPool = this.getSystemPools(systemName);
+          if (systemPool !== undefined) {
+            return systemPool.pools.find(pool => this.checkAlert(pool, definition)) !== undefined;
+          }
+          return false;
+        }
+      );
+    console.log(systemName);
+    console.log(alertDef);
+    if (alertDef !== undefined) {
+      return alertDef.threshold.alertType;
+    }
+
+    return 'alert-ok';
+  }
   isAlertingSystem(systemName: string): boolean {
     if (this.data.length > 0) {
       return this.alertsDefinition
@@ -204,6 +224,17 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
         ) !== undefined;
     }
     return false;
+  }
+
+  getPoolAlertType(systemPool: SystemDetail): string {
+    const alertDef = this.alertsDefinition
+      .find(definition => {
+        return this.checkAlert(systemPool, definition);
+      });
+    if(alertDef !== undefined) {
+      return alertDef.threshold.alertType;
+    }
+    return 'alert-ok';
   }
 
   isAlertingPool(systemPool: SystemDetail) {
@@ -225,6 +256,7 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
 
   getAlertType(systemPool: SystemDetail, type: SystemMetricType) {
     const alertDefinition = this.alertsDefinition
+      .sort((alertA, alertB) => this.compare(alertB.threshold.alertType, alertA.threshold.alertType))
       .find(definition => {
         return this.checkAlert(systemPool, definition) && definition.type === type;
       });
