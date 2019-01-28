@@ -28,8 +28,8 @@ class MetricLabels {
   styleUrls: ['./capacity-statistics.component.css', '../global-statistics.component.css'],
   animations: [
     trigger('slideInOut', [
-      state('true', style({height: '0px', display: 'none', opacity: 0})),
-      state('false', style({height: '*', opacity: 1})),
+      state('true', style({height: '0px', overflow: 'hidden', margin: '0'})),
+      state('false', style({'height': '*', overflow: 'hidden', margin: '0'})),
       transition('1 => 0', animate('500ms ease-in')),
       transition('0 => 1', animate('500ms ease-out'))
     ]),

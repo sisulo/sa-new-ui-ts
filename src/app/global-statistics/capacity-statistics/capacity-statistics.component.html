@@ -53,24 +53,26 @@
           <!---->
           <!--POOL ROWS-->
           <!---->
-          <div *ngFor="let pool of data[i].pools" class="table-data row striped-row collapsable"
-               [class.selectedRow]="isSelectedPool(pool.name)" [@slideInOut]="isCollapsed(system.name)">
-            <div class="col-val col-control"><i
-              [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
-              (click)="selectPool(pool.name, system.name)"></i></div>
-            <div class="col-val col-control">
-              <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation text-orange"></i>
-            </div>
-            <div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>
-            <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
-                 (mouseout)="setCurrentColumn(-1)"
-                 (mouseover)="setCurrentColumn(column)"
-                 [class.highlightColumn]="isCurrentColumn(column)" [tooltip]="getMetricTooltip(pool, type)" hide-delay="0"
-                 show-delay="500">
-              <span [className]="getAlertType(pool, type)">
-                <span class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
-                <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
-              </span>
+          <div class="" [@slideInOut]="isCollapsed(system.name)">
+            <div *ngFor="let pool of data[i].pools" class="table-data row striped-row collapsable"
+                 [class.selectedRow]="isSelectedPool(pool.name)" >
+              <div class="col-val col-control"><i
+                [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
+                (click)="selectPool(pool.name, system.name)"></i></div>
+              <div class="col-val col-control">
+                <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation text-orange"></i>
+              </div>
+              <div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>
+              <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
+                   (mouseout)="setCurrentColumn(-1)"
+                   (mouseover)="setCurrentColumn(column)"
+                   [class.highlightColumn]="isCurrentColumn(column)" [tooltip]="getMetricTooltip(pool, type)" hide-delay="0"
+                   show-delay="500">
+                <span [className]="getAlertType(pool, type)">
+                  <span class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
+                  <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>

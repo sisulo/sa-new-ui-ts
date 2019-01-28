@@ -12,7 +12,10 @@
 .col {
   width: 8.88%;
 }
-
+.capacity-table .row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
 /*** Aggregated values widget ***/
 div.agg-vals {
   margin-top: 25px;
