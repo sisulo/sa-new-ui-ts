@@ -47,10 +47,10 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(
       params => {
-        let id = +params.get('id');
-        if (id === 0) {
-          id = 1;
-        }
+        const id = +params.get('id');
+        // if (id === 0) {
+        //   id = 1;
+        // }
         this.data = this.getTableData(id);
         this.bus.announceDatacenter(id);
       }
