@@ -22,30 +22,30 @@ export class MetricService {
   }
 
   getInfrastructureStats(): Observable<InfrastructureDto> {
-    const url = environment.metricsBaseUrl + 'infrastructureMetric.json';
+    const url = this.buildUrl(environment.metricsBaseUrl, 'infrastructureMetric.json') ;
     return this.http.get<InfrastructureDto>(url);
   }
 
   getDatacenters(): Observable<DatacenterDto> {
-    const url = environment.metricsBaseUrl + 'datacenters.json';
+    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenters.json');
     return this.http.get<DatacenterDto>(url);
   }
 
   getPerformanceStatistics(id: number, period: PeriodType): Observable<PerformanceStatisticsDto> {
-    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/performance' + this.getSuffix(period) + '.json';
+    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/perf' + this.getSuffix(period) + '.json');
     return this.http.get<PerformanceStatisticsDto>(url);
   }
 
   getCapacityStatistics(id: number): Observable<CapacityStatisticsDto> {
-    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/capacity.json';
+    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/capacity.json');
     return this.http.get<CapacityStatisticsDto>(url);
   }
   getDpSlaStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
-    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/dp-sla' + this.getSuffix(period) + '.json';
+    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/dp' + this.getSuffix(period) + '.json');
     return this.http.get<CapacityStatisticsDto>(url);
   }
   getAdaptersStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
-    const url = environment.metricsBaseUrl + 'datacenter/' + id + '/adapters' + this.getSuffix(period) + '.json';
+    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/cha' + this.getSuffix(period) + '.json');
     return this.http.get<CapacityStatisticsDto>(url);
   }
 
@@ -53,14 +53,21 @@ export class MetricService {
     let suffix = '';
     switch (period) {
       case PeriodType.WEEK:
-        suffix = '-weekly';
+        suffix = '_week';
         break;
       case PeriodType.MONTH:
-        suffix = '-monthly';
+        suffix = '_month';
         break;
       default:
-        suffix = '';
+        suffix = '_day';
     }
     return suffix;
+  }
+
+  private buildUrl(baseUrl, basePath) {
+    return baseUrl + basePath + '?t=' + this.generateSaltValue();
+  }
+  private generateSaltValue(): string {
+    return Math.random().toString(36).substring(2, 15);
   }
 }
