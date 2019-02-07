@@ -5,7 +5,6 @@ import {MetricService} from '../../metric.service';
 import {BusService} from '../bus.service';
 import {LocalStorage} from 'ngx-store';
 import {ItemKey} from '../capacity-statistics/capacity-statistics.component';
-import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
 import {SystemDetail} from '../../common/models/SystemDetail';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 
@@ -20,6 +19,11 @@ class CollapsedItems {
 export abstract class DivTableGrouped extends DivTable {
 
   data: any[] = [];
+  predictions: SystemMetricType[] = [
+    SystemMetricType.PREDICTION_L1,
+    SystemMetricType.PREDICTION_L2,
+    SystemMetricType.PREDICTION_L3
+  ];
 
   @LocalStorage() selectedPools: SelectedItems = {};
   @LocalStorage() collapsedRows: CollapsedItems = {};
@@ -97,6 +101,9 @@ export abstract class DivTableGrouped extends DivTable {
 
   getMetricTooltip(systemPool: SystemDetail, type: SystemMetricType) {
     const tooltip = this.getAlertMessage(systemPool, type);
+    if (this.predictions.includes(type)) {
+      return 'Prediction of "Physical usage" metric threshold reached in days';
+    }
     if (tooltip === '') {
       return this.getColumnLabel(type);
     }
