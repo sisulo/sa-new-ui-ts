@@ -47,14 +47,14 @@
             <div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">
               <div *ngFor="let type of types"
                    [tooltip]="getColumnLabel(type)" hide-delay="0" show-delay="300"
-                   class="col-val col">{{this.getSystemStatistics(system.name).getValue(type).toFixed(2)}}</div>
+                   class="col-val col"><span *ngIf="this.getSystemStatistics(system.name).getValue(type) !== undefined">{{this.getSystemStatistics(system.name).getValue(type).toFixed(2)}}</span></div>
             </div>
           </div>
           <!---->
           <!--POOL ROWS-->
           <!---->
-          <div class="" [@slideInOut]="isCollapsed(system.name)">
-            <div *ngFor="let pool of data[i].pools" class="table-data row striped-row collapsable"
+          <div class="row" [@slideInOut]="isCollapsed(system.name)">
+            <div *ngFor="let pool of data[i].pools" class="table-data striped-row collapsable"
                  [class.selectedRow]="isSelectedPool(pool.name)" >
               <div class="col-val col-control"><i
                 [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
@@ -88,7 +88,7 @@
           </div>
           <div class="col" *ngFor="let type of types">
             <div class="agg-name">{{getColumnLabel(type)}}</div>
-            <div class="agg-value">{{this.getSystemStatistics('all').getValue(type).toFixed(2)}}</div>
+            <div class="agg-value"><span *ngIf="this.getSystemStatistics('all').getValue(type) !== undefined">{{this.getSystemStatistics('all').getValue(type).toFixed(2)}}</span></div>
           </div>
         </div>
       </div>

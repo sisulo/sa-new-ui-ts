@@ -82,9 +82,9 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     this.labelMetrics[SystemMetricType.LOGICAL_USAGE] = 'Logical Used';
     this.labelMetrics[SystemMetricType.PHYSICAL_USAGE] = 'Physical Used';
     this.labelMetrics[SystemMetricType.COMPRESS_RATIO] = 'Compression Ratio';
-    this.labelMetrics[SystemMetricType.PREDICTION_L1] = 'L1';
-    this.labelMetrics[SystemMetricType.PREDICTION_L2] = 'L2';
-    this.labelMetrics[SystemMetricType.PREDICTION_L3] = 'L3';
+    this.labelMetrics[SystemMetricType.PREDICTION_L1] = 'Reach 80%';
+    this.labelMetrics[SystemMetricType.PREDICTION_L2] = 'Reach 85%';
+    this.labelMetrics[SystemMetricType.PREDICTION_L3] = 'Reach 90%';
   }
 
   ngOnInit(): void {

@@ -36,6 +36,11 @@ div.collapsable:hover, .table-data .highlightColumn {
   /*width: 100%;*/
 }
 
+.capacity-table .row {
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
 /*** Table header ***/
 
 div.table-header {
@@ -75,7 +80,7 @@ div.table-header > div.col-control {
 }
 
 div.table-group-header {
-  margin-bottom: 2em;
+  margin-bottom: 5px;
 }
 
 .table-group-header > div:first-child {

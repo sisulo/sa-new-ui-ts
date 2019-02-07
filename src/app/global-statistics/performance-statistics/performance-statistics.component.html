@@ -7,15 +7,16 @@
         -->
         <div class="row table-header">
           <div class="col-control"></div>
-          <div class="col">System <i class="text-muted fa " [ngClass]="getSortIconClass(null)" (click)="setSort(null)"></i></div>
+          <div class="col">System <i class="text-muted fa sort-icon-right" [ngClass]="getSortIconClass(null)" (click)="setSort(null)"></i></div>
           <div class="col" *ngFor="let type of types;let column=index"
-               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="text-muted fa " [ngClass]="getPeakSortIconClass(type, false)" (click)="setPeakSort(type, false)"></i>
-            <br/><i class="fa fa-angle-up text-red"></i> <span class="text-muted">Peak</span> <i class='fa fa-sort text-muted' [ngClass]="getPeakSortIconClass(type, true)" (click)="setPeakSort(type, true)"></i>
+               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="text-muted fa sort-icon-right" [ngClass]="getPeakSortIconClass(type, false)" (click)="setPeakSort(type, false)"></i>
+            <br/><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="text-muted">Peak</span> <i class='fa fa-sort text-muted sort-icon-right' [ngClass]="getPeakSortIconClass(type, true)" (click)="setPeakSort(type, true)"></i>
           </div>
         </div>
           <!--POOL ROWS-->
           <!---->
-          <div *ngFor="let system of data" class="table-data row">
+        <div class="row">
+          <div *ngFor="let system of data" class="table-data striped-row row">
             <div class="col-val col-control">
               <i *ngIf="isAlertingSystem(system.name)" tooltip="Warning for one or more metrics" class="fas fa-exclamation text-orange"></i>
             </div>
@@ -27,6 +28,7 @@
             </div>
           </div>
         </div>
+      </div>
     </div>
   </div>
 </div>

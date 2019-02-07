@@ -13,7 +13,7 @@
                [title]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
           </div>
           <div class="col-label">
-            System
+            System <i class="text-muted fa " [ngClass]="getSortIconClass(null)" (click)="setSort(null)"></i>
           </div>
           <div class="col" *ngFor="let type of types;let column=index"
                [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="text-muted fa " [ngClass]="getSortIconClass(type)" (click)="setSort(type)"></i></div>
@@ -45,20 +45,22 @@
           <!---->
           <!--POOL ROWS-->
           <!---->
-          <div *ngFor="let pool of data[i].pools" class="table-data row collapsable"
-               [@slideInOut]="isCollapsed(system.name)">
-            <div class="col-val col-control">
-            </div>
-            <div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>
-            <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
-                 (mouseout)="setCurrentColumn(-1)"
-                 (mouseover)="setCurrentColumn(column)"
-                 [class.highlightColumn]="isCurrentColumn(column)" hide-delay="0"
-                 show-delay="500">
-              <span>
-                <span class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
-                <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
-              </span>
+          <div class="row" [@slideInOut]="isCollapsed(system.name)">
+            <div *ngFor="let pool of data[i].pools" class="table-data striped-row collapsable"
+                 [@slideInOut]="isCollapsed(system.name)">
+              <div class="col-val col-control">
+              </div>
+              <div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>
+              <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
+                   (mouseout)="setCurrentColumn(-1)"
+                   (mouseover)="setCurrentColumn(column)"
+                   [class.highlightColumn]="isCurrentColumn(column)" hide-delay="0"
+                   show-delay="500">
+                <span>
+                  <span class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
+                  <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
+                </span>
+              </div>
             </div>
           </div>
         </div>
