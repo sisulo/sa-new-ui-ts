@@ -32,8 +32,7 @@ export abstract class DivTableGrouped extends DivTable {
     protected route: ActivatedRoute,
     protected router: Router,
     protected periodService: PeriodService,
-    protected metricService: MetricService,
-    protected bus: BusService
+    protected metricService: MetricService
   ) {
     super();
   }

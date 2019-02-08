@@ -44,10 +44,9 @@ export class AdaptersComponent extends DivTableGrouped implements OnInit {
     protected route: ActivatedRoute,
     protected router: Router,
     protected periodService: PeriodService,
-    protected metricService: MetricService,
-    protected bus: BusService,
+    protected metricService: MetricService
   ) {
-    super(route, router, periodService, metricService, bus);
+    super(route, router, periodService, metricService);
 
     this.labelMetrics[SystemMetricType.DISBALANCE_EVENTS] = 'Disbalance events';
     this.labelMetrics[SystemMetricType.INFO] = 'Info';
@@ -58,15 +57,6 @@ export class AdaptersComponent extends DivTableGrouped implements OnInit {
     this.route.paramMap.subscribe(
       params => {
         const id = +params.get('id');
-        // if (id === 0) {
-        //   id = 1;
-        // }
-        this.internalInit(id);
-        this.bus.announceDatacenter(id);
-      }
-    );
-    this.bus.datacenterAnnouncement$.subscribe(
-      id => {
         this.internalInit(id);
       }
     );

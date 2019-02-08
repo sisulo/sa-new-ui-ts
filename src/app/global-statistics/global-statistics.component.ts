@@ -28,8 +28,9 @@ export class GlobalStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.bus.datacenterAnnouncement$.subscribe(
-      id => {
+    this.route.paramMap.subscribe(
+      params => {
+        const id = +params.get('id');
         this.getDatacenters(id);
       }
     );
@@ -40,7 +41,7 @@ export class GlobalStatisticsComponent implements OnInit {
 
   activeTab(id: number) {
     this.currentTab = id;
-    this.bus.announceTab(id);
+    this.router.navigate(['/global-statistics/', id, this.context]);
   }
 
   isCurrentTab(id: number): boolean {

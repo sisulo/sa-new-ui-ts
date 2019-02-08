@@ -24,7 +24,6 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private metricService: MetricService,
-    private bus: BusService,
     private periodService: PeriodService
   ) {
     super();
@@ -48,15 +47,6 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     this.route.paramMap.subscribe(
       params => {
         const id = +params.get('id');
-        // if (id === 0) {
-        //   id = 1;
-        // }
-        this.data = this.getTableData(id);
-        this.bus.announceDatacenter(id);
-      }
-    );
-    this.bus.datacenterAnnouncement$.subscribe(
-      id => {
         this.data = this.getTableData(id);
       }
     );

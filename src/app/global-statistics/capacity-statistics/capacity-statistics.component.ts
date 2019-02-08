@@ -72,10 +72,9 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     protected router: Router,
     protected periodService: PeriodService,
     protected metricService: MetricService,
-    protected bus: BusService,
-    private aggregateService: AggregatedStatisticsService,
+    private aggregateService: AggregatedStatisticsService
   ) {
-    super(route, router, periodService, metricService, bus);
+    super(route, router, periodService, metricService);
     this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical Capacity';
     this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
     this.labelMetrics[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
@@ -91,15 +90,6 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     this.route.paramMap.subscribe(
       params => {
         const id = +params.get('id');
-        // if (id === 0) {
-        //   id = 1;
-        // }
-        this.internalInit(id);
-        this.bus.announceDatacenter(id);
-      }
-    );
-    this.bus.datacenterAnnouncement$.subscribe(
-      id => {
         this.internalInit(id);
       }
     );
