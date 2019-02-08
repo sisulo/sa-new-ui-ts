@@ -3,7 +3,6 @@ import {DivTableGrouped} from '../div-table/div-table-grouped';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../period.service';
 import {MetricService, PeriodType} from '../../metric.service';
-import {BusService} from '../bus.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemPool} from '../../common/models/SystemPool';
 import {animate, state, style, transition, trigger} from '@angular/animations';

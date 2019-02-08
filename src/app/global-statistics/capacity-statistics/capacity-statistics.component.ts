@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../metric.service';
-import {BusService} from '../bus.service';
 import {SystemPool} from '../../common/models/SystemPool';
 import {AggregatedStatisticsService} from './aggregated-statistics.service';
 import {SystemAggregatedStatistics} from '../utils/WeightedArithmeticMean';
