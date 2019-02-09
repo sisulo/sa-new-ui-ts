@@ -86,7 +86,7 @@
             <div class="agg-name"># Selected</div>
             <div class="agg-value">{{getSelectedCount()}}</div>
           </div>
-          <div class="col" *ngFor="let type of types">
+          <div class="col" *ngFor="let type of aggregatedTypes">
             <div class="agg-name">{{getColumnLabel(type)}}</div>
             <div class="agg-value"><span *ngIf="this.getSystemStatistics('all').getValue(type) !== undefined">{{this.getSystemStatistics('all').getValue(type).toFixed(2)}}</span></div>
           </div>

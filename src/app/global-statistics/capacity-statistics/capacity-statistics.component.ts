@@ -56,6 +56,14 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     SystemMetricType.PREDICTION_L2,
     SystemMetricType.PREDICTION_L3
   ];
+  aggregatedTypes = [
+    SystemMetricType.PHYSICAL_SUBS,
+    SystemMetricType.PHYSICAL_CAPACITY,
+    SystemMetricType.AVAILABLE_CAPACITY,
+    SystemMetricType.LOGICAL_USAGE,
+    SystemMetricType.PHYSICAL_USAGE,
+    SystemMetricType.COMPRESS_RATIO,
+  ];
   data: SystemPool[] = []; // Todo caching data by dataCenters
 
   poolMetrics = {};
