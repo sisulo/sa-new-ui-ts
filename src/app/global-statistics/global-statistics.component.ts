@@ -28,14 +28,12 @@ export class GlobalStatisticsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(
-      params => {
-        const id = +params.get('id');
-        this.getDatacenters(id);
-      }
+    this.bus.datacenterAnnouncement$.subscribe(
+      id => this.getDatacenters(id)
+
     );
-    this.route.url.subscribe(
-      url => this.loadContext()
+    this.bus.contextAnnouncement$.subscribe(
+      context => this.context = context
     );
   }
 
@@ -55,31 +53,5 @@ export class GlobalStatisticsComponent implements OnInit {
         this.currentTab = currentTab;
       }
     );
-  }
-
-  private loadContext() {
-    if (this.route.children.length > 0) {
-      const childComponent = this.route.children[0].component;
-      let componentName = '';
-      if (typeof childComponent !== 'string') {
-        componentName = childComponent.name;
-      }
-      switch (componentName) {
-        case CapacityStatisticsComponent.name:
-          this.context = 'capacity';
-          break;
-        case PerformanceStatisticsComponent.name:
-          this.context = 'performance';
-          break;
-        case DpSlaComponent.name:
-          this.context = 'dpSla';
-          break;
-        case AdaptersComponent.name:
-          this.context = 'adapters';
-          break;
-        default:
-          throw new Error('Unknown context');
-      }
-    }
   }
 }

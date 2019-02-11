@@ -8,6 +8,7 @@ import {SystemPool} from '../../common/models/SystemPool';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {SortType} from '../div-table/div-table';
 import {SystemDetail} from '../../common/models/SystemDetail';
+import {BusService} from '../bus.service';
 
 
 @Component({
@@ -43,9 +44,10 @@ export class AdaptersComponent extends DivTableGrouped implements OnInit {
     protected route: ActivatedRoute,
     protected router: Router,
     protected periodService: PeriodService,
-    protected metricService: MetricService
+    protected metricService: MetricService,
+    protected bus: BusService
   ) {
-    super(route, router, periodService, metricService);
+    super(route, router, periodService, metricService, bus);
 
     this.labelMetrics[SystemMetricType.DISBALANCE_EVENTS] = 'Disbalance events';
     this.labelMetrics[SystemMetricType.INFO] = 'Info';
@@ -56,6 +58,8 @@ export class AdaptersComponent extends DivTableGrouped implements OnInit {
     this.route.paramMap.subscribe(
       params => {
         const id = +params.get('id');
+        this.bus.announceDatacenter(id);
+        this.bus.announceContext('adapters');
         this.internalInit(id);
       }
     );
@@ -74,8 +78,6 @@ export class AdaptersComponent extends DivTableGrouped implements OnInit {
 
   recalculateSorting(data: SystemPool[], sortType, sortColumn): SystemPool[] {
     let dataReturned = [];
-    console.log(sortColumn);
-    console.log(sortType);
     if (sortColumn === null) {
       dataReturned = data.map(system => {
         if (sortType === SortType.ASC) {

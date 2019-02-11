@@ -10,6 +10,7 @@ import {DateUtil} from '../utils/DateUtils';
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SortType} from '../div-table/div-table';
 import {SystemDetail} from '../../common/models/SystemDetail';
+import {BusService} from '../bus.service';
 
 
 @Component({
@@ -46,8 +47,9 @@ export class DpSlaComponent extends DivTableGrouped implements OnInit {
     protected router: Router,
     protected periodService: PeriodService,
     protected metricService: MetricService,
+    protected bus: BusService
   ) {
-    super(route, router, periodService, metricService);
+    super(route, router, periodService, metricService, bus);
 
     this.labelMetrics[SystemMetricType.SLA_EVENTS] = 'SLA Events';
     this.labelMetrics[SystemMetricType.OUT_OF_SLA_TIME] = 'Out of SLA Time';
@@ -58,6 +60,8 @@ export class DpSlaComponent extends DivTableGrouped implements OnInit {
     this.route.paramMap.subscribe(
       params => {
         const id = +params.get('id');
+        this.bus.announceDatacenter(id);
+        this.bus.announceContext('dpSla');
         this.internalInit(id);
       }
     );

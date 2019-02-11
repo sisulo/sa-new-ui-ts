@@ -10,6 +10,7 @@ import {SystemDetail} from '../../common/models/SystemDetail';
 import {SortType} from '../div-table/div-table';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {DivTableGrouped} from '../div-table/div-table-grouped';
+import {BusService} from '../bus.service';
 
 
 export class ItemKey {
@@ -79,9 +80,10 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     protected router: Router,
     protected periodService: PeriodService,
     protected metricService: MetricService,
-    private aggregateService: AggregatedStatisticsService
+    private aggregateService: AggregatedStatisticsService,
+    protected bus: BusService
   ) {
-    super(route, router, periodService, metricService);
+    super(route, router, periodService, metricService, bus);
     this.labelMetrics[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical Capacity';
     this.labelMetrics[SystemMetricType.PHYSICAL_SUBS] = 'Physical Subs';
     this.labelMetrics[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
@@ -97,6 +99,8 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     this.route.paramMap.subscribe(
       params => {
         const id = +params.get('id');
+        this.bus.announceDatacenter(id);
+        this.bus.announceContext('capacity');
         this.internalInit(id);
       }
     );
@@ -199,8 +203,6 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
           return false;
         }
       );
-    console.log(systemName);
-    console.log(alertDef);
     if (alertDef !== undefined) {
       return alertDef.threshold.alertType;
     }
@@ -228,7 +230,7 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
       .find(definition => {
         return this.checkAlert(systemPool, definition);
       });
-    if(alertDef !== undefined) {
+    if (alertDef !== undefined) {
       return alertDef.threshold.alertType;
     }
     return 'alert-ok';
@@ -282,8 +284,6 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
 
   recalculateSorting(data: SystemPool[], sortType, sortColumn): SystemPool[] {
     let dataReturned = [];
-    console.log(sortColumn);
-    console.log(sortType);
     if (sortColumn === null) {
       dataReturned = data.map(system => {
         if (sortType === SortType.ASC) {

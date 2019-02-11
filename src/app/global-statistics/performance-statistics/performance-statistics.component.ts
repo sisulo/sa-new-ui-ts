@@ -6,6 +6,7 @@ import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {PeriodService} from '../../period.service';
 import {DivTable, SortType} from '../div-table/div-table';
+import {BusService} from '../bus.service';
 
 @Component({
   selector: 'app-tab',
@@ -23,7 +24,8 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private metricService: MetricService,
-    private periodService: PeriodService
+    private periodService: PeriodService,
+    private bus: BusService
   ) {
     super();
 
@@ -46,6 +48,8 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     this.route.paramMap.subscribe(
       params => {
         const id = +params.get('id');
+        this.bus.announceDatacenter(id);
+        this.bus.announceContext('performance');
         this.data = this.getTableData(id);
       }
     );
