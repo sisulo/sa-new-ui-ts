@@ -2,6 +2,7 @@ import {DivTable} from './div-table';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../period.service';
 import {MetricService} from '../../metric.service';
+import {BusService} from '../bus.service';
 import {LocalStorage} from 'ngx-store';
 import {ItemKey} from '../capacity-statistics/capacity-statistics.component';
 import {SystemDetail} from '../../common/models/SystemDetail';

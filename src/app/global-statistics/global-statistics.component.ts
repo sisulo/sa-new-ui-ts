@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Datacenter} from '../common/models/Datacenter';
 import {MetricService} from '../metric.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {BusService} from './bus.service';
 import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
 import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
 import {DpSlaComponent} from './dp-sla/dp-sla.component';
@@ -20,6 +21,7 @@ export class GlobalStatisticsComponent implements OnInit {
 
   constructor(
     private metricService: MetricService,
+    private bus: BusService,
     private route: ActivatedRoute,
     private router: Router
   ) {
