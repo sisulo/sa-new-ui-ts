@@ -3,6 +3,7 @@ import {MetricService} from '../../metric.service';
 import {Metric} from '../../common/models/metrics/Metric';
 import {System} from '../../common/models/System';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
+import {Alert} from '../../common/models/metrics/Alert';
 
 declare var jquery: any;
 declare var $: any;
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
   }
   metricLabels = {};
   metrics: Metric[] = [];
+  alerts: Alert[] = [];
   datacenters;
   registeredSystems;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
@@ -25,13 +27,14 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.metricLabels[SystemMetricType.WORKLOAD] = 'Workload';
-    this.metricLabels[SystemMetricType.RESPONSE] = 'Response';
-    this.metricLabels[SystemMetricType.HDD] = 'HDD';
+    // this.metricLabels[SystemMetricType.RESPONSE] = 'Response';
+    // this.metricLabels[SystemMetricType.HDD] = 'HDD';
     this.metricLabels[SystemMetricType.TRANSFER] = 'Transfer';
-    this.metricLabels[SystemMetricType.CPU] = 'CPU';
+    // this.metricLabels[SystemMetricType.CPU] = 'CPU';
 
     this.metricService.getInfrastructureStats().subscribe(stats => {
       this.metrics = stats.metrics;
+      this.alerts = stats.alerts;
     });
     this.metricService.getDatacenters().subscribe(
       data => {
@@ -48,9 +51,9 @@ export class DashboardComponent implements OnInit {
       return this.metricLabels[type];
   }
 
-  getColor(): string {
+  getColor(colorIndex): string {
     this.currentColor += 1;
-    return this.colors[this.currentColor % this.colors.length];
+    return this.colors[colorIndex % this.colors.length];
   }
 
   getMap(): void {
