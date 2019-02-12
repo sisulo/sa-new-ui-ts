@@ -8,12 +8,14 @@
     <span class="logo-lg"><b>Storage Analytics</b></span>
   </a>
 
+
   <!-- Header Navbar -->
   <nav class="navbar navbar-static-top" role="navigation">
     <!-- Sidebar toggle button-->
     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
       <span class="sr-only">Toggle navigation</span>
     </a>
+
     <ul [@openClose]="enable ? 'true' : 'false'"
         (@openClose.start)="onAnimationEvent($event)"
         class="nav navbar-nav navbar-left">
@@ -21,5 +23,10 @@
       <li [class.active]="isCurrentPeriod(1)"><a class="btn" (click)="setCurrentPeriod(1)">Last Week</a></li>
       <li [class.active]="isCurrentPeriod(2)"><a class="btn" (click)="setCurrentPeriod(2)">Last Month</a></li>
     </ul>
+    <div class="logo-title">
+      <img [src]="logoUrl" class="sa-logo pull-left"/>
+    </div>
   </nav>
+
+
 </header>

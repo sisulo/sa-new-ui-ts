@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {PeriodType} from '../../metric.service';
 import {PeriodService} from '../../period.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -29,6 +30,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 export class HeaderComponent implements OnInit {
 
   enable = false;
+  logoUrl = environment.logoUrl;
 
   public currentPeriod: PeriodType = PeriodType.DAY;
 
