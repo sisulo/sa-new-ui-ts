@@ -80,8 +80,6 @@ export class DpSlaComponent extends DivTableGrouped implements OnInit {
 
   recalculateSorting(data: SystemPool[], sortType, sortColumn): SystemPool[] {
     let dataReturned = [];
-    console.log(sortColumn);
-    console.log(sortType);
     if (sortColumn === null) {
       dataReturned = data.map(system => {
         if (sortType === SortType.ASC) {

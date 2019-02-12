@@ -3,10 +3,6 @@ import {Datacenter} from '../common/models/Datacenter';
 import {MetricService} from '../metric.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from './bus.service';
-import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
-import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
-import {DpSlaComponent} from './dp-sla/dp-sla.component';
-import {AdaptersComponent} from './adapters/adapters.component';
 
 @Component({
   selector: 'app-global-statistics',
