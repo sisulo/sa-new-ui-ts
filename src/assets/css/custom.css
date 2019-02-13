@@ -28,12 +28,12 @@ section.container-fluid {
 .top-part-menu {
     position: absolute;
     top: 50px;
-    height: 200px; /*Height of top frame div*/
+    height: 208px; /*Height of top frame div*/
     overflow: hidden; /*Disable scrollbars. Set to "scroll" to enable*/
 }
 .central-part-menu {
     position: fixed;
-    top: 250px; /*Set top value to HeightOfTopFrameDiv*/
+    top: 258px; /*Set top value to HeightOfTopFrameDiv*/
     width: 230px;
     bottom:1px;
     overflow: auto;

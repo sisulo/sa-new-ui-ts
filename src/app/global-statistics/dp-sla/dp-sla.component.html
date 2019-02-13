@@ -34,7 +34,7 @@
             <!--<div class="col-val col-control">-->
               <!--<i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation text-orange"></i>-->
             <!--</div>-->
-            <div class="col-val col-label"><span class="system-name">{{ system.name }}</span></div>
+            <div class="col-val col-label"><span class="system-name"><a [routerLink]="system.id | iframeUrlCreator" routerLinkActive="active">{{ system.name }}</a></span></div>
             <!--<div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">-->
             <!--<div class="ignore">-->
               <!--<div *ngFor="let type of types"-->
@@ -46,7 +46,7 @@
           <!--POOL ROWS-->
           <!---->
           <div class="row" [@slideInOut]="isCollapsed(system.name)">
-            <div *ngFor="let pool of data[i].pools" class="table-data striped-row collapsable"
+            <div *ngFor="let pool of data[i].pools" class="table-data striped-row row"
                  [@slideInOut]="isCollapsed(system.name)">
               <div class="col-val col-control">
                 </div>

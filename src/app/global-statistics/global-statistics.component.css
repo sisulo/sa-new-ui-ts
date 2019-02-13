@@ -4,11 +4,11 @@ div.collapsed ~ div.collapsable {
 }
 
 div.table-header > div.col.highlightColumn {
-  text-decoration: #3C8DBC underline;
+  text-decoration: #334369 underline;
 }
 
-div.collapsable:hover, .table-data .highlightColumn {
-  background-color: #E8F4F9 !important;
+.table-data.row:hover, .table-data .highlightColumn {
+  background-color: #b4d1ee !important;
   color: #3A738C;
 }
 
@@ -45,8 +45,9 @@ div.collapsable:hover, .table-data .highlightColumn {
 
 div.table-header {
   border: 3px #EAEAEA solid;
+  background-color: #3C8CBC;
   font-size: 13px;
-  color: #3C8DBC;
+  color: white;
   font-weight: bolder;
 }
 
@@ -103,7 +104,7 @@ div.table-group-header {
 }
 
 div.table-data.striped-row:nth-of-type(odd) {
-  background-color: #F0F0F0;
+  background-color: #f3f8fa;
 }
 
 .table-data > div {
@@ -126,6 +127,9 @@ div.table-data.striped-row:nth-of-type(odd) {
 .col-control i {
   font-size: 11px;
   padding: 3px;
+}
+.table-header .col-control i, .table-header i{
+  color: white
 }
 .col-control:after {
   content: "";

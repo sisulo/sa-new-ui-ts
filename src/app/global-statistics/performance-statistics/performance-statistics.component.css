@@ -2,7 +2,7 @@ i.sort-icon-left {
   margin-right: 5px;
 }
 i.sort-icon-right {
-  margin-left: 2px;
+  margin-left: 5px;
 }
 
 .col {
@@ -11,4 +11,7 @@ i.sort-icon-right {
 .table-data.row {
   margin: 0px 0px 5px 0px;
   border: 3px #EAEAEA solid;
+}
+.peak-label {
+  color: #c7e1f8;
 }

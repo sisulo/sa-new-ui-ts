@@ -9,8 +9,8 @@
           <div class="col-control"></div>
           <div class="col">System <i class="text-muted fa sort-icon-right" [ngClass]="getSortIconClass(null)" (click)="setSort(null)"></i></div>
           <div class="col" *ngFor="let type of types;let column=index"
-               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="text-muted fa sort-icon-right" [ngClass]="getPeakSortIconClass(type, false)" (click)="setPeakSort(type, false)"></i>
-            <br/><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="text-muted">Peak</span> <i class='fa fa-sort text-muted sort-icon-right' [ngClass]="getPeakSortIconClass(type, true)" (click)="setPeakSort(type, true)"></i>
+               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="fa sort-icon-right" [ngClass]="getPeakSortIconClass(type, false)" (click)="setPeakSort(type, false)"></i>
+            <br/><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i class='fa fa-sort sort-icon-right' [ngClass]="getPeakSortIconClass(type, true)" (click)="setPeakSort(type, true)"></i>
           </div>
         </div>
           <!--POOL ROWS-->
@@ -20,7 +20,7 @@
             <div class="col-val col-control">
               <i *ngIf="isAlertingSystem(system.name)" tooltip="Warning for one or more metrics" class="fas fa-exclamation text-orange"></i>
             </div>
-            <div class="col-val col"><span class="system-name">{{system.name}}</span></div>
+            <div class="col-val col"><span class="system-name"><a [routerLink]="system.id | iframeUrlCreator">{{system.name}}</a></span></div>
             <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
                  (mouseout)="setCurrentColumn(-1)"
                  (mouseover)="setCurrentColumn(column)"
