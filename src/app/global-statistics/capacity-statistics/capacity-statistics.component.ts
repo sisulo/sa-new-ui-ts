@@ -22,6 +22,11 @@ class MetricLabels {
   [key: string]: string;
 }
 
+class SelectedItem {
+  systemId: number;
+  poolName: number;
+}
+
 @Component({
   selector: 'app-capacity-statistics',
   templateUrl: './capacity-statistics.component.html',
@@ -137,8 +142,10 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
     return this.data;
   }
 
-  isSelectedPool(poolName: string): boolean {
-    return this.selectedPools[this.currentDataCenterId].findIndex(pool => pool.poolName === poolName) > -1;
+  isSelectedPool(poolName: string, systemName: string): boolean {
+    return this.selectedPools[this.currentDataCenterId].findIndex(
+      pool => pool.poolName === poolName && pool.systemName === systemName
+    ) > -1;
   }
 
   selectPool(poolName: string, systemName: string): void {
@@ -147,7 +154,10 @@ export class CapacityStatisticsComponent extends DivTableGrouped implements OnIn
       this.selectedPools[this.currentDataCenterId] = [];
     }
 
-    const index = this.selectedPools[this.currentDataCenterId].findIndex(pool => pool.poolName === poolName);
+    const index = this.selectedPools[this.currentDataCenterId].findIndex(
+      pool => pool.poolName === poolName && pool.systemName === systemName
+
+    );
 
     if (index >= 0) {
       this.selectedPools[this.currentDataCenterId].splice(index, 1);

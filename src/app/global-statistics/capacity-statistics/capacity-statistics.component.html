@@ -55,9 +55,9 @@
           <!---->
           <div class="row" [@slideInOut]="isCollapsed(system.name)">
             <div *ngFor="let pool of data[i].pools" class="table-data striped-row collapsable"
-                 [class.selectedRow]="isSelectedPool(pool.name)" >
+                 [class.selectedRow]="isSelectedPool(pool.name, system.name)" >
               <div class="col-val col-control"><i
-                [ngClass]="isSelectedPool(pool.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
+                [ngClass]="isSelectedPool(pool.name, system.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
                 (click)="selectPool(pool.name, system.name)"></i></div>
               <div class="col-val col-control">
                 <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation" [ngClass]="getPoolAlertType(pool)"></i>
