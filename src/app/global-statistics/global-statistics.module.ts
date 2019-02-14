@@ -4,20 +4,22 @@ import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statis
 import {GlobalStatisticsComponent} from './global-statistics.component';
 import {CommonModule} from '@angular/common';
 import {GlobalStatisticsRoutingModule} from './global-statistics-routing.module';
-import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
 import {SaCommonModule} from '../common/sa-common.module';
 import {TooltipModule} from 'ng2-tooltip-directive';
-import { DpSlaComponent } from './dp-sla/dp-sla.component';
-import { AdaptersComponent } from './adapters/adapters.component';
+import {DpSlaComponent} from './dp-sla/dp-sla.component';
+import {AdaptersComponent} from './adapters/adapters.component';
+import {SimpleUnitFormatterComponent} from './simple-unit-formatter/simple-unit-formatter.component';
+import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
 
 @NgModule({
   declarations: [
     GlobalStatisticsComponent,
     CapacityStatisticsComponent,
     PerformanceStatisticsComponent,
-    UnitFormatterComponent,
     DpSlaComponent,
     AdaptersComponent,
+    SimpleUnitFormatterComponent,
+    UnitFormatterComponent
   ],
   imports: [
     CommonModule,

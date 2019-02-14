@@ -7,6 +7,9 @@ import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {PeriodService} from '../../period.service';
 import {DivTable, SortType} from '../div-table/div-table';
 import {BusService} from '../bus.service';
+import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
+import {UnitFormatterComponent} from '../unit-formatter/unit-formatter.component';
+import {SimpleUnitFormatterComponent} from '../simple-unit-formatter/simple-unit-formatter.component';
 
 @Component({
   selector: 'app-tab',
@@ -19,6 +22,7 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
   tableData = [];
   alertsDefinition = [];
   sortByPeak = false;
+  options: SasiTableOptions = new SasiTableOptions();
 
   constructor(
     private route: ActivatedRoute,
@@ -36,12 +40,14 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     this.types.push(SystemMetricType.HDD);
     this.types.push(SystemMetricType.WRITE_PENDING);
 
-    this.labelMetrics[SystemMetricType.WORKLOAD] = 'Workload';
-    this.labelMetrics[SystemMetricType.TRANSFER] = 'Transfer';
-    this.labelMetrics[SystemMetricType.RESPONSE] = 'Response';
-    this.labelMetrics[SystemMetricType.CPU] = 'CPU';
-    this.labelMetrics[SystemMetricType.HDD] = 'HDD';
-    this.labelMetrics[SystemMetricType.WRITE_PENDING] = 'Write Pending';
+    this.options.columns.push(new SasiColumn('name', 'System', SimpleUnitFormatterComponent));
+    this.options.columns.push(new SasiColumn(SystemMetricType.WORKLOAD, 'Workload', UnitFormatterComponent));
+    this.options.columns.push(new SasiColumn(SystemMetricType.TRANSFER, 'Transfer', UnitFormatterComponent));
+    this.options.columns.push(new SasiColumn(SystemMetricType.RESPONSE, 'Response', UnitFormatterComponent));
+    this.options.columns.push(new SasiColumn(SystemMetricType.CPU, 'CPU', UnitFormatterComponent));
+    this.options.columns.push(new SasiColumn(SystemMetricType.HDD, 'HDD', UnitFormatterComponent));
+    this.options.columns.push(new SasiColumn(SystemMetricType.WRITE_PENDING, 'Write Pending', UnitFormatterComponent));
+
   }
 
   ngOnInit(): void {

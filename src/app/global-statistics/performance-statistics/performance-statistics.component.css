@@ -1,6 +1,7 @@
 i.sort-icon-left {
   margin-right: 5px;
 }
+
 i.sort-icon-right {
   margin-left: 5px;
 }
@@ -8,10 +9,12 @@ i.sort-icon-right {
 .col {
   width: 13.78%;
 }
+
 .table-data.row {
   margin: 0px 0px 5px 0px;
   border: 3px #EAEAEA solid;
 }
+
 .peak-label {
   color: #c7e1f8;
 }

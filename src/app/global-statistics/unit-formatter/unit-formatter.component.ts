@@ -1,6 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
-import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 
 @Component({
   selector: 'app-unit-formatter',
@@ -10,15 +9,24 @@ import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 export class UnitFormatterComponent implements OnInit {
 
   @Input() metric: SystemMetric;
-  // @Input() isAlert = false;
   @Input() metricLabel = '';
   @Input() alertMessage = '';
+
+  @Input() public data;
 
   constructor() { }
 
   ngOnInit() {
+    console.log(this.data);
 
+  }
 
+  // extract to abstaract class and then extends simple-unit
+  getValue(name: string) {
+    if (this.data !== null) {
+      return this.data.rawData[name] === undefined ? this.data : this.data.rawData[name];
+    }
+    return '';
   }
 
   isAlert(): boolean {
