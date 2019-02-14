@@ -9,16 +9,8 @@
       <!-- /.box-header -->
       <div class="box-body">
         <div class="row">
-          <div *ngFor="let alert of alerts;let i = index" class="col-xs-6 col-sm-3 col-md-3 col-lg-2 text-center">
-              <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
-
-                <div class="info-box-content">
-                  <span class="info-box-text">{{alert.type}}</span>
-                  <span class="info-box-number">{{alert.occurence.length}}<small></small></span>
-                </div>
-                <!-- /.info-box-content -->
-            </div>
+          <div *ngFor="let alert of alerts;let i = index" class="col-xs-6 col-sm-3 col-md-4 col-lg-4 text-center">
+            <app-info-box [value]="alert.occurence.length" [label]="getAlertLabel(alert.type)"></app-info-box>
           </div>
         </div>
         <!-- /.row -->
@@ -39,7 +31,7 @@
       <!-- /.box-header -->
       <div class="box-body">
         <div class="row">
-          <div *ngFor="let metric of metrics;let i = index" class="col-xs-6 col-sm-3 col-md-3 col-lg-2 text-center">
+          <div *ngFor="let metric of metrics;let i = index" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
             <app-knob *ngIf="metric" [sizeType]="'medium'" [metric]="metric" [label]="getMetricLabel(metric.type)" [color]="getColor(i)"></app-knob>
           </div>
         </div>

@@ -4,6 +4,7 @@ import {Metric} from '../../common/models/metrics/Metric';
 import {System} from '../../common/models/System';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {Alert} from '../../common/models/metrics/Alert';
+import {AlertType} from '../../common/models/metrics/AlertType';
 
 declare var jquery: any;
 declare var $: any;
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit {
   constructor(private metricService: MetricService) {
   }
   metricLabels = {};
+  alertLabels = {};
   metrics: Metric[] = [];
   alerts: Alert[] = [];
   datacenters;
@@ -27,10 +29,15 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.metricLabels[SystemMetricType.WORKLOAD] = 'Workload';
-    // this.metricLabels[SystemMetricType.RESPONSE] = 'Response';
-    // this.metricLabels[SystemMetricType.HDD] = 'HDD';
     this.metricLabels[SystemMetricType.TRANSFER] = 'Transfer';
-    // this.metricLabels[SystemMetricType.CPU] = 'CPU';
+
+    this.alertLabels[AlertType.CAPACITY_USAGE] = 'Capacity usage';
+    this.alertLabels[AlertType.CPU] = 'CPU';
+    this.alertLabels[AlertType.DISBALANCE_EVENTS] = 'Disbalance events';
+    this.alertLabels[AlertType.HDD] = 'HDD';
+    this.alertLabels[AlertType.RESPONSE] = 'Response';
+    this.alertLabels[AlertType.SLA_EVENTS] = 'SLA events';
+    this.alertLabels[AlertType.WRITE_PENDING] = 'Write pending';
 
     this.metricService.getInfrastructureStats().subscribe(stats => {
       this.metrics = stats.metrics;
@@ -51,6 +58,9 @@ export class DashboardComponent implements OnInit {
       return this.metricLabels[type];
   }
 
+  getAlertLabel(type: AlertType) {
+    return this.alertLabels[type];
+  }
   getColor(colorIndex): string {
     this.currentColor += 1;
     return this.colors[colorIndex % this.colors.length];

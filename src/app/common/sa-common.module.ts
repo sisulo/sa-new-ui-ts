@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 import {KnobSaComponent} from './components/knob/knob-sa.component';
 import {KnobModule} from '@xmlking/ngx-knob';
 import { IframeUrlCreatorPipe } from './utils/iframe-url-creator.pipe';
+import { InfoBoxComponent } from './components/info-box/info-box.component';
 
 @NgModule({
   declarations: [
     KnobSaComponent,
-    IframeUrlCreatorPipe
+    IframeUrlCreatorPipe,
+    InfoBoxComponent
   ],
   imports: [
     CommonModule,
@@ -15,7 +17,8 @@ import { IframeUrlCreatorPipe } from './utils/iframe-url-creator.pipe';
   ],
   exports: [
     KnobSaComponent,
-    IframeUrlCreatorPipe
+    IframeUrlCreatorPipe,
+    InfoBoxComponent
   ]
 })
 export class SaCommonModule { }
