@@ -1,5 +1,4 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
-import {SortType} from '../../../global-statistics/div-table/div-table';
 
 export class SasiColumn {
   index: string;
@@ -30,7 +29,7 @@ export class SasiTableOptions {
   public sortDefaultIcon;
   public sortColumnName: string;
   public sortType: SasiSortType;
-  public sortByRawValue: string;
+  public altSortColumnName: string;
 }
 
 export enum SasiSortType {
@@ -58,8 +57,11 @@ export class SasiTableComponent implements OnInit {
     sortAscIcon: 'fa-sort-amount-asc',
     sortDefaultIcon: 'fa-sort',
     sortType: SasiSortType.ASC,
-    sortByRawValue: null
+    altSortColumnName: null
   };
+
+  altSort = false;
+
   constructor() {
   }
 
@@ -76,15 +78,6 @@ export class SasiTableComponent implements OnInit {
     return column.label;
   }
 
-  getCell(row, columnIndex: SasiColumn): SasiCell {
-    let cellData = row[columnIndex.index];
-    if (cellData === undefined) {
-      console.error('Cannot find data in %s row, and columnIndex: %s', row.toString(), columnIndex.index);
-      cellData = null;
-    }
-    return cellData;
-  }
-
   getCellValue(row, columnIndex: SasiColumn): any {
     const cellData = this.getCell(row, columnIndex);
     return cellData !== null ? cellData.value : null;
@@ -95,18 +88,31 @@ export class SasiTableComponent implements OnInit {
     return cellData !== null ? cellData.rawData : null;
   }
 
-  getSortIconClass(column: string) {
+  getCell(row, columnIndex: SasiColumn): SasiCell {
+    let cellData = row[columnIndex.index];
+    if (cellData === undefined) {
+      console.error('Cannot find data in %s row, and columnIndex: %s', row.toString(), columnIndex.index);
+      cellData = null;
+    }
+    return cellData;
+  }
+
+  getSortIconClass(column: string, isAltSort: boolean) {
+    let sortIconClass = this.options.sortDefaultIcon;
     if (this.options.sortColumnName === column) {
       if (this.options.sortType === SasiSortType.ASC) {
-        return this.options.sortAscIcon;
+        sortIconClass = this.options.sortAscIcon;
       } else {
-        return this.options.sortDescIcon;
+        sortIconClass = this.options.sortDescIcon;
       }
+    }
+    if (this.altSort === isAltSort) {
+      return sortIconClass;
     }
     return this.options.sortDefaultIcon;
   }
 
-  setSort(column: SasiColumn, sortByRawValue: string) {
+  setSort(column: SasiColumn, isAltSort: boolean) {
     if (this.options.sortColumnName === column.index) {
       if (this.options.sortType === SasiSortType.ASC) {
         this.options.sortType = SasiSortType.DESC;
@@ -117,28 +123,31 @@ export class SasiTableComponent implements OnInit {
       this.options.sortType = SasiSortType.ASC;
       this.options.sortColumnName = column.index;
     }
-    this.options.sortByRawValue = sortByRawValue; // TODO maybe not necessary to store rawColumnName to sorting data by
-    console.log(this.options.sortType);
-    this.data = this.sort(this.data, column, this.options.sortType, this.options.sortByRawValue);
+    this.altSort = isAltSort;
+    this.data = this.sort(
+      this.data,
+      column,
+      this.options.sortType,
+      this.altSort ? this.options.altSortColumnName : null);
     // console.log(this.data);
   }
 
   sort(data, column: SasiColumn, sortType: SasiSortType, sortByRawValue: string) {
     const dataReturned = data.sort(
       (rowA, rowB) => {
-          if (sortType === SasiSortType.ASC) {
-            if (sortByRawValue !== null) {
-              return this.compare(this.getCellRawData(rowA, column)[sortByRawValue], this.getCellRawData(rowB, column)[sortByRawValue]);
-            } else {
-              return this.compare(this.getCellValue(rowA, column), this.getCellValue(rowB, column));
-            }
+        if (sortType === SasiSortType.ASC) {
+          if (sortByRawValue !== null) {
+            return this.compare(this.getCellRawData(rowA, column)[sortByRawValue], this.getCellRawData(rowB, column)[sortByRawValue]);
           } else {
-            if (sortByRawValue !== null) {
-              return this.compare(this.getCellValue(rowB, column)[sortByRawValue], this.getCellValue(rowA, column)[sortByRawValue]);
-            } else {
-              return this.compare(this.getCellValue(rowB, column), this.getCellValue(rowA, column));
-            }
+            return this.compare(this.getCellValue(rowA, column), this.getCellValue(rowB, column));
           }
+        } else {
+          if (sortByRawValue !== null) {
+            return this.compare(this.getCellValue(rowB, column)[sortByRawValue], this.getCellValue(rowA, column)[sortByRawValue]);
+          } else {
+            return this.compare(this.getCellValue(rowB, column), this.getCellValue(rowA, column));
+          }
+        }
       }
     );
     return dataReturned;

@@ -5,9 +5,8 @@
   <div class="row table-header">
     <div class="col-control"></div>
     <div class="col" *ngFor="let columnOption of options.columns;let column=index">
-      {{getColumnLabel(columnOption.index)}} <i class="text-muted fa sort-icon-right" [ngClass]="getSortIconClass(columnOption.index)" (click)="setSort(columnOption, null)"></i>
-         <!--[class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}} <i class="fa sort-icon-right" [ngClass]="getPeakSortIconClass(type, false)" (click)="setPeakSort(type, false)"></i>-->
-      <!--<br/><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i class='fa fa-sort sort-icon-right' [ngClass]="getPeakSortIconClass(type, true)" (click)="setPeakSort(type, true)"></i>-->
+      {{getColumnLabel(columnOption.index)}} <i class="text-muted fa sort-icon-right" [ngClass]="getSortIconClass(columnOption.index, false)" (click)="setSort(columnOption, false)"></i> <!-- [class.highlightColumn]="isCurrentColumn(column)" -->
+      <br/><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i class='fa fa-sort sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)" (click)="setSort(columnOption, true)"></i>
     </div>
   </div>
   <!--POOL ROWS-->
