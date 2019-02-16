@@ -1,13 +1,13 @@
 <div class="metric-value">
   <span *ngIf="isAlert()" tooltip="{{alertMessage}}" hide-delay="0" class="text-orange">{{getValue('value')}} <span
-    class="metric-unit">{{data.rawData.unit}}</span></span>
+    class="metric-unit">{{data.unit}}</span></span>
   <span *ngIf="!isAlert()" tooltip="{{metricLabel}} average" hide-delay="0">{{getValue('value')}} <span
-    class="metric-unit">{{data.rawData.unit}}</span></span>
+    class="metric-unit">{{data.unit}}</span></span>
 </div>
 <div class="peak">
   <span tooltip="{{metricLabel}} peak" hide-delay="0"><span class="text-muted"><i
-    class="fa fa-angle-up text-red"></i>{{data.rawData.peak}} <span
-    class="metric-unit">{{data.rawData.unit}}</span></span>
+    class="fa fa-angle-up text-red"></i>{{data.peak}} <span
+    class="metric-unit">{{data.unit}}</span></span>
   </span>
 </div>
 

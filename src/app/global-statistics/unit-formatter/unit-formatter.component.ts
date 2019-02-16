@@ -12,19 +12,17 @@ export class UnitFormatterComponent implements OnInit {
   @Input() metricLabel = '';
   @Input() alertMessage = '';
 
-  @Input() public data;
+  @Input() public data: SystemMetric;
 
   constructor() { }
 
   ngOnInit() {
-    console.log(this.data);
-
   }
 
   // extract to abstaract class and then extends simple-unit
   getValue(name: string) {
     if (this.data !== null) {
-      return this.data.rawData[name] === undefined ? this.data : this.data.rawData[name];
+      return this.data[name] === undefined ? this.data : this.data[name];
     }
     return '';
   }
