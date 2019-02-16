@@ -5,7 +5,7 @@
   <div class="row table-header">
     <div class="col-control"></div>
     <div class="col" *ngFor="let columnOption of options.columns;let column=index">
-      {{getColumnLabel(columnOption.index)}} <i class="text-muted fa sort-icon-right" [ngClass]="getSortIconClass(columnOption.index, false)" (click)="setSort(columnOption, false)"></i> <!-- [class.highlightColumn]="isCurrentColumn(column)" -->
+      {{getColumnLabel(columnOption.index)}} <i class="text-muted fa sort-icon-right" [ngClass]="getSortIconClass(columnOption.index, false)" (click)="setSort(columnOption, false)"></i> <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
       <br/><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i class='fa fa-sort sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)" (click)="setSort(columnOption, true)"></i>
     </div>
   </div>
@@ -16,12 +16,12 @@
       <div class="col-val col-control">
         <!--<i *ngIf="isAlertingSystem(system.name)" tooltip="Warning for one or more metrics" class="fas fa-exclamation text-orange"></i>-->
       </div>
-      <div [ngClass]="'col-val col'" *ngFor="let column of options.columns;">
+      <div [ngClass]="'col-val col'" *ngFor="let column of options.columns;"
+           (mouseout)="setHighlightedColumn(-1)"
+           (mouseover)="setHighlightedColumn(column)"
+           [class.highlightColumn]="isColumnHighlighted(column)"
+      >
         <app-cell-table [componentFormatter]="column.component" [data]="getCellRawData(row, column)">{{getCell(row, column)}}</app-cell-table>
-           <!--(mouseout)="setCurrentColumn(-1)"-->
-           <!--(mouseover)="setCurrentColumn(column)"-->
-           <!--[class.highlightColumn]="isCurrentColumn(column)"-->
-
         <!--<app-unit-formatter [metric]="getMetricObject(system.name, type)" [metricLabel]="getColumnLabel(type)" [alertMessage]="getAlertMessage(system.name, type)"></app-unit-formatter>-->
       </div>
     </div>

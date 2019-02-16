@@ -30,6 +30,7 @@ export class SasiTableOptions {
   public sortColumnName: string;
   public sortType: SasiSortType;
   public altSortColumnName: string;
+  public highlightColumn: boolean;
 }
 
 export enum SasiSortType {
@@ -57,17 +58,18 @@ export class SasiTableComponent implements OnInit {
     sortAscIcon: 'fa-sort-amount-asc',
     sortDefaultIcon: 'fa-sort',
     sortType: SasiSortType.ASC,
-    altSortColumnName: null
+    altSortColumnName: null,
+    highlightColumn: true
   };
 
   altSort = false;
+  highlightedColumn = -1;
 
   constructor() {
   }
 
   ngOnInit() {
     this.options = Object.assign(this.tableOptions, this.defaultOptions);
-    console.log(this.options);
   }
 
   getColumnLabel(type: string) {
@@ -97,6 +99,8 @@ export class SasiTableComponent implements OnInit {
     return cellData;
   }
 
+
+  /* SORTING FEATURES */
   getSortIconClass(column: string, isAltSort: boolean) {
     let sortIconClass = this.options.sortDefaultIcon;
     if (this.options.sortColumnName === column) {
@@ -160,5 +164,15 @@ export class SasiTableComponent implements OnInit {
       return -1;
     }
     return 0;
+  }
+
+  /* HIGHLIGHTNING */
+
+  isColumnHighlighted(column: number) {
+    return column === this.highlightedColumn;
+  }
+
+  setHighlightedColumn(column: number) {
+    this.highlightedColumn = column;
   }
 }

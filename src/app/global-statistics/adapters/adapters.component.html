@@ -52,8 +52,8 @@
               </div>
               <div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>
               <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
-                   (mouseout)="setCurrentColumn(-1)"
-                   (mouseover)="setCurrentColumn(column)"
+                   (mouseout)="setHighlightedColumn(-1)"
+                   (mouseover)="setHighlightedColumn(column)"
                    [class.highlightColumn]="isCurrentColumn(column)" hide-delay="0"
                    show-delay="500">
                 <span>
