@@ -7,7 +7,7 @@ div.table-header > div.col.highlightColumn {
   text-decoration: #334369 underline;
 }
 
-.table-data.row:hover, .table-data .highlightColumn {
+.table-data.row.highlight-row:hover, .table-data .highlightColumn {
   background-color: #b4d1ee !important;
   color: #3A738C;
 }

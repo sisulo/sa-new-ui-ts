@@ -31,6 +31,7 @@ export class SasiTableOptions {
   public sortType: SasiSortType;
   public altSortColumnName: string;
   public highlightColumn: boolean;
+  public highlightRow: boolean;
 }
 
 export enum SasiSortType {
@@ -59,7 +60,8 @@ export class SasiTableComponent implements OnInit {
     sortDefaultIcon: 'fa-sort',
     sortType: SasiSortType.ASC,
     altSortColumnName: null,
-    highlightColumn: true
+    highlightColumn: true,
+    highlightRow: true
   };
 
   altSort = false;
@@ -169,6 +171,9 @@ export class SasiTableComponent implements OnInit {
   /* HIGHLIGHTNING */
 
   isColumnHighlighted(column: number) {
+    if (!this.options.highlightColumn ) {
+      return false;
+    }
     return column === this.highlightedColumn;
   }
 

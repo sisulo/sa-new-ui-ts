@@ -12,7 +12,7 @@
   <!--POOL ROWS-->
   <!---->
   <div class="row">
-    <div *ngFor="let row of data;" class="table-data striped-row row">
+    <div *ngFor="let row of data;" [class.highlight-row]="options.highlightRow" class="table-data striped-row row">
       <div class="col-val col-control">
         <!--<i *ngIf="isAlertingSystem(system.name)" tooltip="Warning for one or more metrics" class="fas fa-exclamation text-orange"></i>-->
       </div>
