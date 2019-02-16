@@ -9,6 +9,7 @@ import {SasiTableFormatter} from './sasi-table-formatter';
 })
 export class CellTableComponent implements OnInit, OnDestroy {
   @Input() componentFormatter;
+  @Input() label;
   @Input() data;
   @ViewChild(FormatterHostDirective) adHost: FormatterHostDirective;
 
@@ -31,5 +32,6 @@ export class CellTableComponent implements OnInit, OnDestroy {
 
     const componentRef = viewContainerRef.createComponent(componentFactory);
     (<SasiTableFormatter>componentRef.instance).data = this.data;
+    (<SasiTableFormatter>componentRef.instance).label = this.label;
   }
 }

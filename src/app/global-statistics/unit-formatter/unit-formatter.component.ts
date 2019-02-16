@@ -8,8 +8,7 @@ import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 })
 export class UnitFormatterComponent implements OnInit {
 
-  @Input() metric: SystemMetric;
-  @Input() metricLabel = '';
+  @Input() label = '';
   @Input() alertMessage = '';
 
   @Input() public data: SystemMetric;

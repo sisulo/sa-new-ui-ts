@@ -8,6 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SimpleUnitFormatterComponent implements OnInit {
 
   @Input() public data;
+  @Input() public label;
 
   constructor() {
   }

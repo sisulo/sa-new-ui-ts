@@ -16,14 +16,14 @@ import {SimpleUnitFormatterComponent} from '../simple-unit-formatter/simple-unit
   templateUrl: './performance-statistics.component.html',
   styleUrls: ['./performance-statistics.component.css', '../global-statistics.component.css'],
 })
-export class PerformanceStatisticsComponent extends DivTable implements OnInit {
+export class PerformanceStatisticsComponent implements OnInit {
+
   currentPeriod: PeriodType = PeriodType.DAY;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
   alertsDefinition = [];
-  sortByPeak = false;
   options: SasiTableOptions = new SasiTableOptions();
-
+  currentDataCenterId;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -31,15 +31,6 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     private periodService: PeriodService,
     private bus: BusService
   ) {
-    super();
-
-    this.types.push(SystemMetricType.WORKLOAD);
-    this.types.push(SystemMetricType.TRANSFER);
-    this.types.push(SystemMetricType.RESPONSE);
-    this.types.push(SystemMetricType.CPU);
-    this.types.push(SystemMetricType.HDD);
-    this.types.push(SystemMetricType.WRITE_PENDING);
-
     this.options.columns.push(new SasiColumn('name', 'System', SimpleUnitFormatterComponent));
     this.options.columns.push(new SasiColumn(SystemMetricType.WORKLOAD, 'Workload', UnitFormatterComponent));
     this.options.columns.push(new SasiColumn(SystemMetricType.TRANSFER, 'Transfer', UnitFormatterComponent));
@@ -149,7 +140,7 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
     if (this.isAlertingMetric(systemName, type)) {
       const alertDefinition = this.getAlertDefinition(type);
       const metric = this.getMetricObject(systemName, type);
-      return this.getColumnLabel(type) + ' is over ' + alertDefinition.threshold + metric.unit + ' in system ' + systemName;
+      return 'Metric is over ' + alertDefinition.threshold + metric.unit + ' in system ' + systemName;
     } else {
       return '';
     }
@@ -161,53 +152,6 @@ export class PerformanceStatisticsComponent extends DivTable implements OnInit {
 
   setData(data) {
     this.data = data;
-  }
-
-  setPeakSort(column, isPeak) {
-    this.sortByPeak = isPeak;
-    super.setSort(column);
-  }
-
-  getPeakSortIconClass(column: SystemMetricType, isPeak: boolean) {
-    const classIcon = this.getSortIconClass(column);
-    if (isPeak === this.sortByPeak) {
-      return classIcon;
-    } else {
-      return 'fa-sort';
-    }
-  }
-
-  recalculateSorting(data: SystemDetail[], sortType, sortColumn) {
-    const dataReturned = data.sort(
-      (poolA, poolB) => {
-        if (sortColumn === null) {
-          if (sortType === SortType.ASC) {
-            return this.compare(poolA.name, poolB.name);
-          } else {
-            return this.compare(poolB.name, poolA.name);
-          }
-        } else {
-          if (sortType === SortType.ASC) {
-            if (this.sortByPeak === true) {
-              return this.compare(this.findMetric(poolA, sortColumn).peak, this.findMetric(poolB, sortColumn).peak);
-            } else {
-              return this.compare(this.findMetric(poolA, sortColumn).value, this.findMetric(poolB, sortColumn).value);
-            }
-          } else {
-            if (this.sortByPeak === true) {
-              return this.compare(this.findMetric(poolB, sortColumn).peak, this.findMetric(poolA, sortColumn).peak);
-            } else {
-              return this.compare(this.findMetric(poolB, sortColumn).value, this.findMetric(poolA, sortColumn).value);
-            }
-          }
-        }
-      }
-    );
-    return dataReturned;
-  }
-
-  findMetric(pool: SystemDetail, metricType: SystemMetricType) {
-    return pool.metrics.find(metric => metric.type === metricType);
   }
 
   compare(valueA, valueB) {
