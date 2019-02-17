@@ -11,6 +11,8 @@ import {FormatterHostDirective} from './components/sasi-table/formatter-host.dir
 import {SimpleUnitFormatterComponent} from '../global-statistics/simple-unit-formatter/simple-unit-formatter.component';
 import {UnitFormatterComponent} from '../global-statistics/unit-formatter/unit-formatter.component';
 import {TooltipModule} from 'ng2-tooltip-directive';
+import { RowTableComponent } from './components/sasi-table/row-table/row-table.component';
+import {AlertFormatterComponent} from '../global-statistics/alert-formatter/alert-formatter.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import {TooltipModule} from 'ng2-tooltip-directive';
     SystemPool2SasiTablePipe,
     SasiTableComponent,
     CellTableComponent,
-    FormatterHostDirective
+    FormatterHostDirective,
+    RowTableComponent
 
   ],
   imports: [
@@ -37,7 +40,8 @@ import {TooltipModule} from 'ng2-tooltip-directive';
   ],
   entryComponents: [
     SimpleUnitFormatterComponent,
-    UnitFormatterComponent
+    UnitFormatterComponent,
+    AlertFormatterComponent
   ]
 })
 export class SaCommonModule {

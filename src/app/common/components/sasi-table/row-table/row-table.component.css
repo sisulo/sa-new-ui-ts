@@ -1,0 +1,52 @@
+/*** Layout table ***/
+.col-control {
+  width: 3.5%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.col {
+  /*width: 13.33%;*/
+  display: inline-block;
+  vertical-align: middle;
+}
+/**** Table data ****/
+.table-data:last-child {
+  /*margin: 10px 0px 10px 0px;*/
+  border-bottom: 3px solid #EAEAEA;
+}
+
+div.table-data.striped-row:nth-of-type(odd) {
+  background-color: #f3f8fa;
+}
+div {
+  text-align: center;
+  border-right: 1px #EAEAEA solid;
+  margin: 2px 0px 2px 0px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: auto;
+}
+
+/*div.col-control {*/
+/*min-height: 1px;*/
+/*}*/
+
+.col-control i {
+  font-size: 11px;
+  padding: 3px;
+}
+
+.col-control:after {
+  content: "";
+  font-size: 11px;
+  padding: 3px;
+}
+
+div.no-border {
+  border-right: 0px !important;
+}
+/*not for all tables - performance*/
+.col {
+  width: 13.78%;
+}

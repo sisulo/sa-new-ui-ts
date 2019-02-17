@@ -10,6 +10,7 @@ import {BusService} from '../bus.service';
 import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {UnitFormatterComponent} from '../unit-formatter/unit-formatter.component';
 import {SimpleUnitFormatterComponent} from '../simple-unit-formatter/simple-unit-formatter.component';
+import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
 
 @Component({
   selector: 'app-tab',
@@ -38,6 +39,7 @@ export class PerformanceStatisticsComponent implements OnInit {
     this.options.columns.push(new SasiColumn(SystemMetricType.CPU, 'CPU', UnitFormatterComponent));
     this.options.columns.push(new SasiColumn(SystemMetricType.HDD, 'HDD', UnitFormatterComponent));
     this.options.columns.push(new SasiColumn(SystemMetricType.WRITE_PENDING, 'Write Pending', UnitFormatterComponent));
+    this.options.colControlFormatter = AlertFormatterComponent;
 
   }
 
@@ -58,8 +60,12 @@ export class PerformanceStatisticsComponent implements OnInit {
     );
     this.periodService.announceEnablePeriod(true);
 
-    this.alertsDefinition.push({type: SystemMetricType.CPU, threshold: 80});
-    this.alertsDefinition.push({type: SystemMetricType.WRITE_PENDING, threshold: 30});
+    // TODO extract rule to class
+    this.options.cellDecoratorRules.push({type: SystemMetricType.CPU, threshold: 80});
+    this.options.cellDecoratorRules.push({type: SystemMetricType.WRITE_PENDING, threshold: 30});
+    //
+    // this.alertsDefinition.push({type: SystemMetricType.CPU, threshold: 80});
+    // this.alertsDefinition.push({type: SystemMetricType.WRITE_PENDING, threshold: 30});
   }
 
 

@@ -32,6 +32,8 @@ export class SasiTableOptions {
   public altSortColumnName: string;
   public highlightColumn: boolean;
   public highlightRow: boolean;
+  public colControlFormatter;
+  public cellDecoratorRules = [];
 }
 
 export enum SasiSortType {
@@ -61,17 +63,18 @@ export class SasiTableComponent implements OnInit {
     sortType: SasiSortType.ASC,
     altSortColumnName: null,
     highlightColumn: true,
-    highlightRow: true
+    highlightRow: true,
+    colControlFormatter: null,
+    cellDecoratorRules: []
   };
 
   altSort = false;
-  highlightedColumn = -1;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.options = Object.assign(this.tableOptions, this.defaultOptions);
+    this.options = Object.assign(this.defaultOptions, this.tableOptions);
   }
 
   getColumnLabel(type: string) {
@@ -168,16 +171,5 @@ export class SasiTableComponent implements OnInit {
     return 0;
   }
 
-  /* HIGHLIGHTNING */
 
-  isColumnHighlighted(column: number) {
-    if (!this.options.highlightColumn ) {
-      return false;
-    }
-    return column === this.highlightedColumn;
-  }
-
-  setHighlightedColumn(column: number) {
-    this.highlightedColumn = column;
-  }
 }

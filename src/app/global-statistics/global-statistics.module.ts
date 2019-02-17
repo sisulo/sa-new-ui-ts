@@ -10,6 +10,7 @@ import {DpSlaComponent} from './dp-sla/dp-sla.component';
 import {AdaptersComponent} from './adapters/adapters.component';
 import {SimpleUnitFormatterComponent} from './simple-unit-formatter/simple-unit-formatter.component';
 import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
+import { AlertFormatterComponent } from './alert-formatter/alert-formatter.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component'
     DpSlaComponent,
     AdaptersComponent,
     SimpleUnitFormatterComponent,
-    UnitFormatterComponent
+    UnitFormatterComponent,
+    AlertFormatterComponent
   ],
   imports: [
     CommonModule,

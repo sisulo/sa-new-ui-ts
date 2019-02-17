@@ -11,6 +11,7 @@ export class CellTableComponent implements OnInit, OnDestroy {
   @Input() componentFormatter;
   @Input() label;
   @Input() data;
+  @Input() options;
   @ViewChild(FormatterHostDirective) adHost: FormatterHostDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
@@ -33,5 +34,6 @@ export class CellTableComponent implements OnInit, OnDestroy {
     const componentRef = viewContainerRef.createComponent(componentFactory);
     (<SasiTableFormatter>componentRef.instance).data = this.data;
     (<SasiTableFormatter>componentRef.instance).label = this.label;
+    (<SasiTableFormatter>componentRef.instance).options = this.options;
   }
 }
