@@ -8,7 +8,7 @@ import {SystemPool2SasiTablePipe} from './utils/system-pool-2-sasi-table.pipe';
 import {SasiTableComponent} from './components/sasi-table/sasi-table.component';
 import {CellTableComponent} from './components/sasi-table/cell-table.component';
 import {FormatterHostDirective} from './components/sasi-table/formatter-host.directive';
-import {SimpleUnitFormatterComponent} from '../global-statistics/simple-unit-formatter/simple-unit-formatter.component';
+import {RouteLinkFormatterComponent} from '../global-statistics/simple-unit-formatter/route-link-formatter.component';
 import {UnitFormatterComponent} from '../global-statistics/unit-formatter/unit-formatter.component';
 import {TooltipModule} from 'ng2-tooltip-directive';
 import { RowTableComponent } from './components/sasi-table/row-table/row-table.component';
@@ -39,7 +39,7 @@ import {AlertFormatterComponent} from '../global-statistics/alert-formatter/aler
     SasiTableComponent
   ],
   entryComponents: [
-    SimpleUnitFormatterComponent,
+    RouteLinkFormatterComponent,
     UnitFormatterComponent,
     AlertFormatterComponent
   ]

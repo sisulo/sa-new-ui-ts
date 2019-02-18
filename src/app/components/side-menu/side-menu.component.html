@@ -51,7 +51,7 @@
               </span>
               </a>
               <ul class="treeview-menu">
-                <li *ngFor="let poolLink of poolMetricLinks"><a [routerLink]="getPoolMetricLink(link.id, poolLink.linkPart)" routerLinkActive="active">{{poolLink.name}}</a></li>
+                <li *ngFor="let poolLink of poolMetricLinks"><a [routerLink]="link.id | iframeUrlCreator:poolLink.linkPart" routerLinkActive="active">{{poolLink.name}}</a></li>
               </ul>
             </li>
           </ul>

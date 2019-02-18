@@ -2,6 +2,7 @@ import {Component, ComponentFactoryResolver, Input, OnDestroy, OnInit, ViewChild
 
 import {FormatterHostDirective} from './formatter-host.directive';
 import {SasiTableFormatter} from './sasi-table-formatter';
+import {SasiRow} from './sasi-table.component';
 
 @Component({
   selector: 'app-cell-table',
@@ -10,7 +11,7 @@ import {SasiTableFormatter} from './sasi-table-formatter';
 export class CellTableComponent implements OnInit, OnDestroy {
   @Input() componentFormatter;
   @Input() label;
-  @Input() data;
+  @Input() data: SasiRow;
   @Input() options;
   @ViewChild(FormatterHostDirective) adHost: FormatterHostDirective;
 

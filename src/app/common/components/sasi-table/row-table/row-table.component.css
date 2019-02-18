@@ -10,6 +10,7 @@
   display: inline-block;
   vertical-align: middle;
 }
+
 /**** Table data ****/
 .table-data:last-child {
   /*margin: 10px 0px 10px 0px;*/
@@ -19,6 +20,7 @@
 div.table-data.striped-row:nth-of-type(odd) {
   background-color: #f3f8fa;
 }
+
 div {
   text-align: center;
   border-right: 1px #EAEAEA solid;
@@ -46,6 +48,7 @@ div {
 div.no-border {
   border-right: 0px !important;
 }
+
 /*not for all tables - performance*/
 .col {
   width: 13.78%;

@@ -1,8 +1,20 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
 
+/**
+ * SasiColumn is metadata object for columns.
+ */
 export class SasiColumn {
+  /**
+   * @var index in data model
+   */
   index: string;
+  /**
+   * @var label in header
+   */
   label: string;
+  /**
+   * @var data formatter
+   */
   component: Type<any>;
 
   constructor(index: string, label: string, component: Type<any>) {
@@ -12,6 +24,9 @@ export class SasiColumn {
   }
 }
 
+/**
+ * SasiCell is data model for one cell in the table
+ */
 export class SasiCell {
   value: string;
   rawData: any;
@@ -22,6 +37,36 @@ export class SasiCell {
   }
 }
 
+/**
+ * SasiRow is data model for row in the table
+ */
+export class SasiRow {
+
+  public cells: SasiCell[] = [];
+
+  getCellValue(columnIndex: SasiColumn): any {
+    const cellData = this.getCell(columnIndex.index);
+    return cellData !== null ? cellData.value : null;
+  }
+
+  getCellRawData(columnIndex: SasiColumn): SasiCell {
+    const cellData = this.getCell(columnIndex.index);
+    return cellData !== null ? cellData.rawData : null;
+  }
+
+  getCell(columnIndex: string): SasiCell {
+    let cellData = this.cells[columnIndex];
+    if (cellData === undefined) {
+      console.error('Cannot find data in %s row, and columnIndex: %s', this.cells.toString(), columnIndex);
+      cellData = null;
+    }
+    return cellData;
+  }
+}
+
+/**
+ * SasiTableOptions is class holding options to be set in table, and define behavior, features etc. for sasi table.
+ */
 export class SasiTableOptions {
   public columns: SasiColumn[] = [];
   public sortDescIcon;
@@ -51,7 +96,7 @@ export enum SasiSortType {
  */
 export class SasiTableComponent implements OnInit {
 
-  @Input() data = [];
+  @Input() data: SasiRow[] = [];
 
   @Input() tableOptions: SasiTableOptions = new SasiTableOptions();
 
@@ -83,25 +128,6 @@ export class SasiTableComponent implements OnInit {
       return '';
     }
     return column.label;
-  }
-
-  getCellValue(row, columnIndex: SasiColumn): any {
-    const cellData = this.getCell(row, columnIndex);
-    return cellData !== null ? cellData.value : null;
-  }
-
-  getCellRawData(row, columnIndex: SasiColumn): SasiCell {
-    const cellData = this.getCell(row, columnIndex);
-    return cellData !== null ? cellData.rawData : null;
-  }
-
-  getCell(row, columnIndex: SasiColumn): SasiCell {
-    let cellData = row[columnIndex.index];
-    if (cellData === undefined) {
-      console.error('Cannot find data in %s row, and columnIndex: %s', row.toString(), columnIndex.index);
-      cellData = null;
-    }
-    return cellData;
   }
 
 
@@ -146,15 +172,15 @@ export class SasiTableComponent implements OnInit {
       (rowA, rowB) => {
         if (sortType === SasiSortType.ASC) {
           if (sortByRawValue !== null) {
-            return this.compare(this.getCellRawData(rowA, column)[sortByRawValue], this.getCellRawData(rowB, column)[sortByRawValue]);
+            return this.compare(rowA.getCellRawData(column)[sortByRawValue], rowB.getCellRawData(column)[sortByRawValue]);
           } else {
-            return this.compare(this.getCellValue(rowA, column), this.getCellValue(rowB, column));
+            return this.compare(rowA.getCellValue(column), rowB.getCellValue(column));
           }
         } else {
           if (sortByRawValue !== null) {
-            return this.compare(this.getCellValue(rowB, column)[sortByRawValue], this.getCellValue(rowA, column)[sortByRawValue]);
+            return this.compare(rowB.getCellRawData(column)[sortByRawValue], rowA.getCellRawData(column)[sortByRawValue]);
           } else {
-            return this.compare(this.getCellValue(rowB, column), this.getCellValue(rowA, column));
+            return this.compare(rowB.getCellValue(column), rowA.getCellValue(column));
           }
         }
       }

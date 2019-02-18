@@ -152,12 +152,6 @@ div.sticky {
   font-size: 17px;
 }
 
-.system-name {
-  font-size: 14px;
-  text-decoration: #0b3e6f underline;
-  font-weight: 600;
-}
-
 div.no-border {
   border-right: 0px !important;
 }

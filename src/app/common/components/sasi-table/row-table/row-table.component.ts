@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SasiCell, SasiColumn, SasiTableOptions} from '../sasi-table.component';
+import {SasiCell, SasiColumn, SasiRow, SasiTableOptions} from '../sasi-table.component';
 
 @Component({
   selector: 'app-row-table',
@@ -8,14 +8,14 @@ import {SasiCell, SasiColumn, SasiTableOptions} from '../sasi-table.component';
 })
 export class RowTableComponent implements OnInit {
 
-  @Input() data: [];
+  @Input() data: SasiRow;
   @Input() columnHighlightEnable = false;
   @Input() options: SasiTableOptions;
 
-  colControlClassName = 'aa';
   highlightedColumn = -1;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
@@ -23,7 +23,7 @@ export class RowTableComponent implements OnInit {
   /* HIGHLIGHTNING */
 
   isColumnHighlighted(column: number) {
-    if (!this.options.highlightColumn ) {
+    if (!this.options.highlightColumn) {
       return false;
     }
     return column === this.highlightedColumn;
@@ -31,23 +31,5 @@ export class RowTableComponent implements OnInit {
 
   setHighlightedColumn(column: number) {
     this.highlightedColumn = column;
-  }
-
-  getCellRawData(row, columnIndex: SasiColumn): SasiCell { // Todo duplicated with sasi-table
-    const cellData = this.getCell(row, columnIndex);
-    return cellData !== null ? cellData.rawData : null;
-  }
-
-  getCell(row, columnIndex: SasiColumn): SasiCell {
-    let cellData = row[columnIndex.index];
-    if (cellData === undefined) {
-      console.error('Cannot find data in %s row, and columnIndex: %s', row.toString(), columnIndex.index);
-      cellData = null;
-    }
-    return cellData;
-  }
-
-  setClassInControlCol(className: string) {
-
   }
 }

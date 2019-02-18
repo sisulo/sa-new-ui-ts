@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {ConditionEvaluate} from '../utils/ConditionEvaluate';
+import {AlertRule} from '../AlertRule';
 
 @Component({
   selector: 'app-unit-formatter',
@@ -19,18 +20,8 @@ export class UnitFormatterComponent implements OnInit {
   ngOnInit() {
   }
 
-  // TODO extract to abstract class and then extends simple-unit
-  getValue(name: string) {
-    if (this.data !== null) {
-      return this.data[name] === undefined ? this.data : this.data[name];
-    }
-    return '';
-  }
-
   isAlert(): boolean {
-    const ruleDefinition = this.options.cellDecoratorRules.find(
-      rule => rule.type === this.data.type
-    ); // TODO refactor - extract find rule definition to method
+    const ruleDefinition = this.findRuleByType(this.data.type);
     if (ruleDefinition !== undefined) {
       return ConditionEvaluate.eval(this.data.value, ruleDefinition);
     }
@@ -38,9 +29,20 @@ export class UnitFormatterComponent implements OnInit {
   }
 
   getAlertMessage(): string {
-    const ruleDefinition = this.options.cellDecoratorRules.find(
-      rule => rule.type === this.data.type
-    );
+    const ruleDefinition = this.findRuleByType(this.data.type);
     return this.label + ' is over ' + ruleDefinition.threshold + this.data.unit + ' ';
+  }
+
+  findRuleByType(type: string): AlertRule {
+    return this.options.cellDecoratorRules.find(
+      rule => rule.type === type
+    );
+  }
+  getViolatedRuleClass(): string {
+    const ruleDefinition = this.findRuleByType(this.data.type);
+    if (ruleDefinition !== undefined && ConditionEvaluate.eval(this.data.value, ruleDefinition)) {
+      return ruleDefinition.threshold.alertType;
+    }
+    return '';
   }
 }

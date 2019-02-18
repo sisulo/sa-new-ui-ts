@@ -8,9 +8,9 @@ import {SaCommonModule} from '../common/sa-common.module';
 import {TooltipModule} from 'ng2-tooltip-directive';
 import {DpSlaComponent} from './dp-sla/dp-sla.component';
 import {AdaptersComponent} from './adapters/adapters.component';
-import {SimpleUnitFormatterComponent} from './simple-unit-formatter/simple-unit-formatter.component';
+import {RouteLinkFormatterComponent} from './simple-unit-formatter/route-link-formatter.component';
 import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
-import { AlertFormatterComponent } from './alert-formatter/alert-formatter.component';
+import {AlertFormatterComponent} from './alert-formatter/alert-formatter.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { AlertFormatterComponent } from './alert-formatter/alert-formatter.compo
     PerformanceStatisticsComponent,
     DpSlaComponent,
     AdaptersComponent,
-    SimpleUnitFormatterComponent,
+    RouteLinkFormatterComponent,
     UnitFormatterComponent,
     AlertFormatterComponent
   ],

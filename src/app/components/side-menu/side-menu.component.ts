@@ -16,13 +16,13 @@ export class SideMenuComponent implements OnInit {
   filteredItems: MenuTree[];
   searchExpression: string;
   poolMetricLinks = [
-    {id: 1, linkPart: '1%20Dash%20Board/Dash%20Board.html', name: 'Dashboard'},
-    {id: 2, linkPart: '2%20Server%20Board/index.html', name: 'Server board'},
-    {id: 3, linkPart: '4%20DP%20Pool%20Board%20and%20SLA/index.html', name: 'DP Pool Board and SLA'},
-    {id: 4, linkPart: '7%20Deep%20Analysis/index.html', name: 'Deep Analysis'},
-    {id: 5, linkPart: '8%20Cache%20Board/index.html', name: 'Cache Board'},
-    {id: 6, linkPart: '8%20CHA%20Adapters%20Board/index.html', name: 'CHA Adapters Board'},
-    {id: 7, linkPart: '8%20Trends/Trends.html', name: 'Trends'}
+    {id: 1, linkPart: 'dashboard', name: 'Dashboard'},
+    {id: 2, linkPart: 'serverBoard', name: 'Server board'},
+    {id: 3, linkPart: 'dpSla', name: 'DP Pool Board and SLA'},
+    {id: 4, linkPart: 'deepAnalysis', name: 'Deep Analysis'},
+    {id: 5, linkPart: 'cache', name: 'Cache Board'},
+    {id: 6, linkPart: 'adapters', name: 'CHA Adapters Board'},
+    {id: 7, linkPart: 'trends', name: 'Trends'}
   ];
   globalStatisticsLinks = [];
   private defaultDataCenter: number;
@@ -75,15 +75,6 @@ export class SideMenuComponent implements OnInit {
       }
       filteredTree = null;
     }
-  }
-
-  hrefEncode(url: string): string {
-    return '/iframe/' + btoa(url);
-  }
-
-  getPoolMetricLink(systemId: number, linkPart: string) {
-    const systemPrefix = systemId.toString().length === 1 ? '0' + systemId : systemId;
-    return this.hrefEncode(environment.iframeBaseUrl + systemPrefix + linkPart);
   }
 
   private convertMenu(data: Datacenter[]): MenuTree[] {
