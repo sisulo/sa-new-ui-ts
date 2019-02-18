@@ -22,7 +22,6 @@ export class PerformanceStatisticsComponent implements OnInit {
   currentPeriod: PeriodType = PeriodType.DAY;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   tableData = [];
-  alertsDefinition = AlertRule;
   options: SasiTableOptions = new SasiTableOptions();
   currentDataCenterId;
 

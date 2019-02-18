@@ -4,9 +4,9 @@
   -->
   <div class="row table-header">
     <div class="col-control"></div>
-    <div class="col" *ngFor="let columnOption of options.columns;let column=index">
+    <div class="col" *ngFor="let columnOption of options.columns">
       {{getColumnLabel(columnOption.index)}} <i class="text-muted fa sort-icon-right" [ngClass]="getSortIconClass(columnOption.index, false)" (click)="setSort(columnOption, false)"></i> <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
-      <br/><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i class='fa fa-sort sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)" (click)="setSort(columnOption, true)"></i>
+      <br/><span *ngIf="columnOption.index !== 'name'"><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i class='fa fa-sort sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)" (click)="setSort(columnOption, true)"></i></span>
     </div>
   </div>
   <!--POOL ROWS-->

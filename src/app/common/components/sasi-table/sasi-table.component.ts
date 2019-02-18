@@ -1,4 +1,5 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
+import {AlertRule} from '../../../global-statistics/AlertRule';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -78,7 +79,7 @@ export class SasiTableOptions {
   public highlightColumn: boolean;
   public highlightRow: boolean;
   public colControlFormatter;
-  public cellDecoratorRules = [];
+  public cellDecoratorRules: AlertRule[] = [];
 }
 
 export enum SasiSortType {
