@@ -21,7 +21,6 @@ export class PerformanceStatisticsComponent implements OnInit {
 
   currentPeriod: PeriodType = PeriodType.DAY;
   data: SystemDetail[] = []; // Todo caching data by datacenters
-  tableData = [];
   options: SasiTableOptions = new SasiTableOptions();
   currentDataCenterId;
 
@@ -70,7 +69,6 @@ export class PerformanceStatisticsComponent implements OnInit {
     this.metricService.getPerformanceStatistics(id, this.currentPeriod).subscribe(
       data => {
         this.data = data.systems;
-        this.tableData = this.data.map(system => this.convertToTableData(system));
       },
       error => {
         console.log(error);
@@ -78,32 +76,5 @@ export class PerformanceStatisticsComponent implements OnInit {
       }
     );
     return this.data;
-  }
-
-
-  convertToTableData(rawData: SystemDetail): {} {
-    const result = {};
-    for (const metric of rawData.metrics) {
-      result[metric.type] = metric.value;
-    }
-    result['name'] = rawData.name;
-    return result;
-  }
-
-  getData() {
-    return this.data;
-  }
-
-  setData(data) {
-    this.data = data;
-  }
-
-  compare(valueA, valueB) {
-    if (valueA > valueB) {
-      return 1;
-    } else if (valueA < valueB) {
-      return -1;
-    }
-    return 0;
   }
 }
