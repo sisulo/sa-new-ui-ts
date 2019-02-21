@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MetricService} from '../../metric.service';
 import {Metric} from '../../common/models/metrics/Metric';
-import {System} from '../../common/models/System';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {Alert} from '../../common/models/metrics/Alert';
 import {AlertType} from '../../common/models/metrics/AlertType';
@@ -22,14 +21,17 @@ export class DashboardComponent implements OnInit {
   alertLabels = {};
   metrics: Metric[] = [];
   alerts: Alert[] = [];
+  alertIcons = {};
+  metricIcons = {};
+  metricColor = {};
   datacenters;
   registeredSystems;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
   currentColor = 0;
 
   ngOnInit() {
-    this.metricLabels[SystemMetricType.WORKLOAD] = 'Workload';
-    this.metricLabels[SystemMetricType.TRANSFER] = 'Transfer';
+    this.metricLabels[SystemMetricType.WORKLOAD] = 'Total Workload';
+    this.metricLabels[SystemMetricType.TRANSFER] = 'Total Transfer';
 
     this.alertLabels[AlertType.CAPACITY_USAGE] = 'Capacity usage';
     this.alertLabels[AlertType.CPU] = 'CPU';
@@ -38,6 +40,20 @@ export class DashboardComponent implements OnInit {
     this.alertLabels[AlertType.RESPONSE] = 'Response';
     this.alertLabels[AlertType.SLA_EVENTS] = 'SLA events';
     this.alertLabels[AlertType.WRITE_PENDING] = 'Write pending';
+
+    this.alertIcons[AlertType.CAPACITY_USAGE] = 'fa-pie-chart';
+    this.alertIcons[AlertType.CPU] = 'fa-dashboard';
+    this.alertIcons[AlertType.DISBALANCE_EVENTS] = 'fa-random';
+    this.alertIcons[AlertType.HDD] = 'fa-hdd-o';
+    this.alertIcons[AlertType.RESPONSE] = 'fa-line-chart';
+    this.alertIcons[AlertType.SLA_EVENTS] = 'fa-bell-o';
+    this.alertIcons[AlertType.WRITE_PENDING] = 'fa-bar-chart';
+
+    this.metricIcons[SystemMetricType.WORKLOAD] = 'fa fa-chart-bar';
+    this.metricIcons[SystemMetricType.TRANSFER] = 'fa fa-exchange';
+
+    this.metricColor[SystemMetricType.WORKLOAD] = 'bg-maroon';
+    this.metricColor[SystemMetricType.TRANSFER] = 'bg-primary';
 
     this.metricService.getInfrastructureStats().subscribe(stats => {
       this.metrics = stats.metrics;
@@ -54,8 +70,19 @@ export class DashboardComponent implements OnInit {
     this.getMap();
   }
 
+  getAlertIcon(type: SystemMetricType) {
+    return this.alertIcons[type];
+  }
+
+  getMetricIcon(type: SystemMetricType) {
+    return this.metricIcons[type];
+  }
   getMetricLabel(type: SystemMetricType) {
       return this.metricLabels[type];
+  }
+
+  getMetricColor(type: SystemMetricType) {
+    return this.metricColor[type];
   }
 
   getAlertLabel(type: AlertType) {

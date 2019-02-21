@@ -61,7 +61,7 @@ export class DpSlaComponent extends DivTableGrouped implements OnInit {
       params => {
         const id = +params.get('id');
         this.bus.announceDatacenter(id);
-        this.bus.announceContext('dpSla');
+        this.bus.announceContext('dp-sla');
         this.internalInit(id);
       }
     );

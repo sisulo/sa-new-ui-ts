@@ -10,7 +10,8 @@ export class InfoBoxComponent implements OnInit {
 
   @Input() value: number;
   @Input() label: string;
-  @Input() threshold = 1;
+  @Input() threshold = 0;
+  @Input() icon = '';
   constructor() { }
 
   ngOnInit() {

@@ -13,6 +13,7 @@ import {UnitFormatterComponent} from '../global-statistics/unit-formatter/unit-f
 import {TooltipModule} from 'ng2-tooltip-directive';
 import { RowTableComponent } from './components/sasi-table/row-table/row-table.component';
 import {AlertFormatterComponent} from '../global-statistics/alert-formatter/alert-formatter.component';
+import { SmallBoxComponent } from './components/small-box/small-box.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {AlertFormatterComponent} from '../global-statistics/alert-formatter/aler
     SasiTableComponent,
     CellTableComponent,
     FormatterHostDirective,
-    RowTableComponent
+    RowTableComponent,
+    SmallBoxComponent
 
   ],
   imports: [
@@ -36,7 +38,8 @@ import {AlertFormatterComponent} from '../global-statistics/alert-formatter/aler
     IframeUrlCreatorPipe,
     InfoBoxComponent,
     SystemPool2SasiTablePipe,
-    SasiTableComponent
+    SasiTableComponent,
+    SmallBoxComponent
   ],
   entryComponents: [
     RouteLinkFormatterComponent,

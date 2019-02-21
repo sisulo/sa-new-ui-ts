@@ -1,67 +1,45 @@
 <div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="box box-solid">
-      <div class="box-header">
-        <i class="fa fa-bell-o"></i>
-
-        <h3 class="box-title">Alerts</h3>
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body">
-        <div class="row">
-          <div *ngFor="let alert of alerts;let i = index" class="col-xs-6 col-sm-3 col-md-4 col-lg-2 text-center">
-            <app-info-box [value]="alert.occurence.length" [label]="getAlertLabel(alert.type)"></app-info-box>
-          </div>
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.box-body -->
+  <section class="content-header">
+    <H1><i class="fa fa-bell-o"></i> Alerts</H1>
+  </section>
+  <section class="content">
+    <div *ngFor="let alert of alerts;let i = index" class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+      <app-info-box [value]="alert.occurence.length" [label]="getAlertLabel(alert.type)" [icon]="getAlertIcon(alert.type)"></app-info-box>
     </div>
-    <!-- /.box -->
-  </div>
+  </section>
 </div>
 <div class="row">
-  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <div class="box box-solid">
-      <div class="box-header">
-        <i class="fa fa-area-chart"></i>
-
-        <h3 class="box-title">Performance statistics</h3>
-      </div>
-      <!-- /.box-header -->
-      <div class="box-body">
-        <div class="row">
-          <div *ngFor="let metric of metrics;let i = index" class="col-xs-6 col-sm-6 col-md-6 col-lg-6 text-center">
-            <app-knob *ngIf="metric" [sizeType]="'medium'" [metric]="metric" [label]="getMetricLabel(metric.type)" [color]="getColor(i)"></app-knob>
-          </div>
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.box-body -->
+  <section class="content-header">
+    <h1><i class="fa fa-area-chart"></i> Performance statistics</h1>
+  </section>
+  <section class="content">
+    <div *ngFor="let metric of metrics" class="col-lg-3 col-xs-6">
+      <!-- small box -->
+      <app-small-box  [data]="metric" [label]="getMetricLabel(metric.type)" [icon]="getMetricIcon(metric.type)" [color]="getMetricColor(metric.type)"></app-small-box>
     </div>
-    <!-- /.box -->
-  </div>
+  </section>
 </div>
 <div class="row">
-  <div class="col-sm-6 col-md-6 col-lg-6">
-    <div class="info-box">
-      <!-- Apply any bg-* class to to the icon to color it -->
-      <span class="info-box-icon bg-green"><span>{{datacenters}}</span></span>
-      <div class="info-box-content">
-        <h2>Datacenters</h2>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div>
-  <div class="col-sm-6 col-md-6 col-lg-6">
-    <div class="info-box">
-      <!-- Apply any bg-* class to to the icon to color it -->
-      <span class="info-box-icon bg-blue">{{registeredSystems}}</span>
-      <div class="info-box-content">
-        <h2>Registered systems</h2>
-      </div><!-- /.info-box-content -->
-    </div><!-- /.info-box -->
-  </div>
-
+  <section class="content">
+    <div class="col-sm-6 col-md-6 col-lg-3">
+      <div class="info-box">
+        <!-- Apply any bg-* class to to the icon to color it -->
+        <span class="info-box-icon bg-green"><span>{{datacenters}}</span></span>
+        <div class="info-box-content">
+          <h3>Datacenters</h3>
+        </div><!-- /.info-box-content -->
+      </div><!-- /.info-box -->
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-3">
+      <div class="info-box">
+        <!-- Apply any bg-* class to to the icon to color it -->
+        <span class="info-box-icon bg-aqua">{{registeredSystems}}</span>
+        <div class="info-box-content">
+          <h3>Registered systems</h3>
+        </div><!-- /.info-box-content -->
+      </div><!-- /.info-box -->
+    </div>
+  </section>
 </div>
 <div class="row">
   <div class="col-md-12 col-sm-12">

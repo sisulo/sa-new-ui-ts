@@ -1,7 +1,7 @@
 <div class="info-box">
-  <span [ngClass]="isOverThreshold() ? 'info-box-icon bg-red': 'info-box-icon bg-green'" class="info-box-icon"><i [ngClass]="isOverThreshold() ? 'fa fa-line-chart' : 'ion ion-ios-checkmark-outline'"></i></span>
+  <span [ngClass]="isOverThreshold() ? 'info-box-icon bg-orange': 'info-box-icon bg-green'" class="info-box-icon"><i class="fa" [ngClass]="isOverThreshold() ? 'fa-warning' : icon"></i></span>
 
-  <div class="info-box-content">
+  <div class="info-box-content bg-">
     <span class="info-box-text">{{label}}</span>
     <span class="info-box-number">{{value}}<small></small></span>
   </div>
