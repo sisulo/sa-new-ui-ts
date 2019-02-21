@@ -1,21 +1,36 @@
 <div class="row">
   <section class="content-header">
-    <H1><i class="fa fa-bell-o"></i> Alerts</H1>
+    <H1><i class="fa fa-bell-o"></i> Alerts (Last 24 Hours)</H1>
   </section>
   <section class="content">
-    <div *ngFor="let alert of alerts;let i = index" class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <app-info-box [value]="alert.occurence.length" [data]="alert.occurence" [context]="getLinkContext(alert.type)" [label]="getAlertLabel(alert.type)" [icon]="getAlertIcon(alert.type)"></app-info-box>
+    <h4>Performance</h4>
+    <div *ngFor="let alert of alerts;let i = index">
+      <div *ngIf="containsType(alert.type, alertsPerformance)" class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+        <app-info-box [value]="alert.occurence.length" [data]="alert.occurence" [context]="getLinkContext(alert.type)"
+                      [label]="getAlertLabel(alert.type)" [icon]="getAlertIcon(alert.type)"></app-info-box>
+      </div>
     </div>
   </section>
+  <section class="content">
+    <h4>Operations</h4>
+    <div *ngFor="let alert of alerts;let i = index" class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
+      <app-info-box *ngIf="containsType(alert.type, alertsOperations)" [value]="alert.occurence.length"
+                    [data]="alert.occurence" [context]="getLinkContext(alert.type)"
+                    [label]="getAlertLabel(alert.type)" [icon]="getAlertIcon(alert.type)"></app-info-box>
+    </div>
+  </section>
+
+
 </div>
 <div class="row">
   <section class="content-header">
-    <h1><i class="fa fa-area-chart"></i> Performance statistics</h1>
+    <h1><i class="fa fa-area-chart"></i> Infrastructure Stats (Last 24 Hours)</h1>
   </section>
   <section class="content">
     <div *ngFor="let metric of metrics" class="col-lg-3 col-xs-6">
       <!-- small box -->
-      <app-small-box  [data]="metric" [label]="getMetricLabel(metric.type)" [icon]="getMetricIcon(metric.type)" [color]="getMetricColor(metric.type)"></app-small-box>
+      <app-small-box [data]="metric" [label]="getMetricLabel(metric.type)" [icon]="getMetricIcon(metric.type)"
+                     [color]="getMetricColor(metric.type)"></app-small-box>
     </div>
   </section>
 </div>

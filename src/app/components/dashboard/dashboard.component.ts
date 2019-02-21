@@ -21,6 +21,8 @@ export class DashboardComponent implements OnInit {
   alertLabels = {};
   metrics: Metric[] = [];
   alerts: Alert[] = [];
+  alertsPerformance = [];
+  alertsOperations = [];
   alertIcons = {};
   metricIcons = {};
   metricColor = {};
@@ -34,13 +36,13 @@ export class DashboardComponent implements OnInit {
     this.metricLabels[SystemMetricType.WORKLOAD] = 'Total Workload';
     this.metricLabels[SystemMetricType.TRANSFER] = 'Total Transfer';
 
-    this.alertLabels[AlertType.CAPACITY_USAGE] = 'Capacity usage';
-    this.alertLabels[AlertType.CPU] = 'CPU';
-    this.alertLabels[AlertType.DISBALANCE_EVENTS] = 'Disbalance events';
-    this.alertLabels[AlertType.HDD] = 'HDD';
-    this.alertLabels[AlertType.RESPONSE] = 'Response';
-    this.alertLabels[AlertType.SLA_EVENTS] = 'SLA events';
-    this.alertLabels[AlertType.WRITE_PENDING] = 'Write pending';
+    this.alertLabels[AlertType.CAPACITY_USAGE] = 'Capacity Usage Events';
+    this.alertLabels[AlertType.CPU] = 'CPU Utilization Events';
+    this.alertLabels[AlertType.DISBALANCE_EVENTS] = 'CHA Pair Disbalance Events';
+    this.alertLabels[AlertType.HDD] = 'HDD Utilization Events';
+    this.alertLabels[AlertType.RESPONSE] = 'Latency Events';
+    this.alertLabels[AlertType.SLA_EVENTS] = 'Out of SLA Events';
+    this.alertLabels[AlertType.WRITE_PENDING] = 'Cache Write Pending Events';
 
     this.alertIcons[AlertType.CAPACITY_USAGE] = 'fa-pie-chart';
     this.alertIcons[AlertType.CPU] = 'fa-dashboard';
@@ -64,6 +66,9 @@ export class DashboardComponent implements OnInit {
     this.linkContext[AlertType.SLA_EVENTS] = 'dp-sla';
     this.linkContext[AlertType.WRITE_PENDING] = 'capacity';
 
+    this.alertsPerformance.push(AlertType.CPU, AlertType.HDD, AlertType.WRITE_PENDING, AlertType.RESPONSE);
+    this.alertsOperations.push(AlertType.CAPACITY_USAGE, AlertType.SLA_EVENTS, AlertType.DISBALANCE_EVENTS);
+
     this.metricService.getInfrastructureStats().subscribe(stats => {
       this.metrics = stats.metrics;
       this.alerts = stats.alerts;
@@ -79,6 +84,9 @@ export class DashboardComponent implements OnInit {
     this.getMap();
   }
 
+  containsType(alertType: AlertType, types: []) {
+      return types.find(type => type === alertType) !== undefined;
+  }
   getAlertIcon(type: SystemMetricType) {
     return this.alertIcons[type];
   }
