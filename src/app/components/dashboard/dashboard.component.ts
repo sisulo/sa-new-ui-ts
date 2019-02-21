@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit {
   alertIcons = {};
   metricIcons = {};
   metricColor = {};
+  linkContext = {};
   datacenters;
   registeredSystems;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
@@ -55,6 +56,14 @@ export class DashboardComponent implements OnInit {
     this.metricColor[SystemMetricType.WORKLOAD] = 'bg-maroon';
     this.metricColor[SystemMetricType.TRANSFER] = 'bg-primary';
 
+    this.linkContext[AlertType.CAPACITY_USAGE] = 'capacity';
+    this.linkContext[AlertType.CPU] = 'performance';
+    this.linkContext[AlertType.DISBALANCE_EVENTS] = 'adapters';
+    this.linkContext[AlertType.HDD] = 'performance';
+    this.linkContext[AlertType.RESPONSE] = 'performance';
+    this.linkContext[AlertType.SLA_EVENTS] = 'dp-sla';
+    this.linkContext[AlertType.WRITE_PENDING] = 'capacity';
+
     this.metricService.getInfrastructureStats().subscribe(stats => {
       this.metrics = stats.metrics;
       this.alerts = stats.alerts;
@@ -83,6 +92,10 @@ export class DashboardComponent implements OnInit {
 
   getMetricColor(type: SystemMetricType) {
     return this.metricColor[type];
+  }
+
+  getLinkContext(type: SystemMetricType) {
+    return this.linkContext[type];
   }
 
   getAlertLabel(type: AlertType) {

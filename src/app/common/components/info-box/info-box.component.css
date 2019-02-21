@@ -1,0 +1,4 @@
+div.modal.open {
+  display: block;
+  padding-right: 15px;
+}

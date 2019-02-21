@@ -14,6 +14,8 @@ import {TooltipModule} from 'ng2-tooltip-directive';
 import { RowTableComponent } from './components/sasi-table/row-table/row-table.component';
 import {AlertFormatterComponent} from '../global-statistics/alert-formatter/alert-formatter.component';
 import { SmallBoxComponent } from './components/small-box/small-box.component';
+import { RouterModule, Routes } from '@angular/router';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { SmallBoxComponent } from './components/small-box/small-box.component';
   imports: [
     CommonModule,
     KnobModule,
-    TooltipModule
+    TooltipModule,
+    RouterModule
   ],
   exports: [
     KnobSaComponent,

@@ -1,39 +1,22 @@
 <h2>Global Statistics</h2>
-
-<div class="box">
-    <!--<h3 class="box-title">Statistics</h3>-->
-  <!--<div class="box-header with-border">-->
-  <!--<div class="box-tools pull-right">-->
-      <!--&lt;!&ndash; Buttons, labels, and many other things can be placed here! &ndash;&gt;-->
-      <!--&lt;!&ndash; Here is a label for example &ndash;&gt;-->
-      <!--&lt;!&ndash;<span class="label label-primary">Label</span>&ndash;&gt;-->
-    <!--</div>-->
-    <!--&lt;!&ndash; /.box-tools &ndash;&gt;-->
-  <!--</div>-->
-  <!-- /.box-header -->
-  <div class="box-body">
-    <div class="col-md-12">
-      <div class="nav-tabs-custom">
-        <ul class="nav nav-tabs">
-          <li *ngFor="let dataCenter of dataCenters"
-              [class.active]="isCurrentTab(dataCenter.id)">
-            <a (click)="activeTab(dataCenter.id)"
-               [routerLink]="'./'+ dataCenter.id + '/' + context">
-              {{dataCenter.label}}
-            </a>
-          </li>
-        </ul>
-        <div class="tab-content">
-          <router-outlet></router-outlet>
-        </div>
-        <!-- /.performance-statistics-content -->
-      </div>
-      <!-- /.nav-tabs-custom -->
+<div class="col-md-12">
+  <div class="nav-tabs-custom">
+    <ul class="nav nav-tabs">
+      <li *ngFor="let dataCenter of dataCenters"
+          [class.active]="isCurrentTab(dataCenter.id)">
+        <a (click)="activeTab(dataCenter.id)"
+           [routerLink]="'./'+ dataCenter.id + '/' + context">
+          {{dataCenter.label}}
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <router-outlet></router-outlet>
     </div>
+    <!-- /.performance-statistics-content -->
   </div>
-  <!--<div class="overlay">-->
-  <!--<i class="fa fa-refresh fa-spin"></i>-->
-  <!--</div>-->
+  <!-- /.nav-tabs-custom -->
 </div>
+
 
 

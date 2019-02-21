@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {AlertType} from '../../models/metrics/AlertType';
+import {Occurence} from '../../models/metrics/Occurence';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-info-box',
@@ -10,14 +11,40 @@ export class InfoBoxComponent implements OnInit {
 
   @Input() value: number;
   @Input() label: string;
+  @Input() context: string;
   @Input() threshold = 0;
   @Input() icon = '';
-  constructor() { }
+  @Input() data: Occurence[] = [];
+  modalState = 'close';
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+  }
 
   ngOnInit() {
+    if (this.data.length > 0) {
+      const result = this.data.sort(
+        (occurence1, occurrence2) => {
+          return occurrence2.value - occurence1.value;
+        }
+      );
+    }
   }
 
   isOverThreshold() {
     return this.value > this.threshold;
+  }
+
+  openModal() {
+    this.modalState = 'open';
+  }
+
+  closeModal() {
+    this.modalState = 'close';
+  }
+
+  isModalOpened() {
+    return this.modalState === 'open';
   }
 }

@@ -1,9 +1,32 @@
 <div class="info-box">
   <span [ngClass]="isOverThreshold() ? 'info-box-icon bg-orange': 'info-box-icon bg-green'" class="info-box-icon"><i class="fa" [ngClass]="isOverThreshold() ? 'fa-warning' : icon"></i></span>
 
-  <div class="info-box-content bg-">
+  <div class="info-box-content">
     <span class="info-box-text">{{label}}</span>
     <span class="info-box-number">{{value}}<small></small></span>
+    <a class="small-box-footer" href="#" [class.hidden]="!isOverThreshold()" (click)="openModal()"> More </a>
   </div>
   <!-- /.info-box-content -->
+</div>
+<div class="modal fade in" id="modal-default" [class.open]="isModalOpened()">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)="closeModal()">×</span></button>
+        <h4 class="modal-title">Occurrences</h4>
+      </div>
+      <div class="modal-body" *ngIf="data.length > 0">
+        <p  *ngFor="let occurence of data">
+          <a [routerLink]="'/global-statistics/' + occurence.datacenterId + '/' + context">
+          {{occurence.name}}</a> - {{occurence.value}} {{occurence.unit}}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
 </div>

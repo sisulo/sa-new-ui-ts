@@ -4,7 +4,7 @@
   </section>
   <section class="content">
     <div *ngFor="let alert of alerts;let i = index" class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <app-info-box [value]="alert.occurence.length" [label]="getAlertLabel(alert.type)" [icon]="getAlertIcon(alert.type)"></app-info-box>
+      <app-info-box [value]="alert.occurence.length" [data]="alert.occurence" [context]="getLinkContext(alert.type)" [label]="getAlertLabel(alert.type)" [icon]="getAlertIcon(alert.type)"></app-info-box>
     </div>
   </section>
 </div>
