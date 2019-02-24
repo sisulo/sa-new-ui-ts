@@ -15,6 +15,7 @@ import { RowTableComponent } from './components/sasi-table/row-table/row-table.c
 import {AlertFormatterComponent} from '../global-statistics/alert-formatter/alert-formatter.component';
 import { SmallBoxComponent } from './components/small-box/small-box.component';
 import { RouterModule, Routes } from '@angular/router';
+import { SystemPool2SasiGroupTablePipe } from './utils/system-pool-2-sasi-group-table.pipe';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RouterModule, Routes } from '@angular/router';
     CellTableComponent,
     FormatterHostDirective,
     RowTableComponent,
-    SmallBoxComponent
+    SmallBoxComponent,
+    SystemPool2SasiGroupTablePipe
 
   ],
   imports: [

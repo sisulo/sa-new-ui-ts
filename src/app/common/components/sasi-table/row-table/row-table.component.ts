@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SasiCell, SasiColumn, SasiRow, SasiTableOptions} from '../sasi-table.component';
+import {SasiRow, SasiTableOptions} from '../sasi-table.component';
 
 @Component({
   selector: 'app-row-table',

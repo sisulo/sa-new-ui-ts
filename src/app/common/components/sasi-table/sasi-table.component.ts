@@ -65,6 +65,11 @@ export class SasiRow {
   }
 }
 
+export class SasiGroupRow {
+  public groupRow: SasiRow;
+  public rows: SasiRow[] = [];
+}
+
 /**
  * SasiTableOptions is class holding options to be set in table, and define behavior, features etc. for sasi table.
  */

@@ -10,7 +10,7 @@ import {SortType} from '../div-table/div-table';
 import {SystemDetail} from '../../common/models/SystemDetail';
 import {BusService} from '../bus.service';
 
-
+// TODO separate components, pipes, utils to own directories
 @Component({
   selector: 'app-adapters',
   templateUrl: './adapters.component.html',

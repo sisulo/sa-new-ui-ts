@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {SystemDetail} from '../models/SystemDetail';
 import {SasiCell, SasiRow} from '../components/sasi-table/sasi-table.component';
-
+// TODO move to the global statistics module
 @Pipe({
   name: 'systemPool2SasiTable'
 })
