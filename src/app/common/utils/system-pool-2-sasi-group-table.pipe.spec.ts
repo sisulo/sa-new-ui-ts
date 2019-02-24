@@ -1,8 +1,8 @@
-import { SystemPool2SasiGroupTablePipe } from './system-pool-2-sasi-group-table.pipe';
+import {SystemPool2SasiGroupTablePipe} from './system-pool-2-sasi-group-table.pipe';
 
 describe('SystemPool2SasiGroupTablePipe', () => {
   it('create an instance', () => {
-    const pipe = new SystemPool2SasiGroupTablePipe();
+    const pipe = new SystemPool2SasiGroupTablePipe(null);
     expect(pipe).toBeTruthy();
   });
 });

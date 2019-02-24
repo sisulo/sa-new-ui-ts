@@ -1,0 +1,60 @@
+.col-control {
+  width: 3.5%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.col {
+  /*width: 13.33%;*/
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.col-control i {
+  font-size: 11px;
+  padding: 3px;
+}
+
+.col-control:after {
+  content: "";
+  font-size: 11px;
+  padding: 3px;
+}
+
+
+/**** Data group header ****/
+.table-group-header > div.table-group-label.row > div[class^="col"],
+.table-group-header > div.table-group-label.row > div.ignore > div {
+  text-align: center;
+  border-right: 1px #EAEAEA solid;
+  margin: 2px 0px 2px 0px;
+  /*display: inline-block;*/
+  float: left;
+}
+
+.table-group-header > div:first-child {
+  /*background-color: #BBD9E6;*/
+  color: #35516A;
+  /*padding: 10px 0px 10px 0px;*/
+  /*border-top: 3px solid #EAEAEA;*/
+  border-bottom: 3px solid #EAEAEA;
+  /*margin-top: 10px;*/
+}
+
+.table-group-header > div:first-child > div.col:last-child {
+  border-right: none;
+}
+
+app-row-table {
+  display: block;
+}
+
+app-row-table.striped-row:nth-of-type(odd) {
+  background-color: #f3f8fa;
+}
+
+.col-label {
+  display: inline-block;
+  text-align: center;
+  /*width: 100%;*/
+}

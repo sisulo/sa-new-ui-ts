@@ -7,10 +7,6 @@ div.table-header > div.col.highlightColumn {
   text-decoration: #334369 underline;
 }
 
-.table-data.row.highlight-row:hover, .table-data .highlightColumn {
-  background-color: #b4d1ee !important;
-  color: #3A738C;
-}
 
 .selectedRow {
   background-color: #BEECD1 !important;
@@ -33,6 +29,7 @@ div.table-header > div.col.highlightColumn {
 .col-label {
   width: 13%;
   display: inline-block;
+
   /*width: 100%;*/
 }
 
@@ -64,65 +61,19 @@ div.table-header > div.col-control {
   color: #333;
 }
 
-.table-group-header > div.table-group-label.row > div[class^="col"],
-.table-group-header > div.table-group-label.row > div.ignore > div {
-  text-align: center;
-  border-right: 1px #EAEAEA solid;
-  margin: 2px 0px 2px 0px;
-  /*display: inline-block;*/
-  float: left;
-}
-
-/**** Data group header ****/
-.table-group-header > .table-group-label,
-.table-data {
-  border-left: 3px solid #EAEAEA;
-  border-right: 3px solid #EAEAEA;
-}
-
-div.table-group-header {
-  margin-bottom: 5px;
-}
-
-.table-group-header > div:first-child {
-  /*background-color: #BBD9E6;*/
-  color: #35516A;
-  /*padding: 10px 0px 10px 0px;*/
-  border-top: 3px solid #EAEAEA;
-  border-bottom: 3px solid #EAEAEA;
-  /*margin-top: 10px;*/
-}
-
-.table-group-header > div:first-child > div.col:last-child {
-  border-right: none;
-}
-
 /**** Table data ****/
-.table-data:last-child {
-  /*margin: 10px 0px 10px 0px;*/
-  border-bottom: 3px solid #EAEAEA;
+app-row-dynamic-table {
+  display: block;
+  margin: 0 0 5px;
+  border: 3px solid #eaeaea;
 }
-
-div.table-data.striped-row:nth-of-type(odd) {
+app-row-dynamic-table.striped-row:nth-of-type(odd) {
   background-color: #f3f8fa;
 }
-
-.table-data > div {
-  text-align: center;
-  border-right: 1px #EAEAEA solid;
-  margin: 2px 0px 2px 0px;
-  display: inline-block;
-  vertical-align: middle;
-  margin: auto;
+app-row-dynamic-table.highlight-row:hover {
+  background-color: #b4d1ee !important;
+  color: #3A738C;
 }
-
-.table-data > div i {
-  margin-top: 0.1em;
-}
-
-/*div.col-control {*/
-/*min-height: 1px;*/
-/*}*/
 
 .col-control i {
   font-size: 11px;
@@ -155,10 +106,6 @@ div.sticky {
 div.no-border {
   border-right: 0px !important;
 }
-/*not for all tables - performance*/
-.col {
-  width: 13.78%;
-}
 
 i.sort-icon-left {
   margin-right: 5px;
@@ -168,10 +115,6 @@ i.sort-icon-right {
   margin-left: 5px;
 }
 
-.col {
-  width: 13.78%;
-}
-
 .table-data.row {
   margin: 0px 0px 5px 0px;
   border: 3px #EAEAEA solid;
@@ -179,4 +122,7 @@ i.sort-icon-right {
 
 .peak-label {
   color: #c7e1f8;
+}
+app-row-dynamic-table {
+  width: 100%;
 }

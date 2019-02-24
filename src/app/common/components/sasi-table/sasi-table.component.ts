@@ -1,5 +1,6 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/AlertRule';
+import {resolveReflectiveProviders} from '@angular/core/src/di/reflective_provider';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -18,10 +19,13 @@ export class SasiColumn {
    */
   component: Type<any>;
 
-  constructor(index: string, label: string, component: Type<any>) {
+  altSortEnable: boolean;
+
+  constructor(index: string, label: string, component: Type<any>, altSortEnable: boolean) {
     this.index = index;
     this.label = label;
     this.component = component;
+    this.altSortEnable = altSortEnable;
   }
 }
 
@@ -83,8 +87,12 @@ export class SasiTableOptions {
   public altSortColumnName: string;
   public highlightColumn: boolean;
   public highlightRow: boolean;
+  public isDataGrouped: boolean;
   public colControlFormatter;
+  public rowComponentFormatter;
   public cellDecoratorRules: AlertRule[] = [];
+  public valueColumnWidth: string;
+  public labelColumnWidth: string;
 }
 
 export enum SasiSortType {
@@ -115,8 +123,18 @@ export class SasiTableComponent implements OnInit {
     altSortColumnName: null,
     highlightColumn: true,
     highlightRow: true,
+    valueColumnWidth: '',
+    labelColumnWidth: '',
+    isDataGrouped: false,
     colControlFormatter: null,
-    cellDecoratorRules: []
+    cellDecoratorRules: [],
+    rowComponentFormatter: null,
+    getColumnWidth: function (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
+      if (name === 'name') {
+        return this.labelColumnWidth;
+      }
+      return this.valueColumnWidth;
+    }
   };
 
   altSort = false;
@@ -126,6 +144,7 @@ export class SasiTableComponent implements OnInit {
 
   ngOnInit() {
     this.options = Object.assign(this.defaultOptions, this.tableOptions);
+    console.log(this.options);
   }
 
   getColumnLabel(type: string) {

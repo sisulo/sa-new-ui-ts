@@ -4,16 +4,26 @@
   -->
   <div class="row table-header">
     <div class="col-control"></div>
-    <div class="col" *ngFor="let columnOption of options.columns">
-      {{getColumnLabel(columnOption.index)}} <i class="text-muted fa sort-icon-right" [ngClass]="getSortIconClass(columnOption.index, false)" (click)="setSort(columnOption, false)"></i> <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
-      <br/><span *ngIf="columnOption.index !== 'name'"><i class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i class='fa fa-sort sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)" (click)="setSort(columnOption, true)"></i></span>
+    <div class="col" [style.width.%]="options.getColumnWidth(columnOption.index)" *ngFor="let columnOption of options.columns">
+      {{getColumnLabel(columnOption.index)}} <i class="text-muted fa sort-icon-right"
+                                                [ngClass]="getSortIconClass(columnOption.index, false)"
+                                                (click)="setSort(columnOption, false)"></i>
+      <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
+      <br/><span *ngIf="columnOption.altSortEnable === true"><i
+      class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i
+      class='fa fa-sort sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)"
+      (click)="setSort(columnOption, true)"></i></span>
     </div>
   </div>
   <!--POOL ROWS-->
   <!---->
   <div class="row">
-    <div *ngFor="let row of data;" [class.highlight-row]="options.highlightRow" class="table-data striped-row row">
-      <app-row-table [data]="row" [options]="options"></app-row-table>
-    </div>
+    <!--<div  [class.highlight-row]="options.highlightRow">-->
+    <app-row-dynamic-table *ngFor="let row of data"
+                           [class.highlight-row]="options.highlightRow && !options.isDataGrouped"
+                           [class.striped-row]="!options.isDataGrouped"
+                           [componentFormatter]="options.rowComponentFormatter" [data]="row"
+                           [options]="options"></app-row-dynamic-table>
+    <!--</div>-->
   </div>
 </div>
