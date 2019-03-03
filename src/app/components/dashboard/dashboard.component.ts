@@ -27,8 +27,8 @@ export class DashboardComponent implements OnInit {
   metricIcons = {};
   metricColor = {};
   linkContext = {};
-  datacenters;
-  registeredSystems;
+  datacenters: Metric;
+  registeredSystems: Metric;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
   currentColor = 0;
 
@@ -75,8 +75,12 @@ export class DashboardComponent implements OnInit {
     });
     this.metricService.getDatacenters().subscribe(
       data => {
-        this.datacenters = data.datacenters.length;
-        this.registeredSystems = data.datacenters.reduce((previousValue, currentValue) => {
+        this.datacenters = new Metric();
+        this.datacenters.value = data.datacenters.length;
+        this.datacenters.unit = '';
+        this.registeredSystems = new Metric();
+        this.registeredSystems.unit = '';
+        this.registeredSystems.value = data.datacenters.reduce((previousValue, currentValue) => {
           return previousValue + currentValue.systems.length;
         }, 0);
       }

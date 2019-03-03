@@ -24,46 +24,35 @@
 </div>
 <div class="row">
   <section class="content-header">
-    <h1><i class="fa fa-area-chart"></i> Infrastructure Stats (Last 24 Hours)</h1>
-  </section>
-  <section class="content">
-    <div *ngFor="let metric of metrics" class="col-lg-3 col-xs-6">
-      <!-- small box -->
-      <app-small-box [data]="metric" [label]="getMetricLabel(metric.type)" [icon]="getMetricIcon(metric.type)"
-                     [color]="getMetricColor(metric.type)"></app-small-box>
-    </div>
+    <h1><i class="fa fa-area-chart"></i> Geo-location of datacenters</h1>
   </section>
 </div>
 <div class="row">
-  <section class="content">
-    <div class="col-sm-6 col-md-6 col-lg-3">
-      <div class="info-box">
-        <!-- Apply any bg-* class to to the icon to color it -->
-        <span class="info-box-icon bg-green"><span>{{datacenters}}</span></span>
-        <div class="info-box-content">
-          <h3>Datacenters</h3>
-        </div><!-- /.info-box-content -->
-      </div><!-- /.info-box -->
-    </div>
-    <div class="col-sm-6 col-md-6 col-lg-3">
-      <div class="info-box">
-        <!-- Apply any bg-* class to to the icon to color it -->
-        <span class="info-box-icon bg-aqua">{{registeredSystems}}</span>
-        <div class="info-box-content">
-          <h3>Registered systems</h3>
-        </div><!-- /.info-box-content -->
-      </div><!-- /.info-box -->
-    </div>
-  </section>
-</div>
-<div class="row">
-  <div class="col-md-12 col-sm-12">
+  <div class="col-md-9 col-sm-6">
     <div class="box pad">
-      <div class="box-header">
-        <h3>Geo-location of datacenters</h3>
-      </div>
       <div class="box-body">
-        <div id="world-map-markers"></div>
+        <div class="row">
+          <div class="col-md-8" id="world-map-markers"></div>
+          <div class="col-md-4">
+            <div class="row">
+              <section class="content" *ngIf="metrics.length > 0">
+                <div *ngFor="let metric of metrics" class="col-md-12 col-xs-6">
+                  <!-- small box -->
+                  <app-small-box [data]="metric" [label]="getMetricLabel(metric.type)" [icon]="getMetricIcon(metric.type)"
+                                 [color]="getMetricColor(metric.type)"></app-small-box>
+                </div>
+              </section>
+              <div class="col-md-6">
+                <app-knob *ngIf="datacenters !== undefined" [label]="'Datacenters'" [sizeType]="'small'"
+                          [metric]="datacenters" [color]="getColor(1)"></app-knob>
+              </div>
+              <div class="col-md-6">
+                <app-knob *ngIf="registeredSystems !== undefined" [label]="'Registered systems'" [sizeType]="'small'"
+                          [metric]="registeredSystems" [color]="getColor(2)"></app-knob>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

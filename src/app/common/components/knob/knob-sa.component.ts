@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Metric} from '../../models/metrics/Metric';
 
-
 @Component({
   selector: 'app-knob',
   templateUrl: './knob-sa.component.html',
@@ -15,14 +14,14 @@ export class KnobSaComponent implements OnInit {
   @Input() sizeType = 'medium';
   knOptions = {};
 
-  constructor() {
-  }
-
   ngOnInit() {
-    switch (this.sizeType) {
-      case 'medium':
+    console.log(this.metric.value);
+    // if (this.metric !== undefined) {
+      switch (this.sizeType) {
+        case 'medium':
 
         this.knOptions = {
+
           readOnly: true,
           size: 150,
           unit: this.metric.unit,
@@ -40,17 +39,23 @@ export class KnobSaComponent implements OnInit {
         break;
       case 'small':
         this.knOptions = {
+          skin: {
+            type: 'tron',
+            width: 2,
+            color: this.color,
+            spaceWidth: 4
+          },
           readOnly: true,
-          size: 70,
+          size: 100,
           unit: this.metric.unit,
           textColor: this.color,
-          fontSize: '10',
-          fontWeight: '400',
+          fontSize: '25',
+          fontWeight: '800',
           fontFamily: 'Roboto',
           min: 0,
           max: this.metric.unit === '%' ? 100 : this.metric.value,
-          trackWidth: 5,
-          barWidth: 10,
+          trackWidth: 20,
+          barWidth: 25,
           trackColor: '#D8D8D8',
           barColor: this.color,
         };

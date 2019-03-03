@@ -1,2 +1,2 @@
 <div class="custom-knob-label workload-knob-label">{{label}}</div>
-<ngx-knob [value]="metric.value" [options]="knOptions"></ngx-knob>
+<div appUiKnob *ngIf="metric !== undefined" [value]="metric.value" [options]="knOptions"></div>

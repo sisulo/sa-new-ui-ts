@@ -8,7 +8,6 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {BusService} from '../bus.service';
 import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {RouteLinkFormatterComponent} from '../route-link-formatter/route-link-formatter.component';
-import {UnitFormatterComponent} from '../unit-formatter/unit-formatter.component';
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SimpleFormatterComponent} from '../simple-formatter/simple-formatter.component';

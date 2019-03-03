@@ -29,10 +29,10 @@ import {TooltipModule} from 'ng2-tooltip-directive';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    SaCommonModule,
     WebStorageModule,
     BrowserAnimationsModule,
-    TooltipModule
+    TooltipModule,
+    SaCommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
