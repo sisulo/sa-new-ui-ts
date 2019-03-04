@@ -8,7 +8,6 @@ export class LocaleNumberFormatPipe implements PipeTransform {
   public static DECIMAL_SIZE = 3;
 
   transform(value: number): any {
-    console.log(value)
     const result = [];
     let partValue = value.toFixed(0);
     while (this.lastNChar(partValue, LocaleNumberFormatPipe.DECIMAL_SIZE) !== '') {

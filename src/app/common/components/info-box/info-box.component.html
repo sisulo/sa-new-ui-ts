@@ -4,7 +4,14 @@
   <div class="info-box-content">
     <span class="info-box-text">{{label}}</span>
     <span class="info-box-number">{{value}}<small></small></span>
-    <a class="small-box-footer" href="#" [class.hidden]="!isOverThreshold()" (click)="openModal()"> More </a>
+    <span *ngIf="data.length > 0">
+      |<span *ngFor="let occurence of data; let i = index;">
+        <span *ngIf="i < 2" ><a [routerLink]="'/global-statistics/' + occurence.datacenterId + '/' + context">
+          {{occurence.name}}</a> |
+          </span>
+      </span>
+    </span>
+    <span *ngIf="data.length > 2"> ... <a class="small-box-footer" href="#" [class.hidden]="!isOverThreshold()" (click)="openModal()"> >>> </a> </span>
   </div>
   <!-- /.info-box-content -->
 </div>
@@ -17,10 +24,11 @@
         <h4 class="modal-title">Occurrences</h4>
       </div>
       <div class="modal-body" *ngIf="data.length > 0">
-        <p  *ngFor="let occurence of data">
-          <a [routerLink]="'/global-statistics/' + occurence.datacenterId + '/' + context">
-          {{occurence.name}}</a> - {{occurence.value}} {{occurence.unit}}
-        </p>
+        <ul  *ngFor="let occurence of data">
+          <li>
+            <a [routerLink]="'/global-statistics/' + occurence.datacenterId + '/' + context">
+          {{occurence.name}}</a> - {{occurence.value}} {{occurence.unit}}</li>
+        </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeModal()">Close</button>
