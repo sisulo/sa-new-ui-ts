@@ -19,6 +19,7 @@ import {RowGroupTableComponent} from './components/sasi-table/row-group-table/ro
 import {RowDynamicComponent} from './components/sasi-table/row-dynamic.component';
 import {SimpleFormatterComponent} from '../global-statistics/simple-formatter/simple-formatter.component';
 import {Ng2KnobDirective} from './components/knob/ng-2-knob.directive';
+import {LocaleNumberFormatPipe} from './components/small-box/locale-number-format.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {Ng2KnobDirective} from './components/knob/ng-2-knob.directive';
     SystemPool2SasiGroupTablePipe,
     RowGroupTableComponent,
     KnobSaComponent,
-    Ng2KnobDirective
+    Ng2KnobDirective,
+    LocaleNumberFormatPipe
 
   ],
   imports: [

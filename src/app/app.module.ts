@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {Component, NgModule} from '@angular/core';
+import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -21,7 +21,7 @@ import {TooltipModule} from 'ng2-tooltip-directive';
     HeaderComponent,
     SideMenuComponent,
     IframeComponent,
-    DashboardComponent
+    DashboardComponent,
   ],
   imports: [
     GlobalStatisticsModule,
