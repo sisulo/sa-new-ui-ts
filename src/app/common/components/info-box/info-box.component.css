@@ -2,3 +2,9 @@ div.modal.open {
   display: block;
   padding-right: 15px;
 }
+.info-box-number {
+  font-size: 25px;
+}
+.info-box-text {
+  font-size: 17px;
+}
