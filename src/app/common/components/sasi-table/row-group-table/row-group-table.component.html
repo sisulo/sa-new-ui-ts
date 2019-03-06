@@ -7,19 +7,21 @@
   -->
   <div class="table-group-label">
     <div class="col-val col-control">
-      <!--<i class="fa expand-collapse"-->
-         <!--[@iconRotate]='isCollapsed(system.name)'-->
-         <!--[ngClass]="'fa-angle-down'"-->
-         <!--(click)="addCollapsed(system.name)"-->
-         <!--[tooltip]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i>-->
+      <i class="fa expand-collapse"
+         [@iconRotate]="isCollapsed(data.groupRow.getCell('name').value)"
+         [ngClass]="'fa-angle-down'"
+         (click)="addCollapsed(data.groupRow.getCell('name').value)"
+         [tooltip]="isCollapsed(data.groupRow.getCell('name').value) ? 'Expand':'Collapse'"></i>
     </div>
     <!--<div class="col-val col-control">-->
     <!--<i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation text-orange"></i>-->
     <!--</div>-->
     <!--<div class="col-val col-label"><span class="system-name"><a [routerLink]="data.id | iframeUrlCreator"-->
-                                                                <!--routerLinkActive="active">{{ system.name }}</a></span>-->
+    <!--routerLinkActive="active">{{ system.name }}</a></span>-->
     <!--</div>-->
-    <app-cell-table class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)" [componentFormatter]="options.columns[0].component" [data]="data.groupRow.getCell('name').rawData" [label]="''"
+    <app-cell-table class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)"
+                    [componentFormatter]="options.columns[0].component" [data]="data.groupRow.getCell('name').rawData"
+                    [label]="''"
                     [options]="options"></app-cell-table>
     <!--<div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">-->
     <!--<div class="ignore">-->
@@ -31,24 +33,27 @@
   <!---->
   <!--POOL ROWS-->
   <!---->
-  <app-row-table *ngFor="let row of data.rows" [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"></app-row-table>
+  <div [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">
+    <app-row-table [class.highlight-row]="options.highlightRow" *ngFor="let row of data.rows"
+                   [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"></app-row-table>
+  </div>
   <!--<div class="row" [@slideInOut]="isCollapsed(system.name)">-->
-    <!--<div *ngFor="let pool of data[i].pools" class="table-data striped-row row"-->
-         <!--[@slideInOut]="isCollapsed(system.name)">-->
-      <!--<div class="col-val col-control">-->
-      <!--</div>-->
-      <!--<div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>-->
-      <!--<div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"-->
-           <!--(mouseout)="setHighlightedColumn(-1)"-->
-           <!--(mouseover)="setHighlightedColumn(column)"-->
-           <!--[class.highlightColumn]="isCurrentColumn(column)" hide-delay="0"-->
+  <!--<div *ngFor="let pool of data[i].pools" class="table-data striped-row row"-->
+  <!--[@slideInOut]="isCollapsed(system.name)">-->
+  <!--<div class="col-val col-control">-->
+  <!--</div>-->
+  <!--<div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>-->
+  <!--<div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"-->
+  <!--(mouseout)="setHighlightedColumn(-1)"-->
+  <!--(mouseover)="setHighlightedColumn(column)"-->
+  <!--[class.highlightColumn]="isCurrentColumn(column)" hide-delay="0"-->
 
-           <!--show-delay="500">-->
-                <!--<span>-->
-                  <!--<span class="metric-value">{{getFormattedMetric(pool.metrics, type)}}</span>-->
-                  <!--<span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>-->
-                <!--</span>-->
-      <!--</div>-->
-    <!--</div>-->
+  <!--show-delay="500">-->
+  <!--<span>-->
+  <!--<span class="metric-value">{{getFormattedMetric(pool.metrics, type)}}</span>-->
+  <!--<span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>-->
+  <!--</span>-->
+  <!--</div>-->
+  <!--</div>-->
   <!--</div>-->
 </div>

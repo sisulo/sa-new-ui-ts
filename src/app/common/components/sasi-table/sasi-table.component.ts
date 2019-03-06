@@ -1,6 +1,7 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/AlertRule';
-import {resolveReflectiveProviders} from '@angular/core/src/di/reflective_provider';
+import {LocalStorage} from 'ngx-store';
+import {animate, animation, state, style, transition, trigger} from '@angular/animations';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -100,10 +101,28 @@ export enum SasiSortType {
   DESC = 1
 }
 
+export const slideInOutAnimation = [ // TODO reuse animation in all collapsed sasi-table group
+  trigger('slideInOut', [
+    state('true', style({height: '0px', overflow: 'hidden', margin: '0'})),
+    state('false', style({'height': '*', overflow: 'hidden', margin: '0'})),
+    transition('1 => 0', animate('500ms ease-in')),
+    transition('0 => 1', animate('500ms ease-out'))
+  ]),
+  trigger('iconRotate', [
+    state('false', style({transform: 'rotate(0deg)'})),
+    state('true', style({transform: 'rotate(90deg)'})),
+    transition('1 => 0', animate('500ms')),
+    transition(':enter', animate('0ms')),
+    transition(':leave', animate('0ms')),
+    transition('0 => 1', animate('500ms'))
+  ])
+];
+
 @Component({
   selector: 'app-sasi-table',
   templateUrl: './sasi-table.component.html',
-  styleUrls: ['./sasi-table.component.css']
+  styleUrls: ['./sasi-table.component.css'],
+  animations: slideInOutAnimation
 })
 /**
  * Storage analytics simple interactive table
@@ -111,8 +130,8 @@ export enum SasiSortType {
 export class SasiTableComponent implements OnInit {
 
   @Input() data: SasiRow[] = [];
-
   @Input() tableOptions: SasiTableOptions = new SasiTableOptions();
+  @LocalStorage({key: 'sasi_collapsed'}) collapsedRows: Array<string>;
 
   options: SasiTableOptions;
   defaultOptions = {
@@ -140,6 +159,11 @@ export class SasiTableComponent implements OnInit {
   altSort = false;
 
   constructor() {
+    if (this.collapsedRows === null) {
+      this.collapsedRows = [];
+    } else {
+      this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
+    }
   }
 
   ngOnInit() {
@@ -222,5 +246,29 @@ export class SasiTableComponent implements OnInit {
     return 0;
   }
 
+  collapseAll() {
+    // @ts-ignore
+    const d = <SasiGroupRow[]>this.data;
 
+    if (this.isCollapseAll()) {
+      d.forEach(
+        value => this.collapsedRows.splice(
+          this.collapsedRows.findIndex(
+            collapsedRowValue => collapsedRowValue === value.groupRow.getCell('name').value
+          ), 1
+        )
+      );
+    } else {
+      d.forEach(value => this.collapsedRows.push(value.groupRow.getCell('name').value));
+    }
+    // @ts-ignore
+    this.collapsedRows.save();
+  }
+
+  isCollapseAll(): boolean {
+    // return false;
+    return this.data.every(
+      row => this.collapsedRows.includes(row.groupRow.getCell('name').value)
+    );
+  }
 }

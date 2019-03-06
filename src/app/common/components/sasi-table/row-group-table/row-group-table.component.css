@@ -12,7 +12,7 @@
 
 .col-control i {
   font-size: 11px;
-  padding: 3px;
+  padding: 5px;
 }
 
 .col-control:after {
@@ -23,13 +23,11 @@
 
 
 /**** Data group header ****/
-.table-group-header > div.table-group-label.row > div[class^="col"],
-.table-group-header > div.table-group-label.row > div.ignore > div {
+.table-group-header > div.table-group-label > div[class^="col"],
+.table-group-header > div.table-group-label > div.ignore > div {
   text-align: center;
   border-right: 1px #EAEAEA solid;
   margin: 2px 0px 2px 0px;
-  /*display: inline-block;*/
-  float: left;
 }
 
 .table-group-header > div:first-child {
@@ -51,6 +49,11 @@ app-row-table {
 
 app-row-table.striped-row:nth-of-type(odd) {
   background-color: #f3f8fa;
+}
+
+app-row-table.highlight-row:hover {
+  background-color: #b4d1ee !important;
+  color: #3A738C;
 }
 
 .col-label {
