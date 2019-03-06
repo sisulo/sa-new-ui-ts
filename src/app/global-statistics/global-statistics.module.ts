@@ -12,6 +12,8 @@ import {RouteLinkFormatterComponent} from './route-link-formatter/route-link-for
 import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
 import {AlertFormatterComponent} from './alert-formatter/alert-formatter.component';
 import {SimpleFormatterComponent} from './simple-formatter/simple-formatter.component';
+import { TimeFormatterComponent } from './time-formatter/time-formatter.component';
+import {Seconds2FullTimePipe} from './utils/seconds-2-full-time.pipe';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,9 @@ import {SimpleFormatterComponent} from './simple-formatter/simple-formatter.comp
     RouteLinkFormatterComponent,
     UnitFormatterComponent,
     AlertFormatterComponent,
-    SimpleFormatterComponent
+    SimpleFormatterComponent,
+    TimeFormatterComponent,
+    Seconds2FullTimePipe
   ],
   imports: [
     CommonModule,

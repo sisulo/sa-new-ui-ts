@@ -20,6 +20,7 @@ import {RowDynamicComponent} from './components/sasi-table/row-dynamic.component
 import {SimpleFormatterComponent} from '../global-statistics/simple-formatter/simple-formatter.component';
 import {Ng2KnobDirective} from './components/knob/ng-2-knob.directive';
 import {LocaleNumberFormatPipe} from './components/small-box/locale-number-format.pipe';
+import {TimeFormatterComponent} from '../global-statistics/time-formatter/time-formatter.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import {LocaleNumberFormatPipe} from './components/small-box/locale-number-forma
     AlertFormatterComponent,
     SimpleFormatterComponent,
     RowTableComponent,
-    RowGroupTableComponent
+    RowGroupTableComponent,
+    TimeFormatterComponent
   ]
 })
 export class SaCommonModule {
