@@ -4,3 +4,7 @@
 .col-label {
   width: 25% !important;
 }
+.sorting {
+  font-size:13px;
+  transform: rotate(90deg);
+}

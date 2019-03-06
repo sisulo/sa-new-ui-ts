@@ -126,3 +126,8 @@ i.sort-icon-right {
 app-row-dynamic-table {
   width: 100%;
 }
+
+.sorting {
+  font-size:13px;
+  transform: rotate(90deg);
+}

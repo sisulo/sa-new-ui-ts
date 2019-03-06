@@ -57,3 +57,8 @@ div.agg-vals {
   font-size: 8px;
   margin-left: 3px;
 }
+
+.sorting {
+  font-size:13px;
+  transform: rotate(90deg);
+}

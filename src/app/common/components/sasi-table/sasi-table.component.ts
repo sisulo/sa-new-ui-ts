@@ -94,6 +94,13 @@ export class SasiTableOptions {
   public cellDecoratorRules: AlertRule[] = [];
   public valueColumnWidth: string;
   public labelColumnWidth: string;
+
+  getColumnWidth (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
+    if (name === 'name') {
+      return this.labelColumnWidth;
+    }
+    return this.valueColumnWidth;
+  }
 }
 
 export enum SasiSortType {
@@ -137,7 +144,7 @@ export class SasiTableComponent implements OnInit {
   defaultOptions = {
     sortDescIcon: 'fa-sort-amount-desc',
     sortAscIcon: 'fa-sort-amount-asc',
-    sortDefaultIcon: 'fa-sort',
+    sortDefaultIcon: 'sorting fa-exchange',
     sortType: SasiSortType.ASC,
     altSortColumnName: null,
     highlightColumn: true,

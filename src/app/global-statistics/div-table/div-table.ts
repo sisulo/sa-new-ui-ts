@@ -55,7 +55,7 @@ export abstract class DivTable {
         return 'fa-sort-amount-desc';
       }
     }
-    return 'fa-sort';
+    return 'fa-exchange sorting';
   }
 
   abstract setData(data);
