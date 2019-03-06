@@ -266,8 +266,8 @@ export class SasiTableComponent implements OnInit {
   }
 
   isCollapseAll(): boolean {
-    // return false;
     return this.data.every(
+      // @ts-ignore
       row => this.collapsedRows.includes(row.groupRow.getCell('name').value)
     );
   }

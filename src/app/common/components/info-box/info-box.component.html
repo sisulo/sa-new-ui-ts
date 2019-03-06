@@ -21,14 +21,35 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" (click)="closeModal()">×</span></button>
-        <h4 class="modal-title">Occurrences</h4>
+        <h4 class="modal-title">{{label}}</h4>
       </div>
       <div class="modal-body" *ngIf="data.length > 0">
-        <ul  *ngFor="let occurence of data">
-          <li>
-            <a [routerLink]="'/global-statistics/' + occurence.datacenterId + '/' + context">
-          {{occurence.name}}</a> - {{occurence.value}} {{occurence.unit}}</li>
-        </ul>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>System</th>
+              <th *ngIf="data[0].entityType === entityType.POOL">Pool</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tr *ngFor="let occurence of data">
+            <td *ngIf="occurence.entityType === null">
+              {{occurence.name}}
+            </td>
+            <td *ngIf="occurence.entityType !== null">
+              {{metric.getSystemName(occurence.datacenterId, occurence.systemId)}}
+            </td>
+            <td *ngIf="occurence.entityType === entityType.POOL">
+              {{occurence.name}}
+            </td>
+            <td>
+              {{occurence.value}} {{occurence.unit}}
+            </td>
+            <!---->
+            <!--<a [routerLink]="'/global-statistics/' + occurence.datacenterId + '/' + context">-->
+          <!--{{occurence.name}}</a> - {{occurence.value}} {{occurence.unit}} -->
+          </tr>
+        </table>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeModal()">Close</button>

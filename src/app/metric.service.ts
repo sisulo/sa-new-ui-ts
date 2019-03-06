@@ -6,6 +6,7 @@ import {environment} from '../environments/environment';
 import {DatacenterDto} from './common/models/dtos/DatacenterDto';
 import {PerformanceStatisticsDto} from './common/models/dtos/PerformanceStatisticsDto';
 import {CapacityStatisticsDto} from './common/models/dtos/CapacityStatisticsDto';
+import {Datacenter} from './common/models/Datacenter';
 
 export enum PeriodType {
   DAY = 0,
@@ -18,7 +19,10 @@ export enum PeriodType {
 })
 export class MetricService {
 
+  infrastructure: Datacenter[];
+
   constructor(private http: HttpClient) {
+    this.getDatacenters();
   }
 
   getInfrastructureStats(): Observable<InfrastructureDto> {
@@ -28,9 +32,24 @@ export class MetricService {
 
   getDatacenters(): Observable<DatacenterDto> {
     const url = this.buildUrl(environment.metricsBaseUrl, 'datacenters.json');
-    return this.http.get<DatacenterDto>(url);
+    const dtoObservable = this.http.get<DatacenterDto>(url);
+    dtoObservable.subscribe(
+      dto => this.infrastructure = dto.datacenters
+    );
+    return dtoObservable;
   }
 
+  public getSystemName(datacenterId: string, systemId: string): string {
+    const datacenterObj = this.infrastructure.find(datacenter => datacenter.id.toString() === datacenterId);
+    if (datacenterObj === undefined) {
+      return '';
+    }
+    const systemObj = datacenterObj.systems.find(system => system.id.toString() === systemId)
+    if (systemObj === undefined) {
+      return '';
+    }
+    return datacenterObj.systems.find(system => system.id.toString() === systemId).name;
+  }
   getPerformanceStatistics(id: number, period: PeriodType): Observable<PerformanceStatisticsDto> {
     const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/perf' + this.getSuffix(period) + '.json');
     return this.http.get<PerformanceStatisticsDto>(url);

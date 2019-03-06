@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Occurence} from '../../models/metrics/Occurence';
 import {ActivatedRoute, Router} from '@angular/router';
+import {EntityType} from '../../models/metrics/EntityType';
+import {MetricService} from '../../../metric.service';
 
 @Component({
   selector: 'app-info-box',
@@ -15,20 +17,25 @@ export class InfoBoxComponent implements OnInit {
   @Input() threshold = 0;
   @Input() icon = '';
   @Input() data: Occurence[] = [];
+
+  entityType = EntityType;
   modalState = 'close';
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private metric: MetricService
   ) {
   }
 
   ngOnInit() {
     if (this.data.length > 0) {
+
       const result = this.data.sort(
         (occurence1, occurrence2) => {
           return occurrence2.value - occurence1.value;
         }
       );
+      console.log(this.data);
     }
   }
 
