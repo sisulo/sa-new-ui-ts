@@ -19,10 +19,17 @@
     <!--<div class="col-val col-label"><span class="system-name"><a [routerLink]="data.id | iframeUrlCreator"-->
     <!--routerLinkActive="active">{{ system.name }}</a></span>-->
     <!--</div>-->
-    <app-cell-table class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)"
-                    [componentFormatter]="options.columns[0].component" [data]="data.groupRow.getCell('name').rawData"
-                    [label]="''"
-                    [options]="options"></app-cell-table>
+    <div class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)">
+      <app-cell-table
+        [componentFormatter]="options.columns[0].component" [data]="data.groupRow.getCell('name').rawData"
+        [label]="''"
+        [options]="options"></app-cell-table>
+    </div>
+    <div class="col-val col" *ngFor="let column of options.getAggregatedColumns()"
+         [style.width.%]="options.getColumnWidth(column.index)">
+      <app-cell-table [componentFormatter]="column.component" [data]="{value: aggregatedValues[column.index]}"
+                      [label]="''" [options]="options"></app-cell-table>
+    </div>
     <!--<div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">-->
     <!--<div class="ignore">-->
     <!--<div *ngFor="let type of types"-->

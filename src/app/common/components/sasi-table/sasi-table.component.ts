@@ -22,11 +22,14 @@ export class SasiColumn {
 
   altSortEnable: boolean;
 
-  constructor(index: string, label: string, component: Type<any>, altSortEnable: boolean) {
+  isAggregated: boolean
+
+  constructor(index: string, label: string, component: Type<any>, altSortEnable: boolean, isAggragated: boolean) {
     this.index = index;
     this.label = label;
     this.component = component;
     this.altSortEnable = altSortEnable;
+    this.isAggregated = isAggragated;
   }
 }
 
@@ -80,6 +83,7 @@ export class SasiGroupRow {
  */
 export class SasiTableOptions {
   public columns: SasiColumn[] = [];
+  public aggregateColumns: [] = [];
   public sortDescIcon;
   public sortAscIcon;
   public sortDefaultIcon;
@@ -100,6 +104,12 @@ export class SasiTableOptions {
       return this.labelColumnWidth;
     }
     return this.valueColumnWidth;
+  }
+
+  getAggregatedColumns(): SasiColumn[] {
+    return this.columns.filter(
+      column => column.isAggregated
+    );
   }
 }
 
@@ -155,11 +165,18 @@ export class SasiTableComponent implements OnInit {
     colControlFormatter: null,
     cellDecoratorRules: [],
     rowComponentFormatter: null,
+    aggregateColumns: [],
     getColumnWidth: function (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
       if (name === 'name') {
         return this.labelColumnWidth;
       }
       return this.valueColumnWidth;
+    },
+
+    getAggregatedColumns() {
+      return this.columns.filter(
+        column => column.isAggregated
+      );
     }
   };
 

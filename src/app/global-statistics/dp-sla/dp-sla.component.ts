@@ -56,9 +56,9 @@ export class DpSlaComponent implements OnInit {
     protected bus: BusService
   ) {
 
-    this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.SLA_EVENTS, 'SLA Events', SimpleFormatterComponent, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.OUT_OF_SLA_TIME, 'Out of SLA Time', TimeFormatterComponent, false)); // TODO use time formatter
+    this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.SLA_EVENTS, 'SLA Events', SimpleFormatterComponent, false, true));
+    this.options.columns.push(new SasiColumn(SystemMetricType.OUT_OF_SLA_TIME, 'Out of SLA Time', TimeFormatterComponent, false, true)); // TODO use time formatter
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.isDataGrouped = true;

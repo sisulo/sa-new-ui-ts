@@ -31,13 +31,13 @@ export class PerformanceStatisticsComponent implements OnInit {
     private periodService: PeriodService,
     private bus: BusService
   ) {
-    this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.WORKLOAD, 'Workload', UnitFormatterComponent, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.TRANSFER, 'Transfer', UnitFormatterComponent, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.RESPONSE, 'Response', UnitFormatterComponent, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.CPU, 'CPU', UnitFormatterComponent, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.HDD, 'HDD', UnitFormatterComponent, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.WRITE_PENDING, 'Write Pending', UnitFormatterComponent, true));
+    this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.WORKLOAD, 'Workload', UnitFormatterComponent, true, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.TRANSFER, 'Transfer', UnitFormatterComponent, true, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.RESPONSE, 'Response', UnitFormatterComponent, true, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.CPU, 'CPU', UnitFormatterComponent, true, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.HDD, 'HDD', UnitFormatterComponent, true, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.WRITE_PENDING, 'Write Pending', UnitFormatterComponent, true, false));
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
     this.options.labelColumnWidth = '13.78';

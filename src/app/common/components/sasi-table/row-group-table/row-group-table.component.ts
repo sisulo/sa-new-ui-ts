@@ -1,7 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SasiGroupRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
+import {SasiColumn, SasiGroupRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
 import {LocalStorage} from 'ngx-store';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-row-group-table',
@@ -16,6 +15,8 @@ export class RowGroupTableComponent implements OnInit {
   @Input() options: SasiTableOptions;
   @LocalStorage({key: 'sasi_collapsed'}) collapsedRows: Array<string>;
 
+  aggregatedValues = {};
+
   constructor() {
     if (this.collapsedRows === null) {
       this.collapsedRows = [];
@@ -26,6 +27,7 @@ export class RowGroupTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.aggregateValues();
   }
 
   addCollapsed(systemName: string) {
@@ -44,5 +46,19 @@ export class RowGroupTableComponent implements OnInit {
 
   isCollapsed(systemName: string): boolean {
     return this.collapsedRows.findIndex(value => value === systemName) > -1;
+  }
+
+  private aggregateValues() {
+    this.options.getAggregatedColumns().forEach(
+      column => {
+        this.aggregatedValues[column.index] = this.data.rows.map(
+          (row) => {
+            return row.getCellValue(column);
+          }
+        ).reduce(
+          (valueA, valueB) => valueA + valueB
+        );
+      }
+    );
   }
 }
