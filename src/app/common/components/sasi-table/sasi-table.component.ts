@@ -152,9 +152,9 @@ export class SasiTableComponent implements OnInit {
 
   options: SasiTableOptions;
   defaultOptions = {
-    sortDescIcon: 'fa-sort-amount-desc',
-    sortAscIcon: 'fa-sort-amount-asc',
-    sortDefaultIcon: 'sorting fa-exchange',
+    sortDescIcon: 'glyphicon glyphicon-sort-by-attributes-alt',
+    sortAscIcon: 'glyphicon glyphicon-sort-by-attributes',
+    sortDefaultIcon: 'glyphicon glyphicon-sort',
     sortType: SasiSortType.ASC,
     altSortColumnName: null,
     highlightColumn: true,

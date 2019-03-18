@@ -10,15 +10,19 @@
          (click)="collapseAll()"
          [tooltip]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
     </div>
-    <div class="col" [style.width.%]="options.getColumnWidth(columnOption.index)" *ngFor="let columnOption of options.columns">
-      {{getColumnLabel(columnOption.index)}} <i class="text-muted fa sort-icon-right"
-                                                [ngClass]="getSortIconClass(columnOption.index, false)"
-                                                (click)="setSort(columnOption, false)"></i>
+    <div class="col" [style.width.%]="options.getColumnWidth(columnOption.index)"
+         *ngFor="let columnOption of options.columns">
+      <span class="link" (click)="setSort(columnOption, false)">{{getColumnLabel(columnOption.index)}} <i
+        class="text-muted sorting sort-icon-right"
+        [ngClass]="getSortIconClass(columnOption.index, false)"></i>
+      </span>
       <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
-      <br/><span *ngIf="columnOption.altSortEnable === true"><i
-      class="fa fa-angle-up text-red sort-icon-left"></i> <span class="peak-label">Peak</span> <i
-      class='fa fa-sort sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)"
-      (click)="setSort(columnOption, true)"></i></span>
+      <br/>
+      <span *ngIf="columnOption.altSortEnable === true" (click)="setSort(columnOption, true)" class="link"><i
+      class="fa fa-angle-up text-red sort-icon-left"></i>
+        <span class="peak-label">Peak</span> <i
+      class='sorting sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)"
+      ></i></span>
     </div>
   </div>
   <!--POOL ROWS-->

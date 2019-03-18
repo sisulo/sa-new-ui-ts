@@ -127,7 +127,17 @@ app-row-dynamic-table {
   width: 100%;
 }
 
-.sorting {
-  font-size:13px;
-  transform: rotate(90deg);
+.sorting{
+  font-size:11px;
+}
+
+.col span.link {
+  color: white;
+  cursor: pointer;
+
+}
+.col span.link:hover {
+  color: white;
+  cursor: pointer;
+  text-decoration: white underline;
 }
