@@ -17,23 +17,7 @@ import {TimeFormatterComponent} from '../time-formatter/time-formatter.component
 @Component({
   selector: 'app-dp-sla',
   templateUrl: './dp-sla-2.component.html',
-  styleUrls: ['./dp-sla.component.css', '../global-statistics.component.css'],
-  animations: [ // TODO reuse animation in all collapsed sasi-table group
-    trigger('slideInOut', [
-      state('true', style({height: '0px', overflow: 'hidden', margin: '0'})),
-      state('false', style({'height': '*', overflow: 'hidden', margin: '0'})),
-      transition('1 => 0', animate('500ms ease-in')),
-      transition('0 => 1', animate('500ms ease-out'))
-    ]),
-    trigger('iconRotate', [
-      state('false', style({transform: 'rotate(0deg)'})),
-      state('true', style({transform: 'rotate(90deg)'})),
-      transition('1 => 0', animate('500ms')),
-      transition(':enter', animate('0ms')),
-      transition(':leave', animate('0ms')),
-      transition('0 => 1', animate('500ms'))
-    ])
-  ]
+  styleUrls: ['./dp-sla.component.css', '../global-statistics.component.css']
 })
 export class DpSlaComponent implements OnInit {
 
@@ -58,7 +42,7 @@ export class DpSlaComponent implements OnInit {
 
     this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false, false));
     this.options.columns.push(new SasiColumn(SystemMetricType.SLA_EVENTS, 'SLA Events', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.OUT_OF_SLA_TIME, 'Out of SLA Time', TimeFormatterComponent, false, true)); // TODO use time formatter
+    this.options.columns.push(new SasiColumn(SystemMetricType.OUT_OF_SLA_TIME, 'Out of SLA Time', TimeFormatterComponent, false, true));
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.isDataGrouped = true;
