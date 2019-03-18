@@ -85,64 +85,6 @@ export class DpSlaComponent implements OnInit {
     this.periodService.announceEnablePeriod(true);
   }
 
-  // getData(): SystemPool[] {
-  //   return <SystemPool[]>this.data;
-  // }
-  //
-  // recalculateSorting(data: SystemPool[], sortType, sortColumn): SystemPool[] {
-  //   let dataReturned = [];
-  //   if (sortColumn === null) {
-  //     dataReturned = data.map(system => {
-  //       if (sortType === SortType.ASC) {
-  //         system.pools = system.pools.sort((poolA, poolB) => this.compare(poolA.name, poolB.name));
-  //       } else {
-  //         system.pools = system.pools.sort((poolA, poolB) => this.compare(poolB.name, poolA.name));
-  //       }
-  //       return system;
-  //     });
-  //     dataReturned = dataReturned.sort(
-  //       (systemA, systemB) => {
-  //         if (sortType === SortType.ASC) {
-  //           return this.compare(systemA.name, systemB.name);
-  //         } else {
-  //           return this.compare(systemB.name, systemA.name);
-  //         }
-  //       }
-  //     );
-  //   } else {
-  //     dataReturned = data.map(system => {
-  //       system.pools = system.pools.sort(
-  //         (poolA, poolB) => {
-  //           if (sortType === SortType.ASC) {
-  //             return this.compare(this.findMetric(poolA, sortColumn).value, this.findMetric(poolB, sortColumn).value);
-  //           } else {
-  //             return this.compare(this.findMetric(poolB, sortColumn).value, this.findMetric(poolA, sortColumn).value);
-  //           }
-  //         }
-  //       );
-  //       return system;
-  //     });
-  //   }
-  //   return dataReturned;
-  // }
-  //
-  // compare(valueA, valueB) {
-  //   if (valueA > valueB) {
-  //     return 1;
-  //   } else if (valueA < valueB) {
-  //     return -1;
-  //   }
-  //   return 0;
-  // }
-  //
-  // findMetric(pool: SystemDetail, metricType: SystemMetricType) {
-  //   return pool.metrics.find(metric => metric.type === metricType);
-  // }
-  //
-  // setData(data: SystemPool[]) {
-  //   this.data = data;
-  // }
-
   getTableData(id: number): any[] { // TODO duplicated for all GS sasi tables
     this.currentDataCenterId = id;
     this.metricService.getDpSlaStatistics(id, this.currentPeriod).subscribe(
