@@ -1,4 +1,9 @@
-<div class="table-data ">
+<div class="table-data " [class.selectedRow]="isSelectedRow(data.getCell('name').value)">
+  <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
+    <i
+      [ngClass]="isSelectedRow(data.getCell('name').value) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
+      (click)="selectRow(data.getCell('name').value)"></i>
+  </div>
   <div class="col-val col-control">
     <app-cell-table [componentFormatter]="options.colControlFormatter" [data]="data" [label]="''"
                     [options]="options"></app-cell-table>

@@ -2,7 +2,7 @@ import {Component, ComponentFactoryResolver, Input, OnDestroy, OnInit, ViewChild
 
 import {FormatterHostDirective} from './formatter-host.directive';
 import {SasiTableFormatter} from './sasi-table-formatter';
-import {SasiRow} from './sasi-table.component';
+import {SasiColumn, SasiRow} from './sasi-table.component';
 
 @Component({
   selector: 'app-cell-table',
@@ -13,6 +13,7 @@ export class CellTableComponent implements OnInit, OnDestroy {
   @Input() label;
   @Input() data: SasiRow;
   @Input() options;
+  @Input() column: SasiColumn;
   @ViewChild(FormatterHostDirective) adHost: FormatterHostDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
@@ -36,5 +37,6 @@ export class CellTableComponent implements OnInit, OnDestroy {
     (<SasiTableFormatter>componentRef.instance).data = this.data;
     (<SasiTableFormatter>componentRef.instance).label = this.label;
     (<SasiTableFormatter>componentRef.instance).options = this.options;
+    (<SasiTableFormatter>componentRef.instance).column = this.column;
   }
 }

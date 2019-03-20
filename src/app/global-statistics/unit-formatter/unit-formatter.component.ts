@@ -21,25 +21,35 @@ export class UnitFormatterComponent implements OnInit {
   }
 
   isAlert(): boolean {
-    const ruleDefinition = this.findRuleByType(this.data.type);
-    if (ruleDefinition !== undefined) {
-      return ConditionEvaluate.eval(this.data.value, ruleDefinition);
+    const ruleDefinitions = this.findRulesByType(this.data.type);
+    if (ruleDefinitions.length > 0) {
+      return ruleDefinitions.find(
+        ruleDefinition => ConditionEvaluate.eval(this.data.value, ruleDefinition)
+      ) !== undefined;
     }
     return false;
   }
 
   getAlertMessage(): string {
-    const ruleDefinition = this.findRuleByType(this.data.type);
-    return this.label + ' is over ' + ruleDefinition.threshold + this.data.unit + ' ';
+    const ruleDefinition = this.getViolatedRule();
+    return this.label + ' is over ' + ruleDefinition.threshold.min + this.data.unit + ' ';
   }
 
-  findRuleByType(type: string): AlertRule {
-    return this.options.cellDecoratorRules.find(
+  findRulesByType(type: string): AlertRule[] {
+    return this.options.cellDecoratorRules.filter(
       rule => rule.type === type
     );
   }
+  getViolatedRule(): AlertRule {
+    const ruleDefinitions = this.findRulesByType(this.data.type);
+    if (ruleDefinitions.length > 0) {
+      return ruleDefinitions.find(
+        ruleDefinition => ConditionEvaluate.eval(this.data.value, ruleDefinition)
+      );
+    }
+  }
   getViolatedRuleClass(): string {
-    const ruleDefinition = this.findRuleByType(this.data.type);
+    const ruleDefinition = this.getViolatedRule();
     if (ruleDefinition !== undefined && ConditionEvaluate.eval(this.data.value, ruleDefinition)) {
       return ruleDefinition.threshold.alertType;
     }

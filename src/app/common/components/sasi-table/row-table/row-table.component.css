@@ -35,4 +35,7 @@
   margin: auto;
 }
 
-
+.selectedRow {
+  background-color: #BEECD1 !important;
+  color: #3A738C;
+}

@@ -1,4 +1,4 @@
-.col-val {
+:host /deep/ .col-val {
   padding-top: 5px;
   padding-bottom: 5px;
   padding-right: 2px;
@@ -12,10 +12,7 @@
 .col {
   width: 8.88%;
 }
-.capacity-table .row {
-  margin-right: 0px;
-  margin-left: 0px;
-}
+
 /*** Aggregated values widget ***/
 div.agg-vals {
   margin-top: 25px;
@@ -48,12 +45,12 @@ div.agg-vals {
   font-style: italic;
 }
 
-.metric-value {
+:host /deep/ .groupped-data .metric-value {
   font-size: 14px;
   font-weight: bold;
 }
 
-.metric-unit {
+:host /deep/ .groupped-data .metric-unit {
   font-size: 8px;
   margin-left: 3px;
 }

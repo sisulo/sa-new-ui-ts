@@ -10,6 +10,9 @@
          (click)="collapseAll()"
          [tooltip]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
     </div>
+    <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
+      <i tooltip="Alerts" class="fas fa-exclamation text-orange"></i>
+    </div>
     <div class="col" [style.width.%]="options.getColumnWidth(columnOption.index)"
          *ngFor="let columnOption of options.columns">
       <span class="link" (click)="setSort(columnOption, false)">{{getColumnLabel(columnOption.index)}} <i

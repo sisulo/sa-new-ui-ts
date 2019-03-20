@@ -13,6 +13,9 @@
          (click)="addCollapsed(data.groupRow.getCell('name').value)"
          [tooltip]="isCollapsed(data.groupRow.getCell('name').value) ? 'Expand':'Collapse'"></i>
     </div>
+    <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
+
+    </div>
     <!--<div class="col-val col-control">-->
     <!--<i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation text-orange"></i>-->
     <!--</div>-->
@@ -40,9 +43,9 @@
   <!---->
   <!--POOL ROWS-->
   <!---->
-  <div [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">
+  <div class="groupped-data"[@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">
     <app-row-table [class.highlight-row]="options.highlightRow" *ngFor="let row of data.rows"
-                   [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"></app-row-table>
+                   [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options" [groupName]="data.groupRow.getCell('name').value"></app-row-table>
   </div>
   <!--<div class="row" [@slideInOut]="isCollapsed(system.name)">-->
   <!--<div *ngFor="let pool of data[i].pools" class="table-data striped-row row"-->

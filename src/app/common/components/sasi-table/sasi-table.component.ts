@@ -1,7 +1,7 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/AlertRule';
-import {LocalStorage} from 'ngx-store';
-import {animate, animation, state, style, transition, trigger} from '@angular/animations';
+import {LocalStorage, LocalStorageService} from 'ngx-store';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -22,7 +22,7 @@ export class SasiColumn {
 
   altSortEnable: boolean;
 
-  isAggregated: boolean
+  isAggregated: boolean;
 
   constructor(index: string, label: string, component: Type<any>, altSortEnable: boolean, isAggragated: boolean) {
     this.index = index;
@@ -98,8 +98,9 @@ export class SasiTableOptions {
   public cellDecoratorRules: AlertRule[] = [];
   public valueColumnWidth: string;
   public labelColumnWidth: string;
+  public storageNamePrefix: string;
 
-  getColumnWidth (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
+  getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
     if (name === 'name') {
       return this.labelColumnWidth;
     }
@@ -149,6 +150,7 @@ export class SasiTableComponent implements OnInit {
   @Input() data: SasiRow[] = [];
   @Input() tableOptions: SasiTableOptions = new SasiTableOptions();
   @LocalStorage({key: 'sasi_collapsed'}) collapsedRows: Array<string>;
+  selectedRows: Array<string>;
 
   options: SasiTableOptions;
   defaultOptions = {
@@ -166,6 +168,7 @@ export class SasiTableComponent implements OnInit {
     cellDecoratorRules: [],
     rowComponentFormatter: null,
     aggregateColumns: [],
+    storageNamePrefix: 'sasi_default',
     getColumnWidth: function (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
       if (name === 'name') {
         return this.labelColumnWidth;
@@ -182,7 +185,7 @@ export class SasiTableComponent implements OnInit {
 
   altSort = false;
 
-  constructor() {
+  constructor(private localStorageService: LocalStorageService) {
     if (this.collapsedRows === null) {
       this.collapsedRows = [];
     } else {
@@ -192,7 +195,12 @@ export class SasiTableComponent implements OnInit {
 
   ngOnInit() {
     this.options = Object.assign(this.defaultOptions, this.tableOptions);
-    console.log(this.options);
+    this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    if (this.selectedRows === null) {
+      this.selectedRows = [];
+    } else {
+      this.selectedRows = this.selectedRows; // this must be reset because save on the collapsedRows doesn't work
+    }
   }
 
   getColumnLabel(type: string) {
@@ -295,4 +303,60 @@ export class SasiTableComponent implements OnInit {
       row => this.collapsedRows.includes(row.groupRow.getCell('name').value)
     );
   }
+
+  // isSelectedPool(poolName: string, systemName: string): boolean {
+  //   return this.selectedRows[this.currentDataCenterId].findIndex(
+  //     pool => pool.poolName === poolName && pool.systemName === systemName
+  //   ) > -1;
+  // }
+  //
+  // selectPool(poolName: string, systemName: string): void {
+  //
+  //   if (this.selectedPools[this.currentDataCenterId] === undefined) {
+  //     this.selectedPools[this.currentDataCenterId] = [];
+  //   }
+  //
+  //   const index = this.selectedPools[this.currentDataCenterId].findIndex(
+  //     pool => pool.poolName === poolName && pool.systemName === systemName
+  //
+  //   );
+  //
+  //   if (index >= 0) {
+  //     this.selectedPools[this.currentDataCenterId].splice(index, 1);
+  //   } else {
+  //     this.selectedPools[this.currentDataCenterId].push({poolName: poolName, systemName: systemName});
+  //   }
+  //   // @ts-ignore
+  //   this.selectedPools.save();
+  //   this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
+  // }
+  //
+  // isSelectedAll(): boolean {
+  //   return this.data.every(
+  //     // @ts-ignore
+  //     row => this.selectedRows.includes(row.groupRow.getCell('name').value)
+  //   );
+  // }
+  //
+  // getSelectedCount(): number {
+  //   return this.selectedPools[this.currentDataCenterId].length;
+  // }
+  //
+  // selectAll() {
+  //   if (this.isSelectedAll()) {
+  //     this.selectedPools[this.currentDataCenterId] = [];
+  //   } else {
+  //     this.selectedPools[this.currentDataCenterId] = [];
+  //     this.data.forEach(system => system.pools.forEach(
+  //       pool => this.selectedPools[this.currentDataCenterId].push({poolName: pool.name, systemName: system.name})
+  //     ));
+  //   }
+  //   // @ts-ignore
+  //   this.selectedPools.save();
+  //   this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
+  // }
+  //
+  // isPartiallySelected() {
+  //   return this.selectedPools[this.currentDataCenterId].length > 0;
+  // }
 }

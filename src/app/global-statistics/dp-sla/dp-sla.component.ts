@@ -4,7 +4,6 @@ import {PeriodService} from '../../period.service';
 import {MetricService, PeriodType} from '../../metric.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemPool} from '../../common/models/SystemPool';
-import {animate, state, style, transition, trigger} from '@angular/animations';
 import {BusService} from '../bus.service';
 import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {RouteLinkFormatterComponent} from '../route-link-formatter/route-link-formatter.component';

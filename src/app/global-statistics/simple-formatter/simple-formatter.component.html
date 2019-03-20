@@ -1,4 +1,6 @@
-<span>
-  <span class="metric-value">{{data.value}}</span>
-  <span class="metric-unit">{{data.unit}}</span>
-</span>
+<div class="metric-value">
+  <span *ngIf="isAlert()" tooltip="{{getAlertMessage()}}" hide-delay="0" ngClass="{{getViolatedRuleClass()}}">{{data.value}} <span
+    class="metric-unit">{{data.unit}}</span></span>
+  <span *ngIf="!isAlert()" tooltip="{{label}} average" hide-delay="0">{{data.value}} <span
+    class="metric-unit">{{data.unit}}</span></span>
+</div>

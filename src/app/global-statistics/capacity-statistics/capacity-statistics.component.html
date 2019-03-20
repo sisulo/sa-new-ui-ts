@@ -1,97 +1,100 @@
 <div class="tab-pane" *ngIf="data.length > 0">
   <div class="container-fluid">
-    <div class="row">
-      <div class="capacity-table col-md-12">
-        <!--
-          TOP TABLE ROW
-        -->
-        <div class="row table-header">
-          <div class="col-control">
-            <i class="fa"
-               [ngClass]="isCollapseAll() ? 'fa-plus':'fa-minus'"
-               (click)="collapseAll()"
-               [title]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
-            <i *ngIf="isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>
-            <i *ngIf="isPartiallySelected() && !isSelectedAll()" class="fa fa-fw fa-minus-square-o"
-               (click)="selectAll()"></i>
-            <i *ngIf="(!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"
-               (click)="selectAll()"></i>
-          </div>
-          <div class="col-control">
-            <i tooltip="Alerts" class="fas fa-exclamation text-orange"></i>
-          </div>
-          <div class="col-label" >
-            System <i class="text-muted fa " [ngClass]="getSortIconClass(null)" (click)="setSort(null)"></i>
-          </div>
-          <div class="col" *ngFor="let type of types;let column=index"
-               [class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}}
-            <i class="text-muted fa " [ngClass]="getSortIconClass(type)" (click)="setSort(type)"></i></div>
-        </div>
-        <!--
-          SYSTEM PART
-        -->
-        <div class="table-group-header" *ngFor="let system of data;let i = index;">
-          <!--
-            SYSTEM LABEL
-          -->
-          <div class="table-group-label row">
-            <div class="col-val col-control"><i class="fa expand-collapse"
-                                                [@iconRotate] = 'isCollapsed(system.name)'
-                                                [ngClass]="'fa-angle-down'"
-                                        (click)="addCollapsed(system.name)"
-                                        [tooltip]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i></div>
-            <div class="col-val col-control">
-              <i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation" [ngClass]="getSystemAlertType(system.name)"></i>
-            </div>
-            <div class="col-val col-label"><span class="system-name"><a [routerLink]="system.id | iframeUrlCreator" routerLinkActive="active">{{ system.name }}</a></span></div>
-            <div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">
-              <div *ngFor="let type of types"
-                   [tooltip]="getColumnLabel(type)" hide-delay="0" show-delay="300"
-                   class="col-val col"><span *ngIf="this.getSystemStatistics(system.name).getValue(type) !== undefined">{{this.getSystemStatistics(system.name).getValue(type).toFixed(2)}}</span></div>
-            </div>
-          </div>
-          <!---->
-          <!--POOL ROWS-->
-          <!---->
-          <div class="row" [@slideInOut]="isCollapsed(system.name)">
-            <div *ngFor="let pool of data[i].pools" class="table-data striped-row row"
-                 [class.selectedRow]="isSelectedPool(pool.name, system.name)" >
-              <div class="col-val col-control"><i
-                [ngClass]="isSelectedPool(pool.name, system.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
-                (click)="selectPool(pool.name, system.name)"></i></div>
-              <div class="col-val col-control">
-                <i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation" [ngClass]="getPoolAlertType(pool)"></i>
-              </div>
-              <div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>
-              <div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"
-                   (mouseout)="setHighlightedColumn(-1)"
-                   (mouseover)="setHighlightedColumn(column)"
-                   [class.highlightColumn]="isCurrentColumn(column)" [tooltip]="getMetricTooltip(pool, type)" hide-delay="0"
-                   show-delay="500">
-                <span [className]="getAlertType(pool, type)">
-                  <span class="metric-value">{{getMetric(pool.metrics, type).value}}</span>
-                  <span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!--
-          AGGREGATED VALUES
-        -->
-        <div class="row sticky agg-vals" *ngIf="this.getSystemStatistics('all') !== undefined">
-          <div class="col-val col-control"></div>
-          <div class="col-val col-control"></div>
-          <div class="col col-label">
-            <div class="agg-name"># Selected</div>
-            <div class="agg-value">{{getSelectedCount()}}</div>
-          </div>
-          <div class="col" *ngFor="let type of aggregatedTypes">
-            <div class="agg-name">{{getColumnLabel(type)}}</div>
-            <div class="agg-value"><span *ngIf="this.getSystemStatistics('all').getValue(type) !== undefined">{{this.getSystemStatistics('all').getValue(type).toFixed(2)}}</span></div>
-          </div>
-        </div>
-      </div>
+    <div class="row col-md-12">
+      <app-sasi-table [data]="data | systemPool2SasiGroupTable" [tableOptions]="options"></app-sasi-table>
     </div>
   </div>
 </div>
+
+<!--<div class="row">-->
+  <!--<div class="capacity-table col-md-12">-->
+    <!--&lt;!&ndash;-->
+      <!--TOP TABLE ROW-->
+    <!--&ndash;&gt;-->
+    <!--<div class="row table-header">-->
+      <!--<div class="col-control">-->
+        <!--<i class="fa"-->
+           <!--[ngClass]="isCollapseAll() ? 'fa-plus':'fa-minus'"-->
+           <!--(click)="collapseAll()"-->
+           <!--[title]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>-->
+        <!--<i *ngIf="isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>-->
+        <!--<i *ngIf="isPartiallySelected() && !isSelectedAll()" class="fa fa-fw fa-minus-square-o"-->
+           <!--(click)="selectAll()"></i>-->
+        <!--<i *ngIf="(!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"-->
+           <!--(click)="selectAll()"></i>-->
+      <!--</div>-->
+      <!--<div class="col-control">-->
+        <!--<i tooltip="Alerts" class="fas fa-exclamation text-orange"></i>-->
+      <!--</div>-->
+      <!--<div class="col-label" >-->
+        <!--System <i class="text-muted fa " [ngClass]="getSortIconClass(null)" (click)="setSort(null)"></i>-->
+      <!--</div>-->
+      <!--<div class="col" *ngFor="let type of types;let column=index"-->
+           <!--[class.highlightColumn]="isCurrentColumn(column)">{{getColumnLabel(type)}}-->
+        <!--<i class="text-muted fa " [ngClass]="getSortIconClass(type)" (click)="setSort(type)"></i></div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;-->
+      <!--SYSTEM PART-->
+    <!--&ndash;&gt;-->
+    <!--<div class="table-group-header" *ngFor="let system of data;let i = index;">-->
+      <!--&lt;!&ndash;-->
+        <!--SYSTEM LABEL-->
+      <!--&ndash;&gt;-->
+      <!--<div class="table-group-label row">-->
+        <!--<div class="col-val col-control"><i class="fa expand-collapse"-->
+                                            <!--[@iconRotate] = 'isCollapsed(system.name)'-->
+                                            <!--[ngClass]="'fa-angle-down'"-->
+                                            <!--(click)="addCollapsed(system.name)"-->
+                                            <!--[tooltip]="isCollapsed(system.name) ? 'Expand':'Collapse'"></i></div>-->
+        <!--<div class="col-val col-control">-->
+          <!--<i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation" [ngClass]="getSystemAlertType(system.name)"></i>-->
+        <!--</div>-->
+        <!--<div class="col-val col-label"><span class="system-name"><a [routerLink]="system.id | iframeUrlCreator" routerLinkActive="active">{{ system.name }}</a></span></div>-->
+        <!--<div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">-->
+          <!--<div *ngFor="let type of types"-->
+               <!--[tooltip]="getColumnLabel(type)" hide-delay="0" show-delay="300"-->
+               <!--class="col-val col"><span *ngIf="this.getSystemStatistics(system.name).getValue(type) !== undefined">{{this.getSystemStatistics(system.name).getValue(type).toFixed(2)}}</span></div>-->
+        <!--</div>-->
+      <!--</div>-->
+      <!--&lt;!&ndash;&ndash;&gt;-->
+      <!--&lt;!&ndash;POOL ROWS&ndash;&gt;-->
+      <!--&lt;!&ndash;&ndash;&gt;-->
+      <!--<div class="row" [@slideInOut]="isCollapsed(system.name)">-->
+        <!--<div *ngFor="let pool of data[i].pools" class="table-data striped-row row"-->
+             <!--[class.selectedRow]="isSelectedPool(pool.name, system.name)" >-->
+          <!--<div class="col-val col-control"><i-->
+            <!--[ngClass]="isSelectedPool(pool.name, system.name) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"-->
+            <!--(click)="selectPool(pool.name, system.name)"></i></div>-->
+          <!--<div class="col-val col-control">-->
+            <!--<i tooltip="Warning for one or more metrics" *ngIf="isAlertingPool(pool)" class="fas fa-exclamation" [ngClass]="getPoolAlertType(pool)"></i>-->
+          <!--</div>-->
+          <!--<div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>-->
+          <!--<div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"-->
+               <!--(mouseout)="setHighlightedColumn(-1)"-->
+               <!--(mouseover)="setHighlightedColumn(column)"-->
+               <!--[class.highlightColumn]="isCurrentColumn(column)" [tooltip]="getMetricTooltip(pool, type)" hide-delay="0"-->
+               <!--show-delay="500">-->
+                <!--<span [className]="getAlertType(pool, type)">-->
+                  <!--<span class="metric-value">{{getMetric(pool.metrics, type).value}}</span>-->
+                  <!--<span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>-->
+                <!--</span>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
+    <!--&lt;!&ndash;-->
+      <!--AGGREGATED VALUES-->
+    <!--&ndash;&gt;-->
+    <!--<div class="row sticky agg-vals" *ngIf="this.getSystemStatistics('all') !== undefined">-->
+      <!--<div class="col-val col-control"></div>-->
+      <!--<div class="col-val col-control"></div>-->
+      <!--<div class="col col-label">-->
+        <!--<div class="agg-name"># Selected</div>-->
+        <!--<div class="agg-value">{{getSelectedCount()}}</div>-->
+      <!--</div>-->
+      <!--<div class="col" *ngFor="let type of aggregatedTypes">-->
+        <!--<div class="agg-name">{{getColumnLabel(type)}}</div>-->
+        <!--<div class="agg-value"><span *ngIf="this.getSystemStatistics('all').getValue(type) !== undefined">{{this.getSystemStatistics('all').getValue(type).toFixed(2)}}</span></div>-->
+      <!--</div>-->
+    <!--</div>-->
+  <!--</div>-->
