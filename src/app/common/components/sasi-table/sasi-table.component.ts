@@ -2,6 +2,8 @@ import {Component, Input, OnInit, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/AlertRule';
 import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {AggregatedStatisticsService} from '../../../global-statistics/capacity-statistics/aggregated-statistics.service';
+import {AggregateValueService} from './row-group-table/row-group-table.component';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -83,7 +85,6 @@ export class SasiGroupRow {
  */
 export class SasiTableOptions {
   public columns: SasiColumn[] = [];
-  public aggregateColumns: [] = [];
   public sortDescIcon;
   public sortAscIcon;
   public sortDefaultIcon;
@@ -99,6 +100,7 @@ export class SasiTableOptions {
   public valueColumnWidth: string;
   public labelColumnWidth: string;
   public storageNamePrefix: string;
+  public aggregateValuesService: AggregateValueService;
 
   getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
     if (name === 'name') {

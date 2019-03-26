@@ -21,6 +21,7 @@ import {SimpleFormatterComponent} from '../global-statistics/simple-formatter/si
 import {Ng2KnobDirective} from './components/knob/ng-2-knob.directive';
 import {LocaleNumberFormatPipe} from './components/small-box/locale-number-format.pipe';
 import {TimeFormatterComponent} from '../global-statistics/time-formatter/time-formatter.component';
+import {TextFormatterComponent} from '../global-statistics/text-formatter/text-formatter.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import {TimeFormatterComponent} from '../global-statistics/time-formatter/time-f
     SimpleFormatterComponent,
     RowTableComponent,
     RowGroupTableComponent,
-    TimeFormatterComponent
+    TimeFormatterComponent,
+    TextFormatterComponent
   ]
 })
 export class SaCommonModule {

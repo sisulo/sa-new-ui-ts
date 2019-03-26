@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../sasi-table.component';
-import {LocalStorage, LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store';
 
-class SelectedRow {
+export class SelectedRow {
   groupName: string;
   rowName: string;
 
@@ -23,6 +23,7 @@ export class RowTableComponent implements OnInit {
   @Input() groupName: string;
   @Input() columnHighlightEnable = false;
   @Input() options: SasiTableOptions;
+  @Output() selectEmit = new EventEmitter<Array<SelectedRow>>();
   selectedRows: Array<SelectedRow>;
 
   highlightedColumn = -1;
@@ -55,6 +56,7 @@ export class RowTableComponent implements OnInit {
   }
 
   selectRow(name: string) {
+    this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
@@ -66,6 +68,7 @@ export class RowTableComponent implements OnInit {
     }
     // @ts-ignore
     this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
+    this.selectEmit.emit(this.selectedRows);
   }
 
   findIndex(name: string) {

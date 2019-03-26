@@ -1,0 +1,15 @@
+<!--AGGREGATED VALUES-->
+<div class="sticky agg-vals" *ngIf="result !== null">
+  <div class="col-val col-control"></div>
+  <div class="col-val col-control"></div>
+  <div class="col col-label">
+    <div class="agg-name"># Selected</div>
+    <div class="agg-value">{{getSelectedCount()}}</div>
+  </div>
+  <div class="col" *ngFor="let type of aggregatedTypes">
+    <div class="agg-name">{{type.label}}</div>
+    <div class="agg-value"><span
+      *ngIf="result.getValue(type.index) !== undefined">{{result.getValue(type.index).toFixed(2)}}</span>
+    </div>
+  </div>
+</div>

@@ -14,6 +14,8 @@ import {AlertFormatterComponent} from './alert-formatter/alert-formatter.compone
 import {SimpleFormatterComponent} from './simple-formatter/simple-formatter.component';
 import { TimeFormatterComponent } from './time-formatter/time-formatter.component';
 import {Seconds2FullTimePipe} from './utils/seconds-2-full-time.pipe';
+import { TextFormatterComponent } from './text-formatter/text-formatter.component';
+import { AggragatedStatisticsComponent } from './aggragated-statistics/aggragated-statistics.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import {Seconds2FullTimePipe} from './utils/seconds-2-full-time.pipe';
     AlertFormatterComponent,
     SimpleFormatterComponent,
     TimeFormatterComponent,
-    Seconds2FullTimePipe
+    Seconds2FullTimePipe,
+    TextFormatterComponent,
+    AggragatedStatisticsComponent
   ],
   imports: [
     CommonModule,

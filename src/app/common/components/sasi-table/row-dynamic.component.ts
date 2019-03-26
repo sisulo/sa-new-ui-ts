@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 
 import {FormatterHostDirective} from './formatter-host.directive';
 import {SasiTableFormatter} from './sasi-table-formatter';
@@ -8,7 +8,7 @@ import {SasiGroupRow} from './sasi-table.component';
   selector: 'app-row-dynamic-table',
   template: '<ng-template appFormatterHost></ng-template>'
 })
-export class RowDynamicComponent implements OnInit, OnDestroy {
+export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
   @Input() componentFormatter;
   @Input() label;
   @Input() data: SasiGroupRow;
@@ -19,6 +19,10 @@ export class RowDynamicComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loadComponent();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.loadComponent();
   }
 
@@ -37,4 +41,5 @@ export class RowDynamicComponent implements OnInit, OnDestroy {
     (<SasiTableFormatter>componentRef.instance).label = this.label;
     (<SasiTableFormatter>componentRef.instance).options = this.options;
   }
+
 }

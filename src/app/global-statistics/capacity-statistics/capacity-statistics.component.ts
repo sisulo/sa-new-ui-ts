@@ -14,6 +14,7 @@ import {SimpleFormatterComponent} from '../simple-formatter/simple-formatter.com
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {AlertRule, Threshold} from '../AlertRule';
+import {SasiWeightedArithmeticMean} from '../utils/SasiWeightedArithmeticMean';
 
 
 export class ItemKey {
@@ -53,7 +54,6 @@ class SelectedItem {
 })
 export class CapacityStatisticsComponent implements OnInit {
 
-  dataWidth = 80;
   types = [
     SystemMetricType.PHYSICAL_SUBS,
     SystemMetricType.PHYSICAL_CAPACITY,
@@ -65,22 +65,9 @@ export class CapacityStatisticsComponent implements OnInit {
     SystemMetricType.PREDICTION_L2,
     SystemMetricType.PREDICTION_L3
   ];
-  aggregatedTypes = [
-    SystemMetricType.PHYSICAL_SUBS,
-    SystemMetricType.PHYSICAL_CAPACITY,
-    SystemMetricType.AVAILABLE_CAPACITY,
-    SystemMetricType.LOGICAL_USAGE,
-    SystemMetricType.PHYSICAL_USAGE,
-    SystemMetricType.COMPRESS_RATIO,
-  ];
   data: SystemPool[] = []; // Todo caching data by dataCenters
 
-  poolMetrics = {};
   aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
-  alertsDefinition = [
-    {type: SystemMetricType.PHYSICAL_USAGE, threshold: {alertType: 'text-orange', min: 80, max: 90}},
-    {type: SystemMetricType.PHYSICAL_USAGE, threshold: {alertType: 'text-red', min: 90, max: 10000}}
-  ];
 
   options: SasiTableOptions = new SasiTableOptions();
 
@@ -109,6 +96,7 @@ export class CapacityStatisticsComponent implements OnInit {
     this.options.labelColumnWidth = '13';
     this.options.valueColumnWidth = '8.88';
     this.options.storageNamePrefix = 'capacity';
+    this.options.aggregateValuesService = new SasiWeightedArithmeticMean();
 
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-orange', 80, 90)));
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-red', 90, 10000)));

@@ -30,7 +30,8 @@
     </div>
     <div class="col-val col" *ngFor="let column of options.getAggregatedColumns()"
          [style.width.%]="options.getColumnWidth(column.index)">
-      <app-cell-table [componentFormatter]="column.component" [data]="{value: aggregatedValues[column.index]}"
+      <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.component"
+                      [data]="getAggregatedValue(column.index)"
                       [label]="''" [options]="options"></app-cell-table>
     </div>
     <!--<div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">-->
@@ -43,9 +44,11 @@
   <!---->
   <!--POOL ROWS-->
   <!---->
-  <div class="groupped-data"[@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">
+  <div class="groupped-data" [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">
     <app-row-table [class.highlight-row]="options.highlightRow" *ngFor="let row of data.rows"
-                   [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options" [groupName]="data.groupRow.getCell('name').value"></app-row-table>
+                   [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"
+                   [groupName]="data.groupRow.getCell('name').value"
+                   (selectEmit)="onSelectRow($event)"></app-row-table>
   </div>
   <!--<div class="row" [@slideInOut]="isCollapsed(system.name)">-->
   <!--<div *ngFor="let pool of data[i].pools" class="table-data striped-row row"-->

@@ -13,33 +13,6 @@
   width: 8.88%;
 }
 
-/*** Aggregated values widget ***/
-div.agg-vals {
-  margin-top: 25px;
-}
-
-.agg-vals > .col {
-  border: 1px #5C91A8 solid;
-  font-weight: bold;
-  text-align: center;
-
-}
-
-.agg-name {
-  background-color: #3c8dbc;
-  color: white;
-  font-size: 11px;
-  padding: 5px;
-}
-
-.agg-vals .agg-value {
-  padding: 5px;
-  font-size: 12px;
-  background-color: white;
-  /*color: white;*/
-}
-
-
 .pool-name {
   font-size: 14px;
   font-style: italic;
@@ -59,3 +32,9 @@ div.agg-vals {
   font-size:13px;
   transform: rotate(90deg);
 }
+.sticky {
+  position: sticky;
+  bottom: 0px;
+  z-index: 10;
+}
+

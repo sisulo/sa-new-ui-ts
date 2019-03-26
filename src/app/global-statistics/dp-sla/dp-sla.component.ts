@@ -11,6 +11,7 @@ import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.compon
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SimpleFormatterComponent} from '../simple-formatter/simple-formatter.component';
 import {TimeFormatterComponent} from '../time-formatter/time-formatter.component';
+import {SumValueServiceImpl} from '../utils/SumValueServiceImpl';
 
 
 @Component({
@@ -48,6 +49,7 @@ export class DpSlaComponent implements OnInit {
     this.options.highlightRow = true;
     this.options.labelColumnWidth = '25';
     this.options.valueColumnWidth = '35.75';
+    this.options.aggregateValuesService = new SumValueServiceImpl();
   }
 
   ngOnInit() {

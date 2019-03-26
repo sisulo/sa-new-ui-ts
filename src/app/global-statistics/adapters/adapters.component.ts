@@ -14,6 +14,8 @@ import {SimpleFormatterComponent} from '../simple-formatter/simple-formatter.com
 import {TimeFormatterComponent} from '../time-formatter/time-formatter.component';
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
+import {SumValueServiceImpl} from '../utils/SumValueServiceImpl';
+import {TextFormatterComponent} from '../text-formatter/text-formatter.component';
 
 // TODO separate components, pipes, utils to own directories
 @Component({
@@ -43,13 +45,14 @@ export class AdaptersComponent implements OnInit {
 
     this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false, false));
     this.options.columns.push(new SasiColumn(SystemMetricType.DISBALANCE_EVENTS, 'Disbalance events', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.INFO, 'Info', SimpleFormatterComponent, false, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.INFO, 'Info', TextFormatterComponent, false, false));
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.labelColumnWidth = '25';
     this.options.valueColumnWidth = '35.75';
+    this.options.aggregateValuesService = new SumValueServiceImpl();
   }
 
   ngOnInit() {
