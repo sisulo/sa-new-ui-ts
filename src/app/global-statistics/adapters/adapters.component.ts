@@ -1,17 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {DivTableGrouped} from '../div-table/div-table-grouped';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../period.service';
 import {MetricService, PeriodType} from '../../metric.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemPool} from '../../common/models/SystemPool';
-import {SortType} from '../div-table/div-table';
-import {SystemDetail} from '../../common/models/SystemDetail';
 import {BusService} from '../bus.service';
 import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {RouteLinkFormatterComponent} from '../route-link-formatter/route-link-formatter.component';
 import {SimpleFormatterComponent} from '../simple-formatter/simple-formatter.component';
-import {TimeFormatterComponent} from '../time-formatter/time-formatter.component';
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SumValueServiceImpl} from '../utils/SumValueServiceImpl';
@@ -50,6 +46,7 @@ export class AdaptersComponent implements OnInit {
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
+    this.options.highlightColumn = false;
     this.options.labelColumnWidth = '25';
     this.options.valueColumnWidth = '35.75';
     this.options.aggregateValuesService = new SumValueServiceImpl();

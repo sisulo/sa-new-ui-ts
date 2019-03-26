@@ -8,10 +8,10 @@
     <app-cell-table [componentFormatter]="options.colControlFormatter" [data]="data" [label]="''"
                     [options]="options"></app-cell-table>
   </div>
-  <div [ngClass]="'col-val col'" [style.width.%]="options.getColumnWidth(column.index)" *ngFor="let column of options.columns;"
+  <div [ngClass]="'col-val col'" [style.width.%]="options.getColumnWidth(column.index)" *ngFor="let column of options.columns; let colIndex = index"
        (mouseout)="setHighlightedColumn(-1)"
-       (mouseover)="setHighlightedColumn(column)"
-       [class.highlightColumn]="isColumnHighlighted(column)"
+       (mouseover)="setHighlightedColumn(colIndex)"
+       [class.highlightColumn]="isColumnHighlighted(colIndex)"
   >
     <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"
                     [options]="options"></app-cell-table>

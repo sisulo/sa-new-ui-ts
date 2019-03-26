@@ -47,6 +47,7 @@ export class DpSlaComponent implements OnInit {
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
+    this.options.highlightColumn = false;
     this.options.labelColumnWidth = '25';
     this.options.valueColumnWidth = '35.75';
     this.options.aggregateValuesService = new SumValueServiceImpl();

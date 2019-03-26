@@ -61,3 +61,8 @@ app-row-table.highlight-row:hover {
   text-align: center;
   /*width: 100%;*/
 }
+
+.highlightColumn {
+  background-color: #b4d1ee !important;
+  color: #3A738C;
+}

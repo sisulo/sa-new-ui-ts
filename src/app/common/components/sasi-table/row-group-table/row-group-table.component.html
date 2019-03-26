@@ -28,8 +28,9 @@
         [label]="''"
         [options]="options"></app-cell-table>
     </div>
-    <div class="col-val col" *ngFor="let column of options.getAggregatedColumns()"
-         [style.width.%]="options.getColumnWidth(column.index)">
+    <div class="col-val col" *ngFor="let column of options.getAggregatedColumns(); let colIndex=index"
+         [style.width.%]="options.getColumnWidth(column.index)"
+    >
       <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.component"
                       [data]="getAggregatedValue(column.index)"
                       [label]="column.label" [options]="options"></app-cell-table>

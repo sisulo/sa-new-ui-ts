@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../sasi-table.component';
-import {LocalStorageService} from 'ngx-store';
+import {LocalStorage, LocalStorageService, SharedStorageService} from 'ngx-store';
 
 export class SelectedRow {
   groupName: string;
@@ -26,9 +26,10 @@ export class RowTableComponent implements OnInit {
   @Output() selectEmit = new EventEmitter<Array<SelectedRow>>();
   selectedRows: Array<SelectedRow>;
 
-  highlightedColumn = -1;
+  @LocalStorage() highlightedColumn = -1;
 
-  constructor(private localStorageService: LocalStorageService) {
+  constructor(private localStorageService: LocalStorageService
+  ) {
   }
 
   ngOnInit() {
