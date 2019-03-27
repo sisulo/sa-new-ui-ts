@@ -12,6 +12,8 @@ import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.compon
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SumValueServiceImpl} from '../utils/SumValueServiceImpl';
 import {TextFormatterComponent} from '../text-formatter/text-formatter.component';
+import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
+import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
 
 // TODO separate components, pipes, utils to own directories
 @Component({
@@ -50,6 +52,7 @@ export class AdaptersComponent implements OnInit {
     this.options.labelColumnWidth = '25';
     this.options.valueColumnWidth = '35.75';
     this.options.aggregateValuesService = new SumValueServiceImpl();
+    this.options.sortService = new GroupSortImpl();
   }
 
   ngOnInit() {

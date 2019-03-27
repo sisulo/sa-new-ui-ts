@@ -11,6 +11,7 @@ import {RouteLinkFormatterComponent} from '../route-link-formatter/route-link-fo
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
 import {AlertRule, Threshold} from '../AlertRule';
 import {RowTableComponent} from '../../common/components/sasi-table/row-table/row-table.component';
+import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 
 @Component({
   selector: 'app-tab',
@@ -42,6 +43,7 @@ export class PerformanceStatisticsComponent implements OnInit {
     this.options.rowComponentFormatter = RowTableComponent;
     this.options.labelColumnWidth = '13.78';
     this.options.valueColumnWidth = '13.78';
+    this.options.sortService = new SimpleSortImpl();
 
   }
 

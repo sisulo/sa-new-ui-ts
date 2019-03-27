@@ -4,6 +4,8 @@ import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AggregatedStatisticsService} from '../../../global-statistics/capacity-statistics/aggregated-statistics.service';
 import {AggregateValueService} from './row-group-table/row-group-table.component';
+import {SimpleSortImpl} from './simple-sort-impl';
+import {Sort} from './sort';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -100,6 +102,7 @@ export class SasiTableOptions {
   public valueColumnWidth: string;
   public labelColumnWidth: string;
   public storageNamePrefix: string;
+  public sortService: Sort;
   public aggregateValuesService: AggregateValueService;
 
   getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
@@ -170,6 +173,7 @@ export class SasiTableComponent implements OnInit {
     cellDecoratorRules: [],
     rowComponentFormatter: null,
     aggregateColumns: [],
+    sortService : null,
     storageNamePrefix: 'sasi_default',
     getColumnWidth: function (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
       if (name === 'name') {
@@ -242,11 +246,12 @@ export class SasiTableComponent implements OnInit {
       this.options.sortColumnName = column.index;
     }
     this.altSort = isAltSort;
-    this.data = this.sort(
+    this.data = this.options.sortService.sort(
       this.data,
       column,
       this.options.sortType,
-      this.altSort ? this.options.altSortColumnName : null);
+      this.altSort ? this.options.altSortColumnName : null,
+      ((row, column1) => row.getCellValue(column1)));
     // console.log(this.data);
   }
 

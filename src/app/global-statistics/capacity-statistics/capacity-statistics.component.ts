@@ -15,6 +15,7 @@ import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.compon
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {AlertRule, Threshold} from '../AlertRule';
 import {SasiWeightedArithmeticMean} from '../utils/SasiWeightedArithmeticMean';
+import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
 
 
 export class ItemKey {
@@ -97,6 +98,7 @@ export class CapacityStatisticsComponent implements OnInit {
     this.options.valueColumnWidth = '8.88';
     this.options.storageNamePrefix = 'capacity';
     this.options.aggregateValuesService = new SasiWeightedArithmeticMean();
+    this.options.sortService = new GroupSortImpl();
 
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-orange', 80, 90)));
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-red', 90, 10000)));
