@@ -1,8 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {SasiGroupRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
 import {LocalStorage, LocalStorageService} from 'ngx-store';
-import {SelectedRow} from '../row-table/row-table.component';
 import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
+import {SelectedRow} from '../row-table/selected-row';
 
 export interface AggregatedValues {
   getValue(name: string): number;
@@ -38,7 +38,18 @@ export class RowGroupTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
+      data => {
+        this.selectedRows = data.newValue;
+        this.initAggregatedValues();
+      }
+    );
     this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    this.initAggregatedValues();
+
+  }
+
+  initAggregatedValues() {
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }

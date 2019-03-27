@@ -97,6 +97,7 @@ export class CapacityStatisticsComponent implements OnInit {
     this.options.labelColumnWidth = '13';
     this.options.valueColumnWidth = '8.88';
     this.options.storageNamePrefix = 'capacity';
+    this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMean();
     this.options.sortService = new GroupSortImpl();
 

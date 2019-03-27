@@ -2,10 +2,10 @@ import {Component, Input, OnInit, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/AlertRule';
 import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {AggregatedStatisticsService} from '../../../global-statistics/capacity-statistics/aggregated-statistics.service';
 import {AggregateValueService} from './row-group-table/row-group-table.component';
-import {SimpleSortImpl} from './simple-sort-impl';
 import {Sort} from './sort';
+import {SelectedRow} from './row-table/selected-row';
+import {isUndefined} from 'util';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -96,6 +96,7 @@ export class SasiTableOptions {
   public highlightColumn: boolean;
   public highlightRow: boolean;
   public isDataGrouped: boolean;
+  public selectableRows: boolean;
   public colControlFormatter;
   public rowComponentFormatter;
   public cellDecoratorRules: AlertRule[] = [];
@@ -155,7 +156,7 @@ export class SasiTableComponent implements OnInit {
   @Input() data: SasiRow[] = [];
   @Input() tableOptions: SasiTableOptions = new SasiTableOptions();
   @LocalStorage({key: 'sasi_collapsed'}) collapsedRows: Array<string>;
-  selectedRows: Array<string>;
+  selectedRows: Array<SelectedRow>;
 
   options: SasiTableOptions;
   defaultOptions = {
@@ -169,11 +170,12 @@ export class SasiTableComponent implements OnInit {
     valueColumnWidth: '',
     labelColumnWidth: '',
     isDataGrouped: false,
+    selectableRows: false,
     colControlFormatter: null,
     cellDecoratorRules: [],
     rowComponentFormatter: null,
     aggregateColumns: [],
-    sortService : null,
+    sortService: null,
     storageNamePrefix: 'sasi_default',
     getColumnWidth: function (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
       if (name === 'name') {
@@ -201,6 +203,9 @@ export class SasiTableComponent implements OnInit {
 
   ngOnInit() {
     this.options = Object.assign(this.defaultOptions, this.tableOptions);
+    this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
+      data => this.selectedRows = data.newValue
+    );
     this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     if (this.selectedRows === null) {
       this.selectedRows = [];
@@ -255,35 +260,35 @@ export class SasiTableComponent implements OnInit {
     // console.log(this.data);
   }
 
-  sort(data, column: SasiColumn, sortType: SasiSortType, sortByRawValue: string) {
-    const dataReturned = data.sort(
-      (rowA, rowB) => {
-        if (sortType === SasiSortType.ASC) {
-          if (sortByRawValue !== null) {
-            return this.compare(rowA.getCellRawData(column)[sortByRawValue], rowB.getCellRawData(column)[sortByRawValue]);
-          } else {
-            return this.compare(rowA.getCellValue(column), rowB.getCellValue(column));
-          }
-        } else {
-          if (sortByRawValue !== null) {
-            return this.compare(rowB.getCellRawData(column)[sortByRawValue], rowA.getCellRawData(column)[sortByRawValue]);
-          } else {
-            return this.compare(rowB.getCellValue(column), rowA.getCellValue(column));
-          }
-        }
-      }
-    );
-    return dataReturned;
-  }
-
-  compare(valueA, valueB) {
-    if (valueA > valueB) {
-      return 1;
-    } else if (valueA < valueB) {
-      return -1;
-    }
-    return 0;
-  }
+  // sort(data, column: SasiColumn, sortType: SasiSortType, sortByRawValue: string) {
+  //   const dataReturned = data.sort(
+  //     (rowA, rowB) => {
+  //       if (sortType === SasiSortType.ASC) {
+  //         if (sortByRawValue !== null) {
+  //           return this.compare(rowA.getCellRawData(column)[sortByRawValue], rowB.getCellRawData(column)[sortByRawValue]);
+  //         } else {
+  //           return this.compare(rowA.getCellValue(column), rowB.getCellValue(column));
+  //         }
+  //       } else {
+  //         if (sortByRawValue !== null) {
+  //           return this.compare(rowB.getCellRawData(column)[sortByRawValue], rowA.getCellRawData(column)[sortByRawValue]);
+  //         } else {
+  //           return this.compare(rowB.getCellValue(column), rowA.getCellValue(column));
+  //         }
+  //       }
+  //     }
+  //   );
+  //   return dataReturned;
+  // }
+  //
+  // compare(valueA, valueB) {
+  //   if (valueA > valueB) {
+  //     return 1;
+  //   } else if (valueA < valueB) {
+  //     return -1;
+  //   }
+  //   return 0;
+  // }
 
   collapseAll() {
     // @ts-ignore
@@ -310,6 +315,64 @@ export class SasiTableComponent implements OnInit {
       row => this.collapsedRows.includes(row.groupRow.getCell('name').value)
     );
   }
+
+  isSelectedAll(): boolean {
+    if (!this.options.isDataGrouped){
+      return false;
+    }
+    // @ts-ignore
+    const d = <SasiGroupRow[]>this.data;
+    return d.every(
+      // @ts-ignore
+      rowGroup => rowGroup.rows.every(
+        row => this.selectedRows.find(selectedRow => selectedRow.rowName === row.getCell('name').value && selectedRow.groupName === rowGroup.groupRow.getCell('name').value
+        ) !== undefined
+      )
+    );
+  }
+
+  isPartiallySelected() {
+    if (!this.options.isDataGrouped){
+      return false;
+    }
+    // @ts-ignore
+    const d = <SasiGroupRow[]>this.data;
+    return d.find(
+      // @ts-ignore
+      rowGroup => rowGroup.rows.find(
+        row => this.selectedRows.find(
+          selectedRow => selectedRow.rowName === row.getCell('name').value && selectedRow.groupName === rowGroup.groupRow.getCell('name').value
+        ) !== undefined
+      )
+    ) !== undefined;
+  }
+
+  selectAll() {
+    // @ts-ignore
+    const d = <SasiGroupRow[]>this.data;
+    if (!this.isSelectedAll()) {
+      this.selectedRows = [];
+      d.forEach(
+        rowGroup => rowGroup.rows.forEach(
+          row => this.selectedRows.push(new SelectedRow(rowGroup.groupRow.getCell('name').value, row.getCell('name').value))
+        )
+      );
+    } else {
+      d.forEach(
+        groupRow =>
+          groupRow.rows.forEach(
+            row => this.selectedRows.splice(
+            this.selectedRows.findIndex(
+              selectedRow => selectedRow.groupName === groupRow.groupRow.getCell('name').value && selectedRow.rowName === row.getCell('name').value
+            ), 1
+            )
+          )
+      );
+    }
+    this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
+
+  }
+
 
   // isSelectedPool(poolName: string, systemName: string): boolean {
   //   return this.selectedRows[this.currentDataCenterId].findIndex(

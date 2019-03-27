@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {SasiColumn, SasiGroupRow} from '../../common/components/sasi-table/sasi-table.component';
-import {SelectedRow} from '../../common/components/sasi-table/row-table/row-table.component';
 import {LocalStorageService} from 'ngx-store';
 import {SasiWeightedArithmeticMean} from '../utils/SasiWeightedArithmeticMean';
 import {AggregatedValues} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
+import {SelectedRow} from '../../common/components/sasi-table/row-table/selected-row';
 
 @Component({
   selector: 'app-aggragated-statistics',

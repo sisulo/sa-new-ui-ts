@@ -9,6 +9,11 @@
          [ngClass]="'fa-angle-down'"
          (click)="collapseAll()"
          [tooltip]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
+      <i *ngIf="options.selectableRows && isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>
+      <i *ngIf="options.selectableRows && isPartiallySelected() && !isSelectedAll()" class="fa fa-fw fa-minus-square-o"
+      (click)="selectAll()"></i>
+      <i *ngIf="options.selectableRows && (!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"
+      (click)="selectAll()"></i>
     </div>
     <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
       <i tooltip="Alerts" class="fas fa-exclamation text-orange"></i>

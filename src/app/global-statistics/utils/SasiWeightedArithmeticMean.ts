@@ -1,7 +1,7 @@
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SasiGroupRow, SasiRow, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
-import {SelectedRow} from '../../common/components/sasi-table/row-table/row-table.component';
 import {AggregatedValues, AggregateValueService} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
+import {SelectedRow} from '../../common/components/sasi-table/row-table/selected-row';
 
 // class AggregatedStatistics implements AggregatedValues {
 //   physicalSubstitution = 0;

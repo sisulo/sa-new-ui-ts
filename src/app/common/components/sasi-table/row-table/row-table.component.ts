@@ -1,16 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../sasi-table.component';
-import {LocalStorage, LocalStorageService, SharedStorageService} from 'ngx-store';
-
-export class SelectedRow {
-  groupName: string;
-  rowName: string;
-
-  constructor(groupName: string, rowName: string) {
-    this.groupName = groupName;
-    this.rowName = rowName;
-  }
-}
+import {LocalStorage, LocalStorageService} from 'ngx-store';
+import {SelectedRow} from './selected-row';
 
 @Component({
   selector: 'app-row-table',
@@ -33,10 +24,16 @@ export class RowTableComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
+      data => {
+        this.selectedRows = data.newValue;
+      }
+    );
     this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
+
   }
 
   /* HIGHLIGHTNING */

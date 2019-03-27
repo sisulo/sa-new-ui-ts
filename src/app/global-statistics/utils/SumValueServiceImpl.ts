@@ -1,7 +1,7 @@
 import {AggregatedValues, AggregateValueService} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SasiGroupRow, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
-import {SelectedRow} from '../../common/components/sasi-table/row-table/row-table.component';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
+import {SelectedRow} from '../../common/components/sasi-table/row-table/selected-row';
 
 class SumValue implements AggregatedValues {
   data = {};
