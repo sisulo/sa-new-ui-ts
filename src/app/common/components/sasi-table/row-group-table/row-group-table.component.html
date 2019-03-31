@@ -47,7 +47,7 @@
   <!--POOL ROWS-->
   <!---->
   <div class="groupped-data" [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">
-    <app-row-table [class.highlight-row]="options.highlightRow" *ngFor="let row of data.rows"
+    <app-row-table  *ngFor="let row of data.rows"
                    [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"
                    [groupName]="data.groupRow.getCell('name').value"
                    (selectEmit)="onSelectRow($event)"></app-row-table>

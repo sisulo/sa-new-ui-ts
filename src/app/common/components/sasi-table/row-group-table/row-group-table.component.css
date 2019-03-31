@@ -51,11 +51,6 @@ app-row-table.striped-row:nth-of-type(odd) {
   background-color: #f3f8fa;
 }
 
-app-row-table.highlight-row:hover {
-  background-color: #b4d1ee !important;
-  color: #3A738C;
-}
-
 .col-label {
   display: inline-block;
   text-align: center;

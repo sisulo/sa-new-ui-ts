@@ -1,4 +1,4 @@
-<div class="table-data " [class.selectedRow]="isSelectedRow(data.getCell('name').value)">
+<div class="table-data " [class.selectedRow]="isSelectedRow(data.getCell('name').value)" [class.highlight-row]="options.highlightRow">
   <div class="col-val col-control" *ngIf="options.selectableRows">
     <i
       [ngClass]="isSelectedRow(data.getCell('name').value) ? 'fa-check-square-o' : 'fa-square-o'" class="fa fa-fw"
