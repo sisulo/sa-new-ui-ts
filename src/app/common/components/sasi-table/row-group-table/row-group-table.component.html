@@ -23,18 +23,28 @@
     <!--<div class="col-val col-label"><span class="system-name"><a [routerLink]="data.id | iframeUrlCreator"-->
     <!--routerLinkActive="active">{{ system.name }}</a></span>-->
     <!--</div>-->
-    <div class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)">
+    <div class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)"
+         (mouseout)="setHighlightedColumn(-1)"
+         (mouseover)="setHighlightedColumn(0)"
+         [class.highlightColumn]="isColumnHighlighted(0)">
       <app-cell-table
         [componentFormatter]="options.columns[0].component" [data]="data.groupRow.getCell('name').rawData"
         [label]="''"
-        [options]="options"></app-cell-table>
+        [options]="options"
+
+      ></app-cell-table>
     </div>
     <div class="col-val col" *ngFor="let column of options.getAggregatedColumns(); let colIndex=index"
          [style.width.%]="options.getColumnWidth(column.index)"
+         (mouseout)="setHighlightedColumn(-1)"
+         (mouseover)="setHighlightedColumn(colIndex+1)"
+         [class.highlightColumn]="isColumnHighlighted(colIndex+1)"
+
     >
       <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.component"
                       [data]="getAggregatedValue(column.index)"
-                      [label]="column.label" [options]="options"></app-cell-table>
+                      [label]="column.label" [options]="options"
+      ></app-cell-table>
     </div>
     <!--<div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">-->
     <!--<div class="ignore">-->
@@ -47,7 +57,7 @@
   <!--POOL ROWS-->
   <!---->
   <div class="groupped-data" [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">
-    <app-row-table  *ngFor="let row of data.rows"
+    <app-row-table *ngFor="let row of data.rows"
                    [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"
                    [groupName]="data.groupRow.getCell('name').value"
                    (selectEmit)="onSelectRow($event)"></app-row-table>

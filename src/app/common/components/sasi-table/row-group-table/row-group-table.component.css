@@ -60,4 +60,5 @@ app-row-table.striped-row:nth-of-type(odd) {
 .highlightColumn {
   background-color: #b4d1ee !important;
   color: #3A738C;
+  /*padding:0px;*/
 }

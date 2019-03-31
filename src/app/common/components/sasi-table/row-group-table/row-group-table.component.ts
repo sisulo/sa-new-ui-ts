@@ -3,6 +3,7 @@ import {SasiGroupRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table
 import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
 import {SelectedRow} from '../row-table/selected-row';
+import {keys} from 'd3-collection';
 
 export interface AggregatedValues {
   getValue(name: string): number;
@@ -24,6 +25,7 @@ export class RowGroupTableComponent implements OnInit {
   @Input() columnHighlightEnable = false;
   @Input() options: SasiTableOptions;
   @LocalStorage({key: 'sasi_collapsed'}) collapsedRows: Array<string>;
+  @LocalStorage() highlightedColumn = -1;
 
   aggregatedValues = {};
   selectedRows: Array<SelectedRow>;
@@ -84,6 +86,21 @@ export class RowGroupTableComponent implements OnInit {
       );
     }
     this.aggregatedValues = result;
+  }
+
+  isColumnHighlighted(column: number) {
+    if (!this.options.highlightColumn || this.isAggregatedValuesEmpty()) {
+      return false;
+    }
+    return column === this.highlightedColumn;
+  }
+
+  setHighlightedColumn(column: number) {
+    this.highlightedColumn = column;
+  }
+
+  isAggregatedValuesEmpty() {
+    return keys(this.aggregatedValues).length === 0;
   }
 
   onSelectRow(selectedRows: Array<SelectedRow>) {
