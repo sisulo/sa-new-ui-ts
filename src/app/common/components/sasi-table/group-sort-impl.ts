@@ -7,8 +7,12 @@ export class GroupSortImpl extends SimpleSortImpl implements Sort {
     data.forEach(
       groupRow => groupRow.rows = super.sort(groupRow.rows, column, sortType, sortByRawValue, (row, columnIndex) => row.getCellValue(columnIndex))
     );
-    const result = super.sort(data, column, sortType, sortByRawValue, (row, columnIndex) => row.rows[0].getCellValue(columnIndex));
-    return result;
+    if(column.index === 'name') {
+      return super.sort(data, column, sortType, sortByRawValue, (row, columnIndex) => row.groupRow.getCellValue(columnIndex));
+    } else {
+      return super.sort(data, column, sortType, sortByRawValue, (row, columnIndex) => row.rows[0].getCellValue(columnIndex));
+
+    }
   }
 
 }
