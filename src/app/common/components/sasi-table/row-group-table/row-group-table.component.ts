@@ -4,6 +4,9 @@ import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
 import {SelectedRow} from '../row-table/selected-row';
 import {keys} from 'd3-collection';
+import {AlertType} from '../../../models/metrics/AlertType';
+import {ConditionEvaluate} from '../../../../global-statistics/utils/ConditionEvaluate';
+import {AlertRule, Threshold} from '../../../../global-statistics/AlertRule';
 
 export interface AggregatedValues {
   getValue(name: string): number;
@@ -29,6 +32,9 @@ export class RowGroupTableComponent implements OnInit {
 
   aggregatedValues = {};
   selectedRows: Array<SelectedRow>;
+  alertGroup = '';
+
+  alertPriority = ['text-alert-yellow', 'text-orange', 'text-red'];
 
   constructor(private localStorageService: LocalStorageService) {
     if (this.collapsedRows === null) {
@@ -108,6 +114,34 @@ export class RowGroupTableComponent implements OnInit {
     if (this.options.aggregateValuesService !== undefined) {
       this.aggregateValues(selectedRows);
     }
+  }
+
+
+  private getPriority(alertType) {
+    // console.log('alertInput: ' + alertType + ', current: ' + this.alertGroup + ', index:' + this.alertPriority.findIndex(priority => priority === alertType))
+    return this.alertPriority.findIndex(priority => priority === alertType);
+  }
+  private getAlertType() {
+    const alertDef = this.options.cellDecoratorRules.filter(
+      rule => {
+        return this.data.rows.find(
+          row => {
+            const cell = row.getCell(rule.type);
+            return ConditionEvaluate.eval(cell.value, rule);
+          }
+        ) !== undefined;
+      }
+    );
+    if (alertDef.length === 0 ) {
+      return '';
+    }
+    // console.log(alertDef);
+    return alertDef.reduce(
+      (previousValue, currentValue) => {
+        return this.getPriority(previousValue.threshold.alertType) > this.getPriority(currentValue.threshold.alertType)
+          ? previousValue : currentValue;
+      }
+    , new AlertRule(null, new Threshold('', 0, 0))).threshold.alertType;
   }
 
   getAggregatedValue(type: string) {

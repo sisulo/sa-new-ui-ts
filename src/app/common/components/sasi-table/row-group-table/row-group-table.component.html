@@ -15,7 +15,7 @@
 
     </div>
     <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
-
+      <i *ngIf="getAlertType() !== ''" tooltip="Warning for one or more metrics" class="fas fa-exclamation" [ngClass]="getAlertType()" ></i>
     </div>
     <!--<div class="col-val col-control">-->
     <!--<i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation text-orange"></i>-->
@@ -60,7 +60,8 @@
     <app-row-table *ngFor="let row of data.rows"
                    [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"
                    [groupName]="data.groupRow.getCell('name').value"
-                   (selectEmit)="onSelectRow($event)"></app-row-table>
+                   (selectEmit)="onSelectRow($event)"
+                    ></app-row-table>
   </div>
   <!--<div class="row" [@slideInOut]="isCollapsed(system.name)">-->
   <!--<div *ngFor="let pool of data[i].pools" class="table-data striped-row row"-->

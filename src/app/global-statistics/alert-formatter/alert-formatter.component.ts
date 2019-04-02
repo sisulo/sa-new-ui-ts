@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {ConditionEvaluate} from '../utils/ConditionEvaluate';
 
@@ -12,7 +12,6 @@ export class AlertFormatterComponent implements OnInit {
   @Input() public data: SasiRow;
   @Input() public label;
   @Input() public options: SasiTableOptions;
-
   constructor() {
   }
 
@@ -26,5 +25,17 @@ export class AlertFormatterComponent implements OnInit {
         return ConditionEvaluate.eval(cell.value, rule);
       }
     ) !== undefined;
+  }
+  getDecoratorClass() {
+    const alertDef = this.options.cellDecoratorRules.find(
+      rule => {
+        const cell = this.data.getCell(rule.type);
+        return ConditionEvaluate.eval(cell.value, rule);
+      }
+    );
+    if (alertDef !== null) {
+      return alertDef.threshold.alertType;
+    }
+    return '';
   }
 }

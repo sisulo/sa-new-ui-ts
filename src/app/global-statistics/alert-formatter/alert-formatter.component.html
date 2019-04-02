@@ -1,1 +1,1 @@
-<i *ngIf="isAlert()" tooltip="Warning for one or more metrics" class="fas fa-exclamation text-orange"></i>
+<i *ngIf="isAlert()" tooltip="Warning for one or more metrics" class="fas fa-exclamation" [ngClass]="getDecoratorClass()"></i>

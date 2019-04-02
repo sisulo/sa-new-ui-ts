@@ -101,8 +101,9 @@ export class CapacityStatisticsComponent implements OnInit {
     this.options.aggregateValuesService = new SasiWeightedArithmeticMean();
     this.options.sortService = new GroupSortImpl();
 
-    this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-orange', 80, 90)));
-    this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-red', 90, 10000)));
+    this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-alert-yellow', 80, 84.9)));
+    this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-orange', 85, 88)));
+    this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USAGE, new Threshold('text-red', 88, 10000)));
   }
 
   ngOnInit(): void {

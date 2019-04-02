@@ -62,3 +62,7 @@ app-row-table.striped-row:nth-of-type(odd) {
   color: #3A738C;
   /*padding:0px;*/
 }
+
+.text-alert-yellow {
+  color: #ffd829;
+}
