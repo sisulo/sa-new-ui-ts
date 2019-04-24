@@ -90,7 +90,11 @@ app-row-dynamic-table.highlight-row:hover {
 
 div.sticky {
   position: sticky;
-  bottom: 0px;
+}
+
+div.sticky-top {
+  position: sticky;
+  top: 50px;
   z-index: 10;
 }
 
