@@ -118,7 +118,6 @@ export class RowGroupTableComponent implements OnInit {
 
 
   private getPriority(alertType) {
-    // console.log('alertInput: ' + alertType + ', current: ' + this.alertGroup + ', index:' + this.alertPriority.findIndex(priority => priority === alertType))
     return this.alertPriority.findIndex(priority => priority === alertType);
   }
   private getAlertType() {

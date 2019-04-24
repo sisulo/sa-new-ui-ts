@@ -5,7 +5,6 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AggregateValueService} from './row-group-table/row-group-table.component';
 import {Sort} from './sort';
 import {SelectedRow} from './row-table/selected-row';
-import {isUndefined} from 'util';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -99,6 +98,7 @@ export class SasiTableOptions {
   public selectableRows: boolean;
   public colControlFormatter;
   public rowComponentFormatter;
+  public grIndexComponentFormatter;
   public cellDecoratorRules: AlertRule[] = [];
   public valueColumnWidth: string;
   public labelColumnWidth: string;
@@ -174,6 +174,7 @@ export class SasiTableComponent implements OnInit {
     colControlFormatter: null,
     cellDecoratorRules: [],
     rowComponentFormatter: null,
+    grIndexComponentFormatter: null,
     aggregateColumns: [],
     sortService: null,
     storageNamePrefix: 'sasi_default',

@@ -16,6 +16,7 @@ import {RowGroupTableComponent} from '../../common/components/sasi-table/row-gro
 import {AlertRule, Threshold} from '../AlertRule';
 import {SasiWeightedArithmeticMean} from '../utils/SasiWeightedArithmeticMean';
 import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
+import {EmphFormatterComponent} from '../emph-formatter/emph-formatter.component';
 
 
 export class ItemKey {
@@ -80,7 +81,7 @@ export class CapacityStatisticsComponent implements OnInit {
     private aggregateService: AggregatedStatisticsService,
     protected bus: BusService
   ) {
-    this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false, false));
+    this.options.columns.push(new SasiColumn('name', 'System', EmphFormatterComponent, false, false));
     this.options.columns.push(new SasiColumn(SystemMetricType.PHYSICAL_CAPACITY, 'Physical Capacity', SimpleFormatterComponent, false, true));
     this.options.columns.push(new SasiColumn(SystemMetricType.PHYSICAL_SUBS, 'Physical Subs', SimpleFormatterComponent, false, true));
     this.options.columns.push(new SasiColumn(SystemMetricType.AVAILABLE_CAPACITY, 'Available Capacity', SimpleFormatterComponent, false, true));
@@ -92,6 +93,7 @@ export class CapacityStatisticsComponent implements OnInit {
     this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L3, 'Reach 90%', SimpleFormatterComponent, false, false));
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
+    this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.labelColumnWidth = '13';

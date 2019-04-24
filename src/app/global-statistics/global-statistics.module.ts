@@ -16,6 +16,7 @@ import { TimeFormatterComponent } from './time-formatter/time-formatter.componen
 import {Seconds2FullTimePipe} from './utils/seconds-2-full-time.pipe';
 import { TextFormatterComponent } from './text-formatter/text-formatter.component';
 import { AggragatedStatisticsComponent } from './aggragated-statistics/aggragated-statistics.component';
+import { EmphFormatterComponent } from './emph-formatter/emph-formatter.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AggragatedStatisticsComponent } from './aggragated-statistics/aggragate
     TimeFormatterComponent,
     Seconds2FullTimePipe,
     TextFormatterComponent,
-    AggragatedStatisticsComponent
+    AggragatedStatisticsComponent,
+    EmphFormatterComponent
   ],
   imports: [
     CommonModule,

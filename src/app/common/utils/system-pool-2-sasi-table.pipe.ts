@@ -14,7 +14,7 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
     return systems.map(
       system => {
         const row = new SasiRow();
-        row.cells['name'] = new SasiCell(system.name, {id: system.id, iFrameLink: 'dashboard', name: system.name});
+        row.cells['name'] = new SasiCell(system.name, {id: system.id, iFrameLink: 'dashboard', value: system.name});
         system.metrics.forEach(
           metric => row.cells[metric.type] = new SasiCell(metric.value, metric)
         );

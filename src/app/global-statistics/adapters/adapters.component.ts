@@ -12,8 +12,8 @@ import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.compon
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SumValueServiceImpl} from '../utils/SumValueServiceImpl';
 import {TextFormatterComponent} from '../text-formatter/text-formatter.component';
-import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
+import {EmphFormatterComponent} from '../emph-formatter/emph-formatter.component';
 
 // TODO separate components, pipes, utils to own directories
 @Component({
@@ -41,11 +41,12 @@ export class AdaptersComponent implements OnInit {
     protected bus: BusService
   ) {
 
-    this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false, false));
+    this.options.columns.push(new SasiColumn('name', 'System', EmphFormatterComponent, false, false));
     this.options.columns.push(new SasiColumn(SystemMetricType.DISBALANCE_EVENTS, 'Disbalance events', SimpleFormatterComponent, false, true));
     this.options.columns.push(new SasiColumn(SystemMetricType.INFO, 'Info', TextFormatterComponent, false, false));
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
+    this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.highlightColumn = false;

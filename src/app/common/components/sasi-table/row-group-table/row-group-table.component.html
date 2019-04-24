@@ -28,7 +28,7 @@
          (mouseover)="setHighlightedColumn(0)"
          [class.highlightColumn]="isColumnHighlighted(0)">
       <app-cell-table
-        [componentFormatter]="options.columns[0].component" [data]="data.groupRow.getCell('name').rawData"
+        [componentFormatter]="options.grIndexComponentFormatter" [data]="data.groupRow.getCell('name').rawData"
         [label]="''"
         [options]="options"
 

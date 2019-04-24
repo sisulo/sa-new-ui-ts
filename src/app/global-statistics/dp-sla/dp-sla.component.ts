@@ -13,6 +13,7 @@ import {SimpleFormatterComponent} from '../simple-formatter/simple-formatter.com
 import {TimeFormatterComponent} from '../time-formatter/time-formatter.component';
 import {SumValueServiceImpl} from '../utils/SumValueServiceImpl';
 import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
+import {EmphFormatterComponent} from '../emph-formatter/emph-formatter.component';
 
 
 @Component({
@@ -41,11 +42,12 @@ export class DpSlaComponent implements OnInit {
     protected bus: BusService
   ) {
 
-    this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false, false));
+    this.options.columns.push(new SasiColumn('name', 'System', EmphFormatterComponent, false, false));
     this.options.columns.push(new SasiColumn(SystemMetricType.SLA_EVENTS, 'SLA Events', SimpleFormatterComponent, false, true));
     this.options.columns.push(new SasiColumn(SystemMetricType.OUT_OF_SLA_TIME, 'Out of SLA Time', TimeFormatterComponent, false, true));
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
+    this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
