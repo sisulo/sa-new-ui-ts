@@ -20,6 +20,9 @@ export class SystemAggregatedStatistics implements AggregatedValues {
   logicalUsed = 0;
   physicalUsed = 0;
   compressionRatio = 0;
+  capacityChanged1D = 0;
+  capacityChanged1W = 0;
+  capacityChanged1M = 0;
 
   constructor(systemName: string) {
     this.system = systemName;
@@ -39,6 +42,12 @@ export class SystemAggregatedStatistics implements AggregatedValues {
         return this.physicalUsed;
       case SystemMetricType.COMPRESS_RATIO:
         return this.compressionRatio;
+      case SystemMetricType.CAPACITY_CHANGE_1D:
+        return this.capacityChanged1D;
+      case SystemMetricType.CAPACITY_CHANGE_1W:
+        return this.capacityChanged1W;
+      case SystemMetricType.CAPACITY_CHANGE_1M:
+        return this.capacityChanged1M;
     }
   }
 }
@@ -89,6 +98,9 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         systemStats.logicalUsed += this.getMetricByName(sasiRow, SystemMetricType.LOGICAL_USAGE) * physicalCapacity;
         systemStats.physicalUsed += this.getMetricByName(sasiRow, SystemMetricType.PHYSICAL_USAGE) * physicalCapacity;
         systemStats.compressionRatio += this.getMetricByName(sasiRow, SystemMetricType.COMPRESS_RATIO) * physicalCapacity;
+        systemStats.capacityChanged1D += this.getMetricByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D) * physicalCapacity;
+        systemStats.capacityChanged1W += this.getMetricByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W) * physicalCapacity;
+        systemStats.capacityChanged1M += this.getMetricByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M) * physicalCapacity;
       }
     );
     return this.summarizeStats(this.partiallySummarizedValues, 'all');
@@ -102,19 +114,11 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
     summarizedValues.logicalUsed = values.getValue(SystemMetricType.LOGICAL_USAGE) / summarizedValues.physicalCapacity;
     summarizedValues.physicalUsed = values.getValue(SystemMetricType.PHYSICAL_USAGE) / summarizedValues.physicalCapacity;
     summarizedValues.compressionRatio = values.getValue(SystemMetricType.COMPRESS_RATIO) / summarizedValues.physicalCapacity;
+    summarizedValues.capacityChanged1D = values.getValue(SystemMetricType.CAPACITY_CHANGE_1D) / summarizedValues.physicalCapacity;
+    summarizedValues.capacityChanged1W = values.getValue(SystemMetricType.CAPACITY_CHANGE_1W) / summarizedValues.physicalCapacity;
+    summarizedValues.capacityChanged1M = values.getValue(SystemMetricType.CAPACITY_CHANGE_1M) / summarizedValues.physicalCapacity;
     return summarizedValues;
   }
-
-  sum(values: SystemAggregatedStatistics[], statisticsName: string): number {
-    return values
-      .reduce((previousValue, currentValue) => {
-        return previousValue + currentValue[statisticsName];
-      }, 0);
-  }
-
-  // getSystemStatistics(systemName: string): SystemAggregatedStatistics {
-  //   return this.partiallySummarizedValues.find(stats => stats.system === systemName);
-  // }
 
   getMetricByName(metrics: SasiRow, type: SystemMetricType): number {
     const metric = metrics.getCell(type);

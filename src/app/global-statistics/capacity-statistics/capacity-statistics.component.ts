@@ -88,6 +88,9 @@ export class CapacityStatisticsComponent implements OnInit {
     this.options.columns.push(new SasiColumn(SystemMetricType.LOGICAL_USAGE, 'Logical Used', SimpleFormatterComponent, false, true));
     this.options.columns.push(new SasiColumn(SystemMetricType.PHYSICAL_USAGE, 'Physical Used', SimpleFormatterComponent, false, true));
     this.options.columns.push(new SasiColumn(SystemMetricType.COMPRESS_RATIO, 'Compression Ratio', SimpleFormatterComponent, false, true));
+    this.options.columns.push(new SasiColumn(SystemMetricType.CAPACITY_CHANGE_1D, 'Change 1D', SimpleFormatterComponent, false, true));
+    this.options.columns.push(new SasiColumn(SystemMetricType.CAPACITY_CHANGE_1W, 'Change 1W', SimpleFormatterComponent, false, true));
+    this.options.columns.push(new SasiColumn(SystemMetricType.CAPACITY_CHANGE_1M, 'Change 1M', SimpleFormatterComponent, false, true));
     this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L1, 'Reach 80%', SimpleFormatterComponent, false, false));
     this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L2, 'Reach 85%', SimpleFormatterComponent, false, false));
     this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L3, 'Reach 90%', SimpleFormatterComponent, false, false));
@@ -97,7 +100,7 @@ export class CapacityStatisticsComponent implements OnInit {
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.labelColumnWidth = '13';
-    this.options.valueColumnWidth = '8.88';
+    this.options.valueColumnWidth = '6.65';
     this.options.storageNamePrefix = 'capacity';
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMean();

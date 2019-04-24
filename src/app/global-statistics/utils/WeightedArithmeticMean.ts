@@ -9,6 +9,9 @@ class AggregatedStatistics {
   logicalUsed = 0;
   physicalUsed = 0;
   compressionRatio = 0;
+  capacityChanged1D = 0;
+  capacityChanged1W = 0;
+  capacityChanged1M = 0;
 }
 
 export class SystemAggregatedStatistics extends AggregatedStatistics {
@@ -19,6 +22,10 @@ export class SystemAggregatedStatistics extends AggregatedStatistics {
   logicalUsed = 0;
   physicalUsed = 0;
   compressionRatio = 0;
+  capacityChanged1D = 0;
+  capacityChanged1W = 0;
+  capacityChanged1M = 0;
+
 
   constructor(systemName: string) {
     super();
@@ -39,6 +46,13 @@ export class SystemAggregatedStatistics extends AggregatedStatistics {
         return this.physicalUsed;
       case SystemMetricType.COMPRESS_RATIO:
         return this.compressionRatio;
+      case SystemMetricType.CAPACITY_CHANGE_1D:
+        return this.capacityChanged1D;
+      case SystemMetricType.CAPACITY_CHANGE_1W:
+        return this.capacityChanged1W;
+      case SystemMetricType.CAPACITY_CHANGE_1M:
+        return this.capacityChanged1M;
+
     }
   }
 }
@@ -68,6 +82,9 @@ export class WeightedArithmeticMean {
         systemStats.logicalUsed += this.getMetricByName(metrics, SystemMetricType.LOGICAL_USAGE) * physicalCapacity;
         systemStats.physicalUsed += this.getMetricByName(metrics, SystemMetricType.PHYSICAL_USAGE) * physicalCapacity;
         systemStats.compressionRatio += this.getMetricByName(metrics, SystemMetricType.COMPRESS_RATIO) * physicalCapacity;
+        systemStats.capacityChanged1D += this.getMetricByName(metrics, SystemMetricType.CAPACITY_CHANGE_1D) * physicalCapacity;
+        systemStats.capacityChanged1W += this.getMetricByName(metrics, SystemMetricType.CAPACITY_CHANGE_1W) * physicalCapacity;
+        systemStats.capacityChanged1M += this.getMetricByName(metrics, SystemMetricType.CAPACITY_CHANGE_1M) * physicalCapacity;
       }
     );
     filter.forEach(
@@ -80,6 +97,7 @@ export class WeightedArithmeticMean {
       }
     );
     this.systemSummarizedValues.push(this.summarizeStats(this.partiallySummarizedValues, 'all'));
+    console.log(this.systemSummarizedValues);
     return this.systemSummarizedValues;
   }
 
@@ -91,6 +109,9 @@ export class WeightedArithmeticMean {
     summarizedValues.logicalUsed = this.sum(values, 'logicalUsed') / summarizedValues.physicalCapacity;
     summarizedValues.physicalUsed = this.sum(values, 'physicalUsed') / summarizedValues.physicalCapacity;
     summarizedValues.compressionRatio = this.sum(values, 'compressionRatio') / summarizedValues.physicalCapacity;
+    summarizedValues.capacityChanged1D = this.sum(values, 'capacityChanged1D') / summarizedValues.physicalCapacity;
+    summarizedValues.capacityChanged1W = this.sum(values, 'capacityChanged1W') / summarizedValues.physicalCapacity;
+    summarizedValues.capacityChanged1M = this.sum(values, 'capacityChanged1M') / summarizedValues.physicalCapacity;
     return summarizedValues;
   }
 

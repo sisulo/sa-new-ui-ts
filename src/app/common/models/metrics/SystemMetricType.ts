@@ -17,5 +17,8 @@ export enum SystemMetricType {
   PREDICTION_L1 = 'Prediction_L1',
   PREDICTION_L2 = 'Prediction_L2',
   PREDICTION_L3 = 'Prediction_L3',
+  CAPACITY_CHANGE_1D = 'CapacityChange_1D',
+  CAPACITY_CHANGE_1W = 'CapacityChange_1W',
+  CAPACITY_CHANGE_1M = 'CapacityChange_1M',
   INFO = 'info',
 }
