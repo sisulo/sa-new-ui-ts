@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../period.service';
 import {MetricService, PeriodType} from '../../metric.service';
@@ -88,5 +88,4 @@ export class DpSlaComponent implements OnInit {
     );
     return this.data;
   }
-
 }

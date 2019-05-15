@@ -11,14 +11,14 @@ const routes: Routes = [
     path: 'global-statistics',
     component: GlobalStatisticsComponent,
     children: [
-      {path: ':id/performance', component: PerformanceStatisticsComponent},
-      {path: 'performance', component: PerformanceStatisticsComponent},
-      {path: ':id/capacity', component: CapacityStatisticsComponent},
-      {path: 'capacity', component: CapacityStatisticsComponent},
-      {path: ':id/dp-sla', component: DpSlaComponent},
-      {path: 'dp-sla', component: DpSlaComponent},
-      {path: ':id/adapters', component: AdaptersComponent},
-      {path: 'adapters', component: AdaptersComponent}
+      {path: 'performance/:id', component: PerformanceStatisticsComponent},
+      {path: 'performance', redirectTo: 'performance/0', pathMatch: 'full'},
+      {path: 'capacity/:id', component: CapacityStatisticsComponent},
+      {path: 'capacity', redirectTo: 'capacity/0', pathMatch: 'full'},
+      {path: 'dp-sla/:id', component: DpSlaComponent},
+      {path: 'dp-sla', redirectTo: 'dp-sla/0', pathMatch: 'full'},
+      {path: 'adapters/:id', component: AdaptersComponent},
+      {path: 'adapters', redirectTo: 'adapters/0', pathMatch: 'full'}
     ]
   }
 ];

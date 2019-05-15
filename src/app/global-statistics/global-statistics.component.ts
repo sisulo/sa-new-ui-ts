@@ -3,6 +3,10 @@ import {Datacenter} from '../common/models/Datacenter';
 import {MetricService} from '../metric.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BusService} from './bus.service';
+import {AdaptersComponent} from './adapters/adapters.component';
+import {DpSlaComponent} from './dp-sla/dp-sla.component';
+import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
+import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
 
 @Component({
   selector: 'app-global-statistics',
@@ -29,13 +33,18 @@ export class GlobalStatisticsComponent implements OnInit {
 
     );
     this.bus.contextAnnouncement$.subscribe(
-      context => this.context = context
+      context => {
+        setTimeout(() => // setTimeout is small hack because off View checking for changes
+          this.context = context
+        );
+
+      }
     );
   }
 
   activeTab(id: number) {
     this.currentTab = id;
-    this.router.navigate(['/global-statistics/', id, this.context]);
+    // this.router.navigate(['/global-statistics/', id, this.context]);
   }
 
   isCurrentTab(id: number): boolean {

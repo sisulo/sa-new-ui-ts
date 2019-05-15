@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../period.service';
 import {MetricService, PeriodType} from '../../metric.service';
@@ -61,7 +61,7 @@ export class AdaptersComponent implements OnInit {
       params => {
         const id = +params.get('id');
         this.bus.announceDatacenter(id);
-        this.bus.announceContext('dp-sla');
+        this.bus.announceContext('adapters');
         this.getTableData(id); // TODO initInternal removed, check collapse/select behavior
       }
     );

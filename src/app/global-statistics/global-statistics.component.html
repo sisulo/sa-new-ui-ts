@@ -5,7 +5,7 @@
       <li *ngFor="let dataCenter of dataCenters"
           [class.active]="isCurrentTab(dataCenter.id)">
         <a (click)="activeTab(dataCenter.id)"
-           [routerLink]="'./'+ dataCenter.id + '/' + context">
+           [routerLink]="['./' + context, dataCenter.id]">
           {{dataCenter.label}}
         </a>
       </li>

@@ -47,10 +47,10 @@ export class SideMenuComponent implements OnInit {
 
   private setGlobalStatisticsLinks() {
     this.globalStatisticsLinks = [
-      {id: 1, linkPart: `/global-statistics/${this.defaultDataCenter}/performance`, name: 'Performance Statistics'},
-      {id: 2, linkPart: `/global-statistics/${this.defaultDataCenter}/capacity`, name: 'Capacity Statistics'},
-      {id: 3, linkPart: `/global-statistics/${this.defaultDataCenter}/dp-sla`, name: 'DP SLA Statistics'},
-      {id: 3, linkPart: `/global-statistics/${this.defaultDataCenter}/adapters`, name: 'Adapters Statistics'}
+      {id: 1, linkPart: `/global-statistics/performance`, name: 'Performance Statistics'},
+      {id: 2, linkPart: `/global-statistics/capacity`, name: 'Capacity Statistics'},
+      {id: 3, linkPart: `/global-statistics/dp-sla`, name: 'DP SLA Statistics'},
+      {id: 3, linkPart: `/global-statistics/adapters`, name: 'Adapters Statistics'}
     ];
   }
 
