@@ -25,4 +25,11 @@ export class SimpleFormatterComponent extends UnitFormatterComponent implements 
       return this.column.tooltipText;
     }
   }
+
+  getValue() {
+    if (this.column.isInfinity && this.data.value === -1) {
+      return '&#8734;';
+    }
+    return this.data.value % 1 === 0 ? this.data.value : this.data.value.toFixed(1);
+  }
 }

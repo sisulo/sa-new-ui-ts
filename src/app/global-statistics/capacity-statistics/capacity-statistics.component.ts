@@ -180,6 +180,7 @@ export class CapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .withTooltipText('Days to reach 80% of "Physical Used"')
+        .withInfinity(true)
         .build()
     );
     this.options.columns.push(
@@ -190,6 +191,7 @@ export class CapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .withTooltipText('Days to reach 85% of "Physical Used"')
+        .withInfinity(true)
         .build()
     );
     this.options.columns.push(
@@ -200,6 +202,7 @@ export class CapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .withTooltipText('Days to reach 88% of "Physical Used"')
+        .withInfinity(true)
         .build()
     );
     this.options.colControlFormatter = AlertFormatterComponent;

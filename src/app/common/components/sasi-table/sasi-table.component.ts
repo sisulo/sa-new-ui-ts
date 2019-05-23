@@ -29,6 +29,8 @@ export class SasiColumnBuilder {
 
   private tooltipText: string = null;
 
+  private infinity = true;
+
   private constructor() {
   }
 
@@ -47,8 +49,8 @@ export class SasiColumnBuilder {
   }
 
   withComponent(component: Type<any>) {
-      this.component = component;
-      return this;
+    this.component = component;
+    return this;
   }
 
   withAltSortEnable(altSortEnable: boolean) {
@@ -65,6 +67,7 @@ export class SasiColumnBuilder {
     this.tooltipText = tooltipText;
     return this;
   }
+
   build(): SasiColumn {
     return new SasiColumn(
       this.index,
@@ -72,10 +75,17 @@ export class SasiColumnBuilder {
       this.component,
       this.altSortEnable,
       this.isAggregated,
-      this.tooltipText === null ? this.label : this.tooltipText
+      this.tooltipText === null ? this.label : this.tooltipText,
+      this.infinity
     );
   }
+
+  withInfinity(isInfinity: boolean) {
+    this.infinity = isInfinity;
+    return this;
+  }
 }
+
 export class SasiColumn {
   /**
    * @var index in data model
@@ -96,13 +106,24 @@ export class SasiColumn {
 
   tooltipText: string;
 
-  constructor(index: string, label: string, component: Type<any>, altSortEnable: boolean, isAggragated: boolean, tooltipText: string) {
+  isInfinity: boolean;
+
+  constructor(
+    index: string,
+    label: string,
+    component: Type<any>,
+    altSortEnable: boolean,
+    isAggragated: boolean,
+    tooltipText: string,
+    isInfinity: boolean
+  ) {
     this.index = index;
     this.label = label;
     this.component = component;
     this.altSortEnable = altSortEnable;
     this.isAggregated = isAggragated;
     this.tooltipText = tooltipText;
+    this.isInfinity = isInfinity;
   }
 }
 
@@ -387,7 +408,7 @@ export class SasiTableComponent implements OnInit {
   }
 
   isSelectedAll(): boolean {
-    if (!this.options.isDataGrouped){
+    if (!this.options.isDataGrouped) {
       return false;
     }
     // @ts-ignore
@@ -402,7 +423,7 @@ export class SasiTableComponent implements OnInit {
   }
 
   isPartiallySelected() {
-    if (!this.options.isDataGrouped){
+    if (!this.options.isDataGrouped) {
       return false;
     }
     // @ts-ignore
@@ -432,9 +453,9 @@ export class SasiTableComponent implements OnInit {
         groupRow =>
           groupRow.rows.forEach(
             row => this.selectedRows.splice(
-            this.selectedRows.findIndex(
-              selectedRow => selectedRow.groupName === groupRow.groupRow.getCell('name').value && selectedRow.rowName === row.getCell('name').value
-            ), 1
+              this.selectedRows.findIndex(
+                selectedRow => selectedRow.groupName === groupRow.groupRow.getCell('name').value && selectedRow.rowName === row.getCell('name').value
+              ), 1
             )
           )
       );
