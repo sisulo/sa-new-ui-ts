@@ -93,7 +93,7 @@ export class CapacityStatisticsComponent implements OnInit {
     this.options.columns.push(new SasiColumn(SystemMetricType.CAPACITY_CHANGE_1M, 'Change 1M', SimpleFormatterComponent, false, true));
     this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L1, 'Reach 80%', SimpleFormatterComponent, false, false));
     this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L2, 'Reach 85%', SimpleFormatterComponent, false, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L3, 'Reach 90%', SimpleFormatterComponent, false, false));
+    this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L3, 'Reach 88%', SimpleFormatterComponent, false, false));
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
