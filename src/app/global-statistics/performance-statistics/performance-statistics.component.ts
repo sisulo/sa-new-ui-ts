@@ -5,7 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {PeriodService} from '../../period.service';
 import {BusService} from '../bus.service';
-import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
+import {SasiColumnBuilder, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {UnitFormatterComponent} from '../unit-formatter/unit-formatter.component';
 import {RouteLinkFormatterComponent} from '../route-link-formatter/route-link-formatter.component';
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
@@ -32,13 +32,69 @@ export class PerformanceStatisticsComponent implements OnInit {
     private periodService: PeriodService,
     private bus: BusService
   ) {
-    this.options.columns.push(new SasiColumn('name', 'System', RouteLinkFormatterComponent, false, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.WORKLOAD, 'Workload', UnitFormatterComponent, true, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.TRANSFER, 'Transfer', UnitFormatterComponent, true, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.RESPONSE, 'Response', UnitFormatterComponent, true, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.CPU, 'CPU', UnitFormatterComponent, true, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.HDD, 'HDD', UnitFormatterComponent, true, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.WRITE_PENDING, 'Write Pending', UnitFormatterComponent, true, false));
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('name')
+        .withLabel('System')
+        .withComponent(RouteLinkFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.WORKLOAD)
+        .withLabel('Workload')
+        .withComponent(UnitFormatterComponent)
+        .withAltSortEnable(true)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.TRANSFER)
+        .withLabel('Transfer')
+        .withComponent(UnitFormatterComponent)
+        .withAltSortEnable(true)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.RESPONSE)
+        .withLabel('Response')
+        .withComponent(UnitFormatterComponent)
+        .withAltSortEnable(true)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.CPU)
+        .withLabel('CPU')
+        .withComponent(UnitFormatterComponent)
+        .withAltSortEnable(true)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.HDD)
+        .withLabel('HDD')
+        .withComponent(UnitFormatterComponent)
+        .withAltSortEnable(true)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.WRITE_PENDING)
+        .withLabel('Write Pending')
+        .withComponent(UnitFormatterComponent)
+        .withAltSortEnable(true)
+        .withIsAggregated(false)
+        .build()
+    );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
     this.options.labelColumnWidth = '13.78';

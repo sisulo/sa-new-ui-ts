@@ -9,10 +9,12 @@ export class EmphFormatterComponent implements OnInit {
 
   @Input() public data;
   @Input() public label;
+  @Input() public column;
 
   constructor() { }
 
   ngOnInit() {
   }
+
 
 }

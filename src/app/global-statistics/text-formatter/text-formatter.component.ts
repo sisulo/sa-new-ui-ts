@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
+import {SasiColumn} from '../../common/components/sasi-table/sasi-table.component';
 
 @Component({
   selector: 'app-text-formatter',
@@ -10,11 +11,11 @@ export class TextFormatterComponent implements OnInit {
 
   @Input() label;
   @Input() public data: SystemMetric;
+  @Input() public column: SasiColumn;
 
   constructor() { }
 
   ngOnInit() {
-    // console.log(this.data);
   }
 
 }

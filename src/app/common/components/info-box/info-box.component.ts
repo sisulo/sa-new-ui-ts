@@ -35,7 +35,6 @@ export class InfoBoxComponent implements OnInit {
           return occurrence2.value - occurence1.value;
         }
       );
-      console.log(this.data);
     }
   }
 

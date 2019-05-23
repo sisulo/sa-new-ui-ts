@@ -15,7 +15,9 @@
 
     </div>
     <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
-      <i *ngIf="getAlertType() !== ''" tooltip="Warning for one or more metrics" class="fas fa-exclamation" [ngClass]="getAlertType()" ></i>
+      <span *ngFor="let alertSum of alertSummary">
+        <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fas fa-exclamation" [ngClass]="alertSum.type" ></i> {{alertSum.count}} </span>
+      </span>
     </div>
     <!--<div class="col-val col-control">-->
     <!--<i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation text-orange"></i>-->
@@ -42,7 +44,7 @@
 
     >
       <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.component"
-                      [data]="getAggregatedValue(column.index)"
+                      [data]="getAggregatedValue(column.index)" [column]="column"
                       [label]="column.label" [options]="options"
       ></app-cell-table>
     </div>

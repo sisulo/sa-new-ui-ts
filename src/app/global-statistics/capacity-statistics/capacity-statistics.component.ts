@@ -8,7 +8,7 @@ import {PeriodService} from '../../period.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {BusService} from '../bus.service';
-import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
+import {SasiColumnBuilder, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {RouteLinkFormatterComponent} from '../route-link-formatter/route-link-formatter.component';
 import {SimpleFormatterComponent} from '../simple-formatter/simple-formatter.component';
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
@@ -81,19 +81,130 @@ export class CapacityStatisticsComponent implements OnInit {
     private aggregateService: AggregatedStatisticsService,
     protected bus: BusService
   ) {
-    this.options.columns.push(new SasiColumn('name', 'System', EmphFormatterComponent, false, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.PHYSICAL_CAPACITY, 'Physical Capacity', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.PHYSICAL_SUBS, 'Physical Subs', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.AVAILABLE_CAPACITY, 'Available Capacity', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.LOGICAL_USAGE, 'Logical Used', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.PHYSICAL_USAGE, 'Physical Used', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.COMPRESS_RATIO, 'Compression Ratio', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.CAPACITY_CHANGE_1D, 'Change 1D', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.CAPACITY_CHANGE_1W, 'Change 1W', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.CAPACITY_CHANGE_1M, 'Change 1M', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L1, 'Reach 80%', SimpleFormatterComponent, false, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L2, 'Reach 85%', SimpleFormatterComponent, false, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.PREDICTION_L3, 'Reach 90%', SimpleFormatterComponent, false, false));
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('name')
+        .withLabel('System')
+        .withComponent(EmphFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .build()
+      );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.PHYSICAL_CAPACITY)
+        .withLabel('Physical Capacity')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.PHYSICAL_SUBS)
+        .withLabel('Physical Subscription')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.AVAILABLE_CAPACITY)
+        .withLabel('Available Capacity')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.LOGICAL_USAGE)
+        .withLabel('Logical Used')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.PHYSICAL_USAGE)
+        .withLabel('Physical Used')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.COMPRESS_RATIO)
+        .withLabel('Compression Ratio')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.CAPACITY_CHANGE_1D)
+        .withLabel('Change 1D')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.CAPACITY_CHANGE_1W)
+        .withLabel('Change 1W')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.CAPACITY_CHANGE_1M)
+        .withLabel('Change 1M')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.PREDICTION_L1)
+        .withLabel('Reach 80%')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .withTooltipText('Days to reach 80% of "Physical Used"')
+        .withInfinity(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.PREDICTION_L2)
+        .withLabel('Reach 85%')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .withTooltipText('Days to reach 85% of "Physical Used"')
+        .withInfinity(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.PREDICTION_L3)
+        .withLabel('Reach 88%')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .withTooltipText('Days to reach 88% of "Physical Used"')
+        .withInfinity(true)
+        .build()
+    );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;

@@ -1,13 +1,12 @@
-import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../period.service';
 import {MetricService, PeriodType} from '../../metric.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemPool} from '../../common/models/SystemPool';
 import {BusService} from '../bus.service';
-import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
+import {SasiColumnBuilder, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {RouteLinkFormatterComponent} from '../route-link-formatter/route-link-formatter.component';
-import {SimpleFormatterComponent} from '../simple-formatter/simple-formatter.component';
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SumValueServiceImpl} from '../utils/SumValueServiceImpl';
@@ -41,9 +40,33 @@ export class AdaptersComponent implements OnInit {
     protected bus: BusService
   ) {
 
-    this.options.columns.push(new SasiColumn('name', 'System', EmphFormatterComponent, false, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.DISBALANCE_EVENTS, 'Disbalance events', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.INFO, 'Info', TextFormatterComponent, false, false));
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('name')
+        .withLabel('System')
+        .withComponent(EmphFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.DISBALANCE_EVENTS)
+        .withLabel('Disbalance events')
+        .withComponent(EmphFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.INFO)
+        .withLabel('Info')
+        .withComponent(TextFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .build()
+    );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
