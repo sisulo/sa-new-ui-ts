@@ -14,8 +14,8 @@
        (mouseover)="setHighlightedColumn(colIndex)"
        [class.highlightColumn]="isColumnHighlighted(colIndex)"
   >
-    <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"
-                    [options]="options"></app-cell-table>
+   <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"
+                    [options]="options" [column]="column"></app-cell-table>
     <!--<app-unit-formatter [metric]="getMetricObject(system.name, type)" [metricLabel]="getColumnLabel(type)" [alertMessage]="getAlertMessage(system.name, type)"></app-unit-formatter>-->
   </div>
 </div>

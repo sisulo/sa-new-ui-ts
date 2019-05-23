@@ -1,10 +1,9 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SasiGroupRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
 import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
 import {SelectedRow} from '../row-table/selected-row';
 import {keys} from 'd3-collection';
-import {AlertType} from '../../../models/metrics/AlertType';
 import {ConditionEvaluate} from '../../../../global-statistics/utils/ConditionEvaluate';
 import {AlertRule, Threshold} from '../../../../global-statistics/AlertRule';
 
@@ -14,6 +13,16 @@ export interface AggregatedValues {
 
 export interface AggregateValueService {
   computeSummaries(inputRowGroup: SasiGroupRow[], filter: Array<SelectedRow>, options: SasiTableOptions): AggregatedValues;
+}
+
+class AlertSummaryValue {
+  type: string;
+  count: number;
+
+  constructor(type: string, count: number) {
+    this.type = type;
+    this.count = count;
+  }
 }
 
 @Component({
@@ -33,6 +42,7 @@ export class RowGroupTableComponent implements OnInit {
   aggregatedValues = {};
   selectedRows: Array<SelectedRow>;
   alertGroup = '';
+  alertSummary = [];
 
   alertPriority = ['text-alert-yellow', 'text-orange', 'text-red'];
 
@@ -54,6 +64,7 @@ export class RowGroupTableComponent implements OnInit {
     );
     this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     this.initAggregatedValues();
+    this.summarizeAlerts();
 
   }
 
@@ -120,10 +131,11 @@ export class RowGroupTableComponent implements OnInit {
   private getPriority(alertType) {
     return this.alertPriority.findIndex(priority => priority === alertType);
   }
+
   private getAlertType() {
     const alertDef = this.options.cellDecoratorRules.filter(
       rule => {
-        return this.data.rows.find(
+        return this.data.rows.forEach(
           row => {
             const cell = row.getCell(rule.type);
             return ConditionEvaluate.eval(cell.value, rule);
@@ -131,16 +143,41 @@ export class RowGroupTableComponent implements OnInit {
         ) !== undefined;
       }
     );
-    if (alertDef.length === 0 ) {
+    if (alertDef.length === 0) {
       return '';
     }
-    // console.log(alertDef);
     return alertDef.reduce(
       (previousValue, currentValue) => {
         return this.getPriority(previousValue.threshold.alertType) > this.getPriority(currentValue.threshold.alertType)
           ? previousValue : currentValue;
       }
-    , new AlertRule(null, new Threshold('', 0, 0))).threshold.alertType;
+      , new AlertRule(null, new Threshold('', 0, 0))).threshold.alertType;
+  }
+
+  private summarizeAlerts() {
+    this.initializeSummaryAlerts();
+    this.options.cellDecoratorRules.forEach(
+      rule => {
+        const filteredData = this.data.rows.filter(
+          row => {
+            const cell = row.getCell(rule.type);
+            return ConditionEvaluate.eval(cell.value, rule);
+          }
+        );
+        if (filteredData.length > 0) {
+          this.alertSummary.push(new AlertSummaryValue(rule.threshold.alertType, filteredData.length));
+        }
+
+      }
+    );
+  }
+
+  private initializeSummaryAlerts() {
+    this.options.cellDecoratorRules.forEach(
+      rule => {
+        this.alertSummary[rule.threshold.alertType] = 0;
+      }
+    );
   }
 
   getAggregatedValue(type: string) {

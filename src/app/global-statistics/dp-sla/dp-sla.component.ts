@@ -5,7 +5,7 @@ import {MetricService, PeriodType} from '../../metric.service';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SystemPool} from '../../common/models/SystemPool';
 import {BusService} from '../bus.service';
-import {SasiColumn, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
+import {SasiColumnBuilder, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {RouteLinkFormatterComponent} from '../route-link-formatter/route-link-formatter.component';
 import {AlertFormatterComponent} from '../alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
@@ -42,9 +42,33 @@ export class DpSlaComponent implements OnInit {
     protected bus: BusService
   ) {
 
-    this.options.columns.push(new SasiColumn('name', 'System', EmphFormatterComponent, false, false));
-    this.options.columns.push(new SasiColumn(SystemMetricType.SLA_EVENTS, 'SLA Events', SimpleFormatterComponent, false, true));
-    this.options.columns.push(new SasiColumn(SystemMetricType.OUT_OF_SLA_TIME, 'Out of SLA Time', TimeFormatterComponent, false, true));
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('name')
+        .withLabel('System')
+        .withComponent(EmphFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.SLA_EVENTS)
+        .withLabel('SLA Events')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.OUT_OF_SLA_TIME)
+        .withLabel('Out of SLA Time')
+        .withComponent(TimeFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;

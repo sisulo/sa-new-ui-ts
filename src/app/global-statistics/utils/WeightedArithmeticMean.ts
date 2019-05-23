@@ -97,7 +97,6 @@ export class WeightedArithmeticMean {
       }
     );
     this.systemSummarizedValues.push(this.summarizeStats(this.partiallySummarizedValues, 'all'));
-    console.log(this.systemSummarizedValues);
     return this.systemSummarizedValues;
   }
 

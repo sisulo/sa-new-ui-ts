@@ -1,4 +1,4 @@
 <span>
-  <span class="metric-value">{{data.value | seconds2FullTime}}</span>
+  <span class="metric-value" tooltip="{{getTooltipMessage()}}">{{data.value | seconds2FullTime}}</span>
   <!--<span class="metric-unit">{{data.unit}}</span>-->
 </span>

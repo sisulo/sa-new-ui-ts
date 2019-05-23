@@ -1,6 +1,6 @@
 <div class="metric-value">
-  <span *ngIf="isAlert()" tooltip="{{getAlertMessage()}}" hide-delay="0" ngClass="{{getViolatedRuleClass()}}">{{data.value % 1 === 0 ? data.value : data.value.toFixed(1)}} <span
+  <span *ngIf="isAlert()" tooltip="{{getAlertMessage()}}" hide-delay="0" ngClass="{{getViolatedRuleClass()}}"> <i class="fa fa-exclamation"></i> {{data.value % 1 === 0 ? data.value : data.value.toFixed(1)}} <span
     class="metric-unit">{{data.unit}}</span></span>
-  <span *ngIf="!isAlert()" tooltip="{{label}} average" hide-delay="0">{{data.value % 1 === 0 ? data.value : data.value.toFixed(1)}} <span
+  <span *ngIf="!isAlert()" tooltip="{{getTooltipMessage()}}" hide-delay="0">{{data.value % 1 === 0 ? data.value : data.value.toFixed(1)}} <span
     class="metric-unit">{{data.unit}}</span></span>
 </div>

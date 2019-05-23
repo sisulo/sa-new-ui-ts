@@ -15,7 +15,6 @@ export class KnobSaComponent implements OnInit {
   knOptions = {};
 
   ngOnInit() {
-    console.log(this.metric.value);
     // if (this.metric !== undefined) {
       switch (this.sizeType) {
         case 'medium':

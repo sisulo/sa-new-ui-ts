@@ -9,10 +9,16 @@ export class TimeFormatterComponent implements OnInit {
 
   @Input() public data;
   @Input() public label;
+  @Input() public column;
 
   constructor() { }
 
   ngOnInit() {
   }
 
+  getTooltipMessage(): string {
+    if (this.column !== undefined) {
+      return this.column.tooltipText;
+    }
+  }
 }

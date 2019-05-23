@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {DomSanitizer, SafeUrl} from '@angular/platform-browser';
 
@@ -21,8 +21,6 @@ export class IframeComponent implements OnInit {
     this.route.paramMap.subscribe(
       (params: ParamMap) => {
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(atob(params.get('url')));
-        console.log(this.url);
-
       }
     );
   }

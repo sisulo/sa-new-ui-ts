@@ -9,6 +9,73 @@ import {SelectedRow} from './row-table/selected-row';
 /**
  * SasiColumn is metadata object for columns.
  */
+export class SasiColumnBuilder {
+  /**
+   * @var index in data model
+   */
+  private index: string;
+  /**
+   * @var label in header
+   */
+  private label: string;
+  /**
+   * @var data formatter
+   */
+  private component: Type<any>;
+
+  private altSortEnable = false;
+
+  private isAggregated = false;
+
+  private tooltipText: string = null;
+
+  private constructor() {
+  }
+
+  static getInstance(): SasiColumnBuilder {
+    return new SasiColumnBuilder();
+  }
+
+  withIndex(index: string) {
+    this.index = index;
+    return this;
+  }
+
+  withLabel(label: string) {
+    this.label = label;
+    return this;
+  }
+
+  withComponent(component: Type<any>) {
+      this.component = component;
+      return this;
+  }
+
+  withAltSortEnable(altSortEnable: boolean) {
+    this.altSortEnable = altSortEnable;
+    return this;
+  }
+
+  withIsAggregated(isAggregated: boolean) {
+    this.isAggregated = isAggregated;
+    return this;
+  }
+
+  withTooltipText(tooltipText: string) {
+    this.tooltipText = tooltipText;
+    return this;
+  }
+  build(): SasiColumn {
+    return new SasiColumn(
+      this.index,
+      this.label,
+      this.component,
+      this.altSortEnable,
+      this.isAggregated,
+      this.tooltipText === null ? this.label : this.tooltipText
+    );
+  }
+}
 export class SasiColumn {
   /**
    * @var index in data model
@@ -27,12 +94,15 @@ export class SasiColumn {
 
   isAggregated: boolean;
 
-  constructor(index: string, label: string, component: Type<any>, altSortEnable: boolean, isAggragated: boolean) {
+  tooltipText: string;
+
+  constructor(index: string, label: string, component: Type<any>, altSortEnable: boolean, isAggragated: boolean, tooltipText: string) {
     this.index = index;
     this.label = label;
     this.component = component;
     this.altSortEnable = altSortEnable;
     this.isAggregated = isAggragated;
+    this.tooltipText = tooltipText;
   }
 }
 
@@ -258,7 +328,6 @@ export class SasiTableComponent implements OnInit {
       this.options.sortType,
       this.altSort ? this.options.altSortColumnName : null,
       ((row, column1) => row.getCellValue(column1)));
-    // console.log(this.data);
   }
 
   // sort(data, column: SasiColumn, sortType: SasiSortType, sortByRawValue: string) {
