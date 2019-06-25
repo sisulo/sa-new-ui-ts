@@ -23,6 +23,7 @@ import {LocaleNumberFormatPipe} from './components/small-box/locale-number-forma
 import {TimeFormatterComponent} from '../global-statistics/time-formatter/time-formatter.component';
 import {TextFormatterComponent} from '../global-statistics/text-formatter/text-formatter.component';
 import {EmphFormatterComponent} from '../global-statistics/emph-formatter/emph-formatter.component';
+import {SafeHtmlPipe} from './utils/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {EmphFormatterComponent} from '../global-statistics/emph-formatter/emph-f
     RowGroupTableComponent,
     KnobSaComponent,
     Ng2KnobDirective,
-    LocaleNumberFormatPipe
+    LocaleNumberFormatPipe,
+    SafeHtmlPipe
 
   ],
   imports: [
@@ -55,7 +57,8 @@ import {EmphFormatterComponent} from '../global-statistics/emph-formatter/emph-f
     SasiTableComponent,
     KnobSaComponent,
     SmallBoxComponent,
-    Ng2KnobDirective
+    Ng2KnobDirective,
+    SafeHtmlPipe
   ],
   entryComponents: [
     RouteLinkFormatterComponent,
