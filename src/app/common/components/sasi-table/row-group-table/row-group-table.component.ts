@@ -81,7 +81,7 @@ export class RowGroupTableComponent implements OnInit {
     }
     const index = this.collapsedRows.findIndex(name => name === systemName);
     if (index > -1) {
-      this.collapsedRows.splice(index, 1);
+      this.collapsedRows = this.collapsedRows.filter(name => name !== systemName);
     } else {
       this.collapsedRows.push(systemName);
     }

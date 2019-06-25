@@ -387,11 +387,10 @@ export class SasiTableComponent implements OnInit {
 
     if (this.isCollapseAll()) {
       d.forEach(
-        value => this.collapsedRows.splice(
-          this.collapsedRows.findIndex(
-            collapsedRowValue => collapsedRowValue === value.groupRow.getCell('name').value
-          ), 1
-        )
+        value =>
+          this.collapsedRows = this.collapsedRows.filter(
+            collapsedRowValue => collapsedRowValue !== value.groupRow.getCell('name').value
+          )
       );
     } else {
       d.forEach(value => this.collapsedRows.push(value.groupRow.getCell('name').value));

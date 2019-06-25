@@ -16,7 +16,7 @@
     </div>
     <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
       <span *ngFor="let alertSum of alertSummary">
-        <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fas fa-exclamation" [ngClass]="alertSum.type" ></i> {{alertSum.count}} </span>
+        <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fas fa-warning" [ngClass]="alertSum.type" ></i></span>
       </span>
     </div>
     <!--<div class="col-val col-control">-->
