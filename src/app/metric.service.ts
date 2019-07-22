@@ -7,6 +7,7 @@ import {DatacenterDto} from './common/models/dtos/DatacenterDto';
 import {PerformanceStatisticsDto} from './common/models/dtos/PerformanceStatisticsDto';
 import {CapacityStatisticsDto} from './common/models/dtos/CapacityStatisticsDto';
 import {Datacenter} from './common/models/Datacenter';
+import {DatePipe} from '@angular/common';
 
 export enum PeriodType {
   DAY = 0,
@@ -20,18 +21,19 @@ export enum PeriodType {
 export class MetricService {
 
   infrastructure: Datacenter[];
+  currentDate: Date = new Date();
 
   constructor(private http: HttpClient) {
     this.getDatacenters();
   }
 
   getInfrastructureStats(): Observable<InfrastructureDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, 'infrastructureMetric.json') ;
+    const url = this.buildUrl(environment.metricsBaseUrl, 'infrastructureMetric.json');
     return this.http.get<InfrastructureDto>(url);
   }
 
   getDatacenters(): Observable<DatacenterDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenters.json');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters?');
     const dtoObservable = this.http.get<DatacenterDto>(url);
     dtoObservable.subscribe(
       dto => this.infrastructure = dto.datacenters
@@ -44,27 +46,32 @@ export class MetricService {
     if (datacenterObj === undefined) {
       return '';
     }
-    const systemObj = datacenterObj.systems.find(system => system.id.toString() === systemId)
+    const systemObj = datacenterObj.systems.find(system => system.id.toString() === systemId);
     if (systemObj === undefined) {
       return '';
     }
     return datacenterObj.systems.find(system => system.id.toString() === systemId).name;
   }
+
   getPerformanceStatistics(id: number, period: PeriodType): Observable<PerformanceStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/perf' + this.getSuffix(period) + '.json');
-    return this.http.get<PerformanceStatisticsDto>(url);
+    if (id !== undefined) {
+      const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/performance');
+      return this.http.get<PerformanceStatisticsDto>(url);
+    }
   }
 
   getCapacityStatistics(id: number): Observable<CapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/capacity.json');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/capacity');
     return this.http.get<CapacityStatisticsDto>(url);
   }
+
   getDpSlaStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/dp' + this.getSuffix(period) + '.json');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/capacity');
     return this.http.get<CapacityStatisticsDto>(url);
   }
+
   getAdaptersStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, 'datacenter/' + id + '/cha' + this.getSuffix(period) + '.json');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters' + id + '/adapters');
     return this.http.get<CapacityStatisticsDto>(url);
   }
 
@@ -84,9 +91,16 @@ export class MetricService {
   }
 
   private buildUrl(baseUrl, basePath) {
-    return baseUrl + basePath + '?t=' + this.generateSaltValue();
+    return baseUrl + basePath + '?t=' + this.generateSaltValue() + '&date=' + this.generateDate();
   }
+
   private generateSaltValue(): string {
     return Math.random().toString(36).substring(2, 15);
+  }
+
+  private generateDate(): string {
+    const pipe = new DatePipe('en-US');
+    return pipe.transform(this.currentDate, 'yyyy-MM-dd');
+    // return '2019-06-18';
   }
 }
