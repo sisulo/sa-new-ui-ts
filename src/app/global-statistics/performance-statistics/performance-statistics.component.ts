@@ -100,6 +100,7 @@ export class PerformanceStatisticsComponent implements OnInit {
     this.options.labelColumnWidth = '13.78';
     this.options.valueColumnWidth = '13.78';
     this.options.sortService = new SimpleSortImpl();
+    this.options.altSortColumnName = 'peak';
 
   }
 
