@@ -1,10 +1,10 @@
-<div class="metric-value">
+<div *ngIf="data != null" class="metric-value">
   <span *ngIf="isAlert()" tooltip="{{getAlertMessage()}}" hide-delay="0" ngClass="{{getViolatedRuleClass()}}">{{data.value % 1 === 0 ? data.value : data.value.toFixed(1)}} <span
     class="metric-unit">{{data.unit}}</span></span>
   <span *ngIf="!isAlert()" tooltip="{{label}} average" hide-delay="0">{{data.value % 1 === 0 ? data.value : data.value.toFixed(1)}} <span
     class="metric-unit">{{data.unit}}</span></span>
 </div>
-<div class="peak">
+<div *ngIf="data != null" class="peak">
   <span tooltip="{{label}} peak" hide-delay="0"><span class="text-muted"><i
     class="fa fa-angle-up text-red"></i>{{data.peak}} <span
     class="metric-unit">{{data.unit}}</span></span>

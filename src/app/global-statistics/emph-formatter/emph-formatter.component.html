@@ -1,4 +1,4 @@
-<div class="metric-value">
+<div *ngIf="data != null" class="metric-value">
   <span tooltip="{{label}}" hide-delay="0">{{data.value}} <span
     class="metric-unit">{{data.unit}}</span></span>
 </div>

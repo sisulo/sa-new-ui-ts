@@ -71,7 +71,7 @@ export class MetricService {
   }
 
   getAdaptersStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters' + id + '/adapters');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/adapters');
     return this.http.get<CapacityStatisticsDto>(url);
   }
 

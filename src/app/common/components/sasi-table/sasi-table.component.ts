@@ -160,7 +160,7 @@ export class SasiRow {
   getCell(columnIndex: string): SasiCell {
     let cellData = this.cells[columnIndex];
     if (cellData === undefined) {
-      console.error('Cannot find data in %s row, and columnIndex: %s', this.cells.toString(), columnIndex);
+      // console.error('Cannot find data in %s row, and columnIndex: %s', this.cells.toString(), columnIndex);
       cellData = null;
     }
     return cellData;
