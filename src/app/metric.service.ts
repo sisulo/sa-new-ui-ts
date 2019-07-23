@@ -28,12 +28,12 @@ export class MetricService {
   }
 
   getInfrastructureStats(): Observable<InfrastructureDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, 'infrastructureMetric.json');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/infrastructureMetric.json');
     return this.http.get<InfrastructureDto>(url);
   }
 
   getDatacenters(): Observable<DatacenterDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters?');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters');
     const dtoObservable = this.http.get<DatacenterDto>(url);
     dtoObservable.subscribe(
       dto => this.infrastructure = dto.datacenters

@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {ConditionEvaluate} from '../utils/ConditionEvaluate';
 
@@ -22,7 +22,7 @@ export class AlertFormatterComponent implements OnInit {
     return this.options.cellDecoratorRules.find(
       rule => {
         const cell = this.data.getCell(rule.type);
-        return ConditionEvaluate.eval(cell.value, rule);
+        return cell != null ? ConditionEvaluate.eval(cell.value, rule) : false;
       }
     ) !== undefined;
   }
@@ -30,7 +30,7 @@ export class AlertFormatterComponent implements OnInit {
     const alertDef = this.options.cellDecoratorRules.find(
       rule => {
         const cell = this.data.getCell(rule.type);
-        return ConditionEvaluate.eval(cell.value, rule);
+        return cell != null ? ConditionEvaluate.eval(cell.value, rule) : false;
       }
     );
     if (alertDef !== null) {

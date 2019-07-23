@@ -161,7 +161,7 @@ export class RowGroupTableComponent implements OnInit {
         const filteredData = this.data.rows.filter(
           row => {
             const cell = row.getCell(rule.type);
-            return ConditionEvaluate.eval(cell.value, rule);
+            return cell != null ? ConditionEvaluate.eval(cell.value, rule) : false;
           }
         );
         if (filteredData.length > 0) {
