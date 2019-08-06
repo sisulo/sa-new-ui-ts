@@ -24,6 +24,7 @@ import {TimeFormatterComponent} from '../global-statistics/time-formatter/time-f
 import {TextFormatterComponent} from '../global-statistics/text-formatter/text-formatter.component';
 import {EmphFormatterComponent} from '../global-statistics/emph-formatter/emph-formatter.component';
 import {SafeHtmlPipe} from './utils/safe-html.pipe';
+import {DisbalanceFormatterComponent} from '../global-statistics/disbalance-formatter/disbalance-formatter.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import {SafeHtmlPipe} from './utils/safe-html.pipe';
     RowGroupTableComponent,
     TimeFormatterComponent,
     TextFormatterComponent,
-    EmphFormatterComponent
+    EmphFormatterComponent,
+    DisbalanceFormatterComponent
   ]
 })
 export class SaCommonModule {

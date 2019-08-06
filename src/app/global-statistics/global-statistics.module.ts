@@ -12,11 +12,12 @@ import {RouteLinkFormatterComponent} from './route-link-formatter/route-link-for
 import {UnitFormatterComponent} from './unit-formatter/unit-formatter.component';
 import {AlertFormatterComponent} from './alert-formatter/alert-formatter.component';
 import {SimpleFormatterComponent} from './simple-formatter/simple-formatter.component';
-import { TimeFormatterComponent } from './time-formatter/time-formatter.component';
+import {TimeFormatterComponent} from './time-formatter/time-formatter.component';
 import {Seconds2FullTimePipe} from './utils/seconds-2-full-time.pipe';
-import { TextFormatterComponent } from './text-formatter/text-formatter.component';
-import { AggragatedStatisticsComponent } from './aggragated-statistics/aggragated-statistics.component';
-import { EmphFormatterComponent } from './emph-formatter/emph-formatter.component';
+import {TextFormatterComponent} from './text-formatter/text-formatter.component';
+import {AggragatedStatisticsComponent} from './aggragated-statistics/aggragated-statistics.component';
+import {EmphFormatterComponent} from './emph-formatter/emph-formatter.component';
+import {DisbalanceFormatterComponent} from './disbalance-formatter/disbalance-formatter.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { EmphFormatterComponent } from './emph-formatter/emph-formatter.componen
     Seconds2FullTimePipe,
     TextFormatterComponent,
     AggragatedStatisticsComponent,
-    EmphFormatterComponent
+    EmphFormatterComponent,
+    DisbalanceFormatterComponent
   ],
   imports: [
     CommonModule,

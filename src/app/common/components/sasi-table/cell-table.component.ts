@@ -1,15 +1,4 @@
-import {
-  Component,
-  ComponentFactoryResolver,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  Output,
-  SimpleChanges,
-  ViewChild
-} from '@angular/core';
+import {Component, ComponentFactoryResolver, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 
 import {FormatterHostDirective} from './formatter-host.directive';
 import {SasiTableFormatter} from './sasi-table-formatter';
@@ -25,6 +14,7 @@ export class CellTableComponent implements OnInit, OnDestroy, OnChanges {
   @Input() data: SasiRow;
   @Input() options;
   @Input() column: SasiColumn;
+  @Input() rowData: SasiRow;
   @ViewChild(FormatterHostDirective) adHost: FormatterHostDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
@@ -53,5 +43,6 @@ export class CellTableComponent implements OnInit, OnDestroy, OnChanges {
     (<SasiTableFormatter>componentRef.instance).label = this.label;
     (<SasiTableFormatter>componentRef.instance).options = this.options;
     (<SasiTableFormatter>componentRef.instance).column = this.column;
+    (<SasiTableFormatter>componentRef.instance).rowData = this.rowData;
   }
 }

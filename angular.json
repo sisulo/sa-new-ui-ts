@@ -23,14 +23,14 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css",
+              "src/styles.css"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
               "src/assets/bower_components/bootstrap/dist/js/bootstrap.js",
               "src/assets/dist/js/adminlte.js",
               "src/assets/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js",
-              "src/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js",
+              "src/assets/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"
             ]
           },
           "configurations": {
@@ -42,7 +42,7 @@
                 }
               ],
               "optimization": true,
-              "outputHashing": "all",
+              "outputHashing": "none",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
