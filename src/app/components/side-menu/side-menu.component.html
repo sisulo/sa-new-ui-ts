@@ -11,7 +11,7 @@
       <ul id="dash-menu" class="sidebar-menu" data-widget="tree">
 
         <li class="treeview">
-          <a href="#"><i class="fa fa-area-chart"></i><span>Global Statistics</span>
+          <a href="#"><i class="fa fa-chart-area"></i><span>Global Statistics</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -38,14 +38,14 @@
     <div class="central-part-menu">
       <ul id="main-menu" class="sidebar-menu" data-widget="tree">
         <li *ngFor="let menuItem of filteredItems" class="treeview">
-          <a href="#"><i class="fa fa-gears"></i><span>{{menuItem.label}}</span>
+          <a href="#"><i class="fa fa-cogs"></i><span>{{menuItem.label}}</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
           </a>
           <ul class="treeview-menu">
             <li *ngFor="let link of menuItem.items" class="treeview">
-              <a href="#"><i class="fa fa-gears"></i><span>{{link.name}}</span>
+              <a href="#"><i class="fa fa-cogs"></i><span>{{link.name}}</span>
                 <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
