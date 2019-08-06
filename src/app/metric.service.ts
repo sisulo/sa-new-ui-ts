@@ -66,7 +66,7 @@ export class MetricService {
   }
 
   getDpSlaStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/capacity');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/sla');
     return this.http.get<CapacityStatisticsDto>(url);
   }
 
