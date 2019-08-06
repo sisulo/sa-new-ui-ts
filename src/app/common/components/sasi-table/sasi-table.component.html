@@ -9,7 +9,7 @@
          [ngClass]="'fa-angle-down'"
          (click)="collapseAll()"
          [tooltip]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
-      <i *ngIf="options.selectableRows && isSelectedAll()" class="fa fa-fw fa-check-square-o" (click)="selectAll()"></i>
+      <i *ngIf="options.selectableRows && isSelectedAll()" class="fa fa-check-square-o" (click)="selectAll()"></i>
       <i *ngIf="options.selectableRows && isPartiallySelected() && !isSelectedAll()" class="fa fa-fw fa-minus-square-o"
       (click)="selectAll()"></i>
       <i *ngIf="options.selectableRows && (!isPartiallySelected()) && (!isSelectedAll())" class="fa fa-fw fa-square-o"

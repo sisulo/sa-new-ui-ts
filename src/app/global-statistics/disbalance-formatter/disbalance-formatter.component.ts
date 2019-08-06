@@ -22,7 +22,7 @@ export class DisbalanceFormatterComponent implements OnInit {
   }
 
   getInfoMessage() {
-    return `Warning: Channel Adapter Pair imbalance "${this.data.value}" (${this.resolveAbsoluteDisbalance()} [MB/s])`;
+    return `Warning: Channel Adapter Pair Imbalance "${this.data.value}" (${this.resolveAbsoluteDisbalance()} [MB/s])`;
   }
 
   private resolveAbsoluteDisbalance() {
