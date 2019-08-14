@@ -1,6 +1,6 @@
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
-import {ItemKey} from '../capacity-statistics/capacity-statistics.component';
+import {ItemKey} from '../physical-capacity-statistics/physical-capacity-statistics.component';
 
 class AggregatedStatistics {
   physicalSubstitution = 0;
@@ -34,15 +34,15 @@ export class SystemAggregatedStatistics extends AggregatedStatistics {
 
   getValue(name: SystemMetricType) {
     switch (name) {
-      case SystemMetricType.PHYSICAL_SUBS:
+      case SystemMetricType.PHYSICAL_SUBS_PERC:
         return this.physicalSubstitution;
       case SystemMetricType.PHYSICAL_CAPACITY:
         return this.physicalCapacity;
       case SystemMetricType.AVAILABLE_CAPACITY:
         return this.availableCapacity;
-      case SystemMetricType.LOGICAL_USAGE:
+      case SystemMetricType.LOGICAL_USED_PERC:
         return this.logicalUsed;
-      case SystemMetricType.PHYSICAL_USAGE:
+      case SystemMetricType.PHYSICAL_USED_PERC:
         return this.physicalUsed;
       case SystemMetricType.COMPRESS_RATIO:
         return this.compressionRatio;
@@ -77,10 +77,10 @@ export class WeightedArithmeticMean {
         }
         const physicalCapacity = this.getMetricByName(metrics, SystemMetricType.PHYSICAL_CAPACITY);
         systemStats.physicalCapacity += physicalCapacity;
-        systemStats.physicalSubstitution += this.getMetricByName(metrics, SystemMetricType.PHYSICAL_SUBS) * physicalCapacity;
+        systemStats.physicalSubstitution += this.getMetricByName(metrics, SystemMetricType.PHYSICAL_SUBS_PERC) * physicalCapacity;
         systemStats.availableCapacity += this.getMetricByName(metrics, SystemMetricType.AVAILABLE_CAPACITY);
-        systemStats.logicalUsed += this.getMetricByName(metrics, SystemMetricType.LOGICAL_USAGE) * physicalCapacity;
-        systemStats.physicalUsed += this.getMetricByName(metrics, SystemMetricType.PHYSICAL_USAGE) * physicalCapacity;
+        systemStats.logicalUsed += this.getMetricByName(metrics, SystemMetricType.LOGICAL_USED_PERC) * physicalCapacity;
+        systemStats.physicalUsed += this.getMetricByName(metrics, SystemMetricType.PHYSICAL_USED_PERC) * physicalCapacity;
         systemStats.compressionRatio += this.getMetricByName(metrics, SystemMetricType.COMPRESS_RATIO) * physicalCapacity;
         systemStats.capacityChanged1D += this.getMetricByName(metrics, SystemMetricType.CAPACITY_CHANGE_1D) * physicalCapacity;
         systemStats.capacityChanged1W += this.getMetricByName(metrics, SystemMetricType.CAPACITY_CHANGE_1W) * physicalCapacity;

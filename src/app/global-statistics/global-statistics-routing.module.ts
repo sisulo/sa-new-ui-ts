@@ -2,9 +2,10 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {GlobalStatisticsComponent} from './global-statistics.component';
 import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
-import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
 import {DpSlaComponent} from './dp-sla/dp-sla.component';
 import {AdaptersComponent} from './adapters/adapters.component';
+import {LogicalCapacityStatisticsComponent} from './logical-capacity-statistics/logical-capacity-statistics.component';
+import {PhysicalCapacityStatisticsComponent} from './physical-capacity-statistics/physical-capacity-statistics.component';
 
 const routes: Routes = [
   {
@@ -13,8 +14,10 @@ const routes: Routes = [
     children: [
       {path: 'performance/:id', component: PerformanceStatisticsComponent},
       {path: 'performance', redirectTo: 'performance/1', pathMatch: 'full'},
-      {path: 'capacity/:id', component: CapacityStatisticsComponent},
-      {path: 'capacity', redirectTo: 'capacity/1', pathMatch: 'full'},
+      {path: 'physical-capacity/:id', component: PhysicalCapacityStatisticsComponent},
+      {path: 'physical-capacity', redirectTo: 'physical-capacity/1', pathMatch: 'full'},
+      {path: 'logical-capacity/:id', component: LogicalCapacityStatisticsComponent},
+      {path: 'logical-capacity', redirectTo: 'logical-capacity/1', pathMatch: 'full'},
       {path: 'dp-sla/:id', component: DpSlaComponent},
       {path: 'dp-sla', redirectTo: 'dp-sla/1', pathMatch: 'full'},
       {path: 'adapters/:id', component: AdaptersComponent},

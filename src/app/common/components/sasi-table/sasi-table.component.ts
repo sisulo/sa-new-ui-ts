@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/AlertRule';
-import {LocalStorage, LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AggregateValueService} from './row-group-table/row-group-table.component';
 import {Sort} from './sort';
@@ -246,7 +246,7 @@ export class SasiTableComponent implements OnInit {
 
   @Input() data: SasiRow[] = [];
   @Input() tableOptions: SasiTableOptions = new SasiTableOptions();
-  @LocalStorage({key: 'sasi_collapsed'}) collapsedRows: Array<string>;
+  collapsedRows: Array<string>;
   selectedRows: Array<SelectedRow>;
 
   options: SasiTableOptions;
@@ -286,11 +286,7 @@ export class SasiTableComponent implements OnInit {
   altSort = false;
 
   constructor(private localStorageService: LocalStorageService) {
-    if (this.collapsedRows === null) {
-      this.collapsedRows = [];
-    } else {
-      this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
-    }
+
   }
 
   ngOnInit() {
@@ -298,11 +294,22 @@ export class SasiTableComponent implements OnInit {
     this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
       data => this.selectedRows = data.newValue
     );
+    this.localStorageService.observe(this.options.storageNamePrefix + '_collapsed').subscribe(
+      data => {
+        this.collapsedRows = data.newValue;
+      }
+    );
     this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    this.collapsedRows = this.localStorageService.get(this.options.storageNamePrefix + '_collapsed');
     if (this.selectedRows === null) {
       this.selectedRows = [];
     } else {
       this.selectedRows = this.selectedRows; // this must be reset because save on the collapsedRows doesn't work
+    }
+    if (this.collapsedRows === null) {
+      this.collapsedRows = [];
+    } else {
+      this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
     }
   }
 
@@ -351,36 +358,6 @@ export class SasiTableComponent implements OnInit {
       ((row, column1) => row.getCellValue(column1)));
   }
 
-  // sort(data, column: SasiColumn, sortType: SasiSortType, sortByRawValue: string) {
-  //   const dataReturned = data.sort(
-  //     (rowA, rowB) => {
-  //       if (sortType === SasiSortType.ASC) {
-  //         if (sortByRawValue !== null) {
-  //           return this.compare(rowA.getCellRawData(column)[sortByRawValue], rowB.getCellRawData(column)[sortByRawValue]);
-  //         } else {
-  //           return this.compare(rowA.getCellValue(column), rowB.getCellValue(column));
-  //         }
-  //       } else {
-  //         if (sortByRawValue !== null) {
-  //           return this.compare(rowB.getCellRawData(column)[sortByRawValue], rowA.getCellRawData(column)[sortByRawValue]);
-  //         } else {
-  //           return this.compare(rowB.getCellValue(column), rowA.getCellValue(column));
-  //         }
-  //       }
-  //     }
-  //   );
-  //   return dataReturned;
-  // }
-  //
-  // compare(valueA, valueB) {
-  //   if (valueA > valueB) {
-  //     return 1;
-  //   } else if (valueA < valueB) {
-  //     return -1;
-  //   }
-  //   return 0;
-  // }
-
   collapseAll() {
     // @ts-ignore
     const d = <SasiGroupRow[]>this.data;
@@ -395,8 +372,7 @@ export class SasiTableComponent implements OnInit {
     } else {
       d.forEach(value => this.collapsedRows.push(value.groupRow.getCell('name').value));
     }
-    // @ts-ignore
-    this.collapsedRows.save();
+    this.localStorageService.set(this.options.storageNamePrefix + '_collapsed', this.collapsedRows);
   }
 
   isCollapseAll(): boolean {
@@ -462,61 +438,4 @@ export class SasiTableComponent implements OnInit {
     this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
 
   }
-
-
-  // isSelectedPool(poolName: string, systemName: string): boolean {
-  //   return this.selectedRows[this.currentDataCenterId].findIndex(
-  //     pool => pool.poolName === poolName && pool.systemName === systemName
-  //   ) > -1;
-  // }
-  //
-  // selectPool(poolName: string, systemName: string): void {
-  //
-  //   if (this.selectedPools[this.currentDataCenterId] === undefined) {
-  //     this.selectedPools[this.currentDataCenterId] = [];
-  //   }
-  //
-  //   const index = this.selectedPools[this.currentDataCenterId].findIndex(
-  //     pool => pool.poolName === poolName && pool.systemName === systemName
-  //
-  //   );
-  //
-  //   if (index >= 0) {
-  //     this.selectedPools[this.currentDataCenterId].splice(index, 1);
-  //   } else {
-  //     this.selectedPools[this.currentDataCenterId].push({poolName: poolName, systemName: systemName});
-  //   }
-  //   // @ts-ignore
-  //   this.selectedPools.save();
-  //   this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
-  // }
-  //
-  // isSelectedAll(): boolean {
-  //   return this.data.every(
-  //     // @ts-ignore
-  //     row => this.selectedRows.includes(row.groupRow.getCell('name').value)
-  //   );
-  // }
-  //
-  // getSelectedCount(): number {
-  //   return this.selectedPools[this.currentDataCenterId].length;
-  // }
-  //
-  // selectAll() {
-  //   if (this.isSelectedAll()) {
-  //     this.selectedPools[this.currentDataCenterId] = [];
-  //   } else {
-  //     this.selectedPools[this.currentDataCenterId] = [];
-  //     this.data.forEach(system => system.pools.forEach(
-  //       pool => this.selectedPools[this.currentDataCenterId].push({poolName: pool.name, systemName: system.name})
-  //     ));
-  //   }
-  //   // @ts-ignore
-  //   this.selectedPools.save();
-  //   this.aggregateService.aggregateStatsBySystems(this.selectedPools[this.currentDataCenterId], this.poolMetrics);
-  // }
-  //
-  // isPartiallySelected() {
-  //   return this.selectedPools[this.currentDataCenterId].length > 0;
-  // }
 }

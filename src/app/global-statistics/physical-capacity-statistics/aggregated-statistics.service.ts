@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Subject} from 'rxjs';
-import {ItemKey} from './capacity-statistics.component';
+import {ItemKey} from './physical-capacity-statistics.component';
 import {SystemAggregatedStatistics, WeightedArithmeticMean} from '../utils/WeightedArithmeticMean';
 
 @Injectable({

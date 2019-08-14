@@ -4,7 +4,7 @@ import {PeriodService} from '../../period.service';
 import {MetricService} from '../../metric.service';
 import {BusService} from '../bus.service';
 import {LocalStorage} from 'ngx-store';
-import {ItemKey} from '../capacity-statistics/capacity-statistics.component';
+import {ItemKey} from '../physical-capacity-statistics/physical-capacity-statistics.component';
 import {SystemDetail} from '../../common/models/SystemDetail';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 

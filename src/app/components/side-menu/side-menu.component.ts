@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuTree} from '../../common/models/MenuTree';
-import {environment} from '../../../environments/environment';
 import {MetricService} from '../../metric.service';
 import {Datacenter} from '../../common/models/Datacenter';
 import {MenuItem} from '../../common/models/MenuItem';
@@ -48,9 +47,10 @@ export class SideMenuComponent implements OnInit {
   private setGlobalStatisticsLinks() {
     this.globalStatisticsLinks = [
       {id: 1, linkPart: `/global-statistics/performance`, name: 'Performance Statistics'},
-      {id: 2, linkPart: `/global-statistics/capacity`, name: 'Capacity Statistics'},
-      {id: 3, linkPart: `/global-statistics/dp-sla`, name: 'DP SLA Statistics'},
-      {id: 3, linkPart: `/global-statistics/adapters`, name: 'Adapters Statistics'}
+      {id: 2, linkPart: `/global-statistics/physical-capacity`, name: 'Physical Capacity Statistics'},
+      {id: 3, linkPart: `/global-statistics/logical-capacity`, name: 'Logical Capacity Statistics'},
+      {id: 4, linkPart: `/global-statistics/dp-sla`, name: 'DP SLA Statistics'},
+      {id: 5, linkPart: `/global-statistics/adapters`, name: 'Adapters Statistics'}
     ];
   }
 

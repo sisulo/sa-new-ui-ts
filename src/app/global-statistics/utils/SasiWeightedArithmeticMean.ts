@@ -30,15 +30,15 @@ export class SystemAggregatedStatistics implements AggregatedValues {
 
   getValue(name: string): number {
     switch (name) {
-      case SystemMetricType.PHYSICAL_SUBS:
+      case SystemMetricType.PHYSICAL_SUBS_PERC:
         return this.physicalSubstitution;
       case SystemMetricType.PHYSICAL_CAPACITY:
         return this.physicalCapacity;
       case SystemMetricType.AVAILABLE_CAPACITY:
         return this.availableCapacity;
-      case SystemMetricType.LOGICAL_USAGE:
+      case SystemMetricType.LOGICAL_USED_PERC:
         return this.logicalUsed;
-      case SystemMetricType.PHYSICAL_USAGE:
+      case SystemMetricType.PHYSICAL_USED_PERC:
         return this.physicalUsed;
       case SystemMetricType.COMPRESS_RATIO:
         return this.compressionRatio;
@@ -57,6 +57,7 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
   partiallySummarizedValues: SystemAggregatedStatistics = new SystemAggregatedStatistics('all');
 
   computeSummaries(inputRowGroup: SasiGroupRow[], filter: Array<SelectedRow>, options: SasiTableOptions): AggregatedValues {
+    console.log('compute');
     if (filter.length === 0) {
       return null;
     }
@@ -75,7 +76,7 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         }
         return true;
       }
-    )
+    );
     if (amendFilter.length === 0) {
       return null;
     }
@@ -93,10 +94,10 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         const systemStats = this.partiallySummarizedValues;
         const physicalCapacity = this.getMetricByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY);
         systemStats.physicalCapacity += physicalCapacity;
-        systemStats.physicalSubstitution += this.getMetricByName(sasiRow, SystemMetricType.PHYSICAL_SUBS) * physicalCapacity;
+        systemStats.physicalSubstitution += this.getMetricByName(sasiRow, SystemMetricType.PHYSICAL_SUBS_PERC) * physicalCapacity;
         systemStats.availableCapacity += this.getMetricByName(sasiRow, SystemMetricType.AVAILABLE_CAPACITY);
-        systemStats.logicalUsed += this.getMetricByName(sasiRow, SystemMetricType.LOGICAL_USAGE) * physicalCapacity;
-        systemStats.physicalUsed += this.getMetricByName(sasiRow, SystemMetricType.PHYSICAL_USAGE) * physicalCapacity;
+        systemStats.logicalUsed += this.getMetricByName(sasiRow, SystemMetricType.LOGICAL_USED_PERC) * physicalCapacity;
+        systemStats.physicalUsed += this.getMetricByName(sasiRow, SystemMetricType.PHYSICAL_USED_PERC) * physicalCapacity;
         systemStats.compressionRatio += this.getMetricByName(sasiRow, SystemMetricType.COMPRESS_RATIO) * physicalCapacity;
         systemStats.capacityChanged1D += this.getMetricByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D) * physicalCapacity;
         systemStats.capacityChanged1W += this.getMetricByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W) * physicalCapacity;
@@ -109,10 +110,10 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
   summarizeStats(values: SystemAggregatedStatistics, name: string): SystemAggregatedStatistics {
     const summarizedValues = new SystemAggregatedStatistics(name);
     summarizedValues.physicalCapacity = values.getValue(SystemMetricType.PHYSICAL_CAPACITY);
-    summarizedValues.physicalSubstitution = values.getValue(SystemMetricType.PHYSICAL_SUBS) / summarizedValues.physicalCapacity;
+    summarizedValues.physicalSubstitution = values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC) / summarizedValues.physicalCapacity;
     summarizedValues.availableCapacity = values.getValue(SystemMetricType.AVAILABLE_CAPACITY);
-    summarizedValues.logicalUsed = values.getValue(SystemMetricType.LOGICAL_USAGE) / summarizedValues.physicalCapacity;
-    summarizedValues.physicalUsed = values.getValue(SystemMetricType.PHYSICAL_USAGE) / summarizedValues.physicalCapacity;
+    summarizedValues.logicalUsed = values.getValue(SystemMetricType.LOGICAL_USED_PERC) / summarizedValues.physicalCapacity;
+    summarizedValues.physicalUsed = values.getValue(SystemMetricType.PHYSICAL_USED_PERC) / summarizedValues.physicalCapacity;
     summarizedValues.compressionRatio = values.getValue(SystemMetricType.COMPRESS_RATIO) / summarizedValues.physicalCapacity;
     summarizedValues.capacityChanged1D = values.getValue(SystemMetricType.CAPACITY_CHANGE_1D) / summarizedValues.physicalCapacity;
     summarizedValues.capacityChanged1W = values.getValue(SystemMetricType.CAPACITY_CHANGE_1W) / summarizedValues.physicalCapacity;
@@ -122,7 +123,7 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
 
   getMetricByName(metrics: SasiRow, type: SystemMetricType): number {
     const metric = metrics.getCell(type);
-    if (metric === undefined) {
+    if (metric === null) {
       return null;
     }
     return Number(metric.value);

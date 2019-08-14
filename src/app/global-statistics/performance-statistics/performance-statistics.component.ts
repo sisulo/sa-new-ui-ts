@@ -88,7 +88,7 @@ export class PerformanceStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.WRITE_PENDING)
+        .withIndex(SystemMetricType.WRITE_PENDING_PERC)
         .withLabel('Write Pending')
         .withComponent(UnitFormatterComponent)
         .withAltSortEnable(true)
@@ -122,7 +122,7 @@ export class PerformanceStatisticsComponent implements OnInit {
     this.periodService.announceEnablePeriod(true);
 
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.CPU, new Threshold('text-orange', 80, 10000)));
-    this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.WRITE_PENDING, new Threshold('text-orange', 30, 10000)));
+    this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.WRITE_PENDING_PERC, new Threshold('text-orange', 30, 10000)));
   }
 
 

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
-import {CapacityStatisticsComponent} from './capacity-statistics/capacity-statistics.component';
+import {PhysicalCapacityStatisticsComponent} from './physical-capacity-statistics/physical-capacity-statistics.component';
 import {GlobalStatisticsComponent} from './global-statistics.component';
 import {CommonModule} from '@angular/common';
 import {GlobalStatisticsRoutingModule} from './global-statistics-routing.module';
@@ -18,11 +18,12 @@ import {TextFormatterComponent} from './text-formatter/text-formatter.component'
 import {AggragatedStatisticsComponent} from './aggragated-statistics/aggragated-statistics.component';
 import {EmphFormatterComponent} from './emph-formatter/emph-formatter.component';
 import {DisbalanceFormatterComponent} from './disbalance-formatter/disbalance-formatter.component';
+import {LogicalCapacityStatisticsComponent} from './logical-capacity-statistics/logical-capacity-statistics.component';
 
 @NgModule({
   declarations: [
     GlobalStatisticsComponent,
-    CapacityStatisticsComponent,
+    PhysicalCapacityStatisticsComponent,
     PerformanceStatisticsComponent,
     DpSlaComponent,
     AdaptersComponent,
@@ -35,7 +36,8 @@ import {DisbalanceFormatterComponent} from './disbalance-formatter/disbalance-fo
     TextFormatterComponent,
     AggragatedStatisticsComponent,
     EmphFormatterComponent,
-    DisbalanceFormatterComponent
+    DisbalanceFormatterComponent,
+    LogicalCapacityStatisticsComponent
   ],
   imports: [
     CommonModule,

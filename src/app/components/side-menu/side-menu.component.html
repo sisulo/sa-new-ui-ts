@@ -21,6 +21,11 @@
             ><a [routerLink]="[globalLink.linkPart]" routerLinkActive="active">{{globalLink.name}}</a></li>
           </ul>
         </li>
+
+      </ul>
+    </div>
+    <div class="central-part-menu">
+      <ul id="main-menu" class="sidebar-menu" data-widget="tree">
         <li class="header">STORAGE ARRAYS</li>
         <!-- search form (Optional) -->
         <form action="#" method="get" class="sidebar-form" autocomplete="off">
@@ -33,10 +38,6 @@
           </div>
         </form>
         <!-- /.search form -->
-      </ul>
-    </div>
-    <div class="central-part-menu">
-      <ul id="main-menu" class="sidebar-menu" data-widget="tree">
         <li *ngFor="let menuItem of filteredItems" class="treeview">
           <a href="#"><i class="fa fa-cogs"></i><span>{{menuItem.label}}</span>
             <span class="pull-right-container">

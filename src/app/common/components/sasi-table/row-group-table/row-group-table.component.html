@@ -19,12 +19,6 @@
         <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fa fa-exclamation-triangle" [ngClass]="alertSum.type" ></i></span>
       </span>
     </div>
-    <!--<div class="col-val col-control">-->
-    <!--<i tooltip="Warning for one or more metrics" *ngIf="isAlertingSystem(system.name)" class="fas fa-exclamation text-orange"></i>-->
-    <!--</div>-->
-    <!--<div class="col-val col-label"><span class="system-name"><a [routerLink]="data.id | iframeUrlCreator"-->
-    <!--routerLinkActive="active">{{ system.name }}</a></span>-->
-    <!--</div>-->
     <div class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)"
          (mouseout)="setHighlightedColumn(-1)"
          (mouseover)="setHighlightedColumn(0)"
@@ -48,12 +42,6 @@
                       [label]="column.label" [options]="options"
       ></app-cell-table>
     </div>
-    <!--<div class="ignore" *ngIf="this.getSystemStatistics(system.name) !== undefined">-->
-    <!--<div class="ignore">-->
-    <!--<div *ngFor="let type of types"-->
-    <!--[tooltip]="getColumnLabel(type)" hide-delay="0" show-delay="300"-->
-    <!--class="col-val col">{{this.getSystemStatistics(system.name).getValue(type).toFixed(2)}}</div>-->
-    <!--</div>-->
   </div>
   <!---->
   <!--POOL ROWS-->
@@ -65,23 +53,4 @@
                    (selectEmit)="onSelectRow($event)"
                     ></app-row-table>
   </div>
-  <!--<div class="row" [@slideInOut]="isCollapsed(system.name)">-->
-  <!--<div *ngFor="let pool of data[i].pools" class="table-data striped-row row"-->
-  <!--[@slideInOut]="isCollapsed(system.name)">-->
-  <!--<div class="col-val col-control">-->
-  <!--</div>-->
-  <!--<div class="col-val col-label"><span class="pool-name">{{pool.name}}</span></div>-->
-  <!--<div [ngClass]="'col-val col'" *ngFor="let type of types; let column=index;"-->
-  <!--(mouseout)="setHighlightedColumn(-1)"-->
-  <!--(mouseover)="setHighlightedColumn(column)"-->
-  <!--[class.highlightColumn]="isCurrentColumn(column)" hide-delay="0"-->
-
-  <!--show-delay="500">-->
-  <!--<span>-->
-  <!--<span class="metric-value">{{getFormattedMetric(pool.metrics, type)}}</span>-->
-  <!--<span class="metric-unit">{{getMetric(pool.metrics, type).unit}}</span>-->
-  <!--</span>-->
-  <!--</div>-->
-  <!--</div>-->
-  <!--</div>-->
 </div>

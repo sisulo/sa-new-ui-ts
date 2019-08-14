@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SasiColumn, SasiGroupRow} from '../../common/components/sasi-table/sasi-table.component';
 import {LocalStorageService} from 'ngx-store';
 import {SasiWeightedArithmeticMean} from '../utils/SasiWeightedArithmeticMean';
@@ -10,12 +10,12 @@ import {SelectedRow} from '../../common/components/sasi-table/row-table/selected
   templateUrl: './aggragated-statistics.component.html',
   styleUrls: ['./aggragated-statistics.component.css']
 })
-export class AggragatedStatisticsComponent implements OnInit, OnChanges {
+export class AggragatedStatisticsComponent implements OnInit {
 
   @Input() data: SasiGroupRow[];
   @Input() aggregatedTypes: SasiColumn[];
   @Input() prefix: string;
-  selectedRows: Array<SelectedRow>;
+  @Input() selectedRows: Array<SelectedRow>;
   result: AggregatedValues;
 
   constructor(private localStorageService: LocalStorageService) {
@@ -24,10 +24,12 @@ export class AggragatedStatisticsComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.aggregate();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    this.aggregate();
+    this.localStorageService.observe(this.prefix + '_selected').subscribe(
+      data => {
+        this.selectedRows = data.newValue;
+        this.aggregate();
+      }
+    );
   }
 
   aggregate() {
