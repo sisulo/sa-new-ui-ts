@@ -22,13 +22,19 @@ export class DisbalanceFormatterComponent implements OnInit {
   }
 
   getInfoMessage() {
-    return `Warning: Channel Adapter Pair Imbalance "${this.data.value}" (${this.resolveAbsoluteDisbalance()} [MB/s])`;
+    return `Warning: Channel Adapter Pair Imbalance "${this.data.value}%" (${this.resolveAbsoluteDisbalance()} [MB/s])`;
   }
 
   private resolveAbsoluteDisbalance() {
     if (this.rowData !== undefined && this.rowData.getCell(SystemMetricType.IMBALANCE_ABSOLUT) != null) {
       return this.rowData.getCell(SystemMetricType.IMBALANCE_ABSOLUT).value;
     }
+  }
+  private isVisible() {
+    if (this.rowData !== undefined && parseInt(this.rowData.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0) {
+      return true;
+    }
+    return false;
   }
 
 }
