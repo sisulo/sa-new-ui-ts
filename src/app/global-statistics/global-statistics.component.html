@@ -1,4 +1,10 @@
 <h2>Global Statistics</h2>
+<div *ngIf="context === 'physical-capacity'" class="global-stats col-md-12">
+  <app-infrastructure-statistics></app-infrastructure-statistics>
+</div>
+<div *ngIf="context === 'logical-capacity'" class="global-stats col-md-12">
+  <app-global-logical-statistics></app-global-logical-statistics>
+</div>
 <div class="col-md-12">
   <div class="nav-tabs-custom">
     <ul class="nav nav-tabs">

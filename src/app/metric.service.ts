@@ -1,13 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {InfrastructureDto} from './common/models/metrics/InfrastructureDto';
+import {InfrastructureDto} from './common/models/dtos/InfrastructureDto';
 import {environment} from '../environments/environment';
 import {DatacenterDto} from './common/models/dtos/DatacenterDto';
 import {PerformanceStatisticsDto} from './common/models/dtos/PerformanceStatisticsDto';
 import {CapacityStatisticsDto} from './common/models/dtos/CapacityStatisticsDto';
 import {Datacenter} from './common/models/Datacenter';
 import {DatePipe} from '@angular/common';
+import {GlobalCapacityStatisticsDto} from './common/models/dtos/GlobalCapacityStatisticsDto';
 
 export enum PeriodType {
   DAY = 0,
@@ -73,6 +74,11 @@ export class MetricService {
   getAdaptersStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/adapters');
     return this.http.get<CapacityStatisticsDto>(url);
+  }
+
+  getGobalCapacityStatistics(): Observable<GlobalCapacityStatisticsDto> {
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity');
+    return this.http.get<GlobalCapacityStatisticsDto>(url);
   }
 
   private getSuffix(period: PeriodType) {

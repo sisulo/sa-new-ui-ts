@@ -161,3 +161,7 @@ div.sticky {
 div.no-border {
   border-right: 0px !important;
 }
+
+.global-stats {
+  margin-bottom: 15px;
+}

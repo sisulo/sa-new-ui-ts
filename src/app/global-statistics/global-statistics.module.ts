@@ -19,6 +19,8 @@ import {AggragatedStatisticsComponent} from './aggragated-statistics/aggragated-
 import {EmphFormatterComponent} from './emph-formatter/emph-formatter.component';
 import {DisbalanceFormatterComponent} from './disbalance-formatter/disbalance-formatter.component';
 import {LogicalCapacityStatisticsComponent} from './logical-capacity-statistics/logical-capacity-statistics.component';
+import {GlobalPhysicalCapacityStatisticsComponent} from './global-physical-capacity-statistics/global-physical-capacity-statistics.component';
+import {GlobalLogicalStatisticsComponent} from './global-logical-statistics/global-logical-statistics.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +39,9 @@ import {LogicalCapacityStatisticsComponent} from './logical-capacity-statistics/
     AggragatedStatisticsComponent,
     EmphFormatterComponent,
     DisbalanceFormatterComponent,
-    LogicalCapacityStatisticsComponent
+    LogicalCapacityStatisticsComponent,
+    GlobalPhysicalCapacityStatisticsComponent,
+    GlobalLogicalStatisticsComponent
   ],
   imports: [
     CommonModule,
