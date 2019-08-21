@@ -196,6 +196,7 @@ export class SasiTableOptions {
   public storageNamePrefix: string;
   public sortService: Sort;
   public aggregateValuesService: AggregateValueService;
+  public columnAlign: string;
 
   getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
     if (name === 'name') {
@@ -269,6 +270,7 @@ export class SasiTableComponent implements OnInit {
     aggregateColumns: [],
     sortService: null,
     storageNamePrefix: 'sasi_default',
+    columnAlign: 'center',
     getColumnWidth: function (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
       if (name === 'name') {
         return this.labelColumnWidth;

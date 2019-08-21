@@ -25,9 +25,10 @@
 /**** Data group header ****/
 .table-group-header > div.table-group-label > div[class^="col"],
 .table-group-header > div.table-group-label > div.ignore > div {
-  text-align: center;
+  /*text-align: center;*/
   border-right: 1px #EAEAEA solid;
   margin: 2px 0px 2px 0px;
+  font-weight: bold;
 }
 
 .table-group-header > div:first-child {

@@ -6,7 +6,7 @@
     SYSTEM LABEL
   -->
   <div class="table-group-label">
-    <div class="col-val col-control">
+    <div class="col-val col-control text-center">
       <i class="fa expand-collapse"
          [@iconRotate]="isCollapsed(data.groupRow.getCell('name').value)"
          [ngClass]="'fa-angle-down'"
@@ -14,7 +14,7 @@
          [tooltip]="isCollapsed(data.groupRow.getCell('name').value) ? 'Expand':'Collapse'"></i>
 
     </div>
-    <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
+    <div class="col-val col-control text-center" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
       <span *ngFor="let alertSum of alertSummary">
         <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fa fa-exclamation-triangle" [ngClass]="alertSum.type" ></i></span>
       </span>
@@ -35,6 +35,8 @@
          (mouseout)="setHighlightedColumn(-1)"
          (mouseover)="setHighlightedColumn(colIndex+1)"
          [class.highlightColumn]="isColumnHighlighted(colIndex+1)"
+         [class.text-right]="options.columnAlign === 'right'"
+         [class.text-center]="options.columnAlign !== 'right'"
 
     >
       <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.component"

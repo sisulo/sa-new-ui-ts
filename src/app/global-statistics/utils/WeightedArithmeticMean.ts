@@ -1,6 +1,6 @@
 import {SystemMetric} from '../../common/models/metrics/SystemMetric';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
-import {ItemKey} from '../physical-capacity-statistics/physical-capacity-statistics.component';
+import {ItemKey} from '../views/physical-capacity-statistics/physical-capacity-statistics.component';
 
 class AggregatedStatistics {
   physicalSubstitution = 0;

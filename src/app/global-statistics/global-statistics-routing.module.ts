@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {GlobalStatisticsComponent} from './global-statistics.component';
-import {PerformanceStatisticsComponent} from './performance-statistics/performance-statistics.component';
-import {DpSlaComponent} from './dp-sla/dp-sla.component';
-import {AdaptersComponent} from './adapters/adapters.component';
-import {LogicalCapacityStatisticsComponent} from './logical-capacity-statistics/logical-capacity-statistics.component';
-import {PhysicalCapacityStatisticsComponent} from './physical-capacity-statistics/physical-capacity-statistics.component';
+import {PerformanceStatisticsComponent} from './views/performance-statistics/performance-statistics.component';
+import {DpSlaComponent} from './views/dp-sla/dp-sla.component';
+import {AdaptersComponent} from './views/adapters/adapters.component';
+import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-statistics/logical-capacity-statistics.component';
+import {PhysicalCapacityStatisticsComponent} from './views/physical-capacity-statistics/physical-capacity-statistics.component';
 
 const routes: Routes = [
   {
