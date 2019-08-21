@@ -3,7 +3,7 @@
   <div class="col" *ngFor="let type of types">
     <div class="agg-name">{{getLabelByType(type)}}</div>
     <div class="agg-value"><span
-      *ngIf="getMetricByType(type) !== undefined">{{toFixed(getMetricByType(type).value, 2)}} <span class="agg-unit">{{getMetricByType(type).unit}}</span></span>
+      *ngIf="getMetricByType(type) !== undefined">{{toFixed(getMetricByType(type).value, 2) | formatThousands}} <span class="agg-unit">{{getMetricByType(type).unit}}</span></span>
     </div>
   </div>
 </div>

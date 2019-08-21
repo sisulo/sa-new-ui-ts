@@ -15,7 +15,8 @@ export class UnitFormatterComponent implements OnInit {
   @Input() public data: SystemMetric;
   @Input() public options: SasiTableOptions;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
@@ -40,6 +41,7 @@ export class UnitFormatterComponent implements OnInit {
       rule => rule.type === type
     );
   }
+
   getViolatedRule(): AlertRule {
     const ruleDefinitions = this.findRulesByType(this.data.type);
     if (ruleDefinitions.length > 0) {
@@ -48,11 +50,16 @@ export class UnitFormatterComponent implements OnInit {
       );
     }
   }
+
   getViolatedRuleClass(): string {
     const ruleDefinition = this.getViolatedRule();
     if (ruleDefinition !== undefined && ConditionEvaluate.eval(this.data.value, ruleDefinition)) {
       return ruleDefinition.threshold.alertType;
     }
     return '';
+  }
+
+  getValue() {
+    return this.data.value % 1 === 0 ? this.data.value : this.data.value.toFixed(1);
   }
 }

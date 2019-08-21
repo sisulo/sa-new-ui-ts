@@ -25,6 +25,7 @@ import {TextFormatterComponent} from '../global-statistics/text-formatter/text-f
 import {EmphFormatterComponent} from '../global-statistics/emph-formatter/emph-formatter.component';
 import {SafeHtmlPipe} from './utils/safe-html.pipe';
 import {DisbalanceFormatterComponent} from '../global-statistics/disbalance-formatter/disbalance-formatter.component';
+import {FormatThousandsPipe} from './utils/format-thousands.pipe';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {DisbalanceFormatterComponent} from '../global-statistics/disbalance-form
     KnobSaComponent,
     Ng2KnobDirective,
     LocaleNumberFormatPipe,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    FormatThousandsPipe
 
   ],
   imports: [
@@ -59,7 +61,8 @@ import {DisbalanceFormatterComponent} from '../global-statistics/disbalance-form
     KnobSaComponent,
     SmallBoxComponent,
     Ng2KnobDirective,
-    SafeHtmlPipe
+    SafeHtmlPipe,
+    FormatThousandsPipe
   ],
   entryComponents: [
     RouteLinkFormatterComponent,
