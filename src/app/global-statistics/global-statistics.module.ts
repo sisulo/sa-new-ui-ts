@@ -21,6 +21,7 @@ import {DisbalanceFormatterComponent} from './formatters/disbalance-formatter/di
 import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-statistics/logical-capacity-statistics.component';
 import {GlobalPhysicalCapacityStatisticsComponent} from './components/global-physical-capacity-statistics/global-physical-capacity-statistics.component';
 import {GlobalLogicalStatisticsComponent} from './components/global-logical-statistics/global-logical-statistics.component';
+import {GroupedAggregatedStatisticsComponent} from './components/grouped-aggregated-statistics/grouped-aggregated-statistics.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import {GlobalLogicalStatisticsComponent} from './components/global-logical-stat
     Seconds2FullTimePipe,
     TextFormatterComponent,
     AggragatedStatisticsComponent,
+    GroupedAggregatedStatisticsComponent,
     EmphFormatterComponent,
     DisbalanceFormatterComponent,
     LogicalCapacityStatisticsComponent,

@@ -76,7 +76,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Subs. Capacity')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
 
@@ -86,7 +86,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Physical Subs.')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -95,7 +95,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Logical Subs.')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -104,7 +104,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Logical Used')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -113,7 +113,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('NET Subs.')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -122,7 +122,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Physical Capacity')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -131,7 +131,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Physical Used')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -140,7 +140,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Physical Free')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -149,7 +149,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Physical Used')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -158,7 +158,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Logical Capacity')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -167,7 +167,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Logical Used')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -176,7 +176,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Logical Free')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -185,7 +185,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Logical Used')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -194,7 +194,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Net Total')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -203,7 +203,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Net Used')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -212,7 +212,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Net Free')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -221,7 +221,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Net Used')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -230,7 +230,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Comp Ratio')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -239,7 +239,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Dedup Ratio')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.columns.push(
@@ -248,7 +248,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withLabel('Total Saving Effect')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
+        .withIsAggregated(true)
         .build()
     );
     this.options.rowComponentFormatter = RowGroupTableComponent;

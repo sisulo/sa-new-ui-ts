@@ -1,0 +1,46 @@
+/*** Aggregated values widget ***/
+div.agg-vals {
+  margin-top: 25px;
+}
+
+.agg-vals > .col, .agg-vals > .col-smaller {
+  border: 1px #5C91A8 solid;
+  font-weight: bold;
+  text-align: center;
+
+}
+
+.agg-name {
+  background-color: #3c8dbc;
+  color: white;
+  font-size: 11px;
+  padding: 5px;
+}
+
+.agg-vals .agg-value {
+  padding: 5px;
+  font-size: 12px;
+  background-color: white;
+  /*color: white;*/
+}
+.col-control {
+  width: 3.5%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.col {
+  width: 14.8%;
+  display:inline-block;
+  background-color: white;
+  margin-right: 2px;
+}
+.col-label {
+  width: 13%;
+}
+
+.col-smaller{
+  width: 4.8%;
+  display:inline-block;
+  background-color: white;
+  margin-right: 2px;
+}
