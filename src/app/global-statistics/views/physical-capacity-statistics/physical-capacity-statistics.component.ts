@@ -90,7 +90,8 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('name')
-        .withLabel('System')
+        .withLabel('Pool')
+        .withAltLabel('System')
         .withComponent(EmphFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)

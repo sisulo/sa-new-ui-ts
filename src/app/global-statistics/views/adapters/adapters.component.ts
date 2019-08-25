@@ -44,7 +44,8 @@ export class AdaptersComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('name')
-        .withLabel('System')
+        .withAltLabel('System')
+        .withLabel('Cha pair')
         .withComponent(EmphFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
