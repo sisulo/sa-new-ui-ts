@@ -14,7 +14,7 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     cache: '8%20Cache%20Board/index.html',
     adapters: '8%20CHA%20Adapters%20Board/index.html',
     trends: '8%20Trends/Trends.html',
-    capacityAnalysis: '8%20Capacity%20Analysis/Capacity%20Analysis.html'
+    capacityAnalysis: '9%20Capacity%20Analysis/Capacity%20Analysis.html'
   };
   mapSystemToDirectory = [];
 
