@@ -21,7 +21,8 @@ export class SideMenuComponent implements OnInit {
     {id: 4, linkPart: 'deepAnalysis', name: 'Deep Analysis'},
     {id: 5, linkPart: 'cache', name: 'Cache Board'},
     {id: 6, linkPart: 'adapters', name: 'CHA Adapters Board'},
-    {id: 7, linkPart: 'trends', name: 'Trends'}
+    {id: 7, linkPart: 'trends', name: 'Trends'},
+    {id: 8, linkPart: 'capacityAnalysis', name: 'Capacity Analysis'}
   ];
   globalStatisticsLinks = [];
   private defaultDataCenter: number;
