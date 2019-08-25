@@ -1,5 +1,5 @@
 <!--AGGREGATED VALUES-->
-<div class="agg-vals" *ngIf="data.length > 0">
+<div class="agg-vals" *ngIf="data != null">
   <div class="col" *ngFor="let type of types">
     <div class="agg-name">{{getLabelByType(type)}}</div>
     <div class="agg-value"><span

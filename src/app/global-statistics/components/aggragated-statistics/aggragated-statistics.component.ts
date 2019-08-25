@@ -38,7 +38,7 @@ export class AggragatedStatisticsComponent implements OnInit {
       this.selectedRows = [];
     }
     const mean = new SasiWeightedArithmeticMean();
-    this.result = mean.computeSummaries(this.data, this.selectedRows, null);
+    this.result = mean.computeSummaries(this.data, this.selectedRows);
   }
 
   getSelectedCount() {

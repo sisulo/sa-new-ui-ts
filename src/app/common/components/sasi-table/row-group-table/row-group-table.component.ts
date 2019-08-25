@@ -5,9 +5,10 @@ import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
 import {SelectedRow} from '../row-table/selected-row';
 import {keys} from 'd3-collection';
 import {ConditionEvaluate} from '../../../../global-statistics/utils/ConditionEvaluate';
+import {Metric} from '../../../models/metrics/Metric';
 
 export interface AggregatedValues {
-  getValue(name: string): number;
+  getValue(name: SystemMetricType): Metric;
 }
 
 export interface AggregateValueService {
@@ -134,7 +135,7 @@ export class RowGroupTableComponent implements OnInit {
     const result = {};
     if (values !== null) {
       this.options.getAggregatedColumns().forEach(
-        column => result[column.index] = {value: values.getValue(<SystemMetricType>column.index)}
+        column => result[column.index] = {value: values.getValue(<SystemMetricType>column.index).value}
       );
     }
     this.aggregatedValues = result;

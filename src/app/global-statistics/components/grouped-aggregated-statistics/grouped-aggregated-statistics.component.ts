@@ -5,6 +5,7 @@ import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean
 import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {Metric} from '../../../common/models/metrics/Metric';
 
 @Component({
   selector: 'app-grouped-aggregated-statistics',
@@ -100,7 +101,7 @@ export class GroupedAggregatedStatisticsComponent implements OnInit {
       this.selectedRows = [];
     }
     const mean = new SasiWeightedArithmeticMean();
-    this.result = mean.computeSummaries(this.data, this.selectedRows, null);
+    this.result = mean.computeSummaries(this.data, this.selectedRows);
   }
 
   getSelectedCount() {
@@ -119,7 +120,7 @@ export class GroupedAggregatedStatisticsComponent implements OnInit {
     return filteredByData.length;
   }
 
-  getMetricByType(type: SystemMetricType): number {
+  getMetricByType(type: SystemMetricType): Metric {
     return this.result.getValue(type);
   }
 

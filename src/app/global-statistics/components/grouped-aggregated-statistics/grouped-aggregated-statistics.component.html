@@ -5,7 +5,7 @@
   </div>
   <div class="col-smaller">
     <div class="agg-name">Subs. capacity</div>
-    <div class="agg-value ">{{getMetricByType(subsCapacityType)}}</div>
+    <div class="agg-value ">{{getMetricByType(subsCapacityType).value}}</div>
   </div>
   <div class="col" *ngFor="let group of groupTypes">
     <div class="agg-name">{{getGroupLabelByType(group)}}</div>
@@ -13,8 +13,8 @@
       <div *ngFor="let type of types[group]">
         <div class="text-left col-md-5">{{getLabelByType(type)}}: </div>
         <div class="text-right col-md-push-6">
-          <span *ngIf="getMetricByType(type) !== undefined && getMetricByType(type) != null">{{toFixed(getMetricByType(type), 2) | formatThousands}}</span>
-          <span class='text-gray' *ngIf="getMetricByType(type) === undefined || getMetricByType(type) == null">No value</span>
+          <span *ngIf="getMetricByType(type) !== undefined && getMetricByType(type) != null">{{toFixed(getMetricByType(type).value, 2) | formatThousands}}</span>
+          <span class='text-gray' *ngIf="getMetricByType(type).value === undefined || getMetricByType(type).value == null">No value</span>
         </div>
       </div>
     </div>

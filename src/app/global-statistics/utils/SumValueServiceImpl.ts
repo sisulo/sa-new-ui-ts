@@ -10,7 +10,7 @@ class SumValue implements AggregatedValues {
     this.data[name] = value;
   }
 
-  getValue(name: string): number {
+  getValue(name: string): any {
     return this.data[name];
   }
 

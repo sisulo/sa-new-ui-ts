@@ -9,7 +9,7 @@
   <div class="col" *ngFor="let type of aggregatedTypes">
     <div class="agg-name">{{type.label}}</div>
     <div class="agg-value"><span
-      *ngIf="result.getValue(type.index) !== undefined">{{result.getValue(type.index).toFixed(2)}}</span>
+      *ngIf="result.getValue(type.index).value !== undefined">{{result.getValue(type.index).value.toFixed(2)}}</span>
     </div>
   </div>
 </div>

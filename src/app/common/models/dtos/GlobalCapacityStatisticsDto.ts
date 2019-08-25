@@ -1,5 +1,5 @@
-import {Metric} from '../metrics/Metric';
+import {SystemPool} from '../SystemPool';
 
 export class GlobalCapacityStatisticsDto {
-  metrics: Metric[];
+  systems: SystemPool[];
 }

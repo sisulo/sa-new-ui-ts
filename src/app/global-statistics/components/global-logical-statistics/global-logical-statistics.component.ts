@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Metric} from '../../../common/models/metrics/Metric';
 import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
 import {MetricService} from '../../../metric.service';
+import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
+import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
+import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
+import {SystemPool2SasiGroupTablePipe} from '../../../common/utils/system-pool-2-sasi-group-table.pipe';
 
 @Component({
   selector: 'app-global-logical-statistics',
@@ -10,13 +14,14 @@ import {MetricService} from '../../../metric.service';
 })
 export class GlobalLogicalStatisticsComponent implements OnInit {
 
-  data: Metric[] = [];
+  data: AggregatedValues = null;
   types = [];
   groupTypes = [0, 1, 2, 3, 4, 5];
   labels: string[] = [];
   groupLabel = [];
 
-  constructor(protected metricService: MetricService) {
+  constructor(protected metricService: MetricService,
+              protected transformer: SystemPool2SasiGroupTablePipe) {
     this.types[0] = [
       SystemMetricType.PHYSICAL_SUBS_PERC,
       SystemMetricType.LOGICAL_SUBS_PERC,
@@ -79,21 +84,31 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
     this.getTableData();
   }
 
-  getTableData(): any[] { // TODO duplicated for all GS sasi tables
+  getTableData(): AggregatedValues { // TODO duplicated for all GS sasi tables
     this.metricService.getGobalCapacityStatistics().subscribe(
       data => {
-        this.data = data.metrics;
+        const average = new SasiWeightedArithmeticMean();
+        const filter: SelectedRow[] = [];
+        data.systems.forEach(
+
+          system => system.pools.forEach(
+            pool => {
+              const row = new SelectedRow(system.name, pool.name);
+              filter.push(row);
+            }));
+        this.data = average.computeSummaries(this.transformer.transform(data.systems), filter);
+        console.log(this.data);
       },
       error => {
         console.log(error);
-        this.data = [];
+        this.data = null;
       }
     );
     return this.data;
   }
 
   getMetricByType(type: SystemMetricType): Metric {
-    return this.data.find(metric => metric.type === type);
+    return this.data.getValue(type);
   }
 
   getLabelByType(type: string): string {
