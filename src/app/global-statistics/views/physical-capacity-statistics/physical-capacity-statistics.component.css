@@ -18,12 +18,14 @@
   font-style: italic;
 }
 
-:host /deep/ .groupped-data .metric-value {
+:host /deep/ .groupped-data .metric-value,
+:host /deep/ .aggregated-data .metric-value {
   font-size: 14px;
   font-weight: 600;
 }
 
-:host /deep/ .groupped-data .metric-unit {
+:host /deep/ .groupped-data .metric-unit,
+:host /deep/ .aggregated-data .metric-unit {
   font-size: 8px;
   margin-left: 3px;
 }

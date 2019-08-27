@@ -135,7 +135,7 @@ export class RowGroupTableComponent implements OnInit {
     const result = {};
     if (values !== null) {
       this.options.getAggregatedColumns().forEach(
-        column => result[column.index] = {value: values.getValue(<SystemMetricType>column.index).value}
+        column => result[column.index] = {value: values.getValue(<SystemMetricType>column.index).value, unit: values.getValue(<SystemMetricType>column.index).unit}
       );
     }
     this.aggregatedValues = result;
