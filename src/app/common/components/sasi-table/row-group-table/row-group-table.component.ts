@@ -8,7 +8,7 @@ import {ConditionEvaluate} from '../../../../global-statistics/utils/ConditionEv
 import {Metric} from '../../../models/metrics/Metric';
 
 export interface AggregatedValues {
-  getValue(name: SystemMetricType): Metric;
+  getValue(name: SystemMetricType | string): Metric;
 }
 
 export interface AggregateValueService {

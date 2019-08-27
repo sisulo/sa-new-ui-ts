@@ -2,18 +2,30 @@ import {AggregatedValues, AggregateValueService} from '../../common/components/s
 import {SasiGroupRow, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {SelectedRow} from '../../common/components/sasi-table/row-table/selected-row';
+import {Metric} from '../../common/models/metrics/Metric';
 
 class SumValue implements AggregatedValues {
   data = {};
 
-  setValue(name: SystemMetricType, value: number) {
-    this.data[name] = value;
-  }
 
   getValue(name: string): any {
     return this.data[name];
   }
 
+  setMetric(type, value) {
+    this.data[type] = value;
+  }
+
+  setValue(type, value, unit: string) {
+    if (this.data[type] === undefined) {
+      const metric = new Metric();
+      metric.type = type;
+      metric.unit = unit;
+      metric.value = 0;
+      this.setMetric(type, metric);
+    }
+    this.data[type].value += value;
+  }
 }
 
 export class SumValueServiceImpl implements AggregateValueService {
@@ -28,7 +40,7 @@ export class SumValueServiceImpl implements AggregateValueService {
         ).reduce(
           (valueA, valueB) => valueA + valueB
         );
-        aggregatedValues.setValue(<SystemMetricType> column.index, value);
+        aggregatedValues.setValue(<SystemMetricType>column.index, value, null);
       }
     );
     return aggregatedValues;
