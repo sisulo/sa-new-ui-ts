@@ -4,15 +4,7 @@ import {AggregatedValues, AggregateValueService} from '../../common/components/s
 import {SelectedRow} from '../../common/components/sasi-table/row-table/selected-row';
 import {Metric} from '../../common/models/metrics/Metric';
 
-// class AggregatedStatistics implements AggregatedValues {
-//   physicalSubstitution = 0;
-//   physicalCapacity = 0;
-//   availableCapacity = 0;
-//   logicalUsed = 0;
-//   physicalUsedPerc = 0;
-//   compressionRatio = 0;
-// }
-
+// Todo implementation is same also in SumValueServiceImpl
 export class SystemAggregatedStatistics implements AggregatedValues {
   system = null;
   values: Metric[] = [];
