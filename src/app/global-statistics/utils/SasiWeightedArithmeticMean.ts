@@ -103,17 +103,17 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         if (compRatio > 0) {
           this.physicalCapacityCompRatio += physicalCapacity;
         }
-        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1D, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D));
-        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1W, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W));
-        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1M, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M));
+        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1D, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D));
+        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1W, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W));
+        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1M, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M));
         const dedupRatio = this.getMetricValueByName(sasiRow, SystemMetricType.DEDUP_RATIO);
         this.partiallySummarizedValues.setValue(SystemMetricType.DEDUP_RATIO, dedupRatio * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.DEDUP_RATIO));
         if (dedupRatio > 0) {
           this.physicalCapacityDedupRatio += physicalCapacity;
         }
         const totalSaving = this.getMetricValueByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT);
-        this.partiallySummarizedValues.setValue(SystemMetricType.TOTAL_SAVING_EFFECT, totalSaving * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT));
-        if (totalSaving > 0) {
+        if (totalSaving > 1) {
+          this.partiallySummarizedValues.setValue(SystemMetricType.TOTAL_SAVING_EFFECT, totalSaving * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT));
           this.physicalCapacityTotalSaving += physicalCapacity;
         }
       }
@@ -140,9 +140,9 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
     summarizedValues.setValue(SystemMetricType.LOGICAL_USED_PERC, values.getValue(SystemMetricType.LOGICAL_USED_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
     summarizedValues.setValue(SystemMetricType.PHYSICAL_USED_PERC, values.getValue(SystemMetricType.PHYSICAL_USED_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
     summarizedValues.setValue(SystemMetricType.NET_USED_PERC, values.getValue(SystemMetricType.NET_USED_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.NET_USED_PERC).unit);
-    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1D, values.getValue(SystemMetricType.CAPACITY_CHANGE_1D).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1D).unit);
-    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1W, values.getValue(SystemMetricType.CAPACITY_CHANGE_1W).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1W).unit);
-    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1M, values.getValue(SystemMetricType.CAPACITY_CHANGE_1M).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1M).unit);
+    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1D, values.getValue(SystemMetricType.CAPACITY_CHANGE_1D).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1D).unit);
+    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1W, values.getValue(SystemMetricType.CAPACITY_CHANGE_1W).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1W).unit);
+    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1M, values.getValue(SystemMetricType.CAPACITY_CHANGE_1M).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1M).unit);
     summarizedValues.setValue(SystemMetricType.COMPRESS_RATIO, values.getValue(SystemMetricType.COMPRESS_RATIO).value / (this.physicalCapacityCompRatio === 0 ? 1 : this.physicalCapacityCompRatio), values.getValue(SystemMetricType.COMPRESS_RATIO).unit);
     summarizedValues.setValue(SystemMetricType.DEDUP_RATIO, values.getValue(SystemMetricType.DEDUP_RATIO).value / (this.physicalCapacityDedupRatio === 0 ? 1 : this.physicalCapacityDedupRatio), values.getValue(SystemMetricType.DEDUP_RATIO).unit);
     summarizedValues.setValue(SystemMetricType.TOTAL_SAVING_EFFECT, values.getValue(SystemMetricType.TOTAL_SAVING_EFFECT).value / (this.physicalCapacityTotalSaving === 0 ? 1 : this.physicalCapacityTotalSaving), values.getValue(SystemMetricType.TOTAL_SAVING_EFFECT).unit);
