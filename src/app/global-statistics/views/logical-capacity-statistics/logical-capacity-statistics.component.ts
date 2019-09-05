@@ -6,7 +6,6 @@ import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sa
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../../period.service';
 import {MetricService} from '../../../metric.service';
-import {AggregatedStatisticsService} from '../physical-capacity-statistics/aggregated-statistics.service';
 import {BusService} from '../../bus.service';
 import {EmphFormatterComponent} from '../../formatters/emph-formatter/emph-formatter.component';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
@@ -57,7 +56,6 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     protected router: Router,
     protected periodService: PeriodService,
     protected metricService: MetricService,
-    private aggregateService: AggregatedStatisticsService,
     protected bus: BusService,
     protected localStorageService: LocalStorageService,
   ) {
@@ -273,11 +271,6 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         this.bus.announceDatacenter(id);
         this.bus.announceContext('logical-capacity');
         this.getTableData(id);
-      }
-    );
-    this.aggregateService.aggregatedStatistics$.subscribe(
-      stats => {
-        this.aggregatedStats = stats;
       }
     );
     this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(

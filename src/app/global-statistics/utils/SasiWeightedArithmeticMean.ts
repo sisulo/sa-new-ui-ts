@@ -41,6 +41,9 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
   physicalCapacityTotalSaving = 0;
 
   computeSummaries(inputRowGroup: SasiGroupRow[], filter: Array<SelectedRow>): AggregatedValues {
+    this.physicalCapacityTotalSaving = 0;
+    this.physicalCapacityDedupRatio = 0;
+    this.physicalCapacityCompRatio = 0;
     if (filter.length === 0) {
       return null;
     }
@@ -99,22 +102,29 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         this.partiallySummarizedValues.setValue(SystemMetricType.PHYSICAL_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_USED_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_USED_PERC));
         this.partiallySummarizedValues.setValue(SystemMetricType.NET_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.NET_USED_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.NET_USED_PERC));
         const compRatio = this.getMetricValueByName(sasiRow, SystemMetricType.COMPRESS_RATIO);
-        this.partiallySummarizedValues.setValue(SystemMetricType.COMPRESS_RATIO, compRatio * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.COMPRESS_RATIO));
         if (compRatio > 0) {
           this.physicalCapacityCompRatio += physicalCapacity;
+          this.partiallySummarizedValues.setValue(SystemMetricType.COMPRESS_RATIO, compRatio * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.COMPRESS_RATIO));
+        } else {
+          this.partiallySummarizedValues.setValue(SystemMetricType.COMPRESS_RATIO, 0, this.getUnitByName(sasiRow, SystemMetricType.COMPRESS_RATIO));
         }
         this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1D, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D));
         this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1W, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W));
         this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1M, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M));
         const dedupRatio = this.getMetricValueByName(sasiRow, SystemMetricType.DEDUP_RATIO);
-        this.partiallySummarizedValues.setValue(SystemMetricType.DEDUP_RATIO, dedupRatio * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.DEDUP_RATIO));
+
         if (dedupRatio > 0) {
+          this.partiallySummarizedValues.setValue(SystemMetricType.DEDUP_RATIO, dedupRatio * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.DEDUP_RATIO));
           this.physicalCapacityDedupRatio += physicalCapacity;
+        } else {
+          this.partiallySummarizedValues.setValue(SystemMetricType.DEDUP_RATIO, 0, this.getUnitByName(sasiRow, SystemMetricType.DEDUP_RATIO));
         }
         const totalSaving = this.getMetricValueByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT);
         if (totalSaving > 1) {
           this.partiallySummarizedValues.setValue(SystemMetricType.TOTAL_SAVING_EFFECT, totalSaving * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT));
           this.physicalCapacityTotalSaving += physicalCapacity;
+        } else {
+          this.partiallySummarizedValues.setValue(SystemMetricType.TOTAL_SAVING_EFFECT, 0, this.getUnitByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT));
         }
       }
     );

@@ -2,7 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../../metric.service';
 import {SystemPool} from '../../../common/models/SystemPool';
-import {AggregatedStatisticsService} from './aggregated-statistics.service';
 import {SystemAggregatedStatistics} from '../../utils/WeightedArithmeticMean';
 import {PeriodService} from '../../../period.service';
 import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
@@ -83,7 +82,6 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     protected router: Router,
     protected periodService: PeriodService,
     protected metricService: MetricService,
-    private aggregateService: AggregatedStatisticsService,
     protected bus: BusService,
     protected localStorageService: LocalStorageService,
   ) {
@@ -96,7 +94,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
-      );
+    );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.PHYSICAL_CAPACITY)
@@ -238,11 +236,6 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         this.bus.announceDatacenter(id);
         this.bus.announceContext('physical-capacity');
         this.getTableData(id);
-      }
-    );
-    this.aggregateService.aggregatedStatistics$.subscribe(
-      stats => {
-        this.aggregatedStats = stats;
       }
     );
     this.periodService.announceEnablePeriod(false);
