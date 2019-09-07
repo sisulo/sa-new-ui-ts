@@ -17,6 +17,10 @@ export class GlobalPhysicalCapacityStatisticsComponent implements OnInit {
   data: AggregatedValues;
   types: SystemMetricType[];
   labels: string[] = [];
+  typesIntValue = [
+    SystemMetricType.AVAILABLE_CAPACITY,
+    SystemMetricType.PHYSICAL_CAPACITY
+  ];
 
   constructor(protected metricService: MetricService,
               protected transformer: SystemPool2SasiGroupTablePipe) {
@@ -77,7 +81,15 @@ export class GlobalPhysicalCapacityStatisticsComponent implements OnInit {
     return this.labels[type] != null ? this.labels[type] : null;
   }
 
-  toFixed(value, position) {
+  toFixed(type, value, position) {
+    if (value == null) {
+      return 'No value';
+    }
+
+    if (this.typesIntValue.some(item => item === type)) {
+      return parseFloat(value).toFixed(0);
+    }
+
     return parseFloat(value).toFixed(position);
   }
 }

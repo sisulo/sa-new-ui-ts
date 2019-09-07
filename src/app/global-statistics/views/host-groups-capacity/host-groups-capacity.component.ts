@@ -83,6 +83,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('Provisioned Capacity')
         .build()
     );
 
@@ -93,6 +94,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('Used Capacity')
         .build()
     );
     this.options.columns.push(
@@ -102,6 +104,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('Used Capacity')
         .build()
     );
 
@@ -112,6 +115,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('One Day Change')
         .build()
     );
     this.options.columns.push(
@@ -121,6 +125,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('One Week Change')
         .build()
     );
     this.options.columns.push(
@@ -130,6 +135,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('One Month Change')
         .build()
     );
 

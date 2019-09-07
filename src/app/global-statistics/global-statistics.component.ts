@@ -51,4 +51,32 @@ export class GlobalStatisticsComponent implements OnInit {
       }
     );
   }
+  getTitle() {
+    switch (this.context) {
+      case 'performance':
+        return 'Performance Statistics';
+      case 'physical-capacity':
+        return 'Physical Capacity';
+      case 'logical-capacity':
+        return 'Logical capacity';
+      case 'host-group-capacity':
+        return 'VMware Capacity';
+      case 'dp-sla':
+        return 'SLA Events';
+      case 'adapters':
+        return 'CHA Imbalances';
+      default:
+        return 'Statistics';
+    }
+  }
+  getTabTitle() {
+    switch (this.context) {
+      case 'physical-capacity':
+        return 'Physical Capacity by Datacenter';
+      case 'logical-capacity':
+        return 'Logical Capacity by Datacenter';
+      case 'host-group-capacity':
+        return 'VMware Capacity by Datacenter';
+    }
+  }
 }

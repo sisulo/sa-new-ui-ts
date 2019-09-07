@@ -157,6 +157,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('One Day Change')
         .build()
     );
     this.options.columns.push(
@@ -166,6 +167,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('One Week Change')
         .build()
     );
     this.options.columns.push(
@@ -175,6 +177,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('One Month Change')
         .build()
     );
     this.options.columns.push(

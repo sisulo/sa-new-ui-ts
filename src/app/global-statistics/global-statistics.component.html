@@ -1,12 +1,18 @@
-<h2>Global Statistics</h2>
+<h2>{{getTitle()}}</h2>
 <div *ngIf="context === 'physical-capacity'" class="global-stats col-md-12">
+  <h3>Overall Datacenters Physical Capacity</h3>
   <app-infrastructure-statistics></app-infrastructure-statistics>
 </div>
 <div *ngIf="context === 'logical-capacity'" class="global-stats col-md-12">
+  <h3>Overall Datacenters Logical Capacity</h3>
   <app-global-logical-statistics></app-global-logical-statistics>
 </div>
 <div *ngIf="context === 'host-group-capacity'" class="global-stats col-md-12">
+  <h3>Overall Datacenters VMWare Capacity</h3>
   <app-global-host-group-capacity></app-global-host-group-capacity>
+</div>
+<div class="col-md-12">
+  <h3>{{getTabTitle()}}</h3>
 </div>
 <div class="col-md-12">
   <div class="nav-tabs-custom">

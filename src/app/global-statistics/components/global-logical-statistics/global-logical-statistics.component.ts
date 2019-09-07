@@ -19,40 +19,53 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
   groupTypes = [0, 1, 2, 3, 4, 5];
   labels: string[] = [];
   groupLabel = [];
+  typesIntValue = [
+    SystemMetricType.PHYSICAL_USED,
+    SystemMetricType.PHYSICAL_CAPACITY,
+    SystemMetricType.PHYSICAL_FREE,
+    SystemMetricType.NET_TOTAL,
+    SystemMetricType.NET_USED,
+    SystemMetricType.NET_FREE,
+    SystemMetricType.LOGICAL_CAPACITY,
+    SystemMetricType.LOGICAL_USED,
+    SystemMetricType.LOGICAL_FREE
+  ];
 
   constructor(protected metricService: MetricService,
               protected transformer: SystemPool2SasiGroupTablePipe) {
-    this.types[0] = [
+    this.types[0] = [SystemMetricType.SUBSCRIBED_CAPACITY];
+    this.types[1] = [
       SystemMetricType.PHYSICAL_SUBS_PERC,
       SystemMetricType.LOGICAL_SUBS_PERC,
       SystemMetricType.NET_SUBS_PERC
     ];
-    this.types[1] = [
+    this.types[2] = [
       SystemMetricType.PHYSICAL_USED_PERC,
       SystemMetricType.LOGICAL_USED_PERC,
       SystemMetricType.NET_USED_PERC
     ];
-    this.types[2] = [
+    this.types[3] = [
       SystemMetricType.PHYSICAL_CAPACITY,
       SystemMetricType.PHYSICAL_USED,
       SystemMetricType.PHYSICAL_FREE,
     ];
-    this.types[3] = [
+    this.types[4] = [
       SystemMetricType.LOGICAL_CAPACITY,
       SystemMetricType.LOGICAL_USED,
       SystemMetricType.LOGICAL_FREE
     ];
-    this.types[4] = [
+    this.types[5] = [
       SystemMetricType.NET_TOTAL,
       SystemMetricType.NET_USED,
       SystemMetricType.NET_FREE
     ];
-    this.types[5] = [
+    this.types[6] = [
       SystemMetricType.COMPRESS_RATIO,
       SystemMetricType.DEDUP_RATIO,
       SystemMetricType.TOTAL_SAVING_EFFECT
     ];
 
+    this.labels[SystemMetricType.SUBSCRIBED_CAPACITY] = 'Subscribed capacity';
     this.labels[SystemMetricType.PHYSICAL_SUBS_PERC] = 'Physical';
     this.labels[SystemMetricType.LOGICAL_SUBS_PERC] = 'Logical';
     this.labels[SystemMetricType.NET_SUBS_PERC] = 'Net';
@@ -72,12 +85,13 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
     this.labels[SystemMetricType.DEDUP_RATIO] = 'Dedup';
     this.labels[SystemMetricType.TOTAL_SAVING_EFFECT] = 'Savings';
 
-    this.groupLabel[0] = 'Subscription';
-    this.groupLabel[1] = 'Utilization';
-    this.groupLabel[2] = 'Physical Capacity';
-    this.groupLabel[3] = 'Logical Capacity';
-    this.groupLabel[4] = 'Net Capacity';
-    this.groupLabel[5] = 'Savings';
+    this.groupLabel[0] = 'Subscribed capacity'
+    this.groupLabel[1] = 'Subscription';
+    this.groupLabel[2] = 'Utilization';
+    this.groupLabel[3] = 'Physical Capacity';
+    this.groupLabel[4] = 'Logical Capacity';
+    this.groupLabel[5] = 'Net Capacity';
+    this.groupLabel[6] = 'Savings';
   }
 
   ngOnInit() {
@@ -90,7 +104,6 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
         const average = new SasiWeightedArithmeticMean();
         const filter: SelectedRow[] = [];
         data.systems.forEach(
-
           system => system.pools.forEach(
             pool => {
               const row = new SelectedRow(system.name, pool.name);
@@ -115,10 +128,15 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
     return this.labels[type] != null ? this.labels[type] : null;
   }
 
-  toFixed(value, position) {
+  toFixed(type, value, position) {
     if (value == null) {
       return 'No value';
     }
+
+    if (this.typesIntValue.some(item => item === type)) {
+      return parseFloat(value).toFixed(0);
+    }
+
     return parseFloat(value).toFixed(position);
   }
 
