@@ -51,7 +51,8 @@ export class SideMenuComponent implements OnInit {
       {id: 2, linkPart: `/global-statistics/physical-capacity`, name: 'Physical Capacity Statistics'},
       {id: 3, linkPart: `/global-statistics/logical-capacity`, name: 'Logical Capacity Statistics'},
       {id: 4, linkPart: `/global-statistics/dp-sla`, name: 'DP SLA Statistics'},
-      {id: 5, linkPart: `/global-statistics/adapters`, name: 'Adapters Statistics'}
+      {id: 5, linkPart: `/global-statistics/adapters`, name: 'Adapters Statistics'},
+      {id: 6, linkPart: `/global-statistics/host-group-capacity`, name: 'Host group Statistics'},
     ];
   }
 

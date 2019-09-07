@@ -6,6 +6,7 @@ import {DpSlaComponent} from './views/dp-sla/dp-sla.component';
 import {AdaptersComponent} from './views/adapters/adapters.component';
 import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-statistics/logical-capacity-statistics.component';
 import {PhysicalCapacityStatisticsComponent} from './views/physical-capacity-statistics/physical-capacity-statistics.component';
+import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
 
 const routes: Routes = [
   {
@@ -21,7 +22,9 @@ const routes: Routes = [
       {path: 'dp-sla/:id', component: DpSlaComponent},
       {path: 'dp-sla', redirectTo: 'dp-sla/1', pathMatch: 'full'},
       {path: 'adapters/:id', component: AdaptersComponent},
-      {path: 'adapters', redirectTo: 'adapters/1', pathMatch: 'full'}
+      {path: 'adapters', redirectTo: 'adapters/1', pathMatch: 'full'},
+      {path: 'host-group-capacity/:id', component: HostGroupsCapacityComponent},
+      {path: 'host-group-capacity', redirectTo: 'host-group-capacity/1', pathMatch: 'full'}
     ]
   }
 ];

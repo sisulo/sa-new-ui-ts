@@ -1,0 +1,42 @@
+:host /deep/ .col-val {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 2px;
+}
+.alert-red {
+  color:#900020;
+}
+.alert-amber {
+  color:#db8b0b;
+}
+.col {
+  width: 8.88%;
+}
+
+.pool-name {
+  font-size: 14px;
+  font-style: italic;
+}
+/* TODO duplicated css definitions in all statistics component*/
+:host /deep/ .groupped-data .metric-value,
+:host /deep/ .aggregated-data .metric-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+:host /deep/ .groupped-data .metric-unit,
+:host /deep/ .aggregated-data .metric-unit {
+  font-size: 8px;
+  margin-left: 3px;
+}
+
+.sorting {
+  font-size:13px;
+  transform: rotate(90deg);
+}
+.sticky-bottom {
+  position: sticky;
+  bottom: 0px;
+  z-index: 10;
+}
+

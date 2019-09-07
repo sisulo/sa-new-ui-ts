@@ -85,7 +85,7 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
   }
 
   getTableData(): AggregatedValues { // TODO duplicated for all GS sasi tables
-    this.metricService.getGobalCapacityStatistics().subscribe(
+    this.metricService.getGlobalCapacityStatistics().subscribe(
       data => {
         const average = new SasiWeightedArithmeticMean();
         const filter: SelectedRow[] = [];

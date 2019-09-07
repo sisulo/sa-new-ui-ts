@@ -76,9 +76,17 @@ export class MetricService {
     return this.http.get<CapacityStatisticsDto>(url);
   }
 
-  getGobalCapacityStatistics(): Observable<GlobalCapacityStatisticsDto> {
+  getGlobalCapacityStatistics(): Observable<GlobalCapacityStatisticsDto> {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity');
     return this.http.get<GlobalCapacityStatisticsDto>(url);
+  }
+  getGlobalHostGroupCapacityStatistics(): Observable<GlobalCapacityStatisticsDto> {
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/host-group-capacity');
+    return this.http.get<GlobalCapacityStatisticsDto>(url);
+  }
+  getHostGroupCapacityStatistics(id: number): Observable<GlobalCapacityStatisticsDto> {
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/host-groups');
+    return this.http.get<CapacityStatisticsDto>(url);
   }
 
   private getSuffix(period: PeriodType) {

@@ -22,6 +22,8 @@ import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-stati
 import {GlobalPhysicalCapacityStatisticsComponent} from './components/global-physical-capacity-statistics/global-physical-capacity-statistics.component';
 import {GlobalLogicalStatisticsComponent} from './components/global-logical-statistics/global-logical-statistics.component';
 import {GroupedAggregatedStatisticsComponent} from './components/grouped-aggregated-statistics/grouped-aggregated-statistics.component';
+import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
+import {GlobalHostGroupCapacityComponent} from './components/global-host-group-capacity/global-host-group-capacity.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import {GroupedAggregatedStatisticsComponent} from './components/grouped-aggrega
     DisbalanceFormatterComponent,
     LogicalCapacityStatisticsComponent,
     GlobalPhysicalCapacityStatisticsComponent,
-    GlobalLogicalStatisticsComponent
+    GlobalLogicalStatisticsComponent,
+    HostGroupsCapacityComponent,
+    GlobalHostGroupCapacityComponent
   ],
   imports: [
     CommonModule,
