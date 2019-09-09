@@ -87,7 +87,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
-        .withTooltipText('Physical subscription')
+        .withTooltipText('Physical Subscription')
         .build()
     );
     this.options.columns.push(
@@ -97,7 +97,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
-        .withTooltipText('Logical subscription')
+        .withTooltipText('Logical Subscription')
         .build()
     );
     this.options.columns.push(
@@ -117,7 +117,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
-        .withTooltipText('Net subscription')
+        .withTooltipText('Net Subscription')
         .build()
     );
     this.options.columns.push(
@@ -127,7 +127,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
-        .withTooltipText('Physical capacity (Physical data occupation on HDD/FMD/SSD)')
+        .withTooltipText('Physical Capacity (Physical data occupation on HDD/FMD/SSD)')
         .build()
     );
     this.options.columns.push(
@@ -207,7 +207,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
-        .withTooltipText('Net capacity (Virtual capacity without any saving mechanism)')
+        .withTooltipText('Net Capacity (Virtual capacity without any saving mechanism)')
         .build()
     );
     this.options.columns.push(
@@ -247,7 +247,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
-        .withTooltipText('Compensation Ratio')
+        .withTooltipText('Compression Ratio')
         .build()
     );
     this.options.columns.push(

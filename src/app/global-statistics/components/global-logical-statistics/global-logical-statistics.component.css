@@ -3,7 +3,7 @@ div.agg-vals {
   margin-top: 25px;
 }
 
-.agg-vals > .col {
+.agg-vals > .col, .agg-vals > .col-smaller {
   border: 1px #5C91A8 solid;
   font-weight: bold;
   /*text-align: center;*/
@@ -32,7 +32,7 @@ div.agg-vals {
   vertical-align: middle;
 }
 .col {
-  width: 16.3%;
+  width: 15.1%;
   display:inline-block;
   background-color: white;
   margin-right: 2px;
@@ -41,3 +41,9 @@ div.agg-vals {
   /*width: 13%;*/
 }
 
+.col-smaller{
+  width: 6%;
+  display:inline-block;
+  background-color: white;
+  margin-right: 2px;
+}

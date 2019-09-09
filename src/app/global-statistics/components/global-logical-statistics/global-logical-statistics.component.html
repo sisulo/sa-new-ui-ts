@@ -1,5 +1,9 @@
 <!--AGGREGATED VALUES-->
 <div class="agg-vals" *ngIf="data != null">
+  <div class="col col-smaller">
+    <div class="agg-name">Subscribed capacity</div>
+    <div class="agg-value ">{{toFixed(subsCapacityType, getMetricByType(subsCapacityType).value, 2)}} <span class="agg-unit">{{getMetricByType(subsCapacityType).unit}}</span></div>
+  </div>
   <div class="col" *ngFor="let group of groupTypes">
     <div class="agg-name">{{getGroupLabelByType(group)}}</div>
     <div class="agg-value">

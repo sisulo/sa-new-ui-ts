@@ -19,6 +19,7 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
   groupTypes = [0, 1, 2, 3, 4, 5];
   labels: string[] = [];
   groupLabel = [];
+  subsCapacityType = SystemMetricType.SUBSCRIBED_CAPACITY;
   typesIntValue = [
     SystemMetricType.PHYSICAL_USED,
     SystemMetricType.PHYSICAL_CAPACITY,
@@ -33,33 +34,33 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
 
   constructor(protected metricService: MetricService,
               protected transformer: SystemPool2SasiGroupTablePipe) {
-    this.types[0] = [SystemMetricType.SUBSCRIBED_CAPACITY];
-    this.types[1] = [
+    // this.types[0] = [SystemMetricType.SUBSCRIBED_CAPACITY];
+    this.types[0] = [
       SystemMetricType.PHYSICAL_SUBS_PERC,
       SystemMetricType.LOGICAL_SUBS_PERC,
       SystemMetricType.NET_SUBS_PERC
     ];
-    this.types[2] = [
+    this.types[1] = [
       SystemMetricType.PHYSICAL_USED_PERC,
       SystemMetricType.LOGICAL_USED_PERC,
       SystemMetricType.NET_USED_PERC
     ];
-    this.types[3] = [
+    this.types[2] = [
       SystemMetricType.PHYSICAL_CAPACITY,
       SystemMetricType.PHYSICAL_USED,
       SystemMetricType.PHYSICAL_FREE,
     ];
-    this.types[4] = [
+    this.types[3] = [
       SystemMetricType.LOGICAL_CAPACITY,
       SystemMetricType.LOGICAL_USED,
       SystemMetricType.LOGICAL_FREE
     ];
-    this.types[5] = [
+    this.types[4] = [
       SystemMetricType.NET_TOTAL,
       SystemMetricType.NET_USED,
       SystemMetricType.NET_FREE
     ];
-    this.types[6] = [
+    this.types[5] = [
       SystemMetricType.COMPRESS_RATIO,
       SystemMetricType.DEDUP_RATIO,
       SystemMetricType.TOTAL_SAVING_EFFECT
@@ -85,13 +86,13 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
     this.labels[SystemMetricType.DEDUP_RATIO] = 'Dedup';
     this.labels[SystemMetricType.TOTAL_SAVING_EFFECT] = 'Savings';
 
-    this.groupLabel[0] = 'Subscribed capacity'
-    this.groupLabel[1] = 'Subscription';
-    this.groupLabel[2] = 'Utilization';
-    this.groupLabel[3] = 'Physical Capacity';
-    this.groupLabel[4] = 'Logical Capacity';
-    this.groupLabel[5] = 'Net Capacity';
-    this.groupLabel[6] = 'Savings';
+    // this.groupLabel[0] = 'Subscribed capacity'
+    this.groupLabel[0] = 'Subscription';
+    this.groupLabel[1] = 'Utilization';
+    this.groupLabel[2] = 'Physical Capacity';
+    this.groupLabel[3] = 'Logical Capacity';
+    this.groupLabel[4] = 'Net Capacity';
+    this.groupLabel[5] = 'Savings';
   }
 
   ngOnInit() {
