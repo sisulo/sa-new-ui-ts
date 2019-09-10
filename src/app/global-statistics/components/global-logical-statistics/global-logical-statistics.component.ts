@@ -29,7 +29,8 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
     SystemMetricType.NET_FREE,
     SystemMetricType.LOGICAL_CAPACITY,
     SystemMetricType.LOGICAL_USED,
-    SystemMetricType.LOGICAL_FREE
+    SystemMetricType.LOGICAL_FREE,
+    SystemMetricType.SUBSCRIBED_CAPACITY
   ];
 
   constructor(protected metricService: MetricService,
@@ -66,7 +67,7 @@ export class GlobalLogicalStatisticsComponent implements OnInit {
       SystemMetricType.TOTAL_SAVING_EFFECT
     ];
 
-    this.labels[SystemMetricType.SUBSCRIBED_CAPACITY] = 'Subscribed capacity';
+    this.labels[SystemMetricType.SUBSCRIBED_CAPACITY] = 'Subscribed Capacity';
     this.labels[SystemMetricType.PHYSICAL_SUBS_PERC] = 'Physical';
     this.labels[SystemMetricType.LOGICAL_SUBS_PERC] = 'Logical';
     this.labels[SystemMetricType.NET_SUBS_PERC] = 'Net';

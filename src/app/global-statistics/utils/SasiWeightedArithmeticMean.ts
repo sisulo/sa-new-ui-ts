@@ -44,6 +44,8 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
     this.physicalCapacityTotalSaving = 0;
     this.physicalCapacityDedupRatio = 0;
     this.physicalCapacityCompRatio = 0;
+    const startTime = new Date();
+    console.log(startTime);
     if (filter.length === 0) {
       return null;
     }
@@ -83,8 +85,8 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         this.partiallySummarizedValues.setValue(
           SystemMetricType.PHYSICAL_CAPACITY,
           this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY),
-          this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY))
-        ;
+          this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY)
+        );
         this.partiallySummarizedValues.setValue(SystemMetricType.SUBSCRIBED_CAPACITY, this.getMetricValueByName(sasiRow, SystemMetricType.SUBSCRIBED_CAPACITY), this.getUnitByName(sasiRow, SystemMetricType.SUBSCRIBED_CAPACITY));
         this.partiallySummarizedValues.setValue(SystemMetricType.LOGICAL_CAPACITY, this.getMetricValueByName(sasiRow, SystemMetricType.LOGICAL_CAPACITY), this.getUnitByName(sasiRow, SystemMetricType.LOGICAL_CAPACITY));
         this.partiallySummarizedValues.setValue(SystemMetricType.AVAILABLE_CAPACITY, this.getMetricValueByName(sasiRow, SystemMetricType.AVAILABLE_CAPACITY), this.getUnitByName(sasiRow, SystemMetricType.AVAILABLE_CAPACITY));
@@ -128,7 +130,8 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         }
       }
     );
-    return this.summarizeStats(this.partiallySummarizedValues, 'all');
+    const result = this.summarizeStats(this.partiallySummarizedValues, 'all');
+    return result;
   }
 
   summarizeStats(values: SystemAggregatedStatistics, name: string): SystemAggregatedStatistics {

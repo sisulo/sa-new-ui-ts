@@ -39,7 +39,7 @@ export class RowGroupTableComponent implements OnInit {
   @LocalStorage() highlightedColumn = -1;
 
   aggregatedValues = {};
-  selectedRows: Array<SelectedRow>;
+  @Input() selectedRows: Array<SelectedRow>;
   collapsedRows: Array<string> = [];
   alertGroup = '';
   alertSummary = [];
@@ -51,20 +51,20 @@ export class RowGroupTableComponent implements OnInit {
 
   ngOnInit() {
     // TODO refactor this to the service
-    this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
-      data => {
-        this.selectedRows = data.newValue;
-        this.initAggregatedValues();
-      }
-    );
+    // this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
+    //   data => {
+    //     this.selectedRows = data.newValue;
+    //     this.initAggregatedValues();
+    //   }
+    // );
     this.localStorageService.observe(this.options.storageNamePrefix + '_collapsed').subscribe(
       data => {
         this.collapsedRows = data.newValue;
       }
     );
-    this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    // this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     this.collapsedRows = this.localStorageService.get(this.options.storageNamePrefix + '_collapsed');
-    if (this.selectedRows === null) {
+    if (this.selectedRows == null) {
       this.selectedRows = [];
     } else {
       this.selectedRows = this.selectedRows; // this must be reset because save on the collapsedRows doesn't work

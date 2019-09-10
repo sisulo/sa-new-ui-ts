@@ -303,17 +303,17 @@ export class SasiTableComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.options = Object.assign(this.defaultOptions, this.tableOptions);
-    this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
-      data => this.selectedRows = data.newValue
-    );
+    // this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
+    //   data => this.selectedRows = data.newValue
+    // );
     this.localStorageService.observe(this.options.storageNamePrefix + '_collapsed').subscribe(
       data => {
         this.collapsedRows = data.newValue;
       }
     );
-    this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    this.selectedRows = await this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     this.collapsedRows = this.localStorageService.get(this.options.storageNamePrefix + '_collapsed');
     if (this.selectedRows === null) {
       this.selectedRows = [];
@@ -390,6 +390,9 @@ export class SasiTableComponent implements OnInit {
   }
 
   isCollapseAll(): boolean {
+    if (this.collapsedRows === undefined) {
+      return false;
+    }
     return this.data.every(
       // @ts-ignore
       row => this.collapsedRows.includes(row.groupRow.getCell('name').value)
@@ -402,6 +405,9 @@ export class SasiTableComponent implements OnInit {
     }
     // @ts-ignore
     const d = <SasiGroupRow[]>this.data;
+    if (this.selectedRows === undefined) {
+      return false;
+    }
     return d.every(
       // @ts-ignore
       rowGroup => rowGroup.rows.every(
@@ -417,6 +423,9 @@ export class SasiTableComponent implements OnInit {
     }
     // @ts-ignore
     const d = <SasiGroupRow[]>this.data;
+    if (this.selectedRows === undefined) {
+      return false;
+    }
     return d.find(
       // @ts-ignore
       rowGroup => rowGroup.rows.find(
@@ -431,13 +440,21 @@ export class SasiTableComponent implements OnInit {
     // @ts-ignore
     const d = <SasiGroupRow[]>this.data;
     if (!this.isSelectedAll()) {
-      this.selectedRows = [];
+      // this.selectedRows = [];
       d.forEach(
         rowGroup => rowGroup.rows.forEach(
-          row => this.selectedRows.push(new SelectedRow(rowGroup.groupRow.getCell('name').value, row.getCell('name').value))
+
+          row => {
+            if (this.selectedRows.findIndex(filterItem => filterItem.groupName === rowGroup.groupRow.getCell('name').value && row.getCell('name').value === filterItem.rowName) === -1) {
+              this.selectedRows.push(new SelectedRow(rowGroup.groupRow.getCell('name').value, row.getCell('name').value));
+            }
+
+          }
         )
       );
+      this.selectedRows = [...this.selectedRows];
     } else {
+      // this.selectedRows = [];
       d.forEach(
         groupRow =>
           groupRow.rows.forEach(
@@ -448,6 +465,7 @@ export class SasiTableComponent implements OnInit {
             )
           )
       );
+      this.selectedRows = [...this.selectedRows];
     }
     this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
 

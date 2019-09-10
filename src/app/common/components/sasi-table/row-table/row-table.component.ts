@@ -23,13 +23,13 @@ export class RowTableComponent implements OnInit {
   ) {
   }
 
-  ngOnInit() {
-    this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
-      data => {
-        this.selectedRows = data.newValue;
-      }
-    );
-    this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+  async ngOnInit() {
+    // this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
+    //   data => {
+    //     this.selectedRows = data.newValue;
+    //   }
+    // );
+    this.selectedRows = await this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
@@ -70,6 +70,9 @@ export class RowTableComponent implements OnInit {
   }
 
   findIndex(name: string) {
+    if (this.selectedRows === undefined) {
+      return -1;
+    }
     return this.selectedRows.findIndex(value => value.rowName === name && value.groupName === this.groupName);
   }
 }

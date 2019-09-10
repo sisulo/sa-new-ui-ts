@@ -4,4 +4,5 @@ export class SasiTableFormatter {
   public options: any;
   public column: any;
   public rowData: any;
+  public selectedRows: any;
 }

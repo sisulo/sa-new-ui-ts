@@ -40,7 +40,7 @@
     <app-row-dynamic-table *ngFor="let row of data"
                            [class.highlight-row]="options.highlightRow && !options.isDataGrouped"
                            [class.striped-row]="!options.isDataGrouped"
-                           [componentFormatter]="options.rowComponentFormatter" [data]="row"
+                           [componentFormatter]="options.rowComponentFormatter" [data]="row" [selectedRows]="selectedRows"
                            [options]="options"></app-row-dynamic-table>
     <!--</div>-->
   </div>

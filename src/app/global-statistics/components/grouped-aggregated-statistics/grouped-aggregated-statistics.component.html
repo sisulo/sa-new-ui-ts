@@ -5,7 +5,7 @@
   </div>
   <div class="col-smaller">
     <div class="agg-name">Subs. capacity</div>
-    <div class="agg-value ">{{getMetricByType(subsCapacityType).value}}</div>
+    <div class="agg-value ">{{getMetricByType(subsCapacityType).value}} <span class="agg-unit">{{getMetricByType(subsCapacityType).unit}}</span></div>
   </div>
   <div class="col" *ngFor="let group of groupTypes">
     <div class="agg-name">{{getGroupLabelByType(group)}}</div>

@@ -113,7 +113,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.NET_SUBS_PERC)
-        .withLabel('NET Subs.')
+        .withLabel('Net Subs.')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
@@ -203,7 +203,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.NET_TOTAL)
-        .withLabel('Net Total')
+        .withLabel('Net Capacity')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
