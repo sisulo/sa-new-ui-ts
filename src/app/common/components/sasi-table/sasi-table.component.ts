@@ -5,6 +5,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AggregateValueService} from './row-group-table/row-group-table.component';
 import {Sort} from './sort';
 import {SelectedRow} from './row-table/selected-row';
+import {OnSelectService} from './on-select.service';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -299,15 +300,16 @@ export class SasiTableComponent implements OnInit {
 
   altSort = false;
 
-  constructor(private localStorageService: LocalStorageService) {
+  constructor(private localStorageService: LocalStorageService,
+    private onSelectService: OnSelectService) {
 
   }
 
   async ngOnInit() {
     this.options = Object.assign(this.defaultOptions, this.tableOptions);
-    // this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
-    //   data => this.selectedRows = data.newValue
-    // );
+    this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
+      data => this.selectedRows = data.newValue
+    );
     this.localStorageService.observe(this.options.storageNamePrefix + '_collapsed').subscribe(
       data => {
         this.collapsedRows = data.newValue;
@@ -437,37 +439,50 @@ export class SasiTableComponent implements OnInit {
   }
 
   selectAll() {
-    // @ts-ignore
-    const d = <SasiGroupRow[]>this.data;
+
+    // // @ts-ignore
+    // const d = <SasiGroupRow[]>this.data;
     if (!this.isSelectedAll()) {
-      // this.selectedRows = [];
-      d.forEach(
-        rowGroup => rowGroup.rows.forEach(
-
-          row => {
-            if (this.selectedRows.findIndex(filterItem => filterItem.groupName === rowGroup.groupRow.getCell('name').value && row.getCell('name').value === filterItem.rowName) === -1) {
-              this.selectedRows.push(new SelectedRow(rowGroup.groupRow.getCell('name').value, row.getCell('name').value));
-            }
-
-          }
-        )
-      );
-      this.selectedRows = [...this.selectedRows];
+      this.onSelectService.announceSelectAll(true);
     } else {
-      // this.selectedRows = [];
-      d.forEach(
-        groupRow =>
-          groupRow.rows.forEach(
-            row => this.selectedRows.splice(
-              this.selectedRows.findIndex(
-                selectedRow => selectedRow.groupName === groupRow.groupRow.getCell('name').value && selectedRow.rowName === row.getCell('name').value
-              ), 1
-            )
-          )
-      );
-      this.selectedRows = [...this.selectedRows];
+      this.onSelectService.announceSelectAll(false);
     }
-    this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
+    //   // this.selectedRows = [];
+    //   d.forEach(
+    //     rowGroup => rowGroup.rows.forEach(
+    //
+    //       row => {
+    //         if (this.selectedRows.findIndex(filterItem => filterItem.groupName === rowGroup.groupRow.getCell('name').value && row.getCell('name').value === filterItem.rowName) === -1) {
+    //           this.selectedRows.push(new SelectedRow(rowGroup.groupRow.getCell('name').value, row.getCell('name').value));
+    //         }
+    //
+    //       }
+    //     )
+    //   );
+    //   this.selectedRows = [...this.selectedRows];
+    // } else {
+    //   // this.selectedRows = [];
+    //   d.forEach(
+    //     groupRow =>
+    //       groupRow.rows.forEach(
+    //         row => this.selectedRows.splice(
+    //           this.selectedRows.findIndex(
+    //             selectedRow => selectedRow.groupName === groupRow.groupRow.getCell('name').value && selectedRow.rowName === row.getCell('name').value
+    //           ), 1
+    //         )
+    //       )
+    //   );
+    //   this.selectedRows = [...this.selectedRows];
+    // }
+    // this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
+    // console.log(this.selectedRows);
+  }
 
+  onSelect(rows: Array<SelectedRow>) {
+    console.log('Sasi');
+    console.log(rows);
+    // this.selectedRows = [...rows];
+    console.log(this.selectedRows);
+    // this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
   }
 }

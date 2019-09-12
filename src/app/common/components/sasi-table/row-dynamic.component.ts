@@ -7,7 +7,7 @@ import {SelectedRow} from './row-table/selected-row';
 
 @Component({
   selector: 'app-row-dynamic-table',
-  template: '<ng-template appFormatterHost></ng-template>'
+    template: '<ng-template appFormatterHost></ng-template>'
 })
 export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
   @Input() componentFormatter;
@@ -32,7 +32,6 @@ export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   loadComponent() {
-
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.componentFormatter);
 
     const viewContainerRef = this.adHost.viewContainerRef;
@@ -43,8 +42,5 @@ export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
     (<SasiTableFormatter>componentRef.instance).label = this.label;
     (<SasiTableFormatter>componentRef.instance).options = this.options;
     (<SasiTableFormatter>componentRef.instance).selectedRows = this.selectedRows;
-
-
   }
-
 }

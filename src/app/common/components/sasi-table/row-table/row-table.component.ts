@@ -1,14 +1,17 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../sasi-table.component';
 import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {SelectedRow} from './selected-row';
+import {OnSelectService} from '../on-select.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-row-table',
   templateUrl: './row-table.component.html',
   styleUrls: ['./row-table.component.css']
 })
-export class RowTableComponent implements OnInit {
+export class RowTableComponent implements OnInit, OnDestroy {
+
 
   @Input() data: SasiRow;
   @Input() groupName: string;
@@ -16,19 +19,23 @@ export class RowTableComponent implements OnInit {
   @Input() options: SasiTableOptions;
   @Output() selectEmit = new EventEmitter<Array<SelectedRow>>();
   selectedRows: Array<SelectedRow>;
+  subscription: Subscription;
 
   @LocalStorage() highlightedColumn = -1;
 
-  constructor(private localStorageService: LocalStorageService
+  constructor(private localStorageService: LocalStorageService,
+              private onSelectService: OnSelectService
   ) {
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription !== undefined) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   async ngOnInit() {
-    // this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
-    //   data => {
-    //     this.selectedRows = data.newValue;
-    //   }
-    // );
+    this.subscription = this.onSelectService.selectAll$.subscribe(value => this.selectRow(this.data.getCell('name').value, value));
     this.selectedRows = await this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     if (this.selectedRows === null) {
       this.selectedRows = [];
@@ -53,15 +60,16 @@ export class RowTableComponent implements OnInit {
     return this.findIndex(name) > -1;
   }
 
-  selectRow(name: string) {
-    this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+  async selectRow(name: string, ignore?: boolean | false) {
+    this.selectedRows = await this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
     const index = this.findIndex(name);
-    if (index > -1) {
+    if (index > -1 && !ignore) {
       this.selectedRows.splice(index, 1);
-    } else {
+    }
+    if (index < 0) {
       this.selectedRows.push(new SelectedRow(this.groupName, name));
     }
     // @ts-ignore

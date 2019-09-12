@@ -49,21 +49,14 @@ export class RowGroupTableComponent implements OnInit {
   constructor(private localStorageService: LocalStorageService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     // TODO refactor this to the service
-    // this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
-    //   data => {
-    //     this.selectedRows = data.newValue;
-    //     this.initAggregatedValues();
-    //   }
-    // );
     this.localStorageService.observe(this.options.storageNamePrefix + '_collapsed').subscribe(
       data => {
         this.collapsedRows = data.newValue;
       }
     );
-    // this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
-    this.collapsedRows = this.localStorageService.get(this.options.storageNamePrefix + '_collapsed');
+    this.collapsedRows = await this.localStorageService.get(this.options.storageNamePrefix + '_collapsed');
     if (this.selectedRows == null) {
       this.selectedRows = [];
     } else {

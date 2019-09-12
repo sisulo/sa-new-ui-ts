@@ -11,9 +11,9 @@
          [tooltip]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>
       <i *ngIf="options.selectableRows && isSelectedAll()" class="far fa-check-square" (click)="selectAll()"></i>
       <i *ngIf="options.selectableRows && isPartiallySelected() && !isSelectedAll()" class="far fa-fw fa-minus-square"
-      (click)="selectAll()"></i>
+         (click)="selectAll()"></i>
       <i *ngIf="options.selectableRows && (!isPartiallySelected()) && (!isSelectedAll())" class="far fa-fw fa-square"
-      (click)="selectAll()"></i>
+         (click)="selectAll()"></i>
     </div>
     <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
       <i tooltip="Alerts" class="fa fa-exclamation-triangle text-orange"></i>
@@ -27,20 +27,20 @@
       <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
       <br/>
       <span *ngIf="columnOption.altSortEnable === true" (click)="setSort(columnOption, true)" class="link"><i
-      class="fa fa-angle-up text-red sort-icon-left"></i>
+        class="fa fa-angle-up text-red sort-icon-left"></i>
         <span class="peak-label">Peak</span> <i
-      class='sorting sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)"
-      ></i></span>
+          class='sorting sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)"
+        ></i></span>
     </div>
   </div>
   <!--POOL ROWS-->
   <!---->
-  <div class="row">
+  <div class="row" *ngIf="selectedRows !== undefined">
     <!--<div  [class.highlight-row]="options.highlightRow">-->
     <app-row-dynamic-table *ngFor="let row of data"
                            [class.highlight-row]="options.highlightRow && !options.isDataGrouped"
                            [class.striped-row]="!options.isDataGrouped"
-                           [componentFormatter]="options.rowComponentFormatter" [data]="row" [selectedRows]="selectedRows"
+                           [componentFormatter]="options.rowComponentFormatter" [data]="row"
                            [options]="options"></app-row-dynamic-table>
     <!--</div>-->
   </div>
