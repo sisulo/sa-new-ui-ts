@@ -60,8 +60,8 @@ export class RowTableComponent implements OnInit, OnDestroy {
     return this.findIndex(name) > -1;
   }
 
-  async selectRow(name: string, ignore?: boolean | false) {
-    this.selectedRows = await this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+  selectRow(name: string, ignore?: boolean | false) {
+    this.selectedRows =  this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
