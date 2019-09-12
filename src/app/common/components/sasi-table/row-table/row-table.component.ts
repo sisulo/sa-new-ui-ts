@@ -34,9 +34,9 @@ export class RowTableComponent implements OnInit, OnDestroy {
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.subscription = this.onSelectService.selectAll$.subscribe(value => this.selectRow(this.data.getCell('name').value, value));
-    this.selectedRows = await this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    this.selectedRows =  this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }

@@ -49,14 +49,22 @@ export class RowGroupTableComponent implements OnInit {
   constructor(private localStorageService: LocalStorageService) {
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     // TODO refactor this to the service
+    this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
+      data => {
+        this.selectedRows = data.newValue;
+        this.initAggregatedValues();
+      }
+    );
     this.localStorageService.observe(this.options.storageNamePrefix + '_collapsed').subscribe(
       data => {
         this.collapsedRows = data.newValue;
       }
     );
-    this.collapsedRows = await this.localStorageService.get(this.options.storageNamePrefix + '_collapsed');
+
+    this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    this.collapsedRows = this.localStorageService.get(this.options.storageNamePrefix + '_collapsed');
     if (this.selectedRows == null) {
       this.selectedRows = [];
     } else {
@@ -128,7 +136,10 @@ export class RowGroupTableComponent implements OnInit {
     const result = {};
     if (values !== null) {
       this.options.getAggregatedColumns().forEach(
-        column => result[column.index] = {value: values.getValue(<SystemMetricType>column.index).value, unit: values.getValue(<SystemMetricType>column.index).unit}
+        column => result[column.index] = {
+          value: values.getValue(<SystemMetricType>column.index).value,
+          unit: values.getValue(<SystemMetricType>column.index).unit
+        }
       );
     }
     this.aggregatedValues = result;
