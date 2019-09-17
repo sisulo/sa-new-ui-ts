@@ -15,6 +15,7 @@
 .col-control i {
   font-size: 11px;
   padding: 3px;
+  cursor: pointer;
 }
 
 .col-control:after {

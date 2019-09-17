@@ -13,7 +13,7 @@ div.agg-vals {
 .agg-name {
   background-color: #3c8dbc;
   color: white;
-  font-size: 11px;
+  font-size: 10px;
   padding: 5px;
 }
 
@@ -23,24 +23,31 @@ div.agg-vals {
   background-color: white;
   /*color: white;*/
 }
+
+.agg-unit {
+  font-size: 10px;
+}
+
 .col-control {
   width: 3.5%;
   display: inline-block;
   vertical-align: middle;
 }
+
 .col {
   width: 14.8%;
-  display:inline-block;
+  display: inline-block;
   background-color: white;
   margin-right: 2px;
 }
+
 .col-label {
   width: 13%;
 }
 
-.col-smaller{
+.col-smaller {
   width: 4.8%;
-  display:inline-block;
+  display: inline-block;
   background-color: white;
   margin-right: 2px;
 }

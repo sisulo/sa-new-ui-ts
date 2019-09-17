@@ -5,22 +5,19 @@ import {MetricService} from '../../../metric.service';
 import {SystemPool2SasiGroupTablePipe} from '../../../common/utils/system-pool-2-sasi-group-table.pipe';
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
-import {Metric} from '../../../common/models/metrics/Metric';
+import {CommonAggregatedStats} from './global-physical-capacity-statistics.component';
 
 @Component({
   selector: 'app-global-host-group-capacity',
-  templateUrl: './global-host-group-capacity.component.html',
-  styleUrls: ['./global-host-group-capacity.component.css']
+  templateUrl: './aggragated-statistics.component.html',
+  styleUrls: ['./aggragated-statistics.component.css']
 })
-export class GlobalHostGroupCapacityComponent implements OnInit {
-
-  data: AggregatedValues;
-  types: SystemMetricType[];
-  labels: string[] = [];
+export class GlobalHostGroupCapacityComponent extends CommonAggregatedStats implements OnInit {
 
   constructor(protected metricService: MetricService,
               protected transformer: SystemPool2SasiGroupTablePipe) {
-    this.types = [
+    super();
+    this.aggregatedTypes = [
       SystemMetricType.NET_TOTAL,
       SystemMetricType.NET_USED,
       SystemMetricType.NET_USED_PERC,
@@ -47,32 +44,19 @@ export class GlobalHostGroupCapacityComponent implements OnInit {
         const average = new SasiWeightedArithmeticMean();
         const filter: SelectedRow[] = [];
         data.systems.forEach(
-
           system => system.pools.forEach(
             pool => {
               const row = new SelectedRow(system.name, pool.name);
               filter.push(row);
             }));
-        this.data = average.computeSummaries(this.transformer.transform(data.systems), filter);
+        this.result = average.computeSummaries(this.transformer.transform(data.systems), filter);
       },
       error => {
         console.log(error);
-        this.data = null;
+        this.result = null;
       }
     );
-    return this.data;
-  }
-
-  getMetricByType(type: SystemMetricType): Metric {
-    return this.data.getValue(type);
-  }
-
-  getLabelByType(type: string): string {
-    return this.labels[type] != null ? this.labels[type] : null;
-  }
-
-  toFixed(value, position) {
-    return parseFloat(value).toFixed(position);
+    return this.result;
   }
 
 }

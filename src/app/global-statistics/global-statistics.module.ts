@@ -19,11 +19,11 @@ import {AggragatedStatisticsComponent} from './components/aggragated-statistics/
 import {EmphFormatterComponent} from './formatters/emph-formatter/emph-formatter.component';
 import {DisbalanceFormatterComponent} from './formatters/disbalance-formatter/disbalance-formatter.component';
 import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-statistics/logical-capacity-statistics.component';
-import {GlobalPhysicalCapacityStatisticsComponent} from './components/global-physical-capacity-statistics/global-physical-capacity-statistics.component';
+import {GlobalPhysicalCapacityStatisticsComponent} from './components/aggragated-statistics/global-physical-capacity-statistics.component';
 import {GlobalLogicalStatisticsComponent} from './components/global-logical-statistics/global-logical-statistics.component';
 import {GroupedAggregatedStatisticsComponent} from './components/grouped-aggregated-statistics/grouped-aggregated-statistics.component';
 import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
-import {GlobalHostGroupCapacityComponent} from './components/global-host-group-capacity/global-host-group-capacity.component';
+import {GlobalHostGroupCapacityComponent} from './components/aggragated-statistics/global-host-group-capacity.component';
 
 @NgModule({
   declarations: [

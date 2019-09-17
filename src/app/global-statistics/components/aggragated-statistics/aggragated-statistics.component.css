@@ -3,7 +3,16 @@ div.agg-vals {
   margin-top: 25px;
 }
 
-.agg-vals > .col {
+table {
+  border-collapse: separate;
+  border-spacing: 2px 0px;
+}
+
+.agg-value, .agg-name {
+  margin-right: 5px;
+}
+
+.agg-vals > .agg-value, .agg-names > .agg-name {
   border: 1px #5C91A8 solid;
   font-weight: bold;
   text-align: center;
@@ -13,7 +22,7 @@ div.agg-vals {
 .agg-name {
   background-color: #3c8dbc;
   color: white;
-  font-size: 11px;
+  font-size: 10px;
   padding: 5px;
 }
 
@@ -23,15 +32,20 @@ div.agg-vals {
   background-color: white;
   /*color: white;*/
 }
+
+.agg-unit {
+  font-size: 10px;
+}
+
 .col-control {
   width: 3.5%;
-  display: inline-block;
   vertical-align: middle;
 }
+
 .col {
   width: 6.66%;
-  display:inline-block;
 }
+
 .col-label {
-  width: 13%;
+  width: 8%;
 }

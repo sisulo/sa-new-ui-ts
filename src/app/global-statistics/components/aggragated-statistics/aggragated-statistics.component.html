@@ -1,15 +1,17 @@
 <!--AGGREGATED VALUES-->
-<div class="agg-vals" *ngIf="result !== null">
-  <div class="col-val col-control"></div>
-  <div class="col-val col-control"></div>
-  <div class="col col-label">
-    <div class="agg-name"># Selected</div>
-    <div class="agg-value">{{getSelectedCount()}}</div>
-  </div>
-  <div class="col" *ngFor="let type of aggregatedTypes">
-    <div class="agg-name">{{type.label}}</div>
-    <div class="agg-value"><span
-      *ngIf="result.getValue(type.index).value !== undefined">{{result.getValue(type.index).value.toFixed(2)}} <span class="agg-unit">{{result.getValue(type.index).unit}}</span></span>
-    </div>
-  </div>
-</div>
+<table>
+  <thead>
+  <tr class="agg-names">
+    <td *ngFor="let type of aggregatedTypes" class="col agg-name">{{getLabelByType(type)}}</td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr class="agg-vals">
+    <td *ngFor="let type of aggregatedTypes" class="col agg-value">
+        <span
+          *ngIf="getMetricByType(type) != undefined">{{toFixed(type, getMetricByType(type).value, 2)}} <span
+          class="agg-unit">{{getMetricByType(type).unit}}</span></span>
+    </td>
+  </tr>
+  </tbody>
+</table>

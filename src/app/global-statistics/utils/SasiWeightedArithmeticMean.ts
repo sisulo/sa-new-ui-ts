@@ -45,7 +45,6 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
     this.physicalCapacityDedupRatio = 0;
     this.physicalCapacityCompRatio = 0;
     const startTime = new Date();
-    console.log(startTime);
     if (filter.length === 0) {
       return null;
     }
@@ -131,6 +130,7 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
       }
     );
     const result = this.summarizeStats(this.partiallySummarizedValues, 'all');
+    result.setValue(SystemMetricType.SELECTED_COUNT, amendFilter.length, '');
     return result;
   }
 
