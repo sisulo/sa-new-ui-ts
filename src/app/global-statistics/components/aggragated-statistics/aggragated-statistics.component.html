@@ -1,5 +1,5 @@
 <!--AGGREGATED VALUES-->
-<table>
+<table *ngIf="result != null">
   <thead>
   <tr class="agg-names">
     <td *ngFor="let type of aggregatedTypes" class="col agg-name">{{getLabelByType(type)}}</td>

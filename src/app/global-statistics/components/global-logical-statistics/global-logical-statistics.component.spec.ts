@@ -1,6 +1,6 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {GlobalLogicalStatisticsComponent} from './global-logical-statistics.component';
+import {GlobalLogicalStatisticsComponent} from '../grouped-aggregated-statistics/global-logical-statistics.component';
 
 describe('GlobalLogicalStatisticsComponent', () => {
   let component: GlobalLogicalStatisticsComponent;

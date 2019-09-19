@@ -6,6 +6,7 @@ div.agg-vals {
 table {
   border-collapse: separate;
   border-spacing: 2px 0px;
+  width: 100%;
 }
 
 .agg-value, .agg-name {

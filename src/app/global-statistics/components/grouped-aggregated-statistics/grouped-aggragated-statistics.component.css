@@ -3,7 +3,16 @@ div.agg-vals {
   margin-top: 25px;
 }
 
-.agg-vals > .col, .agg-vals > .col-smaller {
+table {
+  border-collapse: separate;
+  border-spacing: 2px 0px;
+}
+
+.agg-value, .agg-name {
+  margin-right: 5px;
+}
+
+.agg-vals > .agg-value, .agg-names > .agg-name {
   border: 1px #5C91A8 solid;
   font-weight: bold;
   text-align: center;
@@ -30,24 +39,17 @@ div.agg-vals {
 
 .col-control {
   width: 3.5%;
-  display: inline-block;
   vertical-align: middle;
 }
 
 .col {
-  width: 14.8%;
-  display: inline-block;
-  background-color: white;
-  margin-right: 2px;
+  width: 6.66%;
 }
 
 .col-label {
-  width: 13%;
+  width: 8%;
 }
 
 .col-smaller {
-  width: 4.8%;
-  display: inline-block;
-  background-color: white;
-  margin-right: 2px;
+  width: 2%;
 }
