@@ -3,12 +3,12 @@ import {MetricService} from '../../../metric.service';
 import {Metric} from '../../../common/models/metrics/Metric';
 import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
 import {SystemPool2SasiGroupTablePipe} from '../../../common/utils/system-pool-2-sasi-group-table.pipe';
-import {SasiWeightedArithmeticMean, SystemAggregatedStatistics} from '../../utils/SasiWeightedArithmeticMean';
+import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 
 export class CommonAggregatedStats {
-  result: AggregatedValues = new SystemAggregatedStatistics('');
+  result: AggregatedValues;
   aggregatedTypes: SystemMetricType[] = [];
   labels: string[] = [];
   typesIntValue: SystemMetricType[] = [];
