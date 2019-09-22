@@ -305,7 +305,8 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
   getTableData(id: number): SystemPool[] {
     this.metricService.getCapacityStatistics(id).subscribe(
       data => {
-        this.data = data.systems;
+        this.data = [];
+        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
       },
       error => {
         console.log(error);

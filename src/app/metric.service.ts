@@ -4,11 +4,11 @@ import {Observable} from 'rxjs';
 import {InfrastructureDto} from './common/models/dtos/InfrastructureDto';
 import {environment} from '../environments/environment';
 import {DatacenterDto} from './common/models/dtos/DatacenterDto';
-import {PerformanceStatisticsDto} from './common/models/dtos/PerformanceStatisticsDto';
-import {CapacityStatisticsDto} from './common/models/dtos/CapacityStatisticsDto';
 import {Datacenter} from './common/models/Datacenter';
 import {DatePipe} from '@angular/common';
 import {GlobalCapacityStatisticsDto} from './common/models/dtos/GlobalCapacityStatisticsDto';
+import {DatacenterListDto} from './common/models/dtos/datacenter-list.dto';
+import {DatacenterCapacityListDto} from './common/models/dtos/datacenter-capacity-list.dto';
 
 export enum PeriodType {
   DAY = 0,
@@ -54,39 +54,64 @@ export class MetricService {
     return datacenterObj.systems.find(system => system.id.toString() === systemId).name;
   }
 
-  getPerformanceStatistics(id: number, period: PeriodType): Observable<PerformanceStatisticsDto> {
-    if (id !== undefined) {
-      const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/performance');
-      return this.http.get<PerformanceStatisticsDto>(url);
+  getPerformanceStatistics(id: number, period: PeriodType): Observable<DatacenterListDto> {
+    let url;
+    if (id !== undefined && id !== -1) {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/performance');
+    } else {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/performance');
     }
+    return this.http.get<DatacenterListDto>(url);
   }
 
-  getCapacityStatistics(id: number): Observable<CapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/capacity');
-    return this.http.get<CapacityStatisticsDto>(url);
+  getCapacityStatistics(id: number): Observable<DatacenterCapacityListDto> {
+    let url;
+    if (id !== undefined && id !== -1) {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/capacity');
+    } else {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/capacity');
+    }
+    return this.http.get<DatacenterCapacityListDto>(url);
   }
 
-  getDpSlaStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/sla');
-    return this.http.get<CapacityStatisticsDto>(url);
+  getDpSlaStatistics(id: number, period: PeriodType): Observable<DatacenterCapacityListDto> {
+    let url;
+    if (id !== undefined && id !== -1) {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/sla');
+    } else {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/sla');
+    }
+    return this.http.get<DatacenterCapacityListDto>(url);
   }
 
-  getAdaptersStatistics(id: number, period: PeriodType): Observable<CapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/adapters');
-    return this.http.get<CapacityStatisticsDto>(url);
+  getAdaptersStatistics(id: number, period: PeriodType): Observable<DatacenterCapacityListDto> {
+    let url;
+    if (id !== undefined && id !== -1) {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/adapters');
+    } else {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/adapters');
+    }
+    return this.http.get<DatacenterCapacityListDto>(url);
   }
 
   getGlobalCapacityStatistics(): Observable<GlobalCapacityStatisticsDto> {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity');
     return this.http.get<GlobalCapacityStatisticsDto>(url);
   }
+
   getGlobalHostGroupCapacityStatistics(): Observable<GlobalCapacityStatisticsDto> {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/host-group-capacity');
     return this.http.get<GlobalCapacityStatisticsDto>(url);
   }
-  getHostGroupCapacityStatistics(id: number): Observable<GlobalCapacityStatisticsDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/host-groups');
-    return this.http.get<CapacityStatisticsDto>(url);
+
+  getHostGroupCapacityStatistics(id: number): Observable<DatacenterCapacityListDto> {
+    let url;
+    if (id !== undefined && id !== -1) {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/host-groups');
+    } else {
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/host-groups');
+    }
+    return this.http.get<DatacenterCapacityListDto>(url);
   }
 
   private getSuffix(period: PeriodType) {

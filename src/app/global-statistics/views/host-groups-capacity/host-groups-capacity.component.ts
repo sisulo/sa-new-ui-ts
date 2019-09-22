@@ -178,7 +178,8 @@ export class HostGroupsCapacityComponent implements OnInit {
   getTableData(id: number): SystemPool[] {
     this.metricService.getHostGroupCapacityStatistics(id).subscribe(
       data => {
-        this.data = data.systems;
+        this.data = [];
+        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
       },
       error => {
         console.log(error);

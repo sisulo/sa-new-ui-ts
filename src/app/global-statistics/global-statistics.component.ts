@@ -10,7 +10,7 @@ import {BusService} from './bus.service';
 })
 export class GlobalStatisticsComponent implements OnInit {
 
-  dataCenters: Datacenter[];
+  dataCenters: Datacenter[] = [];
   currentTab: number;
   context: string;
 
@@ -46,7 +46,12 @@ export class GlobalStatisticsComponent implements OnInit {
   getDatacenters(currentTab: number) {
     this.metricService.getDatacenters().subscribe(
       data => {
-        this.dataCenters = data.datacenters;
+        this.dataCenters = [];
+        const defaultDatacenter = new Datacenter();
+        defaultDatacenter.label = 'All'
+        defaultDatacenter.id = -1;
+        this.dataCenters.push(defaultDatacenter);
+        this.dataCenters = [...this.dataCenters, ...data.datacenters];
         this.currentTab = currentTab;
       }
     );

@@ -130,7 +130,8 @@ export class PerformanceStatisticsComponent implements OnInit {
     this.currentDataCenterId = id;
     this.metricService.getPerformanceStatistics(id, this.currentPeriod).subscribe(
       data => {
-        this.data = data.systems;
+        this.data = [];
+        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
       },
       error => {
         console.log(error);
