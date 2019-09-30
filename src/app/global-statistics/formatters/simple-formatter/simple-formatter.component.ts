@@ -27,7 +27,7 @@ export class SimpleFormatterComponent extends UnitFormatterComponent implements 
   }
 
   getValue() {
-    if (this.column.isInfinity && this.data.value === -1) {
+    if (this.column.isInfinity === true && this.data.value === -1) {
       return '<i class="fas fa-infinity" style="font-size: 12px"></i> ';
     }
     return this.data.value % 1 === 0 ? this.data.value : this.data.value.toFixed(1);

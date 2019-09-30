@@ -155,6 +155,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withIndex(SystemMetricType.CAPACITY_CHANGE_1D)
         .withLabel('Change 1D')
         .withComponent(SimpleFormatterComponent)
+        .withInfinity(false)
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('One Day Change')
@@ -167,6 +168,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withInfinity(false)
         .withTooltipText('One Week Change')
         .build()
     );
@@ -177,6 +179,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withInfinity(false)
         .withTooltipText('One Month Change')
         .build()
     );
