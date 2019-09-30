@@ -6,7 +6,7 @@
     <span class="info-box-number">{{value}}<small></small></span>
     <span *ngIf="data.length > 0">
       |<span *ngFor="let occurence of data; let i = index;">
-        <span *ngIf="i < 2" ><a [routerLink]="'/global-statistics/' + occurence.datacenterId + '/' + context">
+        <span *ngIf="i < 2" ><a [routerLink]="'/global-statistics/' + context + '/' + occurence.datacenterId">
           {{occurence.name}}</a> |
           </span>
       </span>
@@ -46,8 +46,8 @@
               {{occurence.value}} {{occurence.unit}}
             </td>
             <!---->
-            <!--<a [routerLink]="'/global-statistics/' + occurence.datacenterId + '/' + context">-->
-          <!--{{occurence.name}}</a> - {{occurence.value}} {{occurence.unit}} -->
+            <!--<a [routerLink]="'/global-statistics/' + occurrences.datacenterId + '/' + context">-->
+          <!--{{occurrences.name}}</a> - {{occurrences.value}} {{occurrences.unit}} -->
           </tr>
         </table>
       </div>

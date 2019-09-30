@@ -29,7 +29,7 @@ export class MetricService {
   }
 
   getInfrastructureStats(): Observable<InfrastructureDto> {
-    const url = this.buildUrl(environment.metricsBaseUrl, '/infrastructureMetric.json');
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/alerts');
     return this.http.get<InfrastructureDto>(url);
   }
 
@@ -42,16 +42,16 @@ export class MetricService {
     return dtoObservable;
   }
 
-  public getSystemName(datacenterId: string, systemId: string): string {
-    const datacenterObj = this.infrastructure.find(datacenter => datacenter.id.toString() === datacenterId);
+  public getSystemName(datacenterId: number, systemId: number): string {
+    const datacenterObj = this.infrastructure.find(datacenter => datacenter.id === datacenterId);
     if (datacenterObj === undefined) {
       return '';
     }
-    const systemObj = datacenterObj.systems.find(system => system.id.toString() === systemId);
+    const systemObj = datacenterObj.systems.find(system => system.id === systemId);
     if (systemObj === undefined) {
       return '';
     }
-    return datacenterObj.systems.find(system => system.id.toString() === systemId).name;
+    return datacenterObj.systems.find(system => system.id === systemId).name;
   }
 
   getPerformanceStatistics(id: number, period: PeriodType): Observable<DatacenterListDto> {
@@ -140,6 +140,5 @@ export class MetricService {
   private generateDate(): string {
     const pipe = new DatePipe('en-US');
     return pipe.transform(this.currentDate, 'yyyy-MM-dd');
-    // return '2019-06-18';
   }
 }

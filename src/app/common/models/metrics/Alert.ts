@@ -1,7 +1,7 @@
-import {AlertType} from './AlertType';
 import {Occurence} from './Occurence';
+import {SystemMetricType} from './SystemMetricType';
 
 export class Alert {
-  type: AlertType;
-  occurence: Occurence[];
+  type: SystemMetricType;
+  occurrences: Occurence[];
 }

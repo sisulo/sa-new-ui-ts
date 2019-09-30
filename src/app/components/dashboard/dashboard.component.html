@@ -6,7 +6,7 @@
     <h4>Performance</h4>
     <div *ngFor="let alert of alerts;let i = index">
       <div *ngIf="containsType(alert.type, alertsPerformance)" class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-        <app-info-box [value]="alert.occurence.length" [data]="alert.occurence" [context]="getLinkContext(alert.type)"
+        <app-info-box [value]="alert.occurrences.length" [data]="alert.occurrences" [context]="getLinkContext(alert.type)"
                       [label]="getAlertLabel(alert.type)" [icon]="getAlertIcon(alert.type)"></app-info-box>
       </div>
     </div>
@@ -14,8 +14,8 @@
   <section class="content">
     <h4>Operations</h4>
     <div *ngFor="let alert of alerts;let i = index" class="col-xs-6 col-sm-4 col-md-3 col-lg-3">
-      <app-info-box *ngIf="containsType(alert.type, alertsOperations)" [value]="alert.occurence.length"
-                    [data]="alert.occurence" [context]="getLinkContext(alert.type)"
+      <app-info-box *ngIf="containsType(alert.type, alertsOperations)" [value]="alert.occurrences.length"
+                    [data]="alert.occurrences" [context]="getLinkContext(alert.type)"
                     [label]="getAlertLabel(alert.type)" [icon]="getAlertIcon(alert.type)"></app-info-box>
     </div>
   </section>

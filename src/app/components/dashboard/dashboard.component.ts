@@ -44,16 +44,16 @@ export class DashboardComponent implements OnInit {
     this.alertLabels[AlertType.SLA_EVENTS] = 'Out of SLA Events';
     this.alertLabels[AlertType.WRITE_PENDING] = 'Cache Write Pending Events';
 
-    this.alertIcons[AlertType.CAPACITY_USAGE] = 'fa-pie-chart';
-    this.alertIcons[AlertType.CPU] = 'fa-dashboard';
+    this.alertIcons[AlertType.CAPACITY_USAGE] = 'fa-chart-pie';
+    this.alertIcons[AlertType.CPU] = 'fa-tachometer-alt';
     this.alertIcons[AlertType.DISBALANCE_EVENTS] = 'fa-random';
-    this.alertIcons[AlertType.HDD] = 'fa-hdd-o';
-    this.alertIcons[AlertType.RESPONSE] = 'fa-line-chart';
-    this.alertIcons[AlertType.SLA_EVENTS] = 'fa-bell-o';
-    this.alertIcons[AlertType.WRITE_PENDING] = 'fa-bar-chart';
+    this.alertIcons[AlertType.HDD] = 'fa-hdd';
+    this.alertIcons[AlertType.RESPONSE] = 'fa-chart-line';
+    this.alertIcons[AlertType.SLA_EVENTS] = 'fa-bell';
+    this.alertIcons[AlertType.WRITE_PENDING] = 'fa-chart-bar';
 
     this.metricIcons[SystemMetricType.WORKLOAD] = 'fa fa-chart-bar';
-    this.metricIcons[SystemMetricType.TRANSFER] = 'fa fa-exchange';
+    this.metricIcons[SystemMetricType.TRANSFER] = 'fa fa-exchange-alt';
 
     this.metricColor[SystemMetricType.WORKLOAD] = 'bg-maroon';
     this.metricColor[SystemMetricType.TRANSFER] = 'bg-primary';
@@ -70,6 +70,7 @@ export class DashboardComponent implements OnInit {
     this.alertsOperations.push(AlertType.CAPACITY_USAGE, AlertType.SLA_EVENTS, AlertType.DISBALANCE_EVENTS);
 
     this.metricService.getInfrastructureStats().subscribe(stats => {
+      console.log(stats);
       this.metrics = stats.metrics;
       this.alerts = stats.alerts;
     });
@@ -96,6 +97,8 @@ export class DashboardComponent implements OnInit {
   }
 
   getMetricIcon(type: SystemMetricType) {
+    console.log(type);
+    console.log(this.metricIcons[type]);
     return this.metricIcons[type];
   }
   getMetricLabel(type: SystemMetricType) {
