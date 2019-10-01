@@ -2,9 +2,20 @@ div.modal.open {
   display: block;
   padding-right: 15px;
 }
+
 .info-box-number {
   font-size: 25px;
 }
+
 .info-box-text {
   font-size: 17px;
+}
+
+.cut-text {
+  display: inline-block;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 80%;
+  height: 1.2em;
+  white-space: nowrap;
 }

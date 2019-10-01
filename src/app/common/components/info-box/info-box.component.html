@@ -1,17 +1,21 @@
 <div class="info-box">
-  <span [ngClass]="isOverThreshold() ? 'info-box-icon bg-orange': 'info-box-icon bg-green'" class="info-box-icon"><i class="fa" [ngClass]="isOverThreshold() ? 'fa-exclamation-triangle' : icon"></i></span>
+  <span [ngClass]="isOverThreshold() ? 'info-box-icon bg-orange': 'info-box-icon bg-green'" class="info-box-icon"><i
+    class="fa" [ngClass]="isOverThreshold() ? 'fa-exclamation-triangle' : icon"></i></span>
 
   <div class="info-box-content">
     <span class="info-box-text">{{label}}</span>
     <span class="info-box-number">{{value}}<small></small></span>
+    <div class="cut-text">
     <span *ngIf="data.length > 0">
       |<span *ngFor="let occurence of data; let i = index;">
-        <span *ngIf="i < 2" ><a [routerLink]="'/global-statistics/' + context + '/' + occurence.datacenterId">
+        <span *ngIf="i < 10"><a [routerLink]="'/global-statistics/' + context + '/' + occurence.datacenterId">
           {{occurence.name}}</a> |
           </span>
       </span>
     </span>
-    <span *ngIf="data.length > 2"> ... <a class="small-box-footer" href="#" [class.hidden]="!isOverThreshold()" (click)="openModal()"> >>> </a> </span>
+    </div>
+    <span *ngIf="data.length > 2"><a class="small-box-footer" href="#" [class.hidden]="!isOverThreshold()"
+                                          (click)="openModal()"> >>> </a> </span>
   </div>
   <!-- /.info-box-content -->
 </div>
@@ -26,11 +30,12 @@
       <div class="modal-body" *ngIf="data.length > 0">
         <table class="table table-bordered">
           <thead>
-            <tr>
-              <th>System</th>
-              <th *ngIf="data[0].entityType === entityType.POOL">Pool</th>
-              <th>Value</th>
-            </tr>
+          <tr>
+            <th>System</th>
+            <th *ngIf="data[0].entityType === entityType.POOL">Pool</th>
+            <th *ngIf="data[0].entityType === entityType.ADAPTER">Adapter</th>
+            <th>Value</th>
+          </tr>
           </thead>
           <tr *ngFor="let occurence of data">
             <td *ngIf="occurence.entityType === null">
@@ -39,7 +44,7 @@
             <td *ngIf="occurence.entityType !== null">
               {{metric.getSystemName(occurence.datacenterId, occurence.systemId)}}
             </td>
-            <td *ngIf="occurence.entityType === entityType.POOL">
+            <td *ngIf="occurence.entityType === entityType.POOL || occurence.entityType === entityType.ADAPTER ">
               {{occurence.name}}
             </td>
             <td>
@@ -47,12 +52,13 @@
             </td>
             <!---->
             <!--<a [routerLink]="'/global-statistics/' + occurrences.datacenterId + '/' + context">-->
-          <!--{{occurrences.name}}</a> - {{occurrences.value}} {{occurrences.unit}} -->
+            <!--{{occurrences.name}}</a> - {{occurrences.value}} {{occurrences.unit}} -->
           </tr>
         </table>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeModal()">Close</button>
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal" (click)="closeModal()">Close
+        </button>
       </div>
     </div>
     <!-- /.modal-content -->
