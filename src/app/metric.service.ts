@@ -11,9 +11,9 @@ import {DatacenterListDto} from './common/models/dtos/datacenter-list.dto';
 import {DatacenterCapacityListDto} from './common/models/dtos/datacenter-capacity-list.dto';
 
 export enum PeriodType {
-  DAY = 0,
-  WEEK,
-  MONTH
+  DAY = 'DAY',
+  WEEK = 'WEEK',
+  MONTH = 'MONTH'
 }
 
 @Injectable({
@@ -57,9 +57,9 @@ export class MetricService {
   getPerformanceStatistics(id: number, period: PeriodType): Observable<DatacenterListDto> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/performance');
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/performance', period);
     } else {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/performance');
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/performance', period);
     }
     return this.http.get<DatacenterListDto>(url);
   }
@@ -77,9 +77,9 @@ export class MetricService {
   getDpSlaStatistics(id: number, period: PeriodType): Observable<DatacenterCapacityListDto> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/sla');
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/sla', period);
     } else {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/sla');
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/sla', period);
     }
     return this.http.get<DatacenterCapacityListDto>(url);
   }
@@ -87,9 +87,9 @@ export class MetricService {
   getAdaptersStatistics(id: number, period: PeriodType): Observable<DatacenterCapacityListDto> {
     let url;
     if (id !== undefined && id !== -1) {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/adapters');
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/adapters', period);
     } else {
-      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/adapters');
+      url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/adapters', period);
     }
     return this.http.get<DatacenterCapacityListDto>(url);
   }
@@ -114,23 +114,12 @@ export class MetricService {
     return this.http.get<DatacenterCapacityListDto>(url);
   }
 
-  private getSuffix(period: PeriodType) {
-    let suffix = '';
-    switch (period) {
-      case PeriodType.WEEK:
-        suffix = '_week';
-        break;
-      case PeriodType.MONTH:
-        suffix = '_month';
-        break;
-      default:
-        suffix = '_day';
+  private buildUrl(baseUrl, basePath, period?) {
+    let periodParam = '';
+    if (period != null) {
+      periodParam = 'period=' + period + '&';
     }
-    return suffix;
-  }
-
-  private buildUrl(baseUrl, basePath) {
-    return baseUrl + basePath + '?t=' + this.generateSaltValue() + '&date=' + this.generateDate();
+    return baseUrl + basePath + '?' + periodParam + 't=' + this.generateSaltValue() + '&date=' + this.generateDate();
   }
 
   private generateSaltValue(): string {

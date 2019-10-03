@@ -152,39 +152,6 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1D)
-        .withLabel('Change 1D')
-        .withComponent(SimpleFormatterComponent)
-        .withInfinity(false)
-        .withAltSortEnable(false)
-        .withIsAggregated(true)
-        .withTooltipText('One Day Change')
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1W)
-        .withLabel('Change 1W')
-        .withComponent(SimpleFormatterComponent)
-        .withAltSortEnable(false)
-        .withIsAggregated(true)
-        .withInfinity(false)
-        .withTooltipText('One Week Change')
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.CAPACITY_CHANGE_1M)
-        .withLabel('Change 1M')
-        .withComponent(SimpleFormatterComponent)
-        .withAltSortEnable(false)
-        .withIsAggregated(true)
-        .withInfinity(false)
-        .withTooltipText('One Month Change')
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.PREDICTION_L1)
         .withLabel('Reach 80%')
         .withComponent(SimpleFormatterComponent)
@@ -214,6 +181,39 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withIsAggregated(false)
         .withTooltipText('Days to reach 88% of "Physical Used"')
         .withInfinity(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.CAPACITY_CHANGE_1D)
+        .withLabel('Change 1D')
+        .withComponent(SimpleFormatterComponent)
+        .withInfinity(false)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .withTooltipText('One Day Change')
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.CAPACITY_CHANGE_1W)
+        .withLabel('Change 1W')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .withInfinity(false)
+        .withTooltipText('One Week Change')
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.CAPACITY_CHANGE_1M)
+        .withLabel('Change 1M')
+        .withComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .withInfinity(false)
+        .withTooltipText('One Month Change')
         .build()
     );
     this.options.colControlFormatter = AlertFormatterComponent;

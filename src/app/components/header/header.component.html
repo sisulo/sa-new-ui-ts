@@ -20,9 +20,9 @@
     <ul [@openClose]="enable ? 'true' : 'false'"
         (@openClose.start)="onAnimationEvent($event)"
         class="nav navbar-nav navbar-left">
-      <li [class.active]="isCurrentPeriod(0)"><a class="btn" (click)="setCurrentPeriod(0)">Last Day</a></li>
-      <li [class.active]="isCurrentPeriod(1)"><a class="btn" (click)="setCurrentPeriod(1)">Last Week</a></li>
-      <li [class.active]="isCurrentPeriod(2)"><a class="btn" (click)="setCurrentPeriod(2)">Last Month</a></li>
+      <li [class.active]="isCurrentPeriod(periodType.DAY)"><a class="btn" (click)="setCurrentPeriod(periodType.DAY)">Last Day</a></li>
+      <li [class.active]="isCurrentPeriod(periodType.WEEK)"><a class="btn" (click)="setCurrentPeriod(periodType.WEEK)">Last Week</a></li>
+      <li [class.active]="isCurrentPeriod(periodType.MONTH)"><a class="btn" (click)="setCurrentPeriod(periodType.MONTH)">Last Month</a></li>
     </ul>
     <div class="logo-title">
       <img [src]="logoUrl" class="sa-logo pull-left"/>

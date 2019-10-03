@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PeriodType} from '../../metric.service';
 import {PeriodService} from '../../period.service';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -31,6 +31,7 @@ export class HeaderComponent implements OnInit {
 
   enable = false;
   logoUrl = environment.logoUrl;
+  periodType = PeriodType;
 
   public currentPeriod: PeriodType = PeriodType.DAY;
 
