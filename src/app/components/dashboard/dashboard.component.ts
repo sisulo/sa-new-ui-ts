@@ -15,8 +15,6 @@ declare var $: any;
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private metricService: MetricService) {
-  }
   metricLabels = {};
   alertLabels = {};
   metrics: Metric[] = [];
@@ -31,6 +29,9 @@ export class DashboardComponent implements OnInit {
   registeredSystems: Metric;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
   currentColor = 0;
+
+  constructor(private metricService: MetricService) {
+  }
 
   ngOnInit() {
     this.metricLabels[SystemMetricType.WORKLOAD] = 'Total Workload';
@@ -90,19 +91,19 @@ export class DashboardComponent implements OnInit {
   }
 
   containsType(alertType: AlertType, types: []) {
-      return types.find(type => type === alertType) !== undefined;
+    return types.find(type => type === alertType) !== undefined;
   }
+
   getAlertIcon(type: SystemMetricType) {
     return this.alertIcons[type];
   }
 
   getMetricIcon(type: SystemMetricType) {
-    console.log(type);
-    console.log(this.metricIcons[type]);
     return this.metricIcons[type];
   }
+
   getMetricLabel(type: SystemMetricType) {
-      return this.metricLabels[type];
+    return this.metricLabels[type];
   }
 
   getMetricColor(type: SystemMetricType) {
@@ -113,9 +114,27 @@ export class DashboardComponent implements OnInit {
     return this.linkContext[type];
   }
 
+  getThresholdMessage(type: AlertType, minValue: number, maxValue: number, unit: string) {
+    if (maxValue == null && minValue == null) {
+      return null;
+    }
+    let sanitizeUnit = unit;
+    if (sanitizeUnit == null) {
+      sanitizeUnit = '';
+    }
+    if (maxValue == null) {
+      return `${this.getAlertLabel(type)} over ${minValue}${sanitizeUnit}`;
+    }
+    if (minValue == null) {
+      return `${this.getAlertLabel(type)} under ${maxValue}${sanitizeUnit}`;
+    }
+    return `${this.getAlertLabel(type)} between ${minValue}${sanitizeUnit} and ${maxValue}${sanitizeUnit}`;
+  }
+
   getAlertLabel(type: AlertType) {
     return this.alertLabels[type];
   }
+
   getColor(colorIndex): string {
     this.currentColor += 1;
     return this.colors[colorIndex % this.colors.length];

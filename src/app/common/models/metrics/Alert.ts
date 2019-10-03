@@ -1,7 +1,10 @@
 import {Occurence} from './Occurence';
-import {SystemMetricType} from './SystemMetricType';
+import {AlertType} from './AlertType';
 
 export class Alert {
-  type: SystemMetricType;
+  type: AlertType;
+  minValue: number;
+  maxValue: number;
+  unit: string;
   occurrences: Occurence[];
 }

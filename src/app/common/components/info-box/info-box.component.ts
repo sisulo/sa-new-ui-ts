@@ -14,9 +14,12 @@ export class InfoBoxComponent implements OnInit {
   @Input() value: number;
   @Input() label: string;
   @Input() context: string;
+  @Input() minValue = 0;
+  @Input() maxValue = 0;
   @Input() threshold = 0;
   @Input() icon = '';
   @Input() data: Occurence[] = [];
+  @Input() infoBoxTooltip: string;
 
   entityType = EntityType;
   modalState = 'close';

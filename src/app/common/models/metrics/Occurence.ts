@@ -9,4 +9,6 @@ export class Occurence {
   value: number;
   unit: string;
   average: number;
+  minValue: number;
+  maxValue: number;
 }
