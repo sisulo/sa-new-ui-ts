@@ -80,6 +80,7 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         }
         const systemStats = this.partiallySummarizedValues;
         const physicalCapacity = this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY);
+        const netTotal = this.getMetricValueByName(sasiRow, SystemMetricType.NET_TOTAL);
         // systemStats.physicalCapacity += physicalCapacity;
         this.partiallySummarizedValues.setValue(
           SystemMetricType.PHYSICAL_CAPACITY,
@@ -101,7 +102,7 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         this.partiallySummarizedValues.setValue(SystemMetricType.NET_SUBS_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.NET_SUBS_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.NET_SUBS_PERC));
         this.partiallySummarizedValues.setValue(SystemMetricType.LOGICAL_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.LOGICAL_USED_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.LOGICAL_USED_PERC));
         this.partiallySummarizedValues.setValue(SystemMetricType.PHYSICAL_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_USED_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_USED_PERC));
-        this.partiallySummarizedValues.setValue(SystemMetricType.NET_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.NET_USED_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.NET_USED_PERC));
+        this.partiallySummarizedValues.setValue(SystemMetricType.NET_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.NET_USED_PERC) * netTotal, this.getUnitByName(sasiRow, SystemMetricType.NET_USED_PERC));
         const compRatio = this.getMetricValueByName(sasiRow, SystemMetricType.COMPRESS_RATIO);
         if (compRatio > 0) {
           this.physicalCapacityCompRatio += physicalCapacity;
@@ -152,7 +153,7 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
     summarizedValues.setValue(SystemMetricType.NET_SUBS_PERC, values.getValue(SystemMetricType.NET_SUBS_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
     summarizedValues.setValue(SystemMetricType.LOGICAL_USED_PERC, values.getValue(SystemMetricType.LOGICAL_USED_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
     summarizedValues.setValue(SystemMetricType.PHYSICAL_USED_PERC, values.getValue(SystemMetricType.PHYSICAL_USED_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
-    summarizedValues.setValue(SystemMetricType.NET_USED_PERC, values.getValue(SystemMetricType.NET_USED_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.NET_USED_PERC).unit);
+    summarizedValues.setValue(SystemMetricType.NET_USED_PERC, values.getValue(SystemMetricType.NET_USED_PERC).value / summarizedValues.getValue(SystemMetricType.NET_TOTAL).value, values.getValue(SystemMetricType.NET_USED_PERC).unit);
     summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1D, values.getValue(SystemMetricType.CAPACITY_CHANGE_1D).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1D).unit);
     summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1W, values.getValue(SystemMetricType.CAPACITY_CHANGE_1W).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1W).unit);
     summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1M, values.getValue(SystemMetricType.CAPACITY_CHANGE_1M).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1M).unit);
