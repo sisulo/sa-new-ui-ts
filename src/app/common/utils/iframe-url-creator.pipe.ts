@@ -52,7 +52,7 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     if (args.anchor != null) {
       anchorParam = `#${args.anchor}`;
     }
-    return UrlCreator.url(this.mapToDirectory(value), this.iFrameLinks[args.iframeLink]);
+    return UrlCreator.url(this.mapToDirectory(value), this.iFrameLinks[args.iframeLink] + anchorParam);
   }
 
   mapToDirectory(id: number) {
