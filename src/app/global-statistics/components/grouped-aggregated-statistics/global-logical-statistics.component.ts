@@ -111,7 +111,7 @@ export class GlobalLogicalStatisticsComponent extends CommonAggregatedStats impl
               const row = new SelectedRow(system.name, pool.name);
               filter.push(row);
             }));
-        this.result = average.computeSummaries(this.transformer.transform(data.systems), filter);
+        this.result = average.computeSummaries(this.transformer.transform(data.systems, ''), filter);
       },
       error => {
         console.log(error);

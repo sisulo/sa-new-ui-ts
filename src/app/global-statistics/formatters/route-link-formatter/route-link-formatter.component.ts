@@ -11,6 +11,7 @@ export class RouteLinkFormatterComponent implements OnInit {
   @Input() public label;
 
   constructor() {
+
   }
 
   ngOnInit() {

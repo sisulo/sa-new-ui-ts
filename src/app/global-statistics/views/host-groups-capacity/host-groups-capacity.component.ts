@@ -9,7 +9,6 @@ import {PeriodService} from '../../../period.service';
 import {MetricService} from '../../../metric.service';
 import {BusService} from '../../bus.service';
 import {LocalStorageService} from 'ngx-store';
-import {EmphFormatterComponent} from '../../formatters/emph-formatter/emph-formatter.component';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {RouteLinkFormatterComponent} from '../../formatters/route-link-formatter/route-link-formatter.component';
@@ -71,7 +70,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withIndex('name')
         .withLabel('Host-Group')
         .withAltLabel('System')
-        .withComponent(EmphFormatterComponent)
+        .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()

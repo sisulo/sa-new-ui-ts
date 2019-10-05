@@ -11,14 +11,14 @@ export class SystemPool2SasiGroupTablePipe implements PipeTransform {
   constructor(private rowPipe: SystemPool2SasiTablePipe) {
   }
 
-  transform(systems: SystemPool[], args?: any): SasiGroupRow[] {
+  transform(systems: SystemPool[], context?: string): SasiGroupRow[] {
     return systems.map(
       system => {
         const row = new SasiGroupRow();
         const groupRow = new SasiRow();
-        groupRow.cells['name'] = new SasiCell(system.name, {id: system.id, iFrameLink: 'dashboard', value: system.name});
+        groupRow.cells['name'] = new SasiCell(system.name, {id: system.id, iFrameLink: context, value: system.name});
         row.groupRow = groupRow;
-        row.rows = this.rowPipe.transform(system.pools);
+        row.rows = this.rowPipe.transform(system.pools, context, system.id);
         return row;
       }
     );

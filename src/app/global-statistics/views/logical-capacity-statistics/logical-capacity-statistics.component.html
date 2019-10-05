@@ -1,7 +1,7 @@
 <div class="tab-pane" *ngIf="data.length > 0">
   <div class="container-fluid">
     <div class="row col-md-12">
-      <app-sasi-table [data]="data | systemPool2SasiGroupTable" [tableOptions]="options"></app-sasi-table>
+      <app-sasi-table [data]="data | systemPool2SasiGroupTable: 'capacityAnalysis'" [tableOptions]="options"></app-sasi-table>
       <app-grouped-aggregated-statistics class='col-md-12 sticky-bottom' [data]="data | systemPool2SasiGroupTable" [selectedRows]="selectedRows" [prefix]="options.storageNamePrefix"></app-grouped-aggregated-statistics>
     </div>
   </div>

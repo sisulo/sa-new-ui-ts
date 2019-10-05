@@ -1,4 +1,4 @@
 <!--<span [className]="getAlertType(pool, type)">-->
 <span *ngIf="data != null">
-  <span class="system-name"><a [routerLink]="data.id | iframeUrlCreator:data.iFrameLink">{{data.value}}</a></span>
+  <span class="system-name"><a [routerLink]="data.id | iframeUrlCreator: {iframeLink:data.iFrameLink, anchor: data.value}">{{data.value}}</a></span>
 </span>

@@ -14,7 +14,8 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     cache: '8%20Cache%20Board/index.html',
     adapters: '8%20CHA%20Adapters%20Board/index.html',
     trends: '8%20Trends/index.html',
-    capacityAnalysis: '9%20Capacity%20Analysis/index.html'
+    capacityAnalysis: '9%20Capacity%20Analysis/index.html',
+    hostGroups: '9%20Capacity%20Analysis/VM%20Capacity%20Analysis.html',
   };
   mapSystemToDirectory = [];
 
@@ -46,8 +47,12 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     this.mapSystemToDirectory[25] = '63';
   }
 
-  transform(value: any, linkType: string): any {
-    return UrlCreator.url(this.mapToDirectory(value), this.iFrameLinks[linkType]);
+  transform(value: any, args: any): any {
+    let anchorParam = '';
+    if (args.anchor != null) {
+      anchorParam = `#${args.anchor}`;
+    }
+    return UrlCreator.url(this.mapToDirectory(value), this.iFrameLinks[args.iframeLink]);
   }
 
   mapToDirectory(id: number) {

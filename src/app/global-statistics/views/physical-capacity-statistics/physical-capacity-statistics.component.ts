@@ -15,7 +15,6 @@ import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-
 import {AlertRule, Threshold} from '../../AlertRule';
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
-import {EmphFormatterComponent} from '../../formatters/emph-formatter/emph-formatter.component';
 import {LocalStorageService} from 'ngx-store';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 
@@ -90,7 +89,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withIndex('name')
         .withLabel('Pool')
         .withAltLabel('System')
-        .withComponent(EmphFormatterComponent)
+        .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
