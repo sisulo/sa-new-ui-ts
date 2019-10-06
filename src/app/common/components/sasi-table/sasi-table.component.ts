@@ -2,7 +2,7 @@ import {Component, Input, OnInit, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/AlertRule';
 import {LocalStorageService} from 'ngx-store';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import {AggregateValueService} from './row-group-table/row-group-table.component';
+import {AggregatedValues, AggregateValueService} from './row-group-table/row-group-table.component';
 import {Sort} from './sort';
 import {SelectedRow} from './row-table/selected-row';
 import {OnSelectService} from './on-select.service';
@@ -183,6 +183,7 @@ export class SasiRow {
 export class SasiGroupRow {
   public groupRow: SasiRow;
   public rows: SasiRow[] = [];
+  public aggregatedValues: AggregatedValues;
 }
 
 /**

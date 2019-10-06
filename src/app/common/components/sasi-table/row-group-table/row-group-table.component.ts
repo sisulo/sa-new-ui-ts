@@ -142,6 +142,7 @@ export class RowGroupTableComponent implements OnInit {
         }
       );
     }
+    this.data.aggregatedValues = values;
     this.aggregatedValues = result;
   }
 

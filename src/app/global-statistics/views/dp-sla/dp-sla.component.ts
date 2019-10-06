@@ -12,8 +12,8 @@ import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {TimeFormatterComponent} from '../../formatters/time-formatter/time-formatter.component';
 import {SumValueServiceImpl} from '../../utils/SumValueServiceImpl';
-import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {EmphFormatterComponent} from '../../formatters/emph-formatter/emph-formatter.component';
+import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
 
 
 @Component({
@@ -78,7 +78,7 @@ export class DpSlaComponent implements OnInit {
     this.options.labelColumnWidth = '25';
     this.options.valueColumnWidth = '35.75';
     this.options.aggregateValuesService = new SumValueServiceImpl();
-    this.options.sortService = new GroupSortImpl();
+    this.options.sortService = new GroupSortAggregateValueImpl();
   }
 
   ngOnInit() {

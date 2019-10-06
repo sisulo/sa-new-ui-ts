@@ -10,10 +10,10 @@ import {RouteLinkFormatterComponent} from '../../formatters/route-link-formatter
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SumValueServiceImpl} from '../../utils/SumValueServiceImpl';
-import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {EmphFormatterComponent} from '../../formatters/emph-formatter/emph-formatter.component';
 import {DisbalanceFormatterComponent} from '../../formatters/disbalance-formatter/disbalance-formatter.component';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
+import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
 
 // TODO separate components, pipes, utils to own directories
 @Component({
@@ -78,7 +78,7 @@ export class AdaptersComponent implements OnInit {
     this.options.labelColumnWidth = '25';
     this.options.valueColumnWidth = '35.75';
     this.options.aggregateValuesService = new SumValueServiceImpl();
-    this.options.sortService = new GroupSortImpl();
+    this.options.sortService = new GroupSortAggregateValueImpl();
   }
 
   ngOnInit() {
