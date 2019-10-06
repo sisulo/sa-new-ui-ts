@@ -120,7 +120,8 @@ export class PerformanceStatisticsComponent implements OnInit {
       }
     );
     this.periodService.announceEnablePeriod(true);
-
+    console.log('Init perf');
+    this.periodService.announcePeriod(this.currentPeriod);
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.CPU, new Threshold('text-orange', 80, 10000)));
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.WRITE_PENDING_PERC, new Threshold('text-orange', 30, 10000)));
   }

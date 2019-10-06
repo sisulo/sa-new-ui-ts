@@ -41,6 +41,7 @@ export class HeaderComponent implements OnInit {
     this.periodService.periodEnableAnnouncement.subscribe(
       value => this.enable = value
     );
+    this.periodService.periodAnnouncement$.subscribe(value => this.currentPeriod = value);
   }
 
   setCurrentPeriod(period: PeriodType) {

@@ -97,6 +97,7 @@ export class AdaptersComponent implements OnInit {
       }
     );
     this.periodService.announceEnablePeriod(true);
+    this.periodService.announcePeriod(this.currentPeriod);
   }
 
   getTableData(id: number): any[] { // TODO duplicated for all GS sasi tables
