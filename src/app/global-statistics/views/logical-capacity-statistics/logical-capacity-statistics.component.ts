@@ -76,6 +76,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Subscribed Capacity')
+        .withAltBorder(true)
         .build()
     );
 
@@ -117,6 +118,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Net Subscription')
+        .withAltBorder(true)
         .build()
     );
     this.options.columns.push(
@@ -157,6 +159,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Physical Used')
+        .withAltBorder(true)
         .build()
     );
     this.options.columns.push(
@@ -197,6 +200,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Logical Used')
+        .withAltBorder(true)
         .build()
     );
     this.options.columns.push(
@@ -237,6 +241,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Net Used')
+        .withAltBorder(true)
         .build()
     );
     this.options.columns.push(

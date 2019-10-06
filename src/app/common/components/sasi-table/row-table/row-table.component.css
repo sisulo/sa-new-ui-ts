@@ -41,11 +41,18 @@
   background-color: #BEECD1;
   color: #3A738C;
 }
+
 .table-data .highlightColumn {
   background-color: #b4d1ee !important;
   color: #3A738C;
 }
+
 .highlight-row:hover {
   background-color: #b4d1ee !important;
   color: #3A738C;
+}
+
+.table-data div.alt-border {
+  /*border-left: 1px solid black;*/
+  border-right: 2px solid #b4d1ee;
 }

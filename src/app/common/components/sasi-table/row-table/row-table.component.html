@@ -15,6 +15,7 @@
        [class.highlightColumn]="isColumnHighlighted(colIndex)"
        [class.text-right]="colIndex > 0 && options.columnAlign === 'right'"
        [class.text-center]="colIndex <= 0 || options.columnAlign !== 'right'"
+       [class.alt-border]="column.altBorder"
   >
    <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label" [rowData]="data"
                     [options]="options" [column]="column"></app-cell-table>

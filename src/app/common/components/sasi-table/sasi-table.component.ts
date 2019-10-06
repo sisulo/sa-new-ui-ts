@@ -34,6 +34,8 @@ export class SasiColumnBuilder {
 
   private altLabel;
 
+  private altBorder = false;
+
   private constructor() {
   }
 
@@ -76,6 +78,11 @@ export class SasiColumnBuilder {
     return this;
   }
 
+  withAltBorder(altBorder: boolean) {
+    this.altBorder = altBorder;
+    return this;
+  }
+
   build(): SasiColumn {
     return new SasiColumn(
       this.index,
@@ -85,7 +92,8 @@ export class SasiColumnBuilder {
       this.isAggregated,
       this.tooltipText === null ? this.label : this.tooltipText,
       this.infinity,
-      this.altLabel
+      this.altLabel,
+      this.altBorder
     );
   }
 
@@ -119,6 +127,8 @@ export class SasiColumn {
 
   altLabel: string;
 
+  altBorder: boolean;
+
   constructor(
     index: string,
     label: string,
@@ -127,7 +137,8 @@ export class SasiColumn {
     isAggragated: boolean,
     tooltipText: string,
     isInfinity: boolean,
-    altLabel: string
+    altLabel: string,
+    altBorder: boolean,
   ) {
     this.index = index;
     this.label = label;
@@ -137,6 +148,7 @@ export class SasiColumn {
     this.tooltipText = tooltipText;
     this.isInfinity = isInfinity;
     this.altLabel = altLabel;
+    this.altBorder = altBorder;
   }
 }
 
@@ -302,7 +314,7 @@ export class SasiTableComponent implements OnInit {
   altSort = false;
 
   constructor(private localStorageService: LocalStorageService,
-    private onSelectService: OnSelectService) {
+              private onSelectService: OnSelectService) {
 
   }
 
