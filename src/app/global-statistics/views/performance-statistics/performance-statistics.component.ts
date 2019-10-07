@@ -7,7 +7,7 @@ import {PeriodService} from '../../../period.service';
 import {BusService} from '../../bus.service';
 import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
 import {UnitFormatterComponent} from '../../formatters/unit-formatter/unit-formatter.component';
-import {RouteLinkFormatterComponent} from '../../formatters/route-link-formatter/route-link-formatter.component';
+import {RouteLinkFormatterComponent} from '../../../common/components/route-link-formatter/route-link-formatter.component';
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {AlertRule, Threshold} from '../../AlertRule';
 import {RowTableComponent} from '../../../common/components/sasi-table/row-table/row-table.component';

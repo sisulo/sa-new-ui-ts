@@ -59,13 +59,13 @@ export class DashboardComponent implements OnInit {
     this.metricColor[SystemMetricType.WORKLOAD] = 'bg-maroon';
     this.metricColor[SystemMetricType.TRANSFER] = 'bg-primary';
 
-    this.linkContext[AlertType.CAPACITY_USAGE] = 'capacity';
+    this.linkContext[AlertType.CAPACITY_USAGE] = 'physical-capacity';
     this.linkContext[AlertType.CPU] = 'performance';
     this.linkContext[AlertType.DISBALANCE_EVENTS] = 'adapters';
     this.linkContext[AlertType.HDD] = 'performance';
     this.linkContext[AlertType.RESPONSE] = 'performance';
     this.linkContext[AlertType.SLA_EVENTS] = 'dp-sla';
-    this.linkContext[AlertType.WRITE_PENDING] = 'capacity';
+    this.linkContext[AlertType.WRITE_PENDING] = 'physical-capacity';
 
     this.alertsPerformance.push(AlertType.CPU, AlertType.HDD, AlertType.WRITE_PENDING, AlertType.RESPONSE);
     this.alertsOperations.push(AlertType.CAPACITY_USAGE, AlertType.SLA_EVENTS, AlertType.DISBALANCE_EVENTS);

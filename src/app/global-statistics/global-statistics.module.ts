@@ -8,7 +8,7 @@ import {SaCommonModule} from '../common/sa-common.module';
 import {TooltipModule} from 'ng2-tooltip-directive';
 import {DpSlaComponent} from './views/dp-sla/dp-sla.component';
 import {AdaptersComponent} from './views/adapters/adapters.component';
-import {RouteLinkFormatterComponent} from './formatters/route-link-formatter/route-link-formatter.component';
+import {RouteLinkFormatterComponent} from '../common/components/route-link-formatter/route-link-formatter.component';
 import {UnitFormatterComponent} from './formatters/unit-formatter/unit-formatter.component';
 import {AlertFormatterComponent} from './formatters/alert-formatter/alert-formatter.component';
 import {SimpleFormatterComponent} from './formatters/simple-formatter/simple-formatter.component';
@@ -32,7 +32,6 @@ import {GlobalHostGroupCapacityComponent} from './components/aggragated-statisti
     PerformanceStatisticsComponent,
     DpSlaComponent,
     AdaptersComponent,
-    RouteLinkFormatterComponent,
     UnitFormatterComponent,
     AlertFormatterComponent,
     SimpleFormatterComponent,
@@ -48,6 +47,8 @@ import {GlobalHostGroupCapacityComponent} from './components/aggragated-statisti
     GlobalLogicalStatisticsComponent,
     HostGroupsCapacityComponent,
     GlobalHostGroupCapacityComponent
+  ],
+  exports: [
   ],
   imports: [
     CommonModule,

@@ -9,7 +9,7 @@ import {MetricService} from '../../../metric.service';
 import {BusService} from '../../bus.service';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
-import {RouteLinkFormatterComponent} from '../../formatters/route-link-formatter/route-link-formatter.component';
+import {RouteLinkFormatterComponent} from '../../../common/components/route-link-formatter/route-link-formatter.component';
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {LocalStorageService} from 'ngx-store';

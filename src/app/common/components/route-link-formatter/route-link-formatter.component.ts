@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-simple-unit-formatter',
+  selector: 'app-route-link-formatter',
   templateUrl: './route-link-formatter.component.html',
   styleUrls: ['./route-link-formatter.component.css']
 })

@@ -39,13 +39,13 @@
           </thead>
           <tr *ngFor="let occurence of data">
             <td *ngIf="occurence.entityType === null">
-              {{occurence.name}}
+              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: entityType.ADAPTER, value: occurence.name}"></app-route-link-formatter>
             </td>
             <td *ngIf="occurence.entityType !== null">
-              {{metric.getSystemName(occurence.datacenterId, occurence.systemId)}}
+              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: entityType.ADAPTER, value: metric.getSystemName(occurence.datacenterId, occurence.systemId)}"></app-route-link-formatter>
             </td>
             <td *ngIf="occurence.entityType === entityType.POOL || occurence.entityType === entityType.ADAPTER ">
-              {{occurence.name}}
+              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: entityType.ADAPTER, value: occurence.name}"></app-route-link-formatter>
             </td>
             <td>
               {{occurence.value}} {{occurence.unit}}

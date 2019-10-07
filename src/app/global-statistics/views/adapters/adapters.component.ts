@@ -6,7 +6,7 @@ import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType'
 import {SystemPool} from '../../../common/models/SystemPool';
 import {BusService} from '../../bus.service';
 import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
-import {RouteLinkFormatterComponent} from '../../formatters/route-link-formatter/route-link-formatter.component';
+import {RouteLinkFormatterComponent} from '../../../common/components/route-link-formatter/route-link-formatter.component';
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SumValueServiceImpl} from '../../utils/SumValueServiceImpl';

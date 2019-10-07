@@ -7,7 +7,6 @@ import {SystemPool2SasiTablePipe} from './utils/system-pool-2-sasi-table.pipe';
 import {SasiTableComponent} from './components/sasi-table/sasi-table.component';
 import {CellTableComponent} from './components/sasi-table/cell-table.component';
 import {FormatterHostDirective} from './components/sasi-table/formatter-host.directive';
-import {RouteLinkFormatterComponent} from '../global-statistics/formatters/route-link-formatter/route-link-formatter.component';
 import {UnitFormatterComponent} from '../global-statistics/formatters/unit-formatter/unit-formatter.component';
 import {TooltipModule} from 'ng2-tooltip-directive';
 import {RowTableComponent} from './components/sasi-table/row-table/row-table.component';
@@ -26,6 +25,7 @@ import {EmphFormatterComponent} from '../global-statistics/formatters/emph-forma
 import {SafeHtmlPipe} from './utils/safe-html.pipe';
 import {DisbalanceFormatterComponent} from '../global-statistics/formatters/disbalance-formatter/disbalance-formatter.component';
 import {FormatThousandsPipe} from './utils/format-thousands.pipe';
+import {RouteLinkFormatterComponent} from './components/route-link-formatter/route-link-formatter.component';
 
 @NgModule({
   declarations: [
@@ -44,13 +44,14 @@ import {FormatThousandsPipe} from './utils/format-thousands.pipe';
     Ng2KnobDirective,
     LocaleNumberFormatPipe,
     SafeHtmlPipe,
-    FormatThousandsPipe
+    FormatThousandsPipe,
+    RouteLinkFormatterComponent
 
   ],
   imports: [
     CommonModule,
     TooltipModule,
-    RouterModule
+    RouterModule,
   ],
   exports: [
     IframeUrlCreatorPipe,
@@ -62,10 +63,10 @@ import {FormatThousandsPipe} from './utils/format-thousands.pipe';
     SmallBoxComponent,
     Ng2KnobDirective,
     SafeHtmlPipe,
-    FormatThousandsPipe
+    FormatThousandsPipe,
+    RouteLinkFormatterComponent,
   ],
   entryComponents: [
-    RouteLinkFormatterComponent,
     UnitFormatterComponent,
     AlertFormatterComponent,
     SimpleFormatterComponent,
@@ -74,7 +75,8 @@ import {FormatThousandsPipe} from './utils/format-thousands.pipe';
     TimeFormatterComponent,
     TextFormatterComponent,
     EmphFormatterComponent,
-    DisbalanceFormatterComponent
+    DisbalanceFormatterComponent,
+    RouteLinkFormatterComponent
   ]
 })
 export class SaCommonModule {
