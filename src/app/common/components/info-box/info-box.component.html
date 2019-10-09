@@ -38,14 +38,11 @@
           </tr>
           </thead>
           <tr *ngFor="let occurence of data">
-            <td *ngIf="occurence.entityType === null">
-              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: entityType.ADAPTER, value: occurence.name}"></app-route-link-formatter>
-            </td>
             <td *ngIf="occurence.entityType !== null">
-              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: entityType.ADAPTER, value: metric.getSystemName(occurence.datacenterId, occurence.systemId)}"></app-route-link-formatter>
+              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: metric.getSystemName(occurence.datacenterId, occurence.systemId)}"></app-route-link-formatter>
             </td>
             <td *ngIf="occurence.entityType === entityType.POOL || occurence.entityType === entityType.ADAPTER ">
-              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: entityType.ADAPTER, value: occurence.name}"></app-route-link-formatter>
+              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: occurence.name}"></app-route-link-formatter>
             </td>
             <td>
               {{occurence.value}} {{occurence.unit}}

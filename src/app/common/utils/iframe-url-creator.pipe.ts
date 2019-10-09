@@ -50,7 +50,7 @@ export class IframeUrlCreatorPipe implements PipeTransform {
   transform(value: any, args: any): any {
     let anchorParam = '';
     if (args.anchor != null) {
-      anchorParam = `#${args.anchor}`;
+      anchorParam = `#${this.normalizeAnchor(args.anchor)}`;
     }
     return UrlCreator.url(this.mapToDirectory(value), this.iFrameLinks[args.iframeLink] + anchorParam);
   }
@@ -60,5 +60,11 @@ export class IframeUrlCreatorPipe implements PipeTransform {
       return this.mapSystemToDirectory[id];
     }
     throw new Error(`ID: ${id} not found in mapping`);
+  }
+  normalizeAnchor(value) {
+    if (value != null) {
+      return value.replace(/[#\-\s\,]+/g, '_');
+    }
+    return '';
   }
 }

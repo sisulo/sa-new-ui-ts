@@ -19,8 +19,7 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
         if (linkId != null) {
           linkIdInput = linkId;
         }
-        const normalizedName = this.normalizeAnchor(system.name);
-        row.cells['name'] = new SasiCell(system.name, {id: linkIdInput, iFrameLink: context, value: normalizedName});
+        row.cells['name'] = new SasiCell(system.name, {id: linkIdInput, iFrameLink: context, value: system.name});
         system.metrics.forEach(
           metric => row.cells[metric.type] = new SasiCell(metric.value, metric)
         );
@@ -29,11 +28,6 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
     );
   }
 
-  normalizeAnchor(value) {
-    if (value != null) {
-      return value.replace(/[#\-\s]+/g, '_');
-    }
-    return '';
-  }
+
 
 }

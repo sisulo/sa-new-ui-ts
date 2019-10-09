@@ -23,6 +23,7 @@ export class InfoBoxComponent implements OnInit {
 
   entityType = EntityType;
   modalState = 'close';
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -55,5 +56,17 @@ export class InfoBoxComponent implements OnInit {
 
   isModalOpened() {
     return this.modalState === 'open';
+  }
+
+  getIframeLink(entityType: EntityType) {
+    switch (entityType) {
+      case EntityType.ADAPTER:
+        return 'adapters';
+      case EntityType.POOL:
+        return 'capacityAnalysis';
+      case EntityType.SYSTEM:
+        return 'dashboard';
+
+    }
   }
 }
