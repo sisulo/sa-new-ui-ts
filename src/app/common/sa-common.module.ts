@@ -26,6 +26,7 @@ import {SafeHtmlPipe} from './utils/safe-html.pipe';
 import {DisbalanceFormatterComponent} from '../global-statistics/formatters/disbalance-formatter/disbalance-formatter.component';
 import {FormatThousandsPipe} from './utils/format-thousands.pipe';
 import {RouteLinkFormatterComponent} from './components/route-link-formatter/route-link-formatter.component';
+import {StorageConvertPipe} from './storage-convert.pipe';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {RouteLinkFormatterComponent} from './components/route-link-formatter/rou
     LocaleNumberFormatPipe,
     SafeHtmlPipe,
     FormatThousandsPipe,
-    RouteLinkFormatterComponent
+    RouteLinkFormatterComponent,
+    StorageConvertPipe
 
   ],
   imports: [
@@ -65,6 +67,7 @@ import {RouteLinkFormatterComponent} from './components/route-link-formatter/rou
     SafeHtmlPipe,
     FormatThousandsPipe,
     RouteLinkFormatterComponent,
+    StorageConvertPipe,
   ],
   entryComponents: [
     UnitFormatterComponent,

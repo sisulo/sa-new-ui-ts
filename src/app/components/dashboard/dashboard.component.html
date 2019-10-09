@@ -1,6 +1,6 @@
 <div class="row">
   <section class="content-header">
-    <H1><i class="fa fa-bell-o"></i> Alerts (Last 24 Hours)</H1>
+    <H1><i class="fa fa-bell"></i> Alerts (Last 24 Hours)</H1>
   </section>
   <section class="content">
     <h4>Performance</h4>
@@ -55,7 +55,7 @@
                 <section class="content" *ngIf="metrics.length > 0">
                   <div *ngFor="let metric of metrics" class="col-md-12 col-xs-6">
                     <!-- small box -->
-                    <app-small-box [data]="metric" [label]="getMetricLabel(metric.type)" [icon]="getMetricIcon(metric.type)"
+                    <app-small-box [data]="metric | storageConvert" [label]="getMetricLabel(metric.type)" [icon]="getMetricIcon(metric.type)"
                                    [color]="getMetricColor(metric.type)"></app-small-box>
                   </div>
                 </section>
