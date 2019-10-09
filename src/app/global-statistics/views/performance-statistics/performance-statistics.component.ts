@@ -20,7 +20,7 @@ import {SimpleSortImpl} from '../../../common/components/sasi-table/simple-sort-
 })
 export class PerformanceStatisticsComponent implements OnInit {
 
-  currentPeriod: PeriodType = PeriodType.DAY;
+  currentPeriod: PeriodType = PeriodType.WEEK;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   options: SasiTableOptions = new SasiTableOptions();
   currentDataCenterId;

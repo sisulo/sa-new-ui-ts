@@ -33,7 +33,7 @@ export class HeaderComponent implements OnInit {
   logoUrl = environment.logoUrl;
   periodType = PeriodType;
 
-  public currentPeriod: PeriodType = PeriodType.DAY;
+  public currentPeriod: PeriodType = PeriodType.WEEK;
 
   constructor(private periodService: PeriodService) { }
 

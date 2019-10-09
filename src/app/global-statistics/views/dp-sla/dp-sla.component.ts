@@ -12,7 +12,6 @@ import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {TimeFormatterComponent} from '../../formatters/time-formatter/time-formatter.component';
 import {SumValueServiceImpl} from '../../utils/SumValueServiceImpl';
-import {EmphFormatterComponent} from '../../formatters/emph-formatter/emph-formatter.component';
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
 
 
@@ -27,7 +26,7 @@ export class DpSlaComponent implements OnInit {
     SystemMetricType.SLA_EVENTS,
     SystemMetricType.OUT_OF_SLA_TIME
   ];
-  currentPeriod: PeriodType = PeriodType.DAY;
+  currentPeriod: PeriodType = PeriodType.WEEK;
 
   options: SasiTableOptions = new SasiTableOptions();
 
@@ -46,7 +45,7 @@ export class DpSlaComponent implements OnInit {
       SasiColumnBuilder.getInstance()
         .withIndex('name')
         .withLabel('System')
-        .withComponent(EmphFormatterComponent)
+        .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()

@@ -10,7 +10,6 @@ import {RouteLinkFormatterComponent} from '../../../common/components/route-link
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SumValueServiceImpl} from '../../utils/SumValueServiceImpl';
-import {EmphFormatterComponent} from '../../formatters/emph-formatter/emph-formatter.component';
 import {DisbalanceFormatterComponent} from '../../formatters/disbalance-formatter/disbalance-formatter.component';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
@@ -27,7 +26,7 @@ export class AdaptersComponent implements OnInit {
     SystemMetricType.IMBALANCE_EVENTS,
     SystemMetricType.IMBALANCE_PERC
   ];
-  currentPeriod: PeriodType = PeriodType.DAY;
+  currentPeriod: PeriodType = PeriodType.WEEK;
 
   options: SasiTableOptions = new SasiTableOptions();
   data: SystemPool[] = [];
@@ -46,7 +45,7 @@ export class AdaptersComponent implements OnInit {
         .withIndex('name')
         .withAltLabel('System')
         .withLabel('Cha pair')
-        .withComponent(EmphFormatterComponent)
+        .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
