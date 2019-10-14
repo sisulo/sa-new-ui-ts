@@ -62,7 +62,7 @@ export class AdaptersComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.IMBALANCE_PERC)
-        .withLabel('Info')
+        .withLabel('Imbalance Value')
         .withComponent(DisbalanceFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
