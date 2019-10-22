@@ -22,6 +22,7 @@ export class AggragatedStatisticsComponent extends CommonAggregatedStats impleme
 
   constructor(private localStorageService: LocalStorageService) {
     super();
+
   }
 
   ngOnInit() {
@@ -33,7 +34,16 @@ export class AggragatedStatisticsComponent extends CommonAggregatedStats impleme
 
     this.labels[SystemMetricType.SELECTED_COUNT] = '# Selected';
     this.types.forEach(type => this.labels[type.index] = type.label);
-    this.typesIntValue = [SystemMetricType.SELECTED_COUNT];
+    this.typesIntValue = [
+      SystemMetricType.SELECTED_COUNT,
+      SystemMetricType.PHYSICAL_CAPACITY,
+      SystemMetricType.PHYSICAL_SUBS_PERC,
+      SystemMetricType.AVAILABLE_CAPACITY,
+      SystemMetricType.LOGICAL_USED_PERC,
+      SystemMetricType.PHYSICAL_USED_PERC,
+      SystemMetricType.CAPACITY_CHANGE_1D,
+      SystemMetricType.CAPACITY_CHANGE_1W,
+      SystemMetricType.CAPACITY_CHANGE_1M];
     this.aggregate();
     this.localStorageService.observe(this.prefix + '_selected').subscribe(
       data => {

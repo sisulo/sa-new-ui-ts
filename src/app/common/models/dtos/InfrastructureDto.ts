@@ -4,4 +4,5 @@ import {Alert} from '../metrics/Alert';
 export class InfrastructureDto  {
   alerts: Alert[];
   metrics: Metric[];
+  capacityMetrics: Metric[];
 }

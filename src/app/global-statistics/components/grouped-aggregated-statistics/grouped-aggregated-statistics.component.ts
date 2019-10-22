@@ -25,7 +25,23 @@ export class GroupedAggregatedStatisticsComponent extends CommonAggregatedStats 
   constructor(private localStorageService: LocalStorageService) {
     super();
     this.typesIntValue = [
-      SystemMetricType.SELECTED_COUNT
+      SystemMetricType.SELECTED_COUNT,
+      SystemMetricType.SUBSCRIBED_CAPACITY,
+      SystemMetricType.PHYSICAL_SUBS_PERC,
+      SystemMetricType.LOGICAL_SUBS_PERC,
+      SystemMetricType.NET_SUBS_PERC,
+      SystemMetricType.PHYSICAL_USED_PERC,
+      SystemMetricType.LOGICAL_USED_PERC,
+      SystemMetricType.NET_USED_PERC,
+      SystemMetricType.PHYSICAL_CAPACITY,
+      SystemMetricType.PHYSICAL_USED,
+      SystemMetricType.PHYSICAL_FREE,
+      SystemMetricType.LOGICAL_CAPACITY,
+      SystemMetricType.LOGICAL_USED,
+      SystemMetricType.LOGICAL_FREE,
+      SystemMetricType.NET_TOTAL,
+      SystemMetricType.NET_USED,
+      SystemMetricType.NET_FREE,
     ];
     this.types.push([
       SystemMetricType.SELECTED_COUNT

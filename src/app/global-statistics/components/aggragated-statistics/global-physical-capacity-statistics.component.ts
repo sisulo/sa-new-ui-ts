@@ -60,8 +60,14 @@ export class GlobalPhysicalCapacityStatisticsComponent extends CommonAggregatedS
     ];
 
     this.typesIntValue = [
+      SystemMetricType.PHYSICAL_CAPACITY,
+      SystemMetricType.PHYSICAL_SUBS_PERC,
       SystemMetricType.AVAILABLE_CAPACITY,
-      SystemMetricType.PHYSICAL_CAPACITY
+      SystemMetricType.LOGICAL_USED_PERC,
+      SystemMetricType.PHYSICAL_USED_PERC,
+      SystemMetricType.CAPACITY_CHANGE_1D,
+      SystemMetricType.CAPACITY_CHANGE_1W,
+      SystemMetricType.CAPACITY_CHANGE_1M,
     ];
 
     this.labels[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical Capacity';

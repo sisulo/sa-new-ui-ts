@@ -9,7 +9,7 @@
   <tr class="agg-vals">
     <td *ngFor="let type of aggregatedTypes" class="col agg-value">
         <span
-          *ngIf="getMetricByType(type) != undefined">{{toFixed(type, getMetricByType(type).value, 2)}} <span
+          *ngIf="getMetricByType(type) != undefined">{{toFixed(type, getMetricByType(type).value, 1) | formatThousands}} <span
           class="agg-unit">{{getMetricByType(type).unit}}</span></span>
     </td>
   </tr>

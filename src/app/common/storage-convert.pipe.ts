@@ -10,10 +10,15 @@ interface ConvertedValue {
   name: 'storageConvert'
 })
 export class StorageConvertPipe implements PipeTransform {
-  unitOrder = {'CAPACITY': ['MB', 'GB', 'TB', 'PB'], 'TRANSFER': ['MBps', 'GBps', 'TBps']};
+  unitOrder = {
+    'CAPACITY': ['MB', 'GB', 'TB', 'PB'],
+    'TRANSFER': ['MBps', 'GBps', 'TBps'],
+    'PHYSICAL_CAPACITY': ['MB', 'GB', 'TB', 'PB'],
+    'SUBSCRIBED_CAPACITY': ['MB', 'GB', 'TB', 'PB'],
+    'CHANGE_MONTH': ['MB', 'GB', 'TB', 'PB'],
+  };
 
   transform(metric: Metric, args?: any): any {
-    console.log(this.unitOrder[metric.type]);
     if (this.unitOrder[metric.type] === undefined) {
       return metric;
     }

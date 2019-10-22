@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   metricLabels = {};
   alertLabels = {};
   metrics: Metric[] = [];
+  capacityMetrics: Metric[] = [];
   alerts: Alert[] = [];
   alertsPerformance = [];
   alertsOperations = [];
@@ -36,6 +37,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.metricLabels[SystemMetricType.WORKLOAD] = 'Total Workload';
     this.metricLabels[SystemMetricType.TRANSFER] = 'Total Transfer';
+    this.metricLabels[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical capacity';
+    this.metricLabels[SystemMetricType.SUBSCRIBED_CAPACITY] = 'Subscribed capacity';
+    this.metricLabels[SystemMetricType.CAPACITY_CHANGE_1M] = 'Monthly changed';
 
     this.alertLabels[AlertType.CAPACITY_USAGE] = 'Capacity Usage Events';
     this.alertLabels[AlertType.CPU] = 'CPU Utilization Events';
@@ -58,6 +62,9 @@ export class DashboardComponent implements OnInit {
 
     this.metricColor[SystemMetricType.WORKLOAD] = 'bg-maroon';
     this.metricColor[SystemMetricType.TRANSFER] = 'bg-primary';
+    this.metricColor[SystemMetricType.PHYSICAL_CAPACITY] = 'bg-teal';
+    this.metricColor[SystemMetricType.SUBSCRIBED_CAPACITY] = 'bg-aqua';
+    this.metricColor[SystemMetricType.CAPACITY_CHANGE_1M] = 'bg-red';
 
     this.linkContext[AlertType.CAPACITY_USAGE] = 'physical-capacity';
     this.linkContext[AlertType.CPU] = 'performance';
@@ -74,6 +81,7 @@ export class DashboardComponent implements OnInit {
       console.log(stats);
       this.metrics = stats.metrics;
       this.alerts = stats.alerts;
+      this.capacityMetrics = stats.capacityMetrics;
     });
     this.metricService.getDatacenters().subscribe(
       data => {
