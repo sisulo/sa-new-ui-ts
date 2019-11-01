@@ -41,8 +41,16 @@
 </div>
 <div class="row">
 
+
   <section class="content" *ngIf="metrics.length > 0">
     <h3>Total load</h3>
+    <div class="col-md-12">
+      <div class="box pad">
+        <div class="box-body">
+          <apx-chart [series]="series" [chart]="chart" [title]="title"></apx-chart>
+        </div>
+      </div>
+    </div>
     <div *ngFor="let metric of metrics" class="col-md-3 col-xs-6">
       <!-- small box -->
       <app-small-box [data]="metric | storageConvert" [label]="getMetricLabel(metric.type)"
@@ -65,7 +73,7 @@
 
 </div>
 <div class="row">
-  <div class="col-md-9 col-sm-6">
+  <div class="col-md-9 col-sm-12">
     <div class="box pad">
       <div class="box-body">
         <div class="row">

@@ -30,6 +30,9 @@ export class DashboardComponent implements OnInit {
   registeredSystems: Metric;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
   currentColor = 0;
+  chart = {type: 'area'};
+  series = [{name: 'test', data: [1, 2, 2, 10]}];
+  title = {};
 
   constructor(private metricService: MetricService) {
   }
@@ -96,6 +99,10 @@ export class DashboardComponent implements OnInit {
       }
     );
     this.getMap();
+    let i = 0;
+    for (i = 0; i < 50; i++) {
+      this.series[0].data.push(parseInt((Math.random() * 100).toFixed(0), 10));
+    }
   }
 
   containsType(alertType: AlertType, types: []) {

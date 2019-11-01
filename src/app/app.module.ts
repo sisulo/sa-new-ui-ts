@@ -15,6 +15,7 @@ import {WebStorageModule} from 'ngx-store';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {TooltipModule} from 'ng2-tooltip-directive';
 import {SystemPool2SasiGroupTablePipe} from './common/utils/system-pool-2-sasi-group-table.pipe';
+import {NgApexchartsModule} from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {SystemPool2SasiGroupTablePipe} from './common/utils/system-pool-2-sasi-g
     WebStorageModule,
     BrowserAnimationsModule,
     TooltipModule,
-    SaCommonModule
+    SaCommonModule,
+    NgApexchartsModule,
   ],
   providers: [SystemPool2SasiGroupTablePipe],
   bootstrap: [AppComponent]
