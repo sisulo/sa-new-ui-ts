@@ -9,6 +9,8 @@ import {DatePipe} from '@angular/common';
 import {GlobalCapacityStatisticsDto} from './common/models/dtos/GlobalCapacityStatisticsDto';
 import {DatacenterListDto} from './common/models/dtos/datacenter-list.dto';
 import {DatacenterCapacityListDto} from './common/models/dtos/datacenter-capacity-list.dto';
+import {SystemMetricType} from './common/models/metrics/SystemMetricType';
+import {GraphDataDto} from './common/models/dtos/graph-data.dto';
 
 export enum PeriodType {
   DAY = 'DAY',
@@ -112,6 +114,12 @@ export class MetricService {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/host-groups');
     }
     return this.http.get<DatacenterCapacityListDto>(url);
+  }
+
+  getGraphData(types: SystemMetricType[]): Observable<GraphDataDto> {
+    let url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/performance/graph');
+    url = url + '&types[]=TRANSFER&types[]=WORKLOAD';
+    return this.http.get<GraphDataDto>(url);
   }
 
   private buildUrl(baseUrl, basePath, period?) {

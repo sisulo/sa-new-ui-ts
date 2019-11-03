@@ -30,8 +30,21 @@ export class DashboardComponent implements OnInit {
   registeredSystems: Metric;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
   currentColor = 0;
-  chart = {type: 'area'};
-  series = [{name: 'test', data: [1, 2, 2, 10]}];
+  chart = {type: 'area', height: '300'};
+  xaxis = {type: 'datetime', labels: {format: 'yyyy-MM-dd'}};
+  yaxis = [
+    {
+      seriesName: 'Linear',
+    },
+    {
+      seriesName: 'Logarithmic',
+      logarithmic: true,
+      opposite: true,
+    }
+  ];
+  dataLabels = {enabled: false};
+  // series = [{name: 'test', data: [1, 2, 2, 10]}];
+  series = [];
   title = {};
 
   constructor(private metricService: MetricService) {
@@ -98,11 +111,17 @@ export class DashboardComponent implements OnInit {
         }, 0);
       }
     );
+    this.metricService.getGraphData([SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER]).subscribe(dto => {
+      dto.data.forEach(serie => {
+        this.series.push({name: serie.type, data: serie.data});
+      });
+    });
+    console.log(this.series);
     this.getMap();
-    let i = 0;
-    for (i = 0; i < 50; i++) {
-      this.series[0].data.push(parseInt((Math.random() * 100).toFixed(0), 10));
-    }
+    // let i = 0;
+    // for (i = 0; i < 50; i++) {
+    //   this.series[0].data.push(parseInt((Math.random() * 100).toFixed(0), 10));
+    // }
   }
 
   containsType(alertType: AlertType, types: []) {
