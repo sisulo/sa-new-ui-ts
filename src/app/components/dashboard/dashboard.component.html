@@ -36,27 +36,28 @@
 </div>
 <div class="row">
   <section class="content-header">
-    <h1><i class="fa fa-chart-area"></i> Infrastructure stats (Last 24 hours)</h1>
+    <h1><i class="fa fa-chart-area"></i> Infrastructure stats</h1>
   </section>
 </div>
 <div class="row">
 
 
   <section class="content" *ngIf="metrics.length > 0">
-    <h3>Total load</h3>
-    <div class="col-md-12">
-      <div class="box pad">
-        <div class="box-body">
-          <apx-chart [series]="series" [chart]="chart" [xaxis]="xaxis" [yaxis]="yaxis" [dataLabels]="dataLabels" [title]="title"></apx-chart>
-        </div>
-      </div>
-    </div>
+    <h3>Total load (Last 24 hours)</h3>
     <div *ngFor="let metric of metrics" class="col-md-3 col-xs-6">
       <!-- small box -->
       <app-small-box [data]="metric | storageConvert" [label]="getMetricLabel(metric.type)"
                      [icon]="getMetricIcon(metric.type)"
                      [color]="getMetricColor(metric.type)"></app-small-box>
     </div>
+    <div class="col-md-12">
+      <div class="box pad">
+        <div class="box-body">
+          <apx-chart [series]="series" [chart]="chart" [colors]="fill" [xaxis]="xaxis" [yaxis]="yaxis" [dataLabels]="dataLabels" [title]="title"></apx-chart>
+        </div>
+      </div>
+    </div>
+
   </section>
 
 </div>

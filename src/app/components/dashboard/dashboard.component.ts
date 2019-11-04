@@ -4,6 +4,7 @@ import {Metric} from '../../common/models/metrics/Metric';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {Alert} from '../../common/models/metrics/Alert';
 import {AlertType} from '../../common/models/metrics/AlertType';
+import {FormatThousandsPipe} from '../../common/utils/format-thousands.pipe';
 
 declare var jquery: any;
 declare var $: any;
@@ -32,20 +33,33 @@ export class DashboardComponent implements OnInit {
   currentColor = 0;
   chart = {type: 'area', height: '300'};
   xaxis = {type: 'datetime', labels: {format: 'yyyy-MM-dd'}};
+  fill = ['#337ab7', '#d81b60'];
   yaxis = [
     {
-      seriesName: 'Linear',
+      seriesName: 'Transfer',
+      labels: {
+        formatter: function (value) {
+          const pipe = new FormatThousandsPipe();
+          return pipe.transform(value) + ' MBps';
+        }
+      }
     },
     {
-      seriesName: 'Logarithmic',
-      logarithmic: true,
+      seriesName: 'Linear',
+      logarithmic: false,
       opposite: true,
+      labels: {
+        formatter: function (value) {
+          const pipe = new FormatThousandsPipe();
+          return pipe.transform(value) + ' IOPS';
+        }
+      }
     }
   ];
   dataLabels = {enabled: false};
-  // series = [{name: 'test', data: [1, 2, 2, 10]}];
   series = [];
   title = {};
+  capacityMetricSimple = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY];
 
   constructor(private metricService: MetricService) {
   }
@@ -53,9 +67,9 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.metricLabels[SystemMetricType.WORKLOAD] = 'Total Workload';
     this.metricLabels[SystemMetricType.TRANSFER] = 'Total Transfer';
-    this.metricLabels[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical capacity';
-    this.metricLabels[SystemMetricType.SUBSCRIBED_CAPACITY] = 'Subscribed capacity';
-    this.metricLabels[SystemMetricType.CAPACITY_CHANGE_1M] = 'Monthly changed';
+    this.metricLabels[SystemMetricType.LOGICAL_CAPACITY] = 'Logical Capacity';
+    this.metricLabels[SystemMetricType.SUBSCRIBED_CAPACITY] = 'Subscribed Capacity';
+    this.metricLabels[SystemMetricType.LOGICAL_CHANGE_1M] = 'Monthly Changed (logical)';
 
     this.alertLabels[AlertType.CAPACITY_USAGE] = 'Capacity Usage Events';
     this.alertLabels[AlertType.CPU] = 'CPU Utilization Events';
@@ -75,12 +89,15 @@ export class DashboardComponent implements OnInit {
 
     this.metricIcons[SystemMetricType.WORKLOAD] = 'fa fa-chart-bar';
     this.metricIcons[SystemMetricType.TRANSFER] = 'fa fa-exchange-alt';
+    this.metricIcons[SystemMetricType.LOGICAL_CAPACITY] = 'fa fa-hdd';
+    this.metricIcons[SystemMetricType.SUBSCRIBED_CAPACITY] = 'fa fa-retweet';
+    this.metricIcons[SystemMetricType.LOGICAL_CHANGE_1M] = 'fa fa-poll';
 
     this.metricColor[SystemMetricType.WORKLOAD] = 'bg-maroon';
     this.metricColor[SystemMetricType.TRANSFER] = 'bg-primary';
-    this.metricColor[SystemMetricType.PHYSICAL_CAPACITY] = 'bg-teal';
+    this.metricColor[SystemMetricType.LOGICAL_CAPACITY] = 'bg-teal';
     this.metricColor[SystemMetricType.SUBSCRIBED_CAPACITY] = 'bg-aqua';
-    this.metricColor[SystemMetricType.CAPACITY_CHANGE_1M] = 'bg-red';
+    this.metricColor[SystemMetricType.LOGICAL_CHANGE_1M] = 'bg-red';
 
     this.linkContext[AlertType.CAPACITY_USAGE] = 'physical-capacity';
     this.linkContext[AlertType.CPU] = 'performance';
@@ -97,7 +114,14 @@ export class DashboardComponent implements OnInit {
       console.log(stats);
       this.metrics = stats.metrics;
       this.alerts = stats.alerts;
-      this.capacityMetrics = stats.capacityMetrics;
+      this.capacityMetrics = stats.capacityMetrics.filter(metric => {
+        return this.capacityMetricSimple.some(simpleMetric => simpleMetric === metric.type);
+      });
+      const countedMetric = new Metric();
+      countedMetric.value = stats.capacityMetrics.find(metric => metric.type === SystemMetricType.TOTAL_SAVING_EFFECT).value * stats.capacityMetrics.find(metric => metric.type === SystemMetricType.CAPACITY_CHANGE_1M).value;
+      countedMetric.unit = 'TB';
+      countedMetric.type = SystemMetricType.LOGICAL_CHANGE_1M;
+      this.capacityMetrics.push(countedMetric);
     });
     this.metricService.getDatacenters().subscribe(
       data => {
@@ -116,12 +140,7 @@ export class DashboardComponent implements OnInit {
         this.series.push({name: serie.type, data: serie.data});
       });
     });
-    console.log(this.series);
     this.getMap();
-    // let i = 0;
-    // for (i = 0; i < 50; i++) {
-    //   this.series[0].data.push(parseInt((Math.random() * 100).toFixed(0), 10));
-    // }
   }
 
   containsType(alertType: AlertType, types: []) {
