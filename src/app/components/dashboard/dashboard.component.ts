@@ -117,8 +117,9 @@ export class DashboardComponent implements OnInit {
       this.capacityMetrics = stats.capacityMetrics.filter(metric => {
         return this.capacityMetricSimple.some(simpleMetric => simpleMetric === metric.type);
       });
+      console.log(stats.capacityMetrics.find(metric => metric.type === SystemMetricType.PHYSICAL_CAPACITY));
       const countedMetric = new Metric();
-      countedMetric.value = stats.capacityMetrics.find(metric => metric.type === SystemMetricType.TOTAL_SAVING_EFFECT).value * stats.capacityMetrics.find(metric => metric.type === SystemMetricType.CAPACITY_CHANGE_1M).value;
+      countedMetric.value = stats.capacityMetrics.find(metric => metric.type === SystemMetricType.TOTAL_SAVING_EFFECT).value * (stats.capacityMetrics.find(metric => metric.type === SystemMetricType.LOGICAL_CAPACITY).value - stats.capacityMetrics.find(metric => metric.type === SystemMetricType.CAPACITY_CHANGE_1M).value);
       countedMetric.unit = 'TB';
       countedMetric.type = SystemMetricType.LOGICAL_CHANGE_1M;
       this.capacityMetrics.push(countedMetric);
