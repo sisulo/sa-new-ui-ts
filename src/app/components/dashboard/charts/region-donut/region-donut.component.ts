@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {NumberFormatter} from '../../../../global-statistics/utils/number.formatter';
 
 @Component({
   selector: 'app-region-donut',
@@ -17,14 +18,16 @@ export class RegionDonutComponent implements OnInit {
   @Input()
   regionLabels = [];
   @Input()
-  title = {text: 'Region', unit: ''}; // small hack for exposing unit attribute in formatters
+  title = {text: 'Region', unit: '', useKFormatter: false}; // small hack for exposing unit attribute in formatters
   @Input()
   unit = '';
+  @Input()
+  useKFormatter = false;
   dataLabels = {
     enabled: true,
     formatter: function (value, {seriesIndex, dataPointIndex, w}) {
       const serieValue = w.config.series[seriesIndex];
-      return parseFloat(serieValue).toFixed(0);
+      return NumberFormatter.kFormat(parseFloat(serieValue).toFixed(0), w.config.labels.useKFormatter);
     }
   };
 
@@ -41,7 +44,13 @@ export class RegionDonutComponent implements OnInit {
           value: {
             offsetY: -10,
             formatter: function (val, {series, seriesIndex, dataPointIndex, w}) {
-              return parseFloat(val).toFixed(0) + ' ' + w.config.labels.unit;
+              let unit = '';
+              let useKformatter = false;
+              if (w !== undefined && w.config !== undefined) {
+                unit = w.config.labels.unit;
+                useKformatter = w.config.labels.useKFormatter;
+              }
+              return NumberFormatter.kFormat(parseFloat(val).toFixed(0), useKformatter) + ' ' + unit;
             }
           },
           total: {
@@ -52,7 +61,7 @@ export class RegionDonutComponent implements OnInit {
               const aggValue = w.globals.seriesTotals.reduce((a, b) => {
                 return a + b;
               }, 0);
-              return parseFloat(aggValue).toFixed(0) + ' ' + w.config.labels.unit;
+              return NumberFormatter.kFormat(parseFloat(aggValue).toFixed(0), w.config.labels.useKFormatter) + ' ' + w.config.labels.unit;
             }
           }
         }
@@ -68,18 +77,22 @@ export class RegionDonutComponent implements OnInit {
     this.series = this.data;
     this.labels = this.regionLabels;
     this.labels.unit = this.unit;
+    this.labels.useKFormatter = this.useKFormatter;
     this.title.text = this.title.text + ` (${this.labels.unit})`;
     this.tooltip = {
       y: {
         formatter: function (value, w) {
           let unit = '';
+          let useKformatter = false;
           if (w !== undefined && w.config !== undefined) {
             unit = w.config.labels.unit;
+            useKformatter = w.config.labels.useKFormatter;
           }
-          return parseFloat(value).toFixed(0) + ' ' + unit;
+          return NumberFormatter.kFormat(parseFloat(value).toFixed(0), useKformatter) + ' ' + unit;
         }
       }
     };
   }
 
 }
+

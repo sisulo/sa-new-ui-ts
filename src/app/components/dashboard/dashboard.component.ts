@@ -21,8 +21,7 @@ export class DashboardComponent implements OnInit {
 
   metricLabels = {};
   alertLabels = {};
-  metrics: Metric[] = [];
-  capacityMetrics: RegionMetricDto[] = [];
+  metrics: RegionMetricDto[] = [];
   alerts: Alert[] = [];
   alertsPerformance = [];
   alertsOperations = [];
@@ -68,9 +67,12 @@ export class DashboardComponent implements OnInit {
   dataLabels = {enabled: false};
   series = [];
   title = {};
+  perfMetricsType = [SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER];
   capacityMetricsType = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY, SystemMetricType.LOGICAL_CHANGE_1M];
-  capacityMetricSimple = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY];
+  capacityMetricSimple = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY, SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER];
   regionOrder = [Region.EUROPE, Region.AMERICA, Region.ASIA];
+  allMetricType = [...this.perfMetricsType, ...this.capacityMetricsType];
+  useKFormatter = [SystemMetricType.WORKLOAD];
 
   constructor(private metricService: MetricService) {
   }
@@ -99,18 +101,6 @@ export class DashboardComponent implements OnInit {
     this.alertIcons[AlertType.SLA_EVENTS] = 'fa-bell';
     this.alertIcons[AlertType.WRITE_PENDING] = 'fa-chart-bar';
 
-    this.metricIcons[SystemMetricType.WORKLOAD] = 'fa fa-chart-bar';
-    this.metricIcons[SystemMetricType.TRANSFER] = 'fa fa-exchange-alt';
-    this.metricIcons[SystemMetricType.LOGICAL_CAPACITY] = 'fa fa-hdd';
-    this.metricIcons[SystemMetricType.SUBSCRIBED_CAPACITY] = 'fa fa-retweet';
-    this.metricIcons[SystemMetricType.LOGICAL_CHANGE_1M] = 'fa fa-poll';
-
-    this.metricColor[SystemMetricType.WORKLOAD] = 'bg-maroon';
-    this.metricColor[SystemMetricType.TRANSFER] = 'bg-primary';
-    this.metricColor[SystemMetricType.LOGICAL_CAPACITY] = 'bg-teal';
-    this.metricColor[SystemMetricType.SUBSCRIBED_CAPACITY] = 'bg-aqua';
-    this.metricColor[SystemMetricType.LOGICAL_CHANGE_1M] = 'bg-red';
-
     this.linkContext[AlertType.CAPACITY_USAGE] = 'physical-capacity';
     this.linkContext[AlertType.CPU] = 'performance';
     this.linkContext[AlertType.DISBALANCE_EVENTS] = 'adapters';
@@ -124,9 +114,8 @@ export class DashboardComponent implements OnInit {
 
     this.metricService.getInfrastructureStats().subscribe(stats => {
       console.log(stats);
-      this.metrics = stats.metrics;
       this.alerts = stats.alerts;
-      this.capacityMetrics = this.transformCapacityMetrics(stats.capacityMetrics);
+      this.metrics = this.transformCapacityMetrics(stats.metrics);
     });
     this.metricService.getDatacenters().subscribe(
       data => {
@@ -154,7 +143,7 @@ export class DashboardComponent implements OnInit {
       region => {
         const mappedRegion = new RegionMetricDto();
         mappedRegion.region = region.region;
-        this.capacityMetricsType.forEach(
+        this.allMetricType.forEach(
           type => {
             let metric;
             if (this.isSimpleChartMetric(type)) {
@@ -174,7 +163,6 @@ export class DashboardComponent implements OnInit {
             mappedRegion.metrics.push(translatedMetric);
           }
         );
-        console.log(mappedRegion);
         return mappedRegion;
       }
     );
@@ -184,7 +172,7 @@ export class DashboardComponent implements OnInit {
     const mappedValues: number[] = [];
     regionOrder.forEach(
       region => {
-        const regionData = this.capacityMetrics.find(metrics => metrics.region === region);
+        const regionData = this.metrics.find(metrics => metrics.region === region);
         if (regionData === undefined) {
           console.error('Cannot find ' + region + ' in capacity statistics');
           return;
@@ -213,7 +201,7 @@ export class DashboardComponent implements OnInit {
 
   findUnitInMetric(type: SystemMetricType): string {
     let foundUnit = '';
-    this.capacityMetrics.forEach(
+    this.metrics.forEach(
       region => {
         const foundMetric: Metric = region.metrics.find(metric => metric.type === type);
         if (foundMetric !== undefined) {
@@ -232,16 +220,8 @@ export class DashboardComponent implements OnInit {
     return this.alertIcons[type];
   }
 
-  getMetricIcon(type: SystemMetricType) {
-    return this.metricIcons[type];
-  }
-
   getMetricLabel(type: SystemMetricType) {
     return this.metricLabels[type];
-  }
-
-  getMetricColor(type: SystemMetricType) {
-    return this.metricColor[type];
   }
 
   getLinkContext(type: SystemMetricType) {
@@ -278,6 +258,9 @@ export class DashboardComponent implements OnInit {
     return ['Europe', 'America', 'Asia'];
   }
 
+  isKFormatterUsed(type: SystemMetricType): boolean {
+    return this.useKFormatter.some(kType => kType === type);
+  }
   getMap(): void {
     $(function () {
       $('#world-map-markers').vectorMap({

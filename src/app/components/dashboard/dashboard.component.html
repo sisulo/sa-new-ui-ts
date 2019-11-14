@@ -44,11 +44,10 @@
 
   <section class="content" *ngIf="metrics.length > 0">
     <h3>Total load (Last 24 hours)</h3>
-    <div *ngFor="let metric of metrics" class="col-md-3 col-xs-6">
-      <!-- small box -->
-      <app-small-box [data]="metric | storageConvert" [label]="getMetricLabel(metric.type)"
-                     [icon]="getMetricIcon(metric.type)"
-                     [color]="getMetricColor(metric.type)"></app-small-box>
+    <div *ngFor="let type of perfMetricsType" class="col-12 col-sm-6 col-md-6 col-lg-4">
+      <app-region-donut [data]="getMetricValueInRegions(type, regionOrder)" [regionLabels]="getRegionLabels()"
+                        [title]="{text: getMetricLabel(type)}" [unit]="findUnitInMetric(type)"
+                        [useKFormatter]="isKFormatterUsed(type)"></app-region-donut>
     </div>
     <div class="col-md-12">
       <div class="box pad">
@@ -67,7 +66,8 @@
     <h3>Total capacity</h3>
     <div *ngFor="let type of capacityMetricsType" class="col-12 col-sm-6 col-md-6 col-lg-4">
       <app-region-donut [data]="getMetricValueInRegions(type, regionOrder)" [regionLabels]="getRegionLabels()"
-                        [title]="{text: getMetricLabel(type)}" [unit]="findUnitInMetric(type)"></app-region-donut>
+                        [title]="{text: getMetricLabel(type)}" [unit]="findUnitInMetric(type)"
+                        [useKFormatter]="isKFormatterUsed(type)"></app-region-donut>
     </div>
   </section>
 
