@@ -1,4 +1,4 @@
-import { SystemPool2SasiTablePipe } from './system-pool-2-sasi-table.pipe';
+import {SystemPool2SasiTablePipe} from './system-pool-2-sasi-table.pipe';
 
 describe('SystemPool2SasiTablePipe', () => {
   it('create an instance', () => {

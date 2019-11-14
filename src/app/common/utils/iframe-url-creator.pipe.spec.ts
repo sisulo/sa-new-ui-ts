@@ -1,4 +1,4 @@
-import { IframeUrlCreatorPipe } from './iframe-url-creator.pipe';
+import {IframeUrlCreatorPipe} from './iframe-url-creator.pipe';
 
 describe('IframeUrlCreatorPipe', () => {
   it('create an instance', () => {

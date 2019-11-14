@@ -1,5 +1,6 @@
 <div *ngIf="data != null" class="metric-value">
-  <span *ngIf="isAlert()" tooltip="{{getAlertMessage()}}" hide-delay="0" ngClass="{{getViolatedRuleClass()}}">{{getValue() | formatThousands}} <span
+  <span *ngIf="isAlert()" tooltip="{{getAlertMessage()}}" hide-delay="0"
+        ngClass="{{getViolatedRuleClass()}}">{{getValue() | formatThousands}} <span
     class="metric-unit">{{data.unit}}</span></span>
   <span *ngIf="!isAlert()" tooltip="{{label}} average" hide-delay="0">{{getValue() | formatThousands}} <span
     class="metric-unit">{{data.unit}}</span></span>

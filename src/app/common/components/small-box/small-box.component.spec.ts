@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SmallBoxComponent } from './small-box.component';
+import {SmallBoxComponent} from './small-box.component';
 
 describe('SmallBoxComponent', () => {
   let component: SmallBoxComponent;
@@ -8,9 +8,9 @@ describe('SmallBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SmallBoxComponent ]
+      declarations: [SmallBoxComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

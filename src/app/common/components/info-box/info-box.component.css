@@ -19,6 +19,7 @@ div.modal.open {
   height: 1.2em;
   white-space: nowrap;
 }
+
 .modal-content {
   overflow: scroll;
   height: 700px;

@@ -29,5 +29,4 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
   }
 
 
-
 }

@@ -23,7 +23,6 @@ export class GlobalStatisticsComponent implements OnInit {
   ngOnInit(): void {
     this.bus.datacenterAnnouncement$.subscribe(
       id => this.getDatacenters(id)
-
     );
     this.bus.contextAnnouncement$.subscribe(
       context => {
@@ -48,7 +47,7 @@ export class GlobalStatisticsComponent implements OnInit {
       data => {
         this.dataCenters = [];
         const defaultDatacenter = new Datacenter();
-        defaultDatacenter.label = 'All'
+        defaultDatacenter.label = 'All';
         defaultDatacenter.id = -1;
         this.dataCenters.push(defaultDatacenter);
         this.dataCenters = [...this.dataCenters, ...data.datacenters];
@@ -56,6 +55,7 @@ export class GlobalStatisticsComponent implements OnInit {
       }
     );
   }
+
   getTitle() {
     switch (this.context) {
       case 'performance':
@@ -74,6 +74,7 @@ export class GlobalStatisticsComponent implements OnInit {
         return 'Statistics';
     }
   }
+
   getTabTitle() {
     switch (this.context) {
       case 'physical-capacity':

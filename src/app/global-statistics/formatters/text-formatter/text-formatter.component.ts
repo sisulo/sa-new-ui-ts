@@ -13,7 +13,8 @@ export class TextFormatterComponent implements OnInit {
   @Input() public data: SystemMetric;
   @Input() public column: SasiColumn;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

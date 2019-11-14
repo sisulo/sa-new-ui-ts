@@ -121,16 +121,18 @@ div.table-data.striped-row:nth-of-type(odd) {
 }
 
 /*div.col-control {*/
-  /*min-height: 1px;*/
+/*min-height: 1px;*/
 /*}*/
 
 .col-control i {
   font-size: 11px;
   padding: 3px;
 }
-.table-header .col-control i, .table-header i{
+
+.table-header .col-control i, .table-header i {
   color: white
 }
+
 .col-control:after {
   content: "";
   font-size: 11px;

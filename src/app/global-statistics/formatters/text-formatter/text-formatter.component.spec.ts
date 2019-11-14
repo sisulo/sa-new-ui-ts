@@ -8,9 +8,9 @@ describe('TextFormatterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TextFormatterComponent ]
+      declarations: [TextFormatterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

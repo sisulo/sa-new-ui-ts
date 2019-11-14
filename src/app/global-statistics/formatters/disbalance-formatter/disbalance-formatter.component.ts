@@ -30,6 +30,7 @@ export class DisbalanceFormatterComponent implements OnInit {
       return this.rowData.getCell(SystemMetricType.IMBALANCE_ABSOLUT).value;
     }
   }
+
   private isVisible() {
     if (this.rowData !== undefined && parseInt(this.rowData.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0) {
       return true;

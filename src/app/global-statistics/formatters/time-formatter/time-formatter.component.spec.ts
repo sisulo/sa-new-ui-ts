@@ -8,9 +8,9 @@ describe('TimeFormatterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TimeFormatterComponent ]
+      declarations: [TimeFormatterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

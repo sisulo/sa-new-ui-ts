@@ -11,7 +11,9 @@ export class SmallBoxComponent implements OnInit {
   @Input() label;
   @Input() icon;
   @Input() color;
-  constructor() { }
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

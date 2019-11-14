@@ -30,7 +30,8 @@
         <!-- search form (Optional) -->
         <form action="#" method="get" class="sidebar-form" autocomplete="off">
           <div class="input-group">
-            <input [(ngModel)]="searchExpression" (input)="search()" type="text" name="searchExp" class="form-control" placeholder="Search..." id="menu-search-input" />
+            <input [(ngModel)]="searchExpression" (input)="search()" type="text" name="searchExp" class="form-control"
+                   placeholder="Search..." id="menu-search-input"/>
             <span class="input-group-btn">
               <button type="button" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
               </button>
@@ -52,7 +53,9 @@
               </span>
               </a>
               <ul class="treeview-menu">
-                <li *ngFor="let poolLink of poolMetricLinks"><a [routerLink]="link.id | iframeUrlCreator:{iframeLink:poolLink.linkPart}" routerLinkActive="active">{{poolLink.name}}</a></li>
+                <li *ngFor="let poolLink of poolMetricLinks"><a
+                  [routerLink]="link.id | iframeUrlCreator:{iframeLink:poolLink.linkPart}"
+                  routerLinkActive="active">{{poolLink.name}}</a></li>
               </ul>
             </li>
           </ul>

@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {DpSlaComponent} from './dp-sla.component';
+import {RegionDonutComponent} from './region-donut.component';
 
-describe('DpSlaComponent', () => {
-  let component: DpSlaComponent;
-  let fixture: ComponentFixture<DpSlaComponent>;
+describe('RegionDonutComponent', () => {
+  let component: RegionDonutComponent;
+  let fixture: ComponentFixture<RegionDonutComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DpSlaComponent]
+      declarations: [RegionDonutComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DpSlaComponent);
+    fixture = TestBed.createComponent(RegionDonutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

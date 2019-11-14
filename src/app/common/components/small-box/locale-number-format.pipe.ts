@@ -20,6 +20,7 @@ export class LocaleNumberFormatPipe implements PipeTransform {
   lastNChar(value, count) {
     return value.substring(value.length - count, value.length);
   }
+
   ignoreLastNChar(value, count) {
     return value.substring(0, value.length - count);
   }

@@ -1,9 +1,11 @@
 .col {
   width: 35.75% !important;
 }
+
 .col-label {
   width: 25% !important;
 }
+
 :host /deep/ .groupped-data .metric-value {
   font-size: 14px;
   font-weight: 600;

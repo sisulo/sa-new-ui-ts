@@ -8,9 +8,9 @@ describe('CapacityStatisticsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PhysicalCapacityStatisticsComponent ]
+      declarations: [PhysicalCapacityStatisticsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

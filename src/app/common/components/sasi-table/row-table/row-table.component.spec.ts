@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RowTableComponent } from './row-table.component';
+import {RowTableComponent} from './row-table.component';
 
 describe('RowTableComponent', () => {
   let component: RowTableComponent;
@@ -8,9 +8,9 @@ describe('RowTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RowTableComponent ]
+      declarations: [RowTableComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

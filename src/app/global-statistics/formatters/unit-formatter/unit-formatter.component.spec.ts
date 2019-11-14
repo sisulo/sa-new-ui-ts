@@ -8,9 +8,9 @@ describe('UnitFormatterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UnitFormatterComponent ]
+      declarations: [UnitFormatterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

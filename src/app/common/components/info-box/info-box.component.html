@@ -1,5 +1,6 @@
 <div class="info-box">
-  <span [tooltip]="infoBoxTooltip" [ngClass]="isOverThreshold() ? 'info-box-icon bg-orange': 'info-box-icon bg-green'" class="info-box-icon"><i
+  <span [tooltip]="infoBoxTooltip" [ngClass]="isOverThreshold() ? 'info-box-icon bg-orange': 'info-box-icon bg-green'"
+        class="info-box-icon"><i
     class="fa" [ngClass]="isOverThreshold() ? 'fa-exclamation-triangle' : icon"></i></span>
 
   <div class="info-box-content">
@@ -15,7 +16,7 @@
     </span>
     </div>
     <span *ngIf="data.length > 2"><a class="small-box-footer" href="#" [class.hidden]="!isOverThreshold()"
-                                          (click)="openModal()"> >>> </a> </span>
+                                     (click)="openModal()"> >>> </a> </span>
   </div>
   <!-- /.info-box-content -->
 </div>
@@ -39,10 +40,12 @@
           </thead>
           <tr *ngFor="let occurence of data">
             <td *ngIf="occurence.entityType !== null">
-              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: metric.getSystemName(occurence.datacenterId, occurence.systemId)}"></app-route-link-formatter>
+              <app-route-link-formatter
+                [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: metric.getSystemName(occurence.datacenterId, occurence.systemId)}"></app-route-link-formatter>
             </td>
             <td *ngIf="occurence.entityType === entityType.POOL || occurence.entityType === entityType.ADAPTER ">
-              <app-route-link-formatter [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: occurence.name}"></app-route-link-formatter>
+              <app-route-link-formatter
+                [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: occurence.name}"></app-route-link-formatter>
             </td>
             <td>
               {{occurence.value}} {{occurence.unit}}

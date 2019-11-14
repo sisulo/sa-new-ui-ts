@@ -1,4 +1,4 @@
-import {Directive, ElementRef, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Directive, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import * as d3 from 'd3';
 import 'd3-selection-multi';
 

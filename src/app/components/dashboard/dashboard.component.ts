@@ -5,6 +5,9 @@ import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {Alert} from '../../common/models/metrics/Alert';
 import {AlertType} from '../../common/models/metrics/AlertType';
 import {FormatThousandsPipe} from '../../common/utils/format-thousands.pipe';
+import {RegionMetricDto} from '../../common/models/dtos/region-metric.dto';
+import {Region} from '../../common/models/dtos/region.enum';
+import {StorageConvertPipe} from '../../common/storage-convert.pipe';
 
 declare var jquery: any;
 declare var $: any;
@@ -19,7 +22,7 @@ export class DashboardComponent implements OnInit {
   metricLabels = {};
   alertLabels = {};
   metrics: Metric[] = [];
-  capacityMetrics: Metric[] = [];
+  capacityMetrics: RegionMetricDto[] = [];
   alerts: Alert[] = [];
   alertsPerformance = [];
   alertsOperations = [];
@@ -45,10 +48,10 @@ export class DashboardComponent implements OnInit {
       }
     },
     {
-      seriesName: 'Linear',
-      logarithmic: false,
+      seriesName: 'Workload',
       opposite: true,
       labels: {
+
         formatter: function (value) {
           const pipe = new FormatThousandsPipe();
           return pipe.transform(value) + ' IOPS';
@@ -56,10 +59,18 @@ export class DashboardComponent implements OnInit {
       }
     }
   ];
+  legend = {
+    formatter: function (value, {seriesIndex, w}) {
+      const labels = ['Transfer (MBps)', 'Workload (IOPS)'];
+      return labels[seriesIndex];
+    }
+  };
   dataLabels = {enabled: false};
   series = [];
   title = {};
-  capacityMetricSimple = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY];
+  capacityMetricsType = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY, SystemMetricType.LOGICAL_CHANGE_1M];
+  capacityMetricSimple = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY];
+  regionOrder = [Region.EUROPE, Region.AMERICA, Region.ASIA];
 
   constructor(private metricService: MetricService) {
   }
@@ -68,6 +79,7 @@ export class DashboardComponent implements OnInit {
     this.metricLabels[SystemMetricType.WORKLOAD] = 'Total Workload';
     this.metricLabels[SystemMetricType.TRANSFER] = 'Total Transfer';
     this.metricLabels[SystemMetricType.LOGICAL_CAPACITY] = 'Logical Capacity';
+    this.metricLabels[SystemMetricType.PHYSICAL_CAPACITY] = 'Physical Capacity';
     this.metricLabels[SystemMetricType.SUBSCRIBED_CAPACITY] = 'Subscribed Capacity';
     this.metricLabels[SystemMetricType.LOGICAL_CHANGE_1M] = 'Monthly Changed (logical)';
 
@@ -114,15 +126,7 @@ export class DashboardComponent implements OnInit {
       console.log(stats);
       this.metrics = stats.metrics;
       this.alerts = stats.alerts;
-      this.capacityMetrics = stats.capacityMetrics.filter(metric => {
-        return this.capacityMetricSimple.some(simpleMetric => simpleMetric === metric.type);
-      });
-      console.log(stats.capacityMetrics.find(metric => metric.type === SystemMetricType.PHYSICAL_CAPACITY));
-      const countedMetric = new Metric();
-      countedMetric.value = stats.capacityMetrics.find(metric => metric.type === SystemMetricType.TOTAL_SAVING_EFFECT).value * (stats.capacityMetrics.find(metric => metric.type === SystemMetricType.LOGICAL_CAPACITY).value - stats.capacityMetrics.find(metric => metric.type === SystemMetricType.CAPACITY_CHANGE_1M).value);
-      countedMetric.unit = 'TB';
-      countedMetric.type = SystemMetricType.LOGICAL_CHANGE_1M;
-      this.capacityMetrics.push(countedMetric);
+      this.capacityMetrics = this.transformCapacityMetrics(stats.capacityMetrics);
     });
     this.metricService.getDatacenters().subscribe(
       data => {
@@ -142,6 +146,82 @@ export class DashboardComponent implements OnInit {
       });
     });
     this.getMap();
+  }
+
+  transformCapacityMetrics(regionData: RegionMetricDto[]) {
+    const transformer = new StorageConvertPipe();
+    return regionData.map(
+      region => {
+        const mappedRegion = new RegionMetricDto();
+        mappedRegion.region = region.region;
+        this.capacityMetricsType.forEach(
+          type => {
+            let metric;
+            if (this.isSimpleChartMetric(type)) {
+              metric = this.findMetricInRegion(region, type);
+            } else { // here should be switch for specific type and also throw exception if unknown type
+              const changeMetric = this.findMetricInRegion(region, SystemMetricType.CAPACITY_CHANGE_1M);
+              const totalSaving = this.findMetricInRegion(region, SystemMetricType.TOTAL_SAVING_EFFECT);
+              metric = new Metric();
+              metric.unit = 'TB';
+              metric.type = SystemMetricType.LOGICAL_CHANGE_1M;
+              metric.value = changeMetric.value * totalSaving.value;
+            }
+            if (metric === undefined) {
+              console.error('Cannot find ' + type + ' in ' + region);
+            }
+            const translatedMetric = transformer.transform(metric);
+            mappedRegion.metrics.push(translatedMetric);
+          }
+        );
+        console.log(mappedRegion);
+        return mappedRegion;
+      }
+    );
+  }
+
+  getMetricValueInRegions(type: SystemMetricType, regionOrder: Region[]) {
+    const mappedValues: number[] = [];
+    regionOrder.forEach(
+      region => {
+        const regionData = this.capacityMetrics.find(metrics => metrics.region === region);
+        if (regionData === undefined) {
+          console.error('Cannot find ' + region + ' in capacity statistics');
+          return;
+        }
+        const metricValue = this.findMetricInRegion(regionData, type).value;
+        mappedValues.push(this.roundNumber(metricValue));
+      }
+    );
+    return mappedValues;
+  }
+
+  findMetricInRegion(regionData: RegionMetricDto, type): Metric {
+    return regionData.metrics.find(metric => metric.type === type);
+  }
+
+  isSimpleChartMetric(type: SystemMetricType): boolean {
+    return this.capacityMetricSimple.some(simpleType => simpleType === type);
+  }
+
+  roundNumber(value: number) {
+    if (value === undefined) {
+      return 0;
+    }
+    return parseInt(value.toFixed(0), 10);
+  }
+
+  findUnitInMetric(type: SystemMetricType): string {
+    let foundUnit = '';
+    this.capacityMetrics.forEach(
+      region => {
+        const foundMetric: Metric = region.metrics.find(metric => metric.type === type);
+        if (foundMetric !== undefined) {
+          foundUnit = foundMetric.unit;
+        }
+      }
+    );
+    return foundUnit;
   }
 
   containsType(alertType: AlertType, types: []) {
@@ -192,6 +272,10 @@ export class DashboardComponent implements OnInit {
   getColor(colorIndex): string {
     this.currentColor += 1;
     return this.colors[colorIndex % this.colors.length];
+  }
+
+  getRegionLabels() {
+    return ['Europe', 'America', 'Asia'];
   }
 
   getMap(): void {

@@ -8,9 +8,9 @@ describe('PhysicalStatisticsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LogicalCapacityStatisticsComponent ]
+      declarations: [LogicalCapacityStatisticsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -67,9 +67,11 @@ app-row-dynamic-table {
   margin: 0 0 5px;
   border: 3px solid #eaeaea;
 }
+
 app-row-dynamic-table.striped-row:nth-of-type(odd) {
   background-color: #f3f8fa;
 }
+
 app-row-dynamic-table.highlight-row:hover {
   background-color: #b4d1ee !important;
   color: #3A738C;
@@ -79,9 +81,11 @@ app-row-dynamic-table.highlight-row:hover {
   font-size: 11px;
   padding: 3px;
 }
-.table-header .col-control i, .table-header i{
+
+.table-header .col-control i, .table-header i {
   color: white
 }
+
 .col-control:after {
   content: "";
   font-size: 11px;
@@ -127,12 +131,13 @@ i.sort-icon-right {
 .peak-label {
   color: #c7e1f8;
 }
+
 app-row-dynamic-table {
   width: 100%;
 }
 
-.sorting{
-  font-size:10px;
+.sorting {
+  font-size: 10px;
 }
 
 .col span.link {
@@ -140,6 +145,7 @@ app-row-dynamic-table {
   cursor: pointer;
 
 }
+
 .col span.link:hover {
   color: white;
   cursor: pointer;

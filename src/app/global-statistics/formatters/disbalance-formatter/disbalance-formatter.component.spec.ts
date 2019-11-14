@@ -8,9 +8,9 @@ describe('DisbalanceFormatterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DisbalanceFormatterComponent ]
+      declarations: [DisbalanceFormatterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

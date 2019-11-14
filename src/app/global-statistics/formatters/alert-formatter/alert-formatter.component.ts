@@ -12,6 +12,7 @@ export class AlertFormatterComponent implements OnInit {
   @Input() public data: SasiRow;
   @Input() public label;
   @Input() public options: SasiTableOptions;
+
   constructor() {
   }
 
@@ -26,6 +27,7 @@ export class AlertFormatterComponent implements OnInit {
       }
     ) !== undefined;
   }
+
   getDecoratorClass() {
     const alertDef = this.options.cellDecoratorRules.find(
       rule => {

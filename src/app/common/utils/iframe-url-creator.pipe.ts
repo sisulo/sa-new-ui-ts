@@ -61,6 +61,7 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     }
     throw new Error(`ID: ${id} not found in mapping`);
   }
+
   normalizeAnchor(value) {
     if (value != null) {
       return value.replace(/[#\-\s\,]+/g, '_');

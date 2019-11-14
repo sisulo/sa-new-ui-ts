@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SasiTableComponent } from './sasi-table.component';
+import {SasiTableComponent} from './sasi-table.component';
 
 describe('SasiTableComponent', () => {
   let component: SasiTableComponent;
@@ -8,9 +8,9 @@ describe('SasiTableComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SasiTableComponent ]
+      declarations: [SasiTableComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

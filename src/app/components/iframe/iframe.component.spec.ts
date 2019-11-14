@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { IframeComponent } from './iframe.component';
+import {IframeComponent} from './iframe.component';
 
 describe('IframeComponent', () => {
   let component: IframeComponent;
@@ -8,9 +8,9 @@ describe('IframeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ IframeComponent ]
+      declarations: [IframeComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

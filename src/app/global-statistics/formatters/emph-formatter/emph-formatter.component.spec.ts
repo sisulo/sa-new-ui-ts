@@ -8,9 +8,9 @@ describe('EmphFormatterComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EmphFormatterComponent ]
+      declarations: [EmphFormatterComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

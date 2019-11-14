@@ -1,4 +1,5 @@
-<div class="table-data " [class.selectedRow]="isSelectedRow(data.getCell('name').value)" [class.highlight-row]="options.highlightRow">
+<div class="table-data " [class.selectedRow]="isSelectedRow(data.getCell('name').value)"
+     [class.highlight-row]="options.highlightRow">
   <div class="col-val col-control" *ngIf="options.selectableRows">
     <i
       [ngClass]="isSelectedRow(data.getCell('name').value) ? 'fa-check-square' : 'fa-square'" class="far fa-fw"
@@ -7,9 +8,10 @@
   <div *ngIf="options.colControlFormatter != null" class="col-val col-control">
     <app-cell-table [componentFormatter]="options.colControlFormatter" [data]="data" [label]="''"
                     [options]="options"
-                    ></app-cell-table>
+    ></app-cell-table>
   </div>
-  <div [ngClass]="'col-val col'" [style.width.%]="options.getColumnWidth(column.index)" *ngFor="let column of options.columns; let colIndex = index"
+  <div [ngClass]="'col-val col'" [style.width.%]="options.getColumnWidth(column.index)"
+       *ngFor="let column of options.columns; let colIndex = index"
        (mouseout)="setHighlightedColumn(-1)"
        (mouseover)="setHighlightedColumn(colIndex)"
        [class.highlightColumn]="isColumnHighlighted(colIndex)"
@@ -17,7 +19,8 @@
        [class.text-center]="colIndex <= 0 || options.columnAlign !== 'right'"
        [class.alt-border]="column.altBorder"
   >
-   <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label" [rowData]="data"
+    <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"
+                    [rowData]="data"
                     [options]="options" [column]="column"></app-cell-table>
   </div>
 </div>

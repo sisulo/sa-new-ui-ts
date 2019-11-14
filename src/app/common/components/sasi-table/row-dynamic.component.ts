@@ -7,7 +7,7 @@ import {SelectedRow} from './row-table/selected-row';
 
 @Component({
   selector: 'app-row-dynamic-table',
-    template: '<ng-template appFormatterHost></ng-template>'
+  template: '<ng-template appFormatterHost></ng-template>'
 })
 export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
   @Input() componentFormatter;

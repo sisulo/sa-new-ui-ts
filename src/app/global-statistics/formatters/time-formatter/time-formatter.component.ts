@@ -11,7 +11,8 @@ export class TimeFormatterComponent implements OnInit {
   @Input() public label;
   @Input() public column;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }

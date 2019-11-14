@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { GlobalStatisticsComponent } from './global-statistics.component';
+import {GlobalStatisticsComponent} from './global-statistics.component';
 
 describe('GlobalStatisticsComponent', () => {
   let component: GlobalStatisticsComponent;
@@ -8,9 +8,9 @@ describe('GlobalStatisticsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GlobalStatisticsComponent ]
+      declarations: [GlobalStatisticsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

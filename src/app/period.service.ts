@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 import {PeriodType} from './metric.service';
 
 @Injectable({
@@ -9,11 +9,9 @@ export class PeriodService {
 
   // Observable string sources
   private periodAnnoucement = new Subject<PeriodType>();
-  private periodEnableAnnoucement = new Subject<boolean>();
-
   // Observable string streams
   periodAnnouncement$ = this.periodAnnoucement.asObservable();
-
+  private periodEnableAnnoucement = new Subject<boolean>();
   periodEnableAnnouncement = this.periodEnableAnnoucement.asObservable();
 
   // Service message commands

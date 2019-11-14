@@ -8,9 +8,9 @@ describe('AggragatedStatisticsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AggragatedStatisticsComponent ]
+      declarations: [AggragatedStatisticsComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

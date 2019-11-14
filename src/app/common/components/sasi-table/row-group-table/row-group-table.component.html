@@ -16,7 +16,8 @@
     </div>
     <div class="col-val col-control text-center" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
       <span *ngFor="let alertSum of alertSummary">
-        <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fa fa-exclamation-triangle" [ngClass]="alertSum.type" ></i></span>
+        <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fa fa-exclamation-triangle"
+                                           [ngClass]="alertSum.type"></i></span>
       </span>
     </div>
     <div class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)"
@@ -54,6 +55,6 @@
                    [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"
                    [groupName]="data.groupRow.getCell('name').value"
                    (selectEmit)="onSelectRow($event)"
-                    ></app-row-table>
+    ></app-row-table>
   </div>
 </div>

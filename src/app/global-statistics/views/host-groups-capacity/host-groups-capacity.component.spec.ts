@@ -8,9 +8,9 @@ describe('HostGroupsCapacityComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HostGroupsCapacityComponent ]
+      declarations: [HostGroupsCapacityComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

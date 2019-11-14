@@ -1,4 +1,4 @@
-import { LocaleNumberFormatPipe } from './locale-number-format.pipe';
+import {LocaleNumberFormatPipe} from './locale-number-format.pipe';
 
 describe('LocaleNumberFormatPipe', () => {
   it('create an instance', () => {

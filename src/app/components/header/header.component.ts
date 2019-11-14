@@ -35,7 +35,8 @@ export class HeaderComponent implements OnInit {
 
   public currentPeriod: PeriodType = PeriodType.WEEK;
 
-  constructor(private periodService: PeriodService) { }
+  constructor(private periodService: PeriodService) {
+  }
 
   ngOnInit() {
     this.periodService.periodEnableAnnouncement.subscribe(
@@ -53,7 +54,7 @@ export class HeaderComponent implements OnInit {
     return period === this.currentPeriod;
   }
 
-  onAnimationEvent ( event: AnimationEvent ) {
+  onAnimationEvent(event: AnimationEvent) {
     this.periodService.announcePeriod(this.currentPeriod);
   }
 
