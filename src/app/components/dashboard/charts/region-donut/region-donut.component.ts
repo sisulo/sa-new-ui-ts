@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NumberFormatter} from '../../../../global-statistics/utils/number.formatter';
+import {FormatThousandsPipe} from '../../../../common/utils/format-thousands.pipe';
 
 @Component({
   selector: 'app-region-donut',
@@ -26,6 +27,7 @@ export class RegionDonutComponent implements OnInit {
   dataLabels = {
     enabled: true,
     formatter: function (value, {seriesIndex, dataPointIndex, w}) {
+      const transform = new FormatThousandsPipe();
       const serieValue = w.config.series[seriesIndex];
       return NumberFormatter.kFormat(parseFloat(serieValue).toFixed(0), w.config.labels.useKFormatter);
     }
@@ -39,19 +41,11 @@ export class RegionDonutComponent implements OnInit {
           show: true,
           name: {
             show: true,
-            offsetY: -20
+            offsetY: -20,
+            fontSize: '12px'
           },
           value: {
             offsetY: -10,
-            formatter: function (val, {series, seriesIndex, dataPointIndex, w}) {
-              let unit = '';
-              let useKformatter = false;
-              if (w !== undefined && w.config !== undefined) {
-                unit = w.config.labels.unit;
-                useKformatter = w.config.labels.useKFormatter;
-              }
-              return NumberFormatter.kFormat(parseFloat(val).toFixed(0), useKformatter) + ' ' + unit;
-            }
           },
           total: {
             show: true,

@@ -14,7 +14,7 @@ export class StorageConvertPipe implements PipeTransform {
     'CAPACITY': ['MB', 'GB', 'TB', 'PB'],
     'TRANSFER': ['MBps', 'GBps', 'TBps'],
     'LOGICAL_CAPACITY': ['MB', 'GB', 'TB'],
-    'LOGICAL_CHANGE_MONTH': ['MB', 'GB', 'TB', 'PB'],
+    'LOGICAL_CHANGE_MONTH': ['MB', 'GB', 'TB'],
     'SUBSCRIBED_CAPACITY': ['MB', 'GB', 'TB'],
     'CHANGE_MONTH': ['MB', 'GB', 'TB', 'PB'],
   };

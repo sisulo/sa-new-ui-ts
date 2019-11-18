@@ -43,7 +43,7 @@
 
 
   <section class="content" *ngIf="metrics.length > 0">
-    <h3>Total load (Last 24 hours)</h3>
+    <h4>Total load (Last 24 hours)</h4>
     <div *ngFor="let type of perfMetricsType" class="col-12 col-sm-6 col-md-6 col-lg-4">
       <app-region-donut [data]="getMetricValueInRegions(type, regionOrder)" [regionLabels]="getRegionLabels()"
                         [title]="{text: getMetricLabel(type)}" [unit]="findUnitInMetric(type)"
@@ -51,6 +51,9 @@
     </div>
     <div class="col-md-12">
       <div class="box pad">
+        <div class="box-header">
+          <h3 class="box-title">Total Workload and Transfer History</h3>
+        </div>
         <div class="box-body">
           <apx-chart [series]="series" [chart]="chart" [colors]="fill" [xaxis]="xaxis" [yaxis]="yaxis" [legend]="legend"
                      [dataLabels]="dataLabels" [title]="title"></apx-chart>
@@ -73,32 +76,34 @@
 
 </div>
 <div class="row">
-  <div class="col-md-9 col-sm-12">
-    <div class="box pad">
-      <div class="box-body">
-        <div class="row">
+  <section class="content">
+    <div class="col-12">
+      <div class="box pad">
+        <div class="box-body">
+          <div class="row">
 
-          <div class="col-md-8">
-            <h4>Geo-location of datacenters</h4>
-            <div id="world-map-markers"></div>
-          </div>
-          <div class="col-md-4">
+            <div class="col-md-6 col-lg-8">
+              <h4>Geo-location of datacenters</h4>
+              <div id="world-map-markers"></div>
+            </div>
+            <div class="col-md-6 col-lg-4">
 
-            <div class="row">
+              <div class="row">
 
-              <div class="col-md-6">
-                <app-knob *ngIf="datacenters !== undefined" [label]="'Datacenters'" [sizeType]="'small'"
-                          [metric]="datacenters" [color]="getColor(1)"></app-knob>
-              </div>
-              <div class="col-md-6">
-                <app-knob *ngIf="registeredSystems !== undefined" [label]="'Registered systems'" [sizeType]="'small'"
-                          [metric]="registeredSystems" [color]="getColor(2)"></app-knob>
+                <div class="col-md-6">
+                  <app-knob *ngIf="datacenters !== undefined" [label]="'Datacenters'" [sizeType]="'small'"
+                            [metric]="datacenters" [color]="getColor(1)"></app-knob>
+                </div>
+                <div class="col-md-6">
+                  <app-knob *ngIf="registeredSystems !== undefined" [label]="'Registered systems'" [sizeType]="'small'"
+                            [metric]="registeredSystems" [color]="getColor(2)"></app-knob>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 
