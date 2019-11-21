@@ -115,6 +115,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('One Day Change')
+        .withInfinity(false)
         .build()
     );
     this.options.columns.push(
@@ -125,6 +126,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('One Week Change')
+        .withInfinity(false)
         .build()
     );
     this.options.columns.push(
@@ -135,6 +137,7 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('One Month Change')
+        .withInfinity(false)
         .build()
     );
 
