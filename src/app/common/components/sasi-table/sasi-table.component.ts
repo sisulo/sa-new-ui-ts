@@ -375,7 +375,7 @@ export class SasiTableComponent implements OnInit {
         this.options.sortType = SasiSortType.ASC;
       }
     } else {
-      this.options.sortType = SasiSortType.ASC;
+      this.options.sortType = SasiSortType.DESC;
       this.options.sortColumnName = column.index;
     }
     this.altSort = isAltSort;
@@ -460,35 +460,6 @@ export class SasiTableComponent implements OnInit {
     } else {
       this.onSelectService.announceSelectAll(false);
     }
-    //   // this.selectedRows = [];
-    //   d.forEach(
-    //     rowGroup => rowGroup.rows.forEach(
-    //
-    //       row => {
-    //         if (this.selectedRows.findIndex(filterItem => filterItem.groupName === rowGroup.groupRow.getCell('name').value && row.getCell('name').value === filterItem.rowName) === -1) {
-    //           this.selectedRows.push(new SelectedRow(rowGroup.groupRow.getCell('name').value, row.getCell('name').value));
-    //         }
-    //
-    //       }
-    //     )
-    //   );
-    //   this.selectedRows = [...this.selectedRows];
-    // } else {
-    //   // this.selectedRows = [];
-    //   d.forEach(
-    //     groupRow =>
-    //       groupRow.rows.forEach(
-    //         row => this.selectedRows.splice(
-    //           this.selectedRows.findIndex(
-    //             selectedRow => selectedRow.groupName === groupRow.groupRow.getCell('name').value && selectedRow.rowName === row.getCell('name').value
-    //           ), 1
-    //         )
-    //       )
-    //   );
-    //   this.selectedRows = [...this.selectedRows];
-    // }
-    // this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
-    // console.log(this.selectedRows);
   }
 
   onSelect(rows: Array<SelectedRow>) {
