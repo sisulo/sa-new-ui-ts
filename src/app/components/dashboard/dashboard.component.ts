@@ -68,8 +68,19 @@ export class DashboardComponent implements OnInit {
   series = [];
   title = {};
   perfMetricsType = [SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER];
-  capacityMetricsType = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY, SystemMetricType.LOGICAL_CHANGE_1M];
-  capacityMetricSimple = [SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY, SystemMetricType.SUBSCRIBED_CAPACITY, SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER];
+  capacityMetricsType = [
+    SystemMetricType.SUBSCRIBED_CAPACITY,
+    SystemMetricType.LOGICAL_CAPACITY,
+    SystemMetricType.PHYSICAL_CAPACITY,
+    SystemMetricType.LOGICAL_CHANGE_1M
+  ];
+  capacityMetricSimple = [
+    SystemMetricType.LOGICAL_CAPACITY,
+    SystemMetricType.PHYSICAL_CAPACITY,
+    SystemMetricType.SUBSCRIBED_CAPACITY,
+    SystemMetricType.WORKLOAD,
+    SystemMetricType.TRANSFER
+  ];
   regionOrder = [Region.EUROPE, Region.AMERICA, Region.ASIA];
   allMetricType = [...this.perfMetricsType, ...this.capacityMetricsType];
   useKFormatter = [SystemMetricType.WORKLOAD];
@@ -196,7 +207,7 @@ export class DashboardComponent implements OnInit {
     if (value === undefined) {
       return 0;
     }
-    return parseInt(value.toFixed(0), 10);
+    return parseInt(value.toFixed(2), 10);
   }
 
   findUnitInMetric(type: SystemMetricType): string {
