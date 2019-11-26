@@ -37,6 +37,8 @@ export class SasiColumnBuilder {
 
   private altBorder = false;
 
+  private columnWidth = null;
+
   private constructor() {
   }
 
@@ -89,6 +91,11 @@ export class SasiColumnBuilder {
     return this;
   }
 
+  withColumnWidth(width: string) {
+    this.columnWidth = width;
+    return this;
+  }
+
   build(): SasiColumn {
     return new SasiColumn(
       this.index,
@@ -100,7 +107,8 @@ export class SasiColumnBuilder {
       this.tooltipText === null ? this.label : this.tooltipText,
       this.infinity,
       this.altLabel,
-      this.altBorder
+      this.altBorder,
+      this.columnWidth
     );
   }
 
@@ -137,6 +145,8 @@ export class SasiColumn {
 
   altBorder: boolean;
 
+  columnWidth: string;
+
   constructor(
     index: string,
     label: string,
@@ -148,6 +158,7 @@ export class SasiColumn {
     isInfinity: boolean,
     altLabel: string,
     altBorder: boolean,
+    columnWidth: string,
   ) {
     this.index = index;
     this.label = label;
@@ -159,6 +170,7 @@ export class SasiColumn {
     this.isInfinity = isInfinity;
     this.altLabel = altLabel;
     this.altBorder = altBorder;
+    this.columnWidth = columnWidth;
   }
 }
 
@@ -236,6 +248,10 @@ export class SasiTableOptions {
   public columnAlign: string;
 
   getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
+    const columnOption = this.columns.find(column => column.index === name);
+    if (columnOption !== undefined && columnOption.columnWidth !== null) {
+      return columnOption.columnWidth;
+    }
     if (name === 'name') {
       return this.labelColumnWidth;
     }
@@ -308,7 +324,11 @@ export class SasiTableComponent implements OnInit {
     sortService: null,
     storageNamePrefix: 'sasi_default',
     columnAlign: 'center',
-    getColumnWidth: function (name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
+    getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
+      const columnOption = this.columns.find(column => column.index === name);
+      if (columnOption !== undefined && columnOption.columnWidth !== null) {
+        return columnOption.columnWidth;
+      }
       if (name === 'name') {
         return this.labelColumnWidth;
       }

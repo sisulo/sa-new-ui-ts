@@ -53,21 +53,23 @@ export class AdaptersComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.IMBALANCE_EVENTS)
-        .withLabel('Cha Imbalance events')
+        .withLabel('Cha Imbalances')
         .withComponent(SimpleFormatterComponent)
         // .withAggComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withColumnWidth('12')
         .build()
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.PORT_IMBALANCE_EVENTS)
-        .withLabel('Port Imbalance events')
+        .withLabel('Port Imbalances')
         .withComponent(SimpleFormatterComponent)
         // .withAggComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withColumnWidth('12')
         .build()
     );
     this.options.columns.push(
@@ -86,7 +88,7 @@ export class AdaptersComponent implements OnInit {
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
     this.options.labelColumnWidth = '23';
-    this.options.valueColumnWidth = '24.49';
+    this.options.valueColumnWidth = '49.5';
     this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortAggregateValueImpl();
   }

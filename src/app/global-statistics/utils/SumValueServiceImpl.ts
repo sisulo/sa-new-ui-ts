@@ -28,7 +28,7 @@ class SumValue implements AggregatedValues {
   }
 }
 
-export class SumValueServiceImpl implements AggregateValueService {
+export class SumValueServiceImpl implements AggregateValueService { // Too many computes when first time loading adapter stats
   computeSummaries(inputRowGroup: SasiGroupRow[], filter: Array<SelectedRow>, options: SasiTableOptions): AggregatedValues {
     const aggregatedValues = new SumValue();
     options.getAggregatedColumns().forEach(
@@ -43,7 +43,7 @@ export class SumValueServiceImpl implements AggregateValueService {
         aggregatedValues.setValue(<SystemMetricType>column.index, value, null);
       }
     );
-    console.log(aggregatedValues);
+    // console.log(aggregatedValues);
     return aggregatedValues;
   }
 
