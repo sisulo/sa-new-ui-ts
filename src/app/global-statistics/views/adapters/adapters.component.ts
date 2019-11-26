@@ -53,8 +53,19 @@ export class AdaptersComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.IMBALANCE_EVENTS)
-        .withLabel('Imbalance events')
+        .withLabel('Cha Imbalance events')
         .withComponent(SimpleFormatterComponent)
+        // .withAggComponent(SimpleFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(true)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.PORT_IMBALANCE_EVENTS)
+        .withLabel('Port Imbalance events')
+        .withComponent(SimpleFormatterComponent)
+        // .withAggComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .build()
@@ -62,7 +73,7 @@ export class AdaptersComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.IMBALANCE_PERC)
-        .withLabel('Imbalance Value')
+        .withLabel('Details')
         .withComponent(DisbalanceFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -74,8 +85,8 @@ export class AdaptersComponent implements OnInit {
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
-    this.options.labelColumnWidth = '25';
-    this.options.valueColumnWidth = '35.75';
+    this.options.labelColumnWidth = '23';
+    this.options.valueColumnWidth = '24.49';
     this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortAggregateValueImpl();
   }

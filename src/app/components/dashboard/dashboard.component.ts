@@ -127,6 +127,7 @@ export class DashboardComponent implements OnInit {
       console.log(stats);
       this.alerts = stats.alerts;
       this.metrics = this.transformCapacityMetrics(stats.metrics);
+      console.log(this.metrics);
     });
     this.metricService.getDatacenters().subscribe(
       data => {
@@ -163,9 +164,10 @@ export class DashboardComponent implements OnInit {
               const changeMetric = this.findMetricInRegion(region, SystemMetricType.CAPACITY_CHANGE_1M);
               const totalSaving = this.findMetricInRegion(region, SystemMetricType.TOTAL_SAVING_EFFECT);
               metric = new Metric();
-              metric.unit = 'TB';
+              metric.unit = 'GB';
               metric.type = SystemMetricType.LOGICAL_CHANGE_1M;
               metric.value = changeMetric.value * totalSaving.value;
+              console.log(changeMetric.value + '*' + totalSaving.value + '=' + metric.value);
             }
             if (metric === undefined) {
               console.error('Cannot find ' + type + ' in ' + region);
@@ -207,7 +209,7 @@ export class DashboardComponent implements OnInit {
     if (value === undefined) {
       return 0;
     }
-    return parseInt(value.toFixed(2), 10);
+    return parseFloat(value.toFixed(2));
   }
 
   findUnitInMetric(type: SystemMetricType): string {
@@ -272,6 +274,7 @@ export class DashboardComponent implements OnInit {
   isKFormatterUsed(type: SystemMetricType): boolean {
     return this.useKFormatter.some(kType => kType === type);
   }
+
   getMap(): void {
     $(function () {
       $('#world-map-markers').vectorMap({

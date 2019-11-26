@@ -43,6 +43,7 @@ export class SumValueServiceImpl implements AggregateValueService {
         aggregatedValues.setValue(<SystemMetricType>column.index, value, null);
       }
     );
+    console.log(aggregatedValues);
     return aggregatedValues;
   }
 

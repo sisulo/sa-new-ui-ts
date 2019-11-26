@@ -10,15 +10,35 @@ import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType'
 })
 export class DisbalanceFormatterComponent implements OnInit {
 
+  constructor() {
+  }
+
   @Input() label;
   @Input() public data: SystemMetric;
   @Input() public column: SasiColumn;
   @Input() public rowData: SasiRow;
+  private subData: SasiRow[] = [];
+  private imbalancePerc = SystemMetricType.IMBALANCE_PERC;
+  private imbalanceAbs = SystemMetricType.IMBALANCE_ABSOLUT;
 
-  constructor() {
+  static isVisible(row) {
+    if (row !== undefined && row.getCell(SystemMetricType.IMBALANCE_EVENTS) !== null && parseInt(row.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0) {
+      return true;
+    }
+    return false;
   }
 
   ngOnInit() {
+    if (DisbalanceFormatterComponent.isVisible(this.rowData)) {
+      this.subData = [this.rowData];
+    }
+    if (this.rowData !== undefined) {
+      this.rowData.subRows.filter(
+        subRow => DisbalanceFormatterComponent.isVisible(subRow)
+      ).forEach(
+        subRow => this.subData.push(subRow)
+      );
+    }
   }
 
   getInfoMessage() {
@@ -31,11 +51,39 @@ export class DisbalanceFormatterComponent implements OnInit {
     }
   }
 
-  private isVisible() {
-    if (this.rowData !== undefined && parseInt(this.rowData.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0) {
-      return true;
+  private getCellValue(row: SasiRow, type: SystemMetricType) {
+    const metric = row.getCell(type);
+    if (metric === null) {
+      return '';
     }
-    return false;
+    return metric.value;
+  }
+
+  private getUnit(row: SasiRow, type: SystemMetricType) {
+    const metric = row.getCell(type);
+    // console.log(metric);
+    if (metric === null) {
+      return '';
+    }
+    return metric.rawData.unit;
+  }
+
+  isAdapter(row: SasiRow) {
+    return this.rowData.getCell('name').value === row.getCell('name').value;
+  }
+
+  private getIcon(row: SasiRow): string {
+    if (this.isAdapter(row)) {
+      return 'fas fa-server';
+    }
+    return 'fas fa-ethernet';
+  }
+
+  private getTooltip(row: SasiRow) {
+    if (this.isAdapter(row)) {
+      return 'Adapter';
+    }
+    return 'Port';
   }
 
 }

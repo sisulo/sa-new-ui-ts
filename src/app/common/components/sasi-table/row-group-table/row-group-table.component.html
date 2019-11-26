@@ -41,7 +41,7 @@
          [class.alt-border]="column.altBorder"
 
     >
-      <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.component"
+      <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.aggComponent"
                       [data]="getAggregatedValue(column.index)" [column]="column"
                       [label]="column.label" [options]="options"
       ></app-cell-table>

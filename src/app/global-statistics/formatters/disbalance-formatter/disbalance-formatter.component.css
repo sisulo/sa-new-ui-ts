@@ -1,11 +1,16 @@
-i {
+table {
+  margin: 2px;
+  border: 2px solid #EAEAEA;
+}
+
+table thead {
+  background-color: #3C8CBC;
+  color: white;
+}
+
+table td {
   font-size: 11px;
-}
+  padding: 2px;
+  border: 2px solid #EAEAEA;
 
-.text-alert-yellow {
-  color: #ffd829;
-}
-
-.metric-value {
-  font-style: italic;
 }

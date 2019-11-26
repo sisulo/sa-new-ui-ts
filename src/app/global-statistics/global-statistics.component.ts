@@ -69,7 +69,7 @@ export class GlobalStatisticsComponent implements OnInit {
       case 'dp-sla':
         return 'SLA Events';
       case 'adapters':
-        return 'CHA Imbalances';
+        return 'CHA&Port Imbalances';
       default:
         return 'Statistics';
     }

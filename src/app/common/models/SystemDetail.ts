@@ -4,5 +4,6 @@ import {System} from './System';
 export class SystemDetail extends System {
   id: number;
   name: string;
-  metrics: SystemMetric[];
+  metrics: SystemMetric[] = [];
+  ports: SystemDetail[] = [];
 }

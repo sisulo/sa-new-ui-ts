@@ -23,6 +23,7 @@ export class SasiColumnBuilder {
    * @var data formatter
    */
   private component: Type<any>;
+  private aggComponent: Type<any>;
 
   private altSortEnable = false;
 
@@ -63,6 +64,11 @@ export class SasiColumnBuilder {
     return this;
   }
 
+  withAggComponent(component: Type<any>) {
+    this.aggComponent = component;
+    return this;
+  }
+
   withAltSortEnable(altSortEnable: boolean) {
     this.altSortEnable = altSortEnable;
     return this;
@@ -88,6 +94,7 @@ export class SasiColumnBuilder {
       this.index,
       this.label,
       this.component,
+      this.aggComponent === undefined ? this.component : this.aggComponent,
       this.altSortEnable,
       this.isAggregated,
       this.tooltipText === null ? this.label : this.tooltipText,
@@ -116,6 +123,7 @@ export class SasiColumn {
    * @var data formatter
    */
   component: Type<any>;
+  aggComponent: Type<any>;
 
   altSortEnable: boolean;
 
@@ -133,6 +141,7 @@ export class SasiColumn {
     index: string,
     label: string,
     component: Type<any>,
+    aggComponent: Type<any>,
     altSortEnable: boolean,
     isAggragated: boolean,
     tooltipText: string,
@@ -143,6 +152,7 @@ export class SasiColumn {
     this.index = index;
     this.label = label;
     this.component = component;
+    this.aggComponent = aggComponent;
     this.altSortEnable = altSortEnable;
     this.isAggregated = isAggragated;
     this.tooltipText = tooltipText;
@@ -170,6 +180,7 @@ export class SasiCell {
  */
 export class SasiRow {
 
+  public subRows: SasiRow[] = [];
   public cells: SasiCell[] = [];
 
   getCellValue(columnIndex: SasiColumn): any {

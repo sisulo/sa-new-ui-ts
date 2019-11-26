@@ -51,7 +51,7 @@ export class SideMenuComponent implements OnInit {
       {id: 2, linkPart: `/global-statistics/physical-capacity`, name: 'Physical Capacity'},
       {id: 3, linkPart: `/global-statistics/logical-capacity`, name: 'Logical Capacity'},
       {id: 4, linkPart: `/global-statistics/dp-sla`, name: 'SLA Events'},
-      {id: 5, linkPart: `/global-statistics/adapters`, name: 'CHA Imbalances'},
+      {id: 5, linkPart: `/global-statistics/adapters`, name: 'CHA&Port Imbalances'},
       {id: 6, linkPart: `/global-statistics/host-group-capacity`, name: 'VMware Capacity'},
     ];
   }

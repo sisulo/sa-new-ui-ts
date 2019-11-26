@@ -1,6 +1,8 @@
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
 import {SystemDetail} from '../models/SystemDetail';
 import {SasiCell, SasiRow} from '../components/sasi-table/sasi-table.component';
+import {SystemMetricType} from '../models/metrics/SystemMetricType';
+import {Metric} from '../models/metrics/Metric';
 
 // TODO move to the global statistics module
 @Injectable({
@@ -23,6 +25,13 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
         system.metrics.forEach(
           metric => row.cells[metric.type] = new SasiCell(metric.value, metric)
         );
+        if (system.ports !== undefined) {
+          row.subRows = this.transform(system.ports, null, null);
+          const metric = new Metric();
+          metric.value = row.subRows.length > 0 ? 1 : 0;
+          metric.type = SystemMetricType.PORT_IMBALANCE_EVENTS;
+          row.cells[SystemMetricType.PORT_IMBALANCE_EVENTS] = new SasiCell(metric.value, metric);
+        }
         return row;
       }
     );

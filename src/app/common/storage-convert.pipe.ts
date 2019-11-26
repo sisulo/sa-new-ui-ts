@@ -24,7 +24,7 @@ export class StorageConvertPipe implements PipeTransform {
       return metric;
     }
     const startingValue = this.unitOrder[metric.type].findIndex(unit => unit === metric.unit);
-    const convertedValue = this.convertValue(metric.value.toFixed(0), startingValue, this.unitOrder[metric.type].length - 1);
+    const convertedValue = this.convertValue(metric.value, startingValue, this.unitOrder[metric.type].length - 1);
     const result = new Metric();
     result.value = convertedValue.value;
     result.type = metric.type;
@@ -32,15 +32,15 @@ export class StorageConvertPipe implements PipeTransform {
     return result;
   }
 
-  convertValue(value: string, startingOrder: number, maximumOrder: number): ConvertedValue {
+  convertValue(value: number, startingOrder: number, maximumOrder: number): ConvertedValue {
     let countedOrder = startingOrder;
     let countedValue = value;
-    while ((Number.parseInt(countedValue, 10) / 1024) > 1 && countedOrder < maximumOrder) {
-      countedValue = (Number.parseInt(countedValue, 10) / 1024).toFixed(0);
+    while ((countedValue / 1024) > 1 && countedOrder < maximumOrder) {
+      countedValue = (countedValue / 1024);
       countedOrder++;
     }
 
-    return {value: Number.parseInt(countedValue, 10), countedOrder: countedOrder} as ConvertedValue;
+    return {value: countedValue, countedOrder: countedOrder} as ConvertedValue;
 
   }
 }
