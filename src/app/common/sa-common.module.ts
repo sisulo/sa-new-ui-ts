@@ -27,6 +27,7 @@ import {DisbalanceFormatterComponent} from '../global-statistics/formatters/disb
 import {FormatThousandsPipe} from './utils/format-thousands.pipe';
 import {RouteLinkFormatterComponent} from './components/route-link-formatter/route-link-formatter.component';
 import {StorageConvertPipe} from './storage-convert.pipe';
+import {TierFormatterComponent} from '../global-statistics/formatters/tier-formatter/tier-formatter.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import {StorageConvertPipe} from './storage-convert.pipe';
     TextFormatterComponent,
     EmphFormatterComponent,
     DisbalanceFormatterComponent,
-    RouteLinkFormatterComponent
+    RouteLinkFormatterComponent,
+    TierFormatterComponent
   ]
 })
 export class SaCommonModule {

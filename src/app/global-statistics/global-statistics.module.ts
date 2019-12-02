@@ -23,6 +23,7 @@ import {GlobalLogicalStatisticsComponent} from './components/grouped-aggregated-
 import {GroupedAggregatedStatisticsComponent} from './components/grouped-aggregated-statistics/grouped-aggregated-statistics.component';
 import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
 import {GlobalHostGroupCapacityComponent} from './components/aggragated-statistics/global-host-group-capacity.component';
+import {TierFormatterComponent} from './formatters/tier-formatter/tier-formatter.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import {GlobalHostGroupCapacityComponent} from './components/aggragated-statisti
     GlobalPhysicalCapacityStatisticsComponent,
     GlobalLogicalStatisticsComponent,
     HostGroupsCapacityComponent,
-    GlobalHostGroupCapacityComponent
+    GlobalHostGroupCapacityComponent,
+    TierFormatterComponent
   ],
   exports: [],
   imports: [

@@ -32,6 +32,9 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
           metric.type = SystemMetricType.PORT_IMBALANCE_EVENTS;
           row.cells[SystemMetricType.PORT_IMBALANCE_EVENTS] = new SasiCell(metric.value, metric);
         }
+        if (system.externals !== undefined) {
+          row.externals = system.externals;
+        }
         return row;
       }
     );

@@ -15,6 +15,7 @@ import {RouteLinkFormatterComponent} from '../../../common/components/route-link
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {TierFormatterComponent} from '../../formatters/tier-formatter/tier-formatter.component';
 
 @Component({
   selector: 'app-host-groups-capacity',
@@ -73,6 +74,15 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.TIER)
+        .withLabel('Tier')
+        .withComponent(TierFormatterComponent)
+        .withTooltipText('Tier')
+        .withColumnWidth('6')
         .build()
     );
     this.options.columns.push(
@@ -146,7 +156,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.labelColumnWidth = '13';
-    this.options.valueColumnWidth = '13.9';
+    this.options.valueColumnWidth = '12.9';
     this.options.storageNamePrefix = 'hostGroupCap';
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMean();

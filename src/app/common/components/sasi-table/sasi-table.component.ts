@@ -6,6 +6,7 @@ import {AggregatedValues, AggregateValueService} from './row-group-table/row-gro
 import {Sort} from './sort';
 import {SelectedRow} from './row-table/selected-row';
 import {OnSelectService} from './on-select.service';
+import {SystemMetricType} from '../../models/metrics/SystemMetricType';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -187,6 +188,16 @@ export class SasiCell {
   }
 }
 
+export class SasiExternal {
+  type: SystemMetricType;
+  value: string;
+
+  constructor(type: SystemMetricType, value: string) {
+    this.type = type;
+    this.value = value;
+  }
+}
+
 /**
  * SasiRow is data model for row in the table
  */
@@ -194,6 +205,7 @@ export class SasiRow {
 
   public subRows: SasiRow[] = [];
   public cells: SasiCell[] = [];
+  public externals: SasiExternal[] = [];
 
   getCellValue(columnIndex: SasiColumn): any {
     const cellData = this.getCell(columnIndex.index);
@@ -457,10 +469,14 @@ export class SasiTableComponent implements OnInit {
     return d.every(
       // @ts-ignore
       rowGroup => rowGroup.rows.every(
-        row => this.selectedRows.find(selectedRow => selectedRow.rowName === row.getCell('name').value && selectedRow.groupName === rowGroup.groupRow.getCell('name').value
+        row => this.selectedRows.find(selectedRow => this.isSelected(row, selectedRow, rowGroup)
         ) !== undefined
       )
     );
+  }
+
+  private isSelected(row: SasiRow, selectedRow: SelectedRow, rowGroup: SasiGroupRow) {
+    return selectedRow.rowName === row.getCell('name').value && selectedRow.groupName === rowGroup.groupRow.getCell('name').value;
   }
 
   isPartiallySelected() {
@@ -476,7 +492,7 @@ export class SasiTableComponent implements OnInit {
       // @ts-ignore
       rowGroup => rowGroup.rows.find(
         row => this.selectedRows.find(
-          selectedRow => selectedRow.rowName === row.getCell('name').value && selectedRow.groupName === rowGroup.groupRow.getCell('name').value
+          selectedRow => this.isSelected(row, selectedRow, rowGroup)
         ) !== undefined
       )
     ) !== undefined;
