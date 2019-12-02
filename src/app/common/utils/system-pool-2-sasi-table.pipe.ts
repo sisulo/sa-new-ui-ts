@@ -28,7 +28,7 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
         if (system.ports !== undefined) {
           row.subRows = this.transform(system.ports, null, null);
           const metric = new Metric();
-          metric.value = row.subRows.length > 0 ? 1 : 0;
+          metric.value = this.countPortImbalances(row.subRows);
           metric.type = SystemMetricType.PORT_IMBALANCE_EVENTS;
           row.cells[SystemMetricType.PORT_IMBALANCE_EVENTS] = new SasiCell(metric.value, metric);
         }
@@ -40,5 +40,8 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
     );
   }
 
+  countPortImbalances(rows: SasiRow[]): number {
+    return rows.filter(row => parseInt(row.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0).length;
+  }
 
 }
