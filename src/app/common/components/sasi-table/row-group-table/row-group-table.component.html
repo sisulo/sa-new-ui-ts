@@ -31,7 +31,7 @@
 
       ></app-cell-table>
     </div>
-    <div class="col-val col aggregated-data" *ngFor="let column of options.getAggregatedColumns(); let colIndex=index"
+    <div class="col-val col aggregated-data" *ngFor="let column of options.getDataColumns(); let colIndex=index"
          [style.width.%]="options.getColumnWidth(column.index)"
          (mouseout)="setHighlightedColumn(-1)"
          (mouseover)="setHighlightedColumn(colIndex+1)"

@@ -275,6 +275,10 @@ export class SasiTableOptions {
       column => column.isAggregated
     );
   }
+
+  getDataColumns(): SasiColumn[] {
+    return this.columns.filter(column => column.index !== 'name');
+  }
 }
 
 export enum SasiSortType {
@@ -351,6 +355,9 @@ export class SasiTableComponent implements OnInit {
       return this.columns.filter(
         column => column.isAggregated
       );
+    },
+    getDataColumns(): SasiColumn[] {
+      return this.columns.filter(column => column.index !== 'name');
     }
   };
 
