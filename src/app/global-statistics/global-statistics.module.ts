@@ -16,7 +16,7 @@ import {Seconds2FullTimePipe} from './utils/seconds-2-full-time.pipe';
 import {TextFormatterComponent} from './formatters/text-formatter/text-formatter.component';
 import {AggragatedStatisticsComponent} from './components/aggragated-statistics/aggragated-statistics.component';
 import {EmphFormatterComponent} from './formatters/emph-formatter/emph-formatter.component';
-import {DisbalanceFormatterComponent} from './formatters/disbalance-formatter/disbalance-formatter.component';
+import {PortDisbalanceFormatterComponent} from './formatters/port-disbalance-formatter/port-disbalance-formatter.component';
 import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-statistics/logical-capacity-statistics.component';
 import {GlobalPhysicalCapacityStatisticsComponent} from './components/aggragated-statistics/global-physical-capacity-statistics.component';
 import {GlobalLogicalStatisticsComponent} from './components/grouped-aggregated-statistics/global-logical-statistics.component';
@@ -24,6 +24,7 @@ import {GroupedAggregatedStatisticsComponent} from './components/grouped-aggrega
 import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
 import {GlobalHostGroupCapacityComponent} from './components/aggragated-statistics/global-host-group-capacity.component';
 import {TierFormatterComponent} from './formatters/tier-formatter/tier-formatter.component';
+import {AdapterDisbalanceFormatterComponent} from './formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 
 @NgModule({
   declarations: [
@@ -41,13 +42,14 @@ import {TierFormatterComponent} from './formatters/tier-formatter/tier-formatter
     AggragatedStatisticsComponent,
     GroupedAggregatedStatisticsComponent,
     EmphFormatterComponent,
-    DisbalanceFormatterComponent,
+    PortDisbalanceFormatterComponent,
     LogicalCapacityStatisticsComponent,
     GlobalPhysicalCapacityStatisticsComponent,
     GlobalLogicalStatisticsComponent,
     HostGroupsCapacityComponent,
     GlobalHostGroupCapacityComponent,
-    TierFormatterComponent
+    TierFormatterComponent,
+    AdapterDisbalanceFormatterComponent
   ],
   exports: [],
   imports: [

@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {DisbalanceFormatterComponent} from './disbalance-formatter.component';
+import {PortDisbalanceFormatterComponent} from './port-disbalance-formatter.component';
 
 describe('DisbalanceFormatterComponent', () => {
-  let component: DisbalanceFormatterComponent;
-  let fixture: ComponentFixture<DisbalanceFormatterComponent>;
+  let component: PortDisbalanceFormatterComponent;
+  let fixture: ComponentFixture<PortDisbalanceFormatterComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DisbalanceFormatterComponent]
+      declarations: [PortDisbalanceFormatterComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DisbalanceFormatterComponent);
+    fixture = TestBed.createComponent(PortDisbalanceFormatterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

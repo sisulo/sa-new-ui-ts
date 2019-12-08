@@ -35,7 +35,7 @@ export class StorageConvertPipe implements PipeTransform {
   convertValue(value: number, startingOrder: number, maximumOrder: number): ConvertedValue {
     let countedOrder = startingOrder;
     let countedValue = value;
-    while ((countedValue / 1024) > 1 && countedOrder < maximumOrder) {
+    while ((Math.abs(countedValue) / 1024) > 1 && countedOrder < maximumOrder) {
       countedValue = (countedValue / 1024);
       countedOrder++;
     }

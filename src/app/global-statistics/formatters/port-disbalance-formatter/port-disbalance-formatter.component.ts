@@ -4,11 +4,11 @@ import {SasiColumn, SasiRow} from '../../../common/components/sasi-table/sasi-ta
 import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
 
 @Component({
-  selector: 'app-disbalance-formatter',
-  templateUrl: './disbalance-formatter.component.html',
-  styleUrls: ['./disbalance-formatter.component.css']
+  selector: 'app-port-disbalance-formatter',
+  templateUrl: './port-disbalance-formatter.component.html',
+  styleUrls: ['./port-disbalance-formatter.component.css']
 })
-export class DisbalanceFormatterComponent implements OnInit {
+export class PortDisbalanceFormatterComponent implements OnInit {
 
   constructor() {
   }
@@ -20,6 +20,7 @@ export class DisbalanceFormatterComponent implements OnInit {
   private subData: SasiRow[] = [];
   private imbalancePerc = SystemMetricType.IMBALANCE_PERC;
   private imbalanceAbs = SystemMetricType.IMBALANCE_ABSOLUT;
+  private imbalanceEvents = SystemMetricType.IMBALANCE_EVENTS;
 
   static isVisible(row) {
     if (row !== undefined && row.getCell(SystemMetricType.IMBALANCE_EVENTS) !== null && parseInt(row.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0) {
@@ -29,20 +30,13 @@ export class DisbalanceFormatterComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (DisbalanceFormatterComponent.isVisible(this.rowData)) {
-      this.subData = [this.rowData];
-    }
     if (this.rowData !== undefined) {
       this.rowData.subRows.filter(
-        subRow => DisbalanceFormatterComponent.isVisible(subRow)
+        subRow => PortDisbalanceFormatterComponent.isVisible(subRow)
       ).forEach(
         subRow => this.subData.push(subRow)
       );
     }
-  }
-
-  getInfoMessage() {
-    return `Detected imbalance "${this.data.value}%" (${this.resolveAbsoluteDisbalance()} [MB/s])`;
   }
 
   private resolveAbsoluteDisbalance() {
@@ -61,29 +55,10 @@ export class DisbalanceFormatterComponent implements OnInit {
 
   private getUnit(row: SasiRow, type: SystemMetricType) {
     const metric = row.getCell(type);
-    // console.log(metric);
     if (metric === null) {
       return '';
     }
     return metric.rawData.unit;
-  }
-
-  isAdapter(row: SasiRow) {
-    return this.rowData.getCell('name').value === row.getCell('name').value;
-  }
-
-  private getIcon(row: SasiRow): string {
-    if (this.isAdapter(row)) {
-      return 'fas fa-server';
-    }
-    return 'fas fa-ethernet';
-  }
-
-  private getTooltip(row: SasiRow) {
-    if (this.isAdapter(row)) {
-      return 'Adapter';
-    }
-    return 'Port';
   }
 
 }

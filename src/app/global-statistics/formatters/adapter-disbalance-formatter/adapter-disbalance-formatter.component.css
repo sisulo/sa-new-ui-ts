@@ -1,0 +1,31 @@
+i {
+  font-size: 11px;
+}
+
+.text-alert-yellow {
+  color: #ffd829;
+}
+
+.metric-value {
+  font-style: italic;
+}
+
+table {
+  width: 100%;
+}
+
+div.progress {
+  /*width: 90%;*/
+  /*float:left;*/
+  padding: 0px;
+  border: 1px solid darkgrey;
+  margin: 5px auto auto auto;
+}
+
+div.progress-bar {
+  text-align: center;
+}
+
+.row {
+  margin: 0px;
+}

@@ -23,11 +23,12 @@ import {TimeFormatterComponent} from '../global-statistics/formatters/time-forma
 import {TextFormatterComponent} from '../global-statistics/formatters/text-formatter/text-formatter.component';
 import {EmphFormatterComponent} from '../global-statistics/formatters/emph-formatter/emph-formatter.component';
 import {SafeHtmlPipe} from './utils/safe-html.pipe';
-import {DisbalanceFormatterComponent} from '../global-statistics/formatters/disbalance-formatter/disbalance-formatter.component';
+import {PortDisbalanceFormatterComponent} from '../global-statistics/formatters/port-disbalance-formatter/port-disbalance-formatter.component';
 import {FormatThousandsPipe} from './utils/format-thousands.pipe';
 import {RouteLinkFormatterComponent} from './components/route-link-formatter/route-link-formatter.component';
 import {StorageConvertPipe} from './storage-convert.pipe';
 import {TierFormatterComponent} from '../global-statistics/formatters/tier-formatter/tier-formatter.component';
+import {AdapterDisbalanceFormatterComponent} from '../global-statistics/formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 
 @NgModule({
   declarations: [
@@ -79,9 +80,10 @@ import {TierFormatterComponent} from '../global-statistics/formatters/tier-forma
     TimeFormatterComponent,
     TextFormatterComponent,
     EmphFormatterComponent,
-    DisbalanceFormatterComponent,
+    PortDisbalanceFormatterComponent,
     RouteLinkFormatterComponent,
-    TierFormatterComponent
+    TierFormatterComponent,
+    AdapterDisbalanceFormatterComponent
   ]
 })
 export class SaCommonModule {

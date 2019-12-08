@@ -10,9 +10,10 @@ import {RouteLinkFormatterComponent} from '../../../common/components/route-link
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SumValueServiceImpl} from '../../utils/SumValueServiceImpl';
-import {DisbalanceFormatterComponent} from '../../formatters/disbalance-formatter/disbalance-formatter.component';
+import {PortDisbalanceFormatterComponent} from '../../formatters/port-disbalance-formatter/port-disbalance-formatter.component';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
+import {AdapterDisbalanceFormatterComponent} from '../../formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 
 // TODO separate components, pipes, utils to own directories
 @Component({
@@ -54,31 +55,21 @@ export class AdaptersComponent implements OnInit {
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.IMBALANCE_EVENTS)
         .withLabel('Cha Imbalances')
-        .withComponent(SimpleFormatterComponent)
-        // .withAggComponent(SimpleFormatterComponent)
+        .withComponent(AdapterDisbalanceFormatterComponent)
+        .withAggComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
-        .withColumnWidth('12')
+        // .withColumnWidth('12')
         .build()
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.PORT_IMBALANCE_EVENTS)
         .withLabel('Port Imbalances')
-        .withComponent(SimpleFormatterComponent)
-        // .withAggComponent(SimpleFormatterComponent)
+        .withComponent(PortDisbalanceFormatterComponent)
+        .withAggComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
-        .withColumnWidth('12')
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.IMBALANCE_PERC)
-        .withLabel('Details')
-        .withComponent(DisbalanceFormatterComponent)
-        .withAltSortEnable(false)
-        .withIsAggregated(false)
         .build()
     );
     this.options.colControlFormatter = AlertFormatterComponent;
@@ -88,7 +79,7 @@ export class AdaptersComponent implements OnInit {
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
     this.options.labelColumnWidth = '23';
-    this.options.valueColumnWidth = '49.5';
+    this.options.valueColumnWidth = '36.5';
     this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortAggregateValueImpl();
   }
