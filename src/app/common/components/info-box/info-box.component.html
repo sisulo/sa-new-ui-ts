@@ -1,7 +1,12 @@
 <div class="info-box">
-  <span [tooltip]="infoBoxTooltip" [ngClass]="isOverThreshold() ? 'info-box-icon bg-orange': 'info-box-icon bg-green'"
-        class="info-box-icon"><i
-    class="fa" [ngClass]="isOverThreshold() ? 'fa-exclamation-triangle' : icon"></i></span>
+
+  <span *ngIf="isOverThreshold()" [tooltip]="infoBoxTooltip" class="info-box-icon bg-orange info-box-icon cursor"
+        (click)="openModal()">
+    <i class="fa fa-exclamation-triangle"></i>
+  </span>
+  <span *ngIf="!isOverThreshold()" class="info-box-icon bg-green">
+    <i class="fa {{icon}}"></i>
+  </span>
 
   <div class="info-box-content">
     <span class="info-box-text">{{label}}</span>

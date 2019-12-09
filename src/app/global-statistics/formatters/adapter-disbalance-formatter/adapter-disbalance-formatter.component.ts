@@ -14,12 +14,21 @@ export class AdapterDisbalanceFormatterComponent implements OnInit {
   @Input() public data: SystemMetric;
   @Input() public column: SasiColumn;
   @Input() public rowData: SasiRow;
-  @Input() displayName = false;
+  @Input() isPortMetric = false;
+
+  private absolutType = SystemMetricType.IMBALANCE_ABSOLUT;
+  private percType = SystemMetricType.IMBALANCE_PERC;
+  private eventsType = SystemMetricType.IMBALANCE_EVENTS;
 
   constructor() {
   }
 
   ngOnInit() {
+    if (this.isPortMetric) {
+      this.absolutType = SystemMetricType.PORT_IMBALANCE_ABSOLUT;
+      this.percType = SystemMetricType.PORT_IMBALANCE_PERC;
+      this.eventsType = SystemMetricType.PORT_IMBALANCE_EVENTS;
+    }
   }
 
   getInfoMessage() {
@@ -27,11 +36,11 @@ export class AdapterDisbalanceFormatterComponent implements OnInit {
   }
 
   private resolveAbsoluteDisbalance() {
-    return this.resolveDisbalance(SystemMetricType.IMBALANCE_ABSOLUT);
+    return this.resolveDisbalance(this.absolutType);
   }
 
   private resolveRelativeDisbalance() {
-    return this.resolveDisbalance(SystemMetricType.IMBALANCE_PERC);
+    return this.resolveDisbalance(this.percType);
   }
 
 
@@ -43,7 +52,7 @@ export class AdapterDisbalanceFormatterComponent implements OnInit {
 
 
   private isVisible() {
-    if (this.rowData !== undefined && parseInt(this.rowData.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0) {
+    if (this.rowData !== undefined && parseInt(this.rowData.getCell(this.eventsType).value, 10) > 0) {
       return true;
     }
     return false;

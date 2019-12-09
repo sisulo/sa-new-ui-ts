@@ -26,8 +26,6 @@ export class DashboardComponent implements OnInit {
   alertsPerformance = [];
   alertsOperations = [];
   alertIcons = {};
-  metricIcons = {};
-  metricColor = {};
   linkContext = {};
   datacenters: Metric;
   registeredSystems: Metric;
@@ -98,7 +96,8 @@ export class DashboardComponent implements OnInit {
 
     this.alertLabels[AlertType.CAPACITY_USAGE] = 'Capacity Usage Events';
     this.alertLabels[AlertType.CPU] = 'CPU Utilization Events';
-    this.alertLabels[AlertType.DISBALANCE_EVENTS] = 'CHA Pair Disbalance Events';
+    this.alertLabels[AlertType.DISBALANCE_EVENTS] = 'CHA Pair Imbalances';
+    this.alertLabels[AlertType.PORT_DISBALANCE_EVENTS] = 'FE Port Imbalances';
     this.alertLabels[AlertType.HDD] = 'HDD Utilization Events';
     this.alertLabels[AlertType.RESPONSE] = 'Latency Events';
     this.alertLabels[AlertType.SLA_EVENTS] = 'Out of SLA Events';
@@ -107,6 +106,7 @@ export class DashboardComponent implements OnInit {
     this.alertIcons[AlertType.CAPACITY_USAGE] = 'fa-chart-pie';
     this.alertIcons[AlertType.CPU] = 'fa-tachometer-alt';
     this.alertIcons[AlertType.DISBALANCE_EVENTS] = 'fa-random';
+    this.alertIcons[AlertType.PORT_DISBALANCE_EVENTS] = 'fa-random';
     this.alertIcons[AlertType.HDD] = 'fa-hdd';
     this.alertIcons[AlertType.RESPONSE] = 'fa-chart-line';
     this.alertIcons[AlertType.SLA_EVENTS] = 'fa-bell';
@@ -115,13 +115,14 @@ export class DashboardComponent implements OnInit {
     this.linkContext[AlertType.CAPACITY_USAGE] = 'physical-capacity';
     this.linkContext[AlertType.CPU] = 'performance';
     this.linkContext[AlertType.DISBALANCE_EVENTS] = 'adapters';
+    this.linkContext[AlertType.PORT_DISBALANCE_EVENTS] = 'port';
     this.linkContext[AlertType.HDD] = 'performance';
     this.linkContext[AlertType.RESPONSE] = 'performance';
     this.linkContext[AlertType.SLA_EVENTS] = 'dp-sla';
     this.linkContext[AlertType.WRITE_PENDING] = 'physical-capacity';
 
     this.alertsPerformance.push(AlertType.CPU, AlertType.HDD, AlertType.WRITE_PENDING, AlertType.RESPONSE);
-    this.alertsOperations.push(AlertType.CAPACITY_USAGE, AlertType.SLA_EVENTS, AlertType.DISBALANCE_EVENTS);
+    this.alertsOperations.push(AlertType.CAPACITY_USAGE, AlertType.DISBALANCE_EVENTS, AlertType.PORT_DISBALANCE_EVENTS, AlertType.SLA_EVENTS);
 
     this.metricService.getInfrastructureStats().subscribe(stats => {
       console.log(stats);
@@ -241,25 +242,13 @@ export class DashboardComponent implements OnInit {
     return this.linkContext[type];
   }
 
-  getThresholdMessage(type: AlertType, minValue: number, maxValue: number, unit: string) {
-    if (maxValue == null && minValue == null) {
-      return null;
-    }
-    let sanitizeUnit = unit;
-    if (sanitizeUnit == null) {
-      sanitizeUnit = '';
-    }
-    if (maxValue == null) {
-      return `${this.getAlertLabel(type)} over ${minValue}${sanitizeUnit}`;
-    }
-    if (minValue == null) {
-      return `${this.getAlertLabel(type)} under ${maxValue}${sanitizeUnit}`;
-    }
-    return `${this.getAlertLabel(type)} between ${minValue}${sanitizeUnit} and ${maxValue}${sanitizeUnit}`;
-  }
-
   getAlertLabel(type: AlertType) {
     return this.alertLabels[type];
+  }
+
+  getAlert(type: AlertType) {
+    const alert = this.alerts.find(searchAlert => searchAlert.type === type);
+    return alert;
   }
 
   getColor(colorIndex): string {

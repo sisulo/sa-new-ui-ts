@@ -41,7 +41,7 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
   }
 
   countPortImbalances(rows: SasiRow[]): number {
-    return rows.filter(row => parseInt(row.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0).length;
+    return rows.filter(row => parseInt(row.getCell(SystemMetricType.PORT_IMBALANCE_EVENTS).value, 10) > 0).length;
   }
 
 }

@@ -18,12 +18,10 @@ export class PortDisbalanceFormatterComponent implements OnInit {
   @Input() public column: SasiColumn;
   @Input() public rowData: SasiRow;
   private subData: SasiRow[] = [];
-  private imbalancePerc = SystemMetricType.IMBALANCE_PERC;
-  private imbalanceAbs = SystemMetricType.IMBALANCE_ABSOLUT;
-  private imbalanceEvents = SystemMetricType.IMBALANCE_EVENTS;
+  private imbalanceEvents = SystemMetricType.PORT_IMBALANCE_EVENTS;
 
   static isVisible(row) {
-    if (row !== undefined && row.getCell(SystemMetricType.IMBALANCE_EVENTS) !== null && parseInt(row.getCell(SystemMetricType.IMBALANCE_EVENTS).value, 10) > 0) {
+    if (row !== undefined && row.getCell(SystemMetricType.PORT_IMBALANCE_EVENTS) !== null && parseInt(row.getCell(SystemMetricType.PORT_IMBALANCE_EVENTS).value, 10) > 0) {
       return true;
     }
     return false;
@@ -40,8 +38,8 @@ export class PortDisbalanceFormatterComponent implements OnInit {
   }
 
   private resolveAbsoluteDisbalance() {
-    if (this.rowData !== undefined && this.rowData.getCell(SystemMetricType.IMBALANCE_ABSOLUT) != null) {
-      return this.rowData.getCell(SystemMetricType.IMBALANCE_ABSOLUT).value;
+    if (this.rowData !== undefined && this.rowData.getCell(SystemMetricType.PORT_IMBALANCE_ABSOLUT) != null) {
+      return this.rowData.getCell(SystemMetricType.PORT_IMBALANCE_ABSOLUT).value;
     }
   }
 

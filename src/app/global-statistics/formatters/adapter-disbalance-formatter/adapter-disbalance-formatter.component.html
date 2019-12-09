@@ -1,5 +1,5 @@
 <div *ngIf="data != null && data.value > 0 && isVisible()">
-  <div class="col-md-2" *ngIf="displayName" tooltip="Port pair">
+  <div class="col-md-2" *ngIf="isPortMetric" tooltip="Port pair">
     <span class="badge bg-black">{{getName()}}</span>
   </div>
   <div class="progress progress-sm col-md-8" [tooltip]="resolveRelativeDisbalance() + '%'">

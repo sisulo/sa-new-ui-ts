@@ -29,6 +29,7 @@ import {RouteLinkFormatterComponent} from './components/route-link-formatter/rou
 import {StorageConvertPipe} from './storage-convert.pipe';
 import {TierFormatterComponent} from '../global-statistics/formatters/tier-formatter/tier-formatter.component';
 import {AdapterDisbalanceFormatterComponent} from '../global-statistics/formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
+import {AlertInfoBoxComponent} from './components/info-box/alert-info-box.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {AdapterDisbalanceFormatterComponent} from '../global-statistics/formatte
     SafeHtmlPipe,
     FormatThousandsPipe,
     RouteLinkFormatterComponent,
-    StorageConvertPipe
+    StorageConvertPipe,
+    AlertInfoBoxComponent
 
   ],
   imports: [
@@ -70,6 +72,7 @@ import {AdapterDisbalanceFormatterComponent} from '../global-statistics/formatte
     FormatThousandsPipe,
     RouteLinkFormatterComponent,
     StorageConvertPipe,
+    AlertInfoBoxComponent,
   ],
   entryComponents: [
     UnitFormatterComponent,

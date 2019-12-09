@@ -22,5 +22,5 @@
 
 <div *ngFor="let row of subData">
   <app-adapter-disbalance-formatter [data]="row.getCell(imbalanceEvents)" [rowData]="row"
-                                    [displayName]="true"></app-adapter-disbalance-formatter>
+                                    [isPortMetric]="true"></app-adapter-disbalance-formatter>
 </div>
