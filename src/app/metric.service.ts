@@ -122,6 +122,13 @@ export class MetricService {
     return this.http.get<GraphDataDto>(url);
   }
 
+  // TODO types not converted to URL
+  getCapacityGraphData(types: SystemMetricType[]): Observable<GraphDataDto> {
+    let url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity/graph');
+    url = url + '&types[]=SUBSCRIBED_CAPACITY&types[]=LOGICAL_CAPACITY&types[]=PHYSICAL_CAPACITY';
+    return this.http.get<GraphDataDto>(url);
+  }
+
   private buildUrl(baseUrl, basePath, period?) {
     let periodParam = '';
     if (period != null) {

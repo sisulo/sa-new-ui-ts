@@ -16,6 +16,9 @@ import {RegionDonutComponent} from './components/dashboard/charts/region-donut/r
 import {FormsModule} from '@angular/forms';
 import {WebStorageModule} from 'ngx-store';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HistoryChartComponent} from './components/dashboard/charts/history-chart/history-chart.component';
+import {CapacityHistoryChartComponent} from './components/dashboard/charts/capacity-history-chart/capacity-history-chart.component';
+import {BarChartComponent} from './components/dashboard/charts/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +28,9 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     IframeComponent,
     DashboardComponent,
     RegionDonutComponent,
+    HistoryChartComponent,
+    CapacityHistoryChartComponent,
+    BarChartComponent,
   ],
   imports: [
     GlobalStatisticsModule,

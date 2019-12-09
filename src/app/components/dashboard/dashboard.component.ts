@@ -4,7 +4,6 @@ import {Metric} from '../../common/models/metrics/Metric';
 import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
 import {Alert} from '../../common/models/metrics/Alert';
 import {AlertType} from '../../common/models/metrics/AlertType';
-import {FormatThousandsPipe} from '../../common/utils/format-thousands.pipe';
 import {RegionMetricDto} from '../../common/models/dtos/region-metric.dto';
 import {Region} from '../../common/models/dtos/region.enum';
 import {StorageConvertPipe} from '../../common/storage-convert.pipe';
@@ -31,46 +30,22 @@ export class DashboardComponent implements OnInit {
   registeredSystems: Metric;
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
   currentColor = 0;
-  chart = {type: 'area', height: '300'};
-  xaxis = {type: 'datetime', labels: {format: 'yyyy-MM-dd'}};
-  fill = ['#337ab7', '#d81b60'];
-  yaxis = [
-    {
-      seriesName: 'Transfer',
-      labels: {
-        formatter: function (value) {
-          const pipe = new FormatThousandsPipe();
-          return pipe.transform(value) + ' MBps';
-        }
-      }
-    },
-    {
-      seriesName: 'Workload',
-      opposite: true,
-      labels: {
-
-        formatter: function (value) {
-          const pipe = new FormatThousandsPipe();
-          return pipe.transform(value) + ' IOPS';
-        }
-      }
-    }
-  ];
-  legend = {
-    formatter: function (value, {seriesIndex, w}) {
-      const labels = ['Transfer (MBps)', 'Workload (IOPS)'];
-      return labels[seriesIndex];
-    }
-  };
-  dataLabels = {enabled: false};
-  series = [];
-  title = {};
+  perfGraphSeries = [];
+  capacityGraphSeries = [];
   perfMetricsType = [SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER];
+  logicalChangeType = SystemMetricType.LOGICAL_CHANGE_1M;
+  // TODO refactor to have only one of this 2 following arrays
   capacityMetricsType = [
     SystemMetricType.SUBSCRIBED_CAPACITY,
     SystemMetricType.LOGICAL_CAPACITY,
     SystemMetricType.PHYSICAL_CAPACITY,
     SystemMetricType.LOGICAL_CHANGE_1M
+  ];
+  displayCapacityType = [
+    SystemMetricType.SUBSCRIBED_CAPACITY,
+    SystemMetricType.LOGICAL_CAPACITY,
+    SystemMetricType.PHYSICAL_CAPACITY,
+    // SystemMetricType.LOGICAL_CHANGE_1M
   ];
   capacityMetricSimple = [
     SystemMetricType.LOGICAL_CAPACITY,
@@ -125,10 +100,8 @@ export class DashboardComponent implements OnInit {
     this.alertsOperations.push(AlertType.CAPACITY_USAGE, AlertType.DISBALANCE_EVENTS, AlertType.PORT_DISBALANCE_EVENTS, AlertType.SLA_EVENTS);
 
     this.metricService.getInfrastructureStats().subscribe(stats => {
-      console.log(stats);
       this.alerts = stats.alerts;
       this.metrics = this.transformCapacityMetrics(stats.metrics);
-      console.log(this.metrics);
     });
     this.metricService.getDatacenters().subscribe(
       data => {
@@ -144,7 +117,12 @@ export class DashboardComponent implements OnInit {
     );
     this.metricService.getGraphData([SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER]).subscribe(dto => {
       dto.data.forEach(serie => {
-        this.series.push({name: serie.type, data: serie.data});
+        this.perfGraphSeries.push({name: serie.type, data: serie.data});
+      });
+    });
+    this.metricService.getCapacityGraphData([SystemMetricType.SUBSCRIBED_CAPACITY, SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY]).subscribe(dto => {
+      dto.data.forEach(serie => {
+        this.capacityGraphSeries.push({name: serie.type, data: serie.data});
       });
     });
     this.getMap();
@@ -226,10 +204,6 @@ export class DashboardComponent implements OnInit {
     return foundUnit;
   }
 
-  containsType(alertType: AlertType, types: []) {
-    return types.find(type => type === alertType) !== undefined;
-  }
-
   getAlertIcon(type: SystemMetricType) {
     return this.alertIcons[type];
   }
@@ -249,11 +223,6 @@ export class DashboardComponent implements OnInit {
   getAlert(type: AlertType) {
     const alert = this.alerts.find(searchAlert => searchAlert.type === type);
     return alert;
-  }
-
-  getColor(colorIndex): string {
-    this.currentColor += 1;
-    return this.colors[colorIndex % this.colors.length];
   }
 
   getRegionLabels() {
