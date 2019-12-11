@@ -1,11 +1,12 @@
-<div *ngIf="data != null && data.value > 0 && isVisible()">
-  <div class="col-md-2" *ngIf="isPortMetric" tooltip="Port pair">
+<div>
+  <div class="col-xs-4 col-sm-4 col-md-4">
     <span class="badge bg-black">{{getName()}}</span>
   </div>
-  <div class="progress progress-sm col-md-8" [tooltip]="resolveRelativeDisbalance() + '%'">
+  <div *ngIf="data != null && data.value > 0 && isVisible()" class="progress progress-sm col-xs-4 col-sm-4 col-md-4"
+       [tooltip]="resolveRelativeDisbalance() + '%'">
     <div class="progress-bar progress-bar-danger" [ngStyle]="{width:resolveRelativeDisbalance() + '%'}"></div>
   </div>
-  <div class="col-md-2">
+  <div *ngIf="data != null && data.value > 0 && isVisible()" class="col-xs-4 col-sm-4 col-md-4">
     <span class="badge bg-red">{{resolveAbsoluteDisbalance() + 'MBps'}}</span>
   </div>
 </div>

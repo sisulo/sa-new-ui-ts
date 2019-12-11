@@ -25,6 +25,7 @@ import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-gro
 import {GlobalHostGroupCapacityComponent} from './components/aggragated-statistics/global-host-group-capacity.component';
 import {TierFormatterComponent} from './formatters/tier-formatter/tier-formatter.component';
 import {AdapterDisbalanceFormatterComponent} from './formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
+import {EmptyFormatterComponent} from './formatters/empty-formatter/empty-formatter.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import {AdapterDisbalanceFormatterComponent} from './formatters/adapter-disbalan
     HostGroupsCapacityComponent,
     GlobalHostGroupCapacityComponent,
     TierFormatterComponent,
-    AdapterDisbalanceFormatterComponent
+    AdapterDisbalanceFormatterComponent,
+    EmptyFormatterComponent
   ],
   exports: [],
   imports: [

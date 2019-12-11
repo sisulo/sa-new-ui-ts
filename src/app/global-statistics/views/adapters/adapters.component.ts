@@ -14,6 +14,7 @@ import {PortDisbalanceFormatterComponent} from '../../formatters/port-disbalance
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
 import {AdapterDisbalanceFormatterComponent} from '../../formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
+import {EmptyFormatterComponent} from '../../formatters/empty-formatter/empty-formatter.component';
 
 // TODO separate components, pipes, utils to own directories
 @Component({
@@ -46,7 +47,7 @@ export class AdaptersComponent implements OnInit {
         .withIndex('name')
         .withAltLabel('System')
         .withLabel('Cha pair')
-        .withComponent(RouteLinkFormatterComponent)
+        .withComponent(EmptyFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
@@ -107,8 +108,12 @@ export class AdaptersComponent implements OnInit {
     this.currentDataCenterId = id;
     this.metricService.getAdaptersStatistics(id, this.currentPeriod).subscribe(
       data => {
-        this.data = [];
+        this.data = [] as SystemPool[];
         data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
+        // TODO change this filtering. checking first metric for non-null is not good
+        this.data.forEach(system => system.pools.forEach(pool => pool.ports = pool.ports.filter(port => port.metrics.length > 0 && port.metrics[0].value > 0)));
+        this.data.forEach(system => system.pools = system.pools.filter(pool => (pool.metrics.length > 0 && pool.metrics[0].value > 0) || pool.ports.length > 0));
+        console.log(this.data);
       },
       error => {
         console.log(error);

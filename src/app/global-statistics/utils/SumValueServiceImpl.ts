@@ -38,12 +38,11 @@ export class SumValueServiceImpl implements AggregateValueService { // Too many 
             return row.getCellValue(column);
           }
         ).reduce(
-          (valueA, valueB) => valueA + valueB
+          (valueA, valueB) => valueA + valueB, 0
         );
         aggregatedValues.setValue(<SystemMetricType>column.index, value, null);
       }
     );
-    // console.log(aggregatedValues);
     return aggregatedValues;
   }
 

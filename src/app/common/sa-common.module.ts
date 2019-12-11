@@ -30,6 +30,7 @@ import {StorageConvertPipe} from './storage-convert.pipe';
 import {TierFormatterComponent} from '../global-statistics/formatters/tier-formatter/tier-formatter.component';
 import {AdapterDisbalanceFormatterComponent} from '../global-statistics/formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 import {AlertInfoBoxComponent} from './components/info-box/alert-info-box.component';
+import {EmptyFormatterComponent} from '../global-statistics/formatters/empty-formatter/empty-formatter.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import {AlertInfoBoxComponent} from './components/info-box/alert-info-box.compon
     PortDisbalanceFormatterComponent,
     RouteLinkFormatterComponent,
     TierFormatterComponent,
-    AdapterDisbalanceFormatterComponent
+    AdapterDisbalanceFormatterComponent,
+    EmptyFormatterComponent
   ]
 })
 export class SaCommonModule {
