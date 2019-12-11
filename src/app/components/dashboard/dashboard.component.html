@@ -76,41 +76,51 @@
 
 </div>
 <div class="row">
-  <section class="content">
-    <div class="col-12">
-      <div class="box pad">
-        <div class="box-body">
-          <div class="row">
-
-            <div class="col-md-4 col-lg-6">
-              <h4>Geo-location of datacenters</h4>
-              <div id="world-map-markers"></div>
-            </div>
-            <div class="col-md-8 col-lg-6">
-
-              <div class="row">
-
-                <div class="col-md-6">
-                  <app-small-box *ngIf="datacenters !== undefined" [label]="'Datacenters'"
-                                 [data]="datacenters" [color]="'bg-green'" [icon]="'fas fa-building'"></app-small-box>
-                </div>
-                <div class="col-md-6">
-                  <app-small-box *ngIf="registeredSystems !== undefined" [label]="'Registered systems'"
-                                 [data]="registeredSystems" [color]="'bg-blue'" [icon]="'fas fa-cubes'"></app-small-box>
-                </div>
-              </div>
-              <div class="row" *ngIf="metrics.length > 0">
-                <app-bar-chart [data]="getMetricValueInRegions(logicalChangeType, regionOrder)"
-                               [regionLabels]="getRegionLabels()"
-                               [title]="{text: getMetricLabel(logicalChangeType)}"
-                               [unit]="findUnitInMetric(logicalChangeType)"
-                               [useKFormatter]="isKFormatterUsed(logicalChangeType)"></app-bar-chart>
-              </div>
-            </div>
+  <div class="col-md-6">
+    <div class="box pad">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-12" *ngIf="metrics.length > 0">
+            <app-bar-chart [data]="getMetricValueInRegions(logicalChangeType, regionOrder)"
+                           [regionLabels]="getRegionLabels()"
+                           [title]="{text: getMetricLabel(logicalChangeType)}"
+                           [unit]="findUnitInMetric(logicalChangeType)"
+                           [useKFormatter]="isKFormatterUsed(logicalChangeType)"></app-bar-chart>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+  <!--  <section class="content">-->
+  <div class="col-md-6">
+    <div class="box pad">
+      <div class="box-body">
+        <div class="row">
+          <div class="col-md-4 col-lg-4">
+            <div class="row">
+              <div class="col-md-8">
+                <app-small-box *ngIf="datacenters !== undefined" [label]="'Datacenters'"
+                               [data]="datacenters" [color]="'bg-green'" [icon]="'fas fa-building'"></app-small-box>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <app-small-box *ngIf="registeredSystems !== undefined" [label]="'Registered systems'"
+                               [data]="registeredSystems" [color]="'bg-blue'" [icon]="'fas fa-cubes'"></app-small-box>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-8 col-lg-8">
+            <h4>Geo-location of datacenters</h4>
+            <div id="world-map-markers"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  </section>-->
+  <!--  <section class="content">-->
+
+  <!--  </section>-->
 </div>
 
