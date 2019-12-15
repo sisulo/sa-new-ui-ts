@@ -95,4 +95,17 @@ export class AlertInfoBoxComponent implements OnInit {
     return `${this.label} between ${minValue}${sanitizeUnit} and ${maxValue}${sanitizeUnit}`;
   }
 
+  getContext(entityType: EntityType) {
+    switch (entityType) {
+      case EntityType.ADAPTER:
+      case EntityType.PORT:
+        return 'adapters';
+      case EntityType.POOL:
+        return 'capacityAnalysis';
+      case EntityType.SYSTEM:
+        return 'dashboard';
+
+    }
+  }
+
 }

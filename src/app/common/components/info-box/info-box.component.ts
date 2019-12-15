@@ -40,6 +40,7 @@ export class InfoBoxComponent implements OnInit {
         }
       );
     }
+    console.log(this.data);
   }
 
   isOverThreshold() {
@@ -61,6 +62,7 @@ export class InfoBoxComponent implements OnInit {
   getIframeLink(entityType: EntityType) {
     switch (entityType) {
       case EntityType.ADAPTER:
+      case EntityType.PORT:
         return 'adapters';
       case EntityType.POOL:
         return 'capacityAnalysis';

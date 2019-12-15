@@ -5,6 +5,9 @@ export class Occurence {
   systemId: number;
   entityId: number;
   entityType: EntityType;
+  middleEntityType: EntityType;
+  middleEntityId: number;
+  middleEntityName: string;
   name: string;
   value: number;
   unit: string;

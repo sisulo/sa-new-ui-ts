@@ -90,7 +90,7 @@ export class DashboardComponent implements OnInit {
     this.linkContext[AlertType.CAPACITY_USAGE] = 'physical-capacity';
     this.linkContext[AlertType.CPU] = 'performance';
     this.linkContext[AlertType.DISBALANCE_EVENTS] = 'adapters';
-    this.linkContext[AlertType.PORT_DISBALANCE_EVENTS] = 'port';
+    this.linkContext[AlertType.PORT_DISBALANCE_EVENTS] = 'adapters';
     this.linkContext[AlertType.HDD] = 'performance';
     this.linkContext[AlertType.RESPONSE] = 'performance';
     this.linkContext[AlertType.SLA_EVENTS] = 'dp-sla';
