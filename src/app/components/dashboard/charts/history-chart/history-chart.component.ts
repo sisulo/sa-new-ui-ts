@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormatThousandsPipe} from '../../../../common/utils/format-thousands.pipe';
+import {ApexYAxis} from 'ng-apexcharts/lib/model/apex-types';
+import {ArrayUtils} from '../../../../common/utils/array-utils';
 
 @Component({
   selector: 'app-history-chart',
@@ -14,24 +16,26 @@ export class HistoryChartComponent implements OnInit {
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
   dataLabels = {enabled: false};
   title = {};
-  yaxis = [
+  yaxis: ApexYAxis[] = [
     {
-      seriesName: 'Transfer',
+      seriesName: 'TRANSFER',
       labels: {
         formatter: function (value) {
           const pipe = new FormatThousandsPipe();
-          return pipe.transform(value) + ' MBps';
+          return pipe.transform(value.toString()) + ' MBps';
         }
-      }
+      },
+      forceNiceScale: true,
     },
     {
-      seriesName: 'Workload',
+      seriesName: 'WORKLOAD',
       opposite: true,
+      forceNiceScale: true,
       labels: {
 
         formatter: function (value) {
           const pipe = new FormatThousandsPipe();
-          return pipe.transform(value) + ' IOPS';
+          return pipe.transform(value.toString()) + ' IOPS';
         }
       }
     }
@@ -47,6 +51,15 @@ export class HistoryChartComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.series.forEach(
+      serie => this.setMinimum(serie)
+    );
+  }
+
+  setMinimum(serie) {
+    const yaxis = this.yaxis.find(y => y.seriesName === serie.name);
+    const yValues = serie.data.map(value => value.y);
+    yaxis.min = ArrayUtils.min(yValues);
   }
 
 }

@@ -1,5 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {FormatThousandsPipe} from '../../../../common/utils/format-thousands.pipe';
+import {ApexYAxis} from 'ng-apexcharts';
+import {ArrayUtils} from '../../../../common/utils/array-utils';
 
 @Component({
   selector: 'app-capacity-history-chart',
@@ -14,12 +16,13 @@ export class CapacityHistoryChartComponent implements OnInit {
   colors = ['#a09608', '#38a008', '#08a09d', '#421570', '#f56954'];
   dataLabels = {enabled: false};
   title = {};
-  yaxis = [
+  yaxis: ApexYAxis[] = [
     {
+      forceNiceScale: true,
       labels: {
         formatter: function (value) {
           const pipe = new FormatThousandsPipe();
-          return pipe.transform(value) + ' TB';
+          return pipe.transform(value.toString()) + ' TB';
         }
       }
     },
@@ -35,6 +38,12 @@ export class CapacityHistoryChartComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.yaxis[0].min = ArrayUtils.min(this.series.map(serie => this.findMinimum(serie)));
+  }
+
+  findMinimum(serie) {
+    const yValues = serie.data.map(value => value.y);
+    return ArrayUtils.min(yValues);
   }
 
 }

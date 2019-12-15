@@ -1,5 +1,4 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {NumberFormatter} from '../../../../global-statistics/utils/number.formatter';
 
 @Component({
   selector: 'app-bar-chart',
@@ -16,7 +15,7 @@ export class BarChartComponent implements OnInit {
   xaxis = {
     categories: [],
     title: {
-      text: 'TB'
+      // text: 'TB'
     },
     labels: {
       formatter: function (val) {
@@ -40,9 +39,9 @@ export class BarChartComponent implements OnInit {
   @Input()
   useKFormatter = false;
   dataLabels = {
-    enabled: true,
+    enabled: false,
     formatter: function (value, {seriesIndex, dataPointIndex, w}) {
-      return Math.abs(Math.round(value)) + 'TB';
+      return Math.abs(Math.round(value)) + ' TB';
     }
   };
 
@@ -79,14 +78,13 @@ export class BarChartComponent implements OnInit {
   plotOptions = {
     bar: {
       horizontal: true,
-      barHeight: '80%',
+      // barHeight: '80%',
 
     },
   };
-  colors = ['#F44336', '#E91E63', '#9C27B0'];
+  colors = ['rgb(0, 143, 251)', 'rgb(0, 227, 150)', 'rgb(254, 176, 25)'];
   yaxis = {
-    min: -405,
-    max: 405,
+    // range: 1,
     title: {
       // text: 'Age',
     },
@@ -97,9 +95,8 @@ export class BarChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.series = [{name: 'Monthly changed', data: this.data}];
-    console.log(this.data);
-    this.xaxis.categories = this.regionLabels;
+    this.series = this.convertToMoreSeries(this.data);
+    this.xaxis.categories = [''];
     this.labels = this.regionLabels;
     this.labels.unit = this.unit;
     this.labels.useKFormatter = this.useKFormatter;
@@ -107,15 +104,27 @@ export class BarChartComponent implements OnInit {
     this.tooltip = {
       y: {
         formatter: function (value, w) {
-          let unit = '';
-          let useKformatter = false;
-          if (w !== undefined && w.config !== undefined) {
-            unit = w.config.labels.unit;
-            useKformatter = w.config.labels.useKFormatter;
-          }
-          return NumberFormatter.kFormat(parseFloat(value).toFixed(0), useKformatter) + ' ' + unit;
+          return value + ' TB';
+          // let unit = '';
+          // let useKformatter = false;
+          // if (w !== undefined && w.config !== undefined) {
+          //   unit = w.config.labels.unit;
+          //   useKformatter = w.config.labels.useKFormatter;
+          // }
+          // return NumberFormatter.kFormat(parseFloat(value).toFixed(0), useKformatter) + ' ' + unit;
         }
       }
     };
+  }
+
+  convertToMoreSeries(data: number[]) {
+    const convertData = [];
+    // tslint:disable-next-line:forin
+    for (const i in this.regionLabels) {
+      const emptyZeroArray = new Array(this.regionLabels.length).fill(0);
+      emptyZeroArray[i] = data[i];
+      convertData.push({name: this.regionLabels[i], data: emptyZeroArray});
+    }
+    return convertData;
   }
 }
