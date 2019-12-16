@@ -4,6 +4,7 @@
   </div>
   <div *ngIf="data != null && data.value > 0 && isVisible()" class="progress progress-sm col-xs-4 col-sm-4 col-md-4"
        [tooltip]="resolveRelativeDisbalance() + '%'">
+    <div class="progress-value">{{resolveRelativeDisbalance()}}</div>
     <div class="progress-bar progress-bar-danger" [ngStyle]="{width:resolveRelativeDisbalance() + '%'}"></div>
   </div>
   <div *ngIf="data != null && data.value > 0 && isVisible()" class="col-xs-4 col-sm-4 col-md-4">

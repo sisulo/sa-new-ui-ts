@@ -39,9 +39,9 @@ export class BarChartComponent implements OnInit {
   @Input()
   useKFormatter = false;
   dataLabels = {
-    enabled: false,
+    enabled: true,
     formatter: function (value, {seriesIndex, dataPointIndex, w}) {
-      return Math.abs(Math.round(value)) + ' TB';
+      return (Math.round(value)) + ' TB';
     }
   };
 

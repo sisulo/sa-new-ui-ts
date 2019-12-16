@@ -20,6 +20,7 @@ div.progress {
   padding: 0px;
   border: 1px solid darkgrey;
   margin: 5px auto auto auto;
+  height: 20px;
 }
 
 div.progress-bar {
@@ -28,4 +29,13 @@ div.progress-bar {
 
 .row {
   margin: 0px;
+}
+
+.progress-value {
+  float: left;
+  position: absolute;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
 }
