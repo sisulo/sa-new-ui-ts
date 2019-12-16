@@ -515,12 +515,4 @@ export class SasiTableComponent implements OnInit {
       this.onSelectService.announceSelectAll(false);
     }
   }
-
-  onSelect(rows: Array<SelectedRow>) {
-    console.log('Sasi');
-    console.log(rows);
-    // this.selectedRows = [...rows];
-    console.log(this.selectedRows);
-    // this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
-  }
 }
