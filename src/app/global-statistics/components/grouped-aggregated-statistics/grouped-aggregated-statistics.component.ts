@@ -3,7 +3,7 @@ import {SasiGroupRow} from '../../../common/components/sasi-table/sasi-table.com
 import {LocalStorageService} from 'ngx-store';
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {CommonAggregatedStats} from '../aggragated-statistics/global-physical-capacity-statistics.component';
 
 @Component({

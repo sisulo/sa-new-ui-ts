@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {UrlCreator} from './UrlCreator';
+import {UrlCreator} from './url-creatot.utils';
 
 @Pipe({
   name: 'iframeUrlCreator'

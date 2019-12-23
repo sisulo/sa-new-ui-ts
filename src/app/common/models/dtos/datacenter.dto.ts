@@ -1,4 +1,4 @@
-import {Datacenter} from '../Datacenter';
+import {Datacenter} from '../datacenter.vo';
 
 export class DatacenterDto {
   datacenters: Datacenter[];

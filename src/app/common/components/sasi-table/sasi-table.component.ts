@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, Type} from '@angular/core';
-import {AlertRule} from '../../../global-statistics/AlertRule';
+import {AlertRule} from '../../../global-statistics/alert-rule';
 import {LocalStorageService} from 'ngx-store';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AggregatedValues, AggregateValueService} from './row-group-table/row-group-table.component';
 import {Sort} from './sort';
 import {SelectedRow} from './row-table/selected-row';
 import {OnSelectService} from './on-select.service';
-import {SystemMetricType} from '../../models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../models/metrics/system-metric-type.enum';
 
 /**
  * SasiColumn is metadata object for columns.

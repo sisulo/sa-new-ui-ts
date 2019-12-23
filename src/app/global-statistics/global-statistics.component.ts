@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Datacenter} from '../common/models/Datacenter';
+import {Datacenter} from '../common/models/datacenter.vo';
 import {MetricService} from '../metric.service';
 import {BusService} from './bus.service';
 

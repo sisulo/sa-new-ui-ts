@@ -1,4 +1,4 @@
-import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../common/models/metrics/system-metric-type.enum';
 
 class AggregatedStatistics {
   physicalSubstitution = 0;

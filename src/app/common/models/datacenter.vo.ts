@@ -1,4 +1,4 @@
-import {System} from './System';
+import {System} from './system.vo';
 
 export class Datacenter {
   id: number;

@@ -1,6 +1,6 @@
-import {SystemMetric} from './metrics/SystemMetric';
-import {System} from './System';
-import {ComponentExternal} from './ComponentExternal';
+import {SystemMetric} from './metrics/system-metric.vo';
+import {System} from './system.vo';
+import {ComponentExternal} from './component-external.vo';
 
 export class SystemDetail extends System {
   id: number;

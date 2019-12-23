@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {MetricService} from '../../../metric.service';
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';

@@ -1,4 +1,4 @@
-import {MenuItem} from './MenuItem';
+import {MenuItem} from './menu-item.vo';
 
 export class MenuTree {
   label: string;

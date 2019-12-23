@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Metric} from './models/metrics/Metric';
+import {Metric} from './models/metrics/metric.vo';
 
 interface ConvertedValue {
   value: number;

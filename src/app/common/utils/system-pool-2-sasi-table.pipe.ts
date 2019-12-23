@@ -1,8 +1,8 @@
 import {Injectable, Pipe, PipeTransform} from '@angular/core';
-import {SystemDetail} from '../models/SystemDetail';
+import {SystemDetail} from '../models/system-detail.vo';
 import {SasiCell, SasiRow} from '../components/sasi-table/sasi-table.component';
-import {SystemMetricType} from '../models/metrics/SystemMetricType';
-import {Metric} from '../models/metrics/Metric';
+import {SystemMetricType} from '../models/metrics/system-metric-type.enum';
+import {Metric} from '../models/metrics/metric.vo';
 
 // TODO move to the global statistics module
 @Injectable({

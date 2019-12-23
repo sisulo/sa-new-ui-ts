@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Metric} from '../../models/metrics/Metric';
+import {Metric} from '../../models/metrics/metric.vo';
 
 @Component({
   selector: 'app-knob',

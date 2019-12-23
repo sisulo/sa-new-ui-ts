@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {MetricService, PeriodType} from '../../../metric.service';
-import {SystemDetail} from '../../../common/models/SystemDetail';
+import {SystemDetail} from '../../../common/models/system-detail.vo';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {PeriodService} from '../../../period.service';
 import {BusService} from '../../bus.service';
 import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
 import {UnitFormatterComponent} from '../../formatters/unit-formatter/unit-formatter.component';
 import {RouteLinkFormatterComponent} from '../../../common/components/route-link-formatter/route-link-formatter.component';
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
-import {AlertRule, Threshold} from '../../AlertRule';
+import {AlertRule, Threshold} from '../../alert-rule';
 import {RowTableComponent} from '../../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../../common/components/sasi-table/simple-sort-impl';
 

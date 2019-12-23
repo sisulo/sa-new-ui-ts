@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../../metric.service';
-import {SystemPool} from '../../../common/models/SystemPool';
+import {SystemPool} from '../../../common/models/system-pool.vo';
 import {SystemAggregatedStatistics} from '../../utils/WeightedArithmeticMean';
 import {PeriodService} from '../../../period.service';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {BusService} from '../../bus.service';
 import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
@@ -12,7 +12,7 @@ import {RouteLinkFormatterComponent} from '../../../common/components/route-link
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
-import {AlertRule, Threshold} from '../../AlertRule';
+import {AlertRule, Threshold} from '../../alert-rule';
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {LocalStorageService} from 'ngx-store';

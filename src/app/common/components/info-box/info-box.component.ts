@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Occurence} from '../../models/metrics/Occurence';
+import {Occurence} from '../../models/metrics/occurence.vo';
 import {ActivatedRoute, Router} from '@angular/router';
-import {EntityType} from '../../models/metrics/EntityType';
+import {EntityType} from '../../models/metrics/entity-type.enum';
 import {MetricService} from '../../../metric.service';
 
 @Component({

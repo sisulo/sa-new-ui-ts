@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
-import {SystemPool} from '../../../common/models/SystemPool';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
+import {SystemPool} from '../../../common/models/system-pool.vo';
 import {SystemAggregatedStatistics} from '../../utils/WeightedArithmeticMean';
 import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
 import {ActivatedRoute, Router} from '@angular/router';

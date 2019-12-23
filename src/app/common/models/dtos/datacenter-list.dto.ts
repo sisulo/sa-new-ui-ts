@@ -1,4 +1,4 @@
-import {PerformanceStatisticsDto} from './PerformanceStatisticsDto';
+import {PerformanceStatisticsDto} from './performance-statistics.dto';
 
 export class DatacenterListDto {
   datacenters: PerformanceStatisticsDto[] = [];

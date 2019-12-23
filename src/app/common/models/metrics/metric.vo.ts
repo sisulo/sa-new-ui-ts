@@ -1,4 +1,4 @@
-import {SystemMetricType} from './SystemMetricType';
+import {SystemMetricType} from './system-metric-type.enum';
 
 export class Metric {
   value: number;

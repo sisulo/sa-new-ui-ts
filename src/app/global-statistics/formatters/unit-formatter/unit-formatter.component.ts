@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SystemMetric} from '../../../common/models/metrics/SystemMetric';
+import {SystemMetric} from '../../../common/models/metrics/system-metric.vo';
 import {SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
 import {ConditionEvaluate} from '../../utils/ConditionEvaluate';
-import {AlertRule} from '../../AlertRule';
+import {AlertRule} from '../../alert-rule';
 
 @Component({
   selector: 'app-unit-formatter',

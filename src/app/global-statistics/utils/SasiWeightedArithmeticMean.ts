@@ -1,8 +1,8 @@
-import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../common/models/metrics/system-metric-type.enum';
 import {SasiCell, SasiGroupRow, SasiRow} from '../../common/components/sasi-table/sasi-table.component';
 import {AggregatedValues, AggregateValueService} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SelectedRow} from '../../common/components/sasi-table/row-table/selected-row';
-import {Metric} from '../../common/models/metrics/Metric';
+import {Metric} from '../../common/models/metrics/metric.vo';
 
 // Todo implementation is same also in SumValueServiceImpl
 export class SystemAggregatedStatistics implements AggregatedValues {

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MetricService} from '../../../metric.service';
-import {Metric} from '../../../common/models/metrics/Metric';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {Metric} from '../../../common/models/metrics/metric.vo';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {SystemPool2SasiGroupTablePipe} from '../../../common/utils/system-pool-2-sasi-group-table.pipe';
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';

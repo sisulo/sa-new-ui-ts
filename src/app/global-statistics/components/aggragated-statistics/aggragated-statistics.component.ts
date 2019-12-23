@@ -5,7 +5,7 @@ import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean
 import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {CommonAggregatedStats} from './global-physical-capacity-statistics.component';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 
 @Component({
   selector: 'app-aggragated-statistics',

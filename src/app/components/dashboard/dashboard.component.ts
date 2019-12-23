@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MetricService} from '../../metric.service';
-import {Metric} from '../../common/models/metrics/Metric';
-import {SystemMetricType} from '../../common/models/metrics/SystemMetricType';
-import {Alert} from '../../common/models/metrics/Alert';
-import {AlertType} from '../../common/models/metrics/AlertType';
+import {Metric} from '../../common/models/metrics/metric.vo';
+import {SystemMetricType} from '../../common/models/metrics/system-metric-type.enum';
+import {Alert} from '../../common/models/metrics/alert.vo';
+import {AlertType} from '../../common/models/metrics/alert-type.enum';
 import {RegionMetricDto} from '../../common/models/dtos/region-metric.dto';
 import {Region} from '../../common/models/dtos/region.enum';
 import {StorageConvertPipe} from '../../common/storage-convert.pipe';

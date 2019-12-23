@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {MetricService} from '../../../metric.service';
 import {SystemPool2SasiGroupTablePipe} from '../../../common/utils/system-pool-2-sasi-group-table.pipe';
 import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';

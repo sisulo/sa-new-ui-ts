@@ -1,4 +1,4 @@
-import {AlertRule} from '../AlertRule';
+import {AlertRule} from '../alert-rule';
 
 export class ConditionEvaluate {
 

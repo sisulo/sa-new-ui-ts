@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Occurence} from '../../models/metrics/Occurence';
+import {Occurence} from '../../models/metrics/occurence.vo';
 import {ActivatedRoute, Router} from '@angular/router';
-import {EntityType} from '../../models/metrics/EntityType';
+import {EntityType} from '../../models/metrics/entity-type.enum';
 import {MetricService} from '../../../metric.service';
-import {Alert} from '../../models/metrics/Alert';
-import {AlertType} from '../../models/metrics/AlertType';
+import {Alert} from '../../models/metrics/alert.vo';
+import {AlertType} from '../../models/metrics/alert-type.enum';
 
 @Component({
   selector: 'app-alert-info-box',

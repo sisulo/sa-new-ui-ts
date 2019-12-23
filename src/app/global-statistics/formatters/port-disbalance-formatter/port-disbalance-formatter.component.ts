@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SystemMetric} from '../../../common/models/metrics/SystemMetric';
+import {SystemMetric} from '../../../common/models/metrics/system-metric.vo';
 import {SasiColumn, SasiRow} from '../../../common/components/sasi-table/sasi-table.component';
-import {SystemMetricType} from '../../../common/models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 
 @Component({
   selector: 'app-port-disbalance-formatter',

@@ -1,4 +1,4 @@
-import {EntityType} from './EntityType';
+import {EntityType} from './entity-type.enum';
 
 export class Occurence {
   datacenterId: number;

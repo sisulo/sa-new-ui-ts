@@ -1,11 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SasiGroupRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
 import {LocalStorage, LocalStorageService} from 'ngx-store';
-import {SystemMetricType} from '../../../models/metrics/SystemMetricType';
+import {SystemMetricType} from '../../../models/metrics/system-metric-type.enum';
 import {SelectedRow} from '../row-table/selected-row';
 import {keys} from 'd3-collection';
 import {ConditionEvaluate} from '../../../../global-statistics/utils/ConditionEvaluate';
-import {Metric} from '../../../models/metrics/Metric';
+import {Metric} from '../../../models/metrics/metric.vo';
 
 export interface AggregatedValues {
   getValue(name: SystemMetricType | string): Metric;
