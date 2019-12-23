@@ -54,6 +54,9 @@ export class HistoryChartComponent implements OnInit {
     this.series.forEach(
       serie => this.setMinimum(serie)
     );
+    this.series.forEach(
+      serie => this.setMaximum(serie)
+    );
   }
 
   setMinimum(serie) {
@@ -62,4 +65,9 @@ export class HistoryChartComponent implements OnInit {
     yaxis.min = ArrayUtils.min(yValues);
   }
 
+  setMaximum(serie) {
+    const yaxis = this.yaxis.find(y => y.seriesName === serie.name);
+    const yValues = serie.data.map(value => value.y);
+    yaxis.max = ArrayUtils.max(yValues);
+  }
 }

@@ -124,7 +124,7 @@ export class DashboardComponent implements OnInit {
         }, 0);
       }
     );
-    this.metricService.getGraphData([SystemMetricType.WORKLOAD, SystemMetricType.TRANSFER]).subscribe(dto => {
+    this.metricService.getGraphData([SystemMetricType.TRANSFER, SystemMetricType.WORKLOAD]).subscribe(dto => {
       dto.data.forEach(serie => {
         this.perfGraphSeries.push({name: serie.type, data: serie.data});
       });

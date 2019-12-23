@@ -118,14 +118,13 @@ export class MetricService {
 
   getGraphData(types: SystemMetricType[]): Observable<GraphDataDto> {
     let url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/performance/graph');
-    url = url + '&types[]=TRANSFER&types[]=WORKLOAD';
+    url = url + this.convertTypeToUrlParams('types', types);
     return this.http.get<GraphDataDto>(url);
   }
 
-  // TODO types not converted to URL
   getCapacityGraphData(types: SystemMetricType[]): Observable<GraphDataDto> {
     let url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity/graph');
-    url = url + '&types[]=SUBSCRIBED_CAPACITY&types[]=LOGICAL_CAPACITY&types[]=PHYSICAL_CAPACITY';
+    url = url + this.convertTypeToUrlParams('types', types);
     return this.http.get<GraphDataDto>(url);
   }
 
@@ -144,5 +143,14 @@ export class MetricService {
   private generateDate(): string {
     const pipe = new DatePipe('en-US');
     return pipe.transform(this.currentDate, 'yyyy-MM-dd');
+  }
+
+  private convertTypeToUrlParams(paramName: string, types: SystemMetricType[]) {
+    const paramNameUrl = '&' + paramName + '[]=';
+    return types.reduce(
+      (previous, current) => {
+        return previous + paramNameUrl + current;
+      }, ''
+    );
   }
 }
