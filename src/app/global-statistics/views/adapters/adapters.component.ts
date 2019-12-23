@@ -110,10 +110,9 @@ export class AdaptersComponent implements OnInit {
       data => {
         this.data = [] as SystemPool[];
         data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
-        // TODO change this filtering. checking first metric for non-null is not good
+        // TODO change this filtering. checking first metric for non-null is not good, and make it as some named function for readability
         this.data.forEach(system => system.pools.forEach(pool => pool.ports = pool.ports.filter(port => port.metrics.length > 0 && port.metrics[0].value > 0)));
         this.data.forEach(system => system.pools = system.pools.filter(pool => (pool.metrics.length > 0 && pool.metrics[0].value > 0) || pool.ports.length > 0));
-        console.log(this.data);
       },
       error => {
         console.log(error);

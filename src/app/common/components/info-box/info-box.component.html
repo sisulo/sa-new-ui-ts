@@ -48,27 +48,28 @@
           </thead>
           <tr *ngFor="let occurence of data">
             <td *ngIf="occurence.entityType !== null">
-              <app-route-link-formatter
-                [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: metric.getSystemName(occurence.datacenterId, occurence.systemId)}"></app-route-link-formatter>
+              <span><a [routerLink]="'/global-statistics/' + context + '/' + occurence.datacenterId">
+                {{metric.getSystemName(occurence.datacenterId, occurence.systemId)}}</a>
+              </span>
             </td>
             <td *ngIf="occurence.entityType === entityType.POOL || occurence.entityType === entityType.ADAPTER ">
-              <app-route-link-formatter
-                [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: occurence.name}"></app-route-link-formatter>
+              <span><a [routerLink]="'/global-statistics/' + context + '/' + occurence.datacenterId">
+                {{occurence.name}}</a>
+              </span>
             </td>
             <td *ngIf="occurence.middleEntityType === entityType.ADAPTER">
-              <app-route-link-formatter
-                [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.middleEntityType), value: occurence.middleEntityName}"></app-route-link-formatter>
+              <span><a [routerLink]="'/global-statistics/' + context + '/' + occurence.datacenterId">
+                {{occurence.middleEntityName}}</a>
+              </span>
             </td>
             <td *ngIf="occurence.entityType === entityType.PORT">
-              <app-route-link-formatter
-                [data]="{id: occurence.systemId, iFrameLink: getIframeLink(occurence.entityType), value: occurence.name}"></app-route-link-formatter>
+              <span><a [routerLink]="'/global-statistics/' + context + '/' + occurence.datacenterId">
+                {{occurence.name}}</a>
+              </span>
             </td>
             <td>
               {{occurence.value}} {{occurence.unit}}
             </td>
-            <!---->
-            <!--<a [routerLink]="'/global-statistics/' + occurrences.datacenterId + '/' + context">-->
-            <!--{{occurrences.name}}</a> - {{occurrences.value}} {{occurrences.unit}} -->
           </tr>
         </table>
       </div>

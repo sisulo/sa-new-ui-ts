@@ -1,26 +1,6 @@
-<!--&lt;!&ndash;<div *ngIf="data != null && data.value > 0 && isVisible()" class="metric-value">&ndash;&gt;-->
-<!--&lt;!&ndash;  <i class="fa fa-exclamation-triangle text-alert-yellow"></i>&nbsp;<span class="text-red">{{getInfoMessage()}}</span>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--<table class="table table-bordered" *ngIf="subData.length > 0">-->
-<!--  <thead>-->
-<!--  <tr>-->
-<!--    <td>Name</td>-->
-<!--&lt;!&ndash;    <td>Type</td>&ndash;&gt;-->
-<!--    <td>Relative</td>-->
-<!--    <td>Absolute</td>-->
-<!--  </tr>-->
-<!--  </thead>-->
-<!--  <tbody>-->
-<!--  <tr *ngFor="let row of subData">-->
-<!--    <td>{{row.cells['name'].value}}</td>-->
-<!--&lt;!&ndash;    <td><i tooltip="{{getTooltip(row)}}" [className]="getIcon(row)"></i></td>&ndash;&gt;-->
-<!--    <td>{{getCellValue(row, imbalancePerc)}} [{{getUnit(row, imbalancePerc)}}]</td>-->
-<!--    <td>{{getCellValue(row, imbalanceAbs)}} [{{getUnit(row, imbalanceAbs)}}]</td>-->
-<!--  </tr>-->
-<!--  </tbody>-->
-<!--</table>-->
-
 <div *ngFor="let row of subData">
-  <app-adapter-disbalance-formatter [data]="row.getCell(imbalanceEvents)" [rowData]="row"
-                                    [isPortMetric]="true"></app-adapter-disbalance-formatter>
+  <div class="row">
+    <app-adapter-disbalance-formatter [data]="row.getCell(imbalanceEvents)" [rowData]="row"
+                                      [isPortMetric]="true"></app-adapter-disbalance-formatter>
+  </div>
 </div>

@@ -18,7 +18,6 @@ export class TierFormatterComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.rowData.externals);
   }
 
   isHidden(): boolean {

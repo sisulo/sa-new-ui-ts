@@ -96,8 +96,17 @@ export class DashboardComponent implements OnInit {
     this.linkContext[AlertType.SLA_EVENTS] = 'dp-sla';
     this.linkContext[AlertType.WRITE_PENDING] = 'physical-capacity';
 
-    this.alertsPerformance.push(AlertType.CPU, AlertType.HDD, AlertType.WRITE_PENDING, AlertType.RESPONSE);
-    this.alertsOperations.push(AlertType.CAPACITY_USAGE, AlertType.DISBALANCE_EVENTS, AlertType.PORT_DISBALANCE_EVENTS, AlertType.SLA_EVENTS);
+    this.alertsPerformance.push(
+      AlertType.CPU,
+      AlertType.HDD,
+      AlertType.WRITE_PENDING,
+      AlertType.RESPONSE);
+    this.alertsOperations.push(
+      AlertType.CAPACITY_USAGE,
+      AlertType.DISBALANCE_EVENTS,
+      AlertType.PORT_DISBALANCE_EVENTS,
+      AlertType.SLA_EVENTS
+    );
 
     this.metricService.getInfrastructureStats().subscribe(stats => {
       this.alerts = stats.alerts;
@@ -120,7 +129,11 @@ export class DashboardComponent implements OnInit {
         this.perfGraphSeries.push({name: serie.type, data: serie.data});
       });
     });
-    this.metricService.getCapacityGraphData([SystemMetricType.SUBSCRIBED_CAPACITY, SystemMetricType.LOGICAL_CAPACITY, SystemMetricType.PHYSICAL_CAPACITY]).subscribe(dto => {
+    this.metricService.getCapacityGraphData([
+      SystemMetricType.SUBSCRIBED_CAPACITY,
+      SystemMetricType.LOGICAL_CAPACITY,
+      SystemMetricType.PHYSICAL_CAPACITY
+    ]).subscribe(dto => {
       dto.data.forEach(serie => {
         this.capacityGraphSeries.push({name: serie.type, data: serie.data});
       });
@@ -146,7 +159,6 @@ export class DashboardComponent implements OnInit {
               metric.unit = 'GB';
               metric.type = SystemMetricType.LOGICAL_CHANGE_1M;
               metric.value = changeMetric.value * totalSaving.value;
-              console.log(changeMetric.value + '*' + totalSaving.value + '=' + metric.value);
             }
             if (metric === undefined) {
               console.error('Cannot find ' + type + ' in ' + region);
@@ -221,8 +233,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getAlert(type: AlertType) {
-    const alert = this.alerts.find(searchAlert => searchAlert.type === type);
-    return alert;
+    return this.alerts.find(searchAlert => searchAlert.type === type);
   }
 
   getRegionLabels() {

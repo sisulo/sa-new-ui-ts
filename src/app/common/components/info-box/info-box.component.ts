@@ -34,13 +34,12 @@ export class InfoBoxComponent implements OnInit {
   ngOnInit() {
     if (this.data.length > 0) {
 
-      const result = this.data.sort(
+      this.data.sort(
         (occurence1, occurrence2) => {
           return occurrence2.value - occurence1.value;
         }
       );
     }
-    console.log(this.data);
   }
 
   isOverThreshold() {
