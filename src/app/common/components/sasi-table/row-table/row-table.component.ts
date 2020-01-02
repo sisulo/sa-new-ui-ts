@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../sasi-table.component';
 import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {SelectedRow} from './selected-row';
@@ -8,7 +8,8 @@ import {Subscription} from 'rxjs';
 @Component({
   selector: 'app-row-table',
   templateUrl: './row-table.component.html',
-  styleUrls: ['./row-table.component.css']
+  styleUrls: ['./row-table.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RowTableComponent implements OnInit, OnDestroy {
 

@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
 import {ConditionEvaluate} from '../../utils/ConditionEvaluate';
 
 @Component({
   selector: 'app-alert-formatter',
   templateUrl: './alert-formatter.component.html',
-  styleUrls: ['./alert-formatter.component.css']
+  styleUrls: ['./alert-formatter.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AlertFormatterComponent implements OnInit {
 

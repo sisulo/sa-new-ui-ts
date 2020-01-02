@@ -6,7 +6,7 @@ import {SasiColumn, SasiRow} from './sasi-table.component';
 
 @Component({
   selector: 'app-cell-table',
-  template: '<ng-template appFormatterHost></ng-template>'
+  template: '<ng-template appFormatterHost></ng-template>',
 })
 export class CellTableComponent implements OnInit, OnDestroy, OnChanges {
   @Input() componentFormatter;

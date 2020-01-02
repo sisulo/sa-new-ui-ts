@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {UnitFormatterComponent} from '../unit-formatter/unit-formatter.component';
 import {SasiColumn} from '../../../common/components/sasi-table/sasi-table.component';
 
 @Component({
   selector: 'app-simple-formatter',
   templateUrl: './simple-formatter.component.html',
-  styleUrls: ['./simple-formatter.component.css']
+  styleUrls: ['./simple-formatter.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SimpleFormatterComponent extends UnitFormatterComponent implements OnInit {
 

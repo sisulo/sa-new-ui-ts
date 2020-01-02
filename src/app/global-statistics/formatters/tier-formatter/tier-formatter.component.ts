@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../../common/models/metrics/system-metric.vo';
 import {SasiColumn, SasiRow} from '../../../common/components/sasi-table/sasi-table.component';
 
 @Component({
   selector: 'app-tier-formatter',
   templateUrl: './tier-formatter.component.html',
-  styleUrls: ['./tier-formatter.component.css']
+  styleUrls: ['./tier-formatter.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TierFormatterComponent implements OnInit {
 
