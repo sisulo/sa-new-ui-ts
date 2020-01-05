@@ -4,7 +4,7 @@ import {LocalStorage, LocalStorageService} from 'ngx-store';
 import {SystemMetricType} from '../../../models/metrics/system-metric-type.enum';
 import {SelectedRow} from '../row-table/selected-row';
 import {keys} from 'd3-collection';
-import {ConditionEvaluate} from '../../../../global-statistics/utils/ConditionEvaluate';
+import {ConditionEvaluateUtils} from '../../../../global-statistics/utils/condition-evaluate.utils';
 import {Metric} from '../../../models/metrics/metric.vo';
 
 export interface AggregatedValues {
@@ -153,7 +153,7 @@ export class RowGroupTableComponent implements OnInit {
         const filteredData = this.data.rows.filter(
           row => {
             const cell = row.getCell(rule.type);
-            return cell != null ? ConditionEvaluate.eval(cell.value, rule) : false;
+            return cell != null ? ConditionEvaluateUtils.eval(cell.value, rule) : false;
           }
         );
         if (filteredData.length > 0) {

@@ -1,20 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {GroupedAggregatedStatisticsComponent} from './grouped-aggregated-statistics.component';
+import {AggregatedStatisticsComponent} from './aggregated-statistics.component';
 
 describe('AggregatedStatisticsComponent', () => {
-  let component: GroupedAggregatedStatisticsComponent;
-  let fixture: ComponentFixture<GroupedAggregatedStatisticsComponent>;
+  let component: AggregatedStatisticsComponent;
+  let fixture: ComponentFixture<AggregatedStatisticsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [GroupedAggregatedStatisticsComponent]
+      declarations: [AggregatedStatisticsComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GroupedAggregatedStatisticsComponent);
+    fixture = TestBed.createComponent(AggregatedStatisticsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

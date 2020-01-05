@@ -14,15 +14,15 @@ import {SimpleFormatterComponent} from './formatters/simple-formatter/simple-for
 import {TimeFormatterComponent} from './formatters/time-formatter/time-formatter.component';
 import {Seconds2FullTimePipe} from './utils/seconds-2-full-time.pipe';
 import {TextFormatterComponent} from './formatters/text-formatter/text-formatter.component';
-import {AggragatedStatisticsComponent} from './components/aggragated-statistics/aggragated-statistics.component';
+import {AggregatedStatisticsComponent} from './components/aggregated-statistics/aggregated-statistics.component';
 import {EmphFormatterComponent} from './formatters/emph-formatter/emph-formatter.component';
 import {PortDisbalanceFormatterComponent} from './formatters/port-disbalance-formatter/port-disbalance-formatter.component';
 import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-statistics/logical-capacity-statistics.component';
-import {GlobalPhysicalCapacityStatisticsComponent} from './components/aggragated-statistics/global-physical-capacity-statistics.component';
+import {GlobalPhysicalCapacityStatisticsComponent} from './components/aggregated-statistics/global-physical-capacity-statistics.component';
 import {GlobalLogicalStatisticsComponent} from './components/grouped-aggregated-statistics/global-logical-statistics.component';
 import {GroupedAggregatedStatisticsComponent} from './components/grouped-aggregated-statistics/grouped-aggregated-statistics.component';
 import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
-import {GlobalHostGroupCapacityComponent} from './components/aggragated-statistics/global-host-group-capacity.component';
+import {GlobalHostGroupCapacityComponent} from './components/aggregated-statistics/global-host-group-capacity.component';
 import {TierFormatterComponent} from './formatters/tier-formatter/tier-formatter.component';
 import {AdapterDisbalanceFormatterComponent} from './formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 import {EmptyFormatterComponent} from './formatters/empty-formatter/empty-formatter.component';
@@ -40,7 +40,7 @@ import {EmptyFormatterComponent} from './formatters/empty-formatter/empty-format
     TimeFormatterComponent,
     Seconds2FullTimePipe,
     TextFormatterComponent,
-    AggragatedStatisticsComponent,
+    AggregatedStatisticsComponent,
     GroupedAggregatedStatisticsComponent,
     EmphFormatterComponent,
     PortDisbalanceFormatterComponent,

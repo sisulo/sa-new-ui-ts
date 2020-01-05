@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
-import {ConditionEvaluate} from '../../utils/ConditionEvaluate';
+import {ConditionEvaluateUtils} from '../../utils/condition-evaluate.utils';
 
 @Component({
   selector: 'app-alert-formatter',
@@ -24,7 +24,7 @@ export class AlertFormatterComponent implements OnInit {
     return this.options.cellDecoratorRules.find(
       rule => {
         const cell = this.data.getCell(rule.type);
-        return cell != null ? ConditionEvaluate.eval(cell.value, rule) : false;
+        return cell != null ? ConditionEvaluateUtils.eval(cell.value, rule) : false;
       }
     ) !== undefined;
   }
@@ -33,7 +33,7 @@ export class AlertFormatterComponent implements OnInit {
     const alertDef = this.options.cellDecoratorRules.find(
       rule => {
         const cell = this.data.getCell(rule.type);
-        return cell != null ? ConditionEvaluate.eval(cell.value, rule) : false;
+        return cell != null ? ConditionEvaluateUtils.eval(cell.value, rule) : false;
       }
     );
     if (alertDef !== null) {

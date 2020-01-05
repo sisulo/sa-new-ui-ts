@@ -3,7 +3,7 @@ import {MetricService} from '../../../metric.service';
 import {Metric} from '../../../common/models/metrics/metric.vo';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {SystemPool2SasiGroupTablePipe} from '../../../common/utils/system-pool-2-sasi-group-table.pipe';
-import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
+import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 
@@ -39,8 +39,8 @@ export class CommonAggregatedStats {
 
 @Component({
   selector: 'app-infrastructure-statistics',
-  templateUrl: './aggragated-statistics.component.html',
-  styleUrls: ['./aggragated-statistics.component.css']
+  templateUrl: './aggregated-statistics.component.html',
+  styleUrls: ['./aggregated-statistics.component.css']
 })
 export class GlobalPhysicalCapacityStatisticsComponent extends CommonAggregatedStats implements OnInit {
 
@@ -88,7 +88,7 @@ export class GlobalPhysicalCapacityStatisticsComponent extends CommonAggregatedS
   getTableData(): AggregatedValues { // TODO duplicated for all GS sasi tables
     this.metricService.getGlobalCapacityStatistics().subscribe(
       data => {
-        const average = new SasiWeightedArithmeticMean();
+        const average = new SasiWeightedArithmeticMeanUtils();
         const filter: SelectedRow[] = [];
         data.systems.forEach(
           system => system.pools.forEach(

@@ -9,7 +9,7 @@ import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sa
 import {RouteLinkFormatterComponent} from '../../../common/components/route-link-formatter/route-link-formatter.component';
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
-import {SumValueServiceImpl} from '../../utils/SumValueServiceImpl';
+import {SumValueServiceImpl} from '../../utils/sum-value-service.impl';
 import {PortDisbalanceFormatterComponent} from '../../formatters/port-disbalance-formatter/port-disbalance-formatter.component';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';

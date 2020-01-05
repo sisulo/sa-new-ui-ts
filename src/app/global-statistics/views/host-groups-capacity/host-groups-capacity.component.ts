@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {SystemPool} from '../../../common/models/system-pool.vo';
-import {SystemAggregatedStatistics} from '../../utils/WeightedArithmeticMean';
+import {SystemAggregatedStatistics} from '../../utils/weighted-arithmetic-mean.utils';
 import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -12,7 +12,7 @@ import {LocalStorageService} from 'ngx-store';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {RouteLinkFormatterComponent} from '../../../common/components/route-link-formatter/route-link-formatter.component';
-import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
+import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {TierFormatterComponent} from '../../formatters/tier-formatter/tier-formatter.component';
@@ -159,7 +159,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     this.options.valueColumnWidth = '12.9';
     this.options.storageNamePrefix = 'hostGroupCap';
     this.options.selectableRows = true;
-    this.options.aggregateValuesService = new SasiWeightedArithmeticMean();
+    this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
     this.options.columnAlign = 'right';
     //

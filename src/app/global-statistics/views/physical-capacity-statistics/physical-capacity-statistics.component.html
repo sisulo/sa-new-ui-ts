@@ -3,9 +3,9 @@
     <div class="row col-md-12">
       <app-sasi-table class="table-right" [data]="data | systemPool2SasiGroupTable: 'capacityAnalysis'"
                       [tableOptions]="options"></app-sasi-table>
-      <app-aggragated-statistics class='col-md-12 sticky-bottom' [aggregatedTypes]="options.getAggregatedColumns()"
+      <app-aggregated-statistics class='col-md-12 sticky-bottom' [aggregatedColumns]="options.getAggregatedColumns()"
                                  [data]="data | systemPool2SasiGroupTable" [selectedRows]="selectedRows"
-                                 [prefix]="options.storageNamePrefix"></app-aggragated-statistics>
+                                 [prefix]="options.storageNamePrefix"></app-aggregated-statistics>
     </div>
   </div>
 </div>

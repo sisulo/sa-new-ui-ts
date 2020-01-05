@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../../metric.service';
 import {SystemPool} from '../../../common/models/system-pool.vo';
-import {SystemAggregatedStatistics} from '../../utils/WeightedArithmeticMean';
+import {SystemAggregatedStatistics} from '../../utils/weighted-arithmetic-mean.utils';
 import {PeriodService} from '../../../period.service';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -13,25 +13,10 @@ import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {AlertRule, Threshold} from '../../alert-rule';
-import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
+import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {LocalStorageService} from 'ngx-store';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
-
-
-export class ItemKey {
-  systemName: string;
-  poolName: string;
-}
-
-class MetricLabels {
-  [key: string]: string;
-}
-
-class SelectedItem {
-  systemId: number;
-  poolName: number;
-}
 
 @Component({
   selector: 'app-capacity-statistics',
@@ -224,7 +209,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.valueColumnWidth = '6.65';
     this.options.storageNamePrefix = 'physicalCap';
     this.options.selectableRows = true;
-    this.options.aggregateValuesService = new SasiWeightedArithmeticMean();
+    this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
     this.options.columnAlign = 'right';
 

@@ -33,7 +33,7 @@ export class SystemAggregatedStatistics implements AggregatedValues {
   }
 }
 
-export class SasiWeightedArithmeticMean implements AggregateValueService {
+export class SasiWeightedArithmeticMeanUtils implements AggregateValueService {
   systemSummarizedValues: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
   partiallySummarizedValues: SystemAggregatedStatistics = new SystemAggregatedStatistics('all');
   physicalCapacityCompRatio = 0;
@@ -44,7 +44,6 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
     this.physicalCapacityTotalSaving = 0;
     this.physicalCapacityDedupRatio = 0;
     this.physicalCapacityCompRatio = 0;
-    const startTime = new Date();
     if (filter.length === 0) {
       return null;
     }
@@ -78,10 +77,8 @@ export class SasiWeightedArithmeticMean implements AggregateValueService {
         if (sasiRow === undefined) {
           return null;
         }
-        const systemStats = this.partiallySummarizedValues;
         const physicalCapacity = this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY);
         const netTotal = this.getMetricValueByName(sasiRow, SystemMetricType.NET_TOTAL);
-        // systemStats.physicalCapacity += physicalCapacity;
         this.partiallySummarizedValues.setValue(
           SystemMetricType.PHYSICAL_CAPACITY,
           this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY),

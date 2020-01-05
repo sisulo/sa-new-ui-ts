@@ -1,6 +1,6 @@
 import {AlertRule} from '../alert-rule';
 
-export class ConditionEvaluate {
+export class ConditionEvaluateUtils {
 
   static eval(value, rule: AlertRule) {
     if (rule.threshold.max != null) {

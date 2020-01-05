@@ -3,14 +3,14 @@ import {AggregatedValues} from '../../../common/components/sasi-table/row-group-
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {MetricService} from '../../../metric.service';
 import {SystemPool2SasiGroupTablePipe} from '../../../common/utils/system-pool-2-sasi-group-table.pipe';
-import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
+import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {CommonAggregatedStats} from './global-physical-capacity-statistics.component';
 
 @Component({
   selector: 'app-global-host-group-capacity',
-  templateUrl: './aggragated-statistics.component.html',
-  styleUrls: ['./aggragated-statistics.component.css']
+  templateUrl: './aggregated-statistics.component.html',
+  styleUrls: ['./aggregated-statistics.component.css']
 })
 export class GlobalHostGroupCapacityComponent extends CommonAggregatedStats implements OnInit {
 
@@ -41,7 +41,7 @@ export class GlobalHostGroupCapacityComponent extends CommonAggregatedStats impl
   getTableData(): AggregatedValues { // TODO duplicated for all GS sasi tables
     this.metricService.getGlobalHostGroupCapacityStatistics().subscribe(
       data => {
-        const average = new SasiWeightedArithmeticMean();
+        const average = new SasiWeightedArithmeticMeanUtils();
         const filter: SelectedRow[] = [];
         data.systems.forEach(
           system => system.pools.forEach(

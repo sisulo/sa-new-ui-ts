@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {MetricService} from '../../../metric.service';
-import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
+import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SystemPool2SasiGroupTablePipe} from '../../../common/utils/system-pool-2-sasi-group-table.pipe';
-import {CommonAggregatedStats} from '../aggragated-statistics/global-physical-capacity-statistics.component';
+import {CommonAggregatedStats} from '../aggregated-statistics/global-physical-capacity-statistics.component';
 
 @Component({
   selector: 'app-global-logical-statistics',
@@ -103,7 +103,7 @@ export class GlobalLogicalStatisticsComponent extends CommonAggregatedStats impl
   getTableData(): AggregatedValues { // TODO duplicated for all GS sasi tables
     this.metricService.getGlobalCapacityStatistics().subscribe(
       data => {
-        const average = new SasiWeightedArithmeticMean();
+        const average = new SasiWeightedArithmeticMeanUtils();
         const filter: SelectedRow[] = [];
         data.systems.forEach(
           system => system.pools.forEach(

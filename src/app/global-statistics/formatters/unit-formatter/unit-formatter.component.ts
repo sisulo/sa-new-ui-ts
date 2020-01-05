@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../../common/models/metrics/system-metric.vo';
 import {SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
-import {ConditionEvaluate} from '../../utils/ConditionEvaluate';
+import {ConditionEvaluateUtils} from '../../utils/condition-evaluate.utils';
 import {AlertRule} from '../../alert-rule';
 
 @Component({
@@ -26,7 +26,7 @@ export class UnitFormatterComponent implements OnInit {
     const ruleDefinitions = this.findRulesByType(this.data.type);
     if (ruleDefinitions.length > 0) {
       return ruleDefinitions.find(
-        ruleDefinition => ConditionEvaluate.eval(this.data.value, ruleDefinition)
+        ruleDefinition => ConditionEvaluateUtils.eval(this.data.value, ruleDefinition)
       ) !== undefined;
     }
     return false;
@@ -47,14 +47,14 @@ export class UnitFormatterComponent implements OnInit {
     const ruleDefinitions = this.findRulesByType(this.data.type);
     if (ruleDefinitions.length > 0) {
       return ruleDefinitions.find(
-        ruleDefinition => ConditionEvaluate.eval(this.data.value, ruleDefinition)
+        ruleDefinition => ConditionEvaluateUtils.eval(this.data.value, ruleDefinition)
       );
     }
   }
 
   getViolatedRuleClass(): string {
     const ruleDefinition = this.getViolatedRule();
-    if (ruleDefinition !== undefined && ConditionEvaluate.eval(this.data.value, ruleDefinition)) {
+    if (ruleDefinition !== undefined && ConditionEvaluateUtils.eval(this.data.value, ruleDefinition)) {
       return ruleDefinition.threshold.alertType;
     }
     return '';

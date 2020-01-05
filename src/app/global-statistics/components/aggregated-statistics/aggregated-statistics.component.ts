@@ -1,21 +1,21 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SasiColumn, SasiGroupRow} from '../../../common/components/sasi-table/sasi-table.component';
 import {LocalStorageService} from 'ngx-store';
-import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
+import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {CommonAggregatedStats} from './global-physical-capacity-statistics.component';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 
 @Component({
-  selector: 'app-aggragated-statistics',
-  templateUrl: './aggragated-statistics.component.html',
-  styleUrls: ['./aggragated-statistics.component.css']
+  selector: 'app-aggregated-statistics',
+  templateUrl: './aggregated-statistics.component.html',
+  styleUrls: ['./aggregated-statistics.component.css']
 })
-export class AggragatedStatisticsComponent extends CommonAggregatedStats implements OnInit {
+export class AggregatedStatisticsComponent extends CommonAggregatedStats implements OnInit {
 
   @Input() data: SasiGroupRow[];
-  @Input('aggregatedTypes') types: SasiColumn[];
+  @Input() aggregatedColumns: SasiColumn[];
   @Input() prefix: string;
   @Input() selectedRows: Array<SelectedRow>;
   result: AggregatedValues;
@@ -29,11 +29,11 @@ export class AggragatedStatisticsComponent extends CommonAggregatedStats impleme
 
     this.aggregatedTypes = [
       SystemMetricType.SELECTED_COUNT,
-      ...this.types.map(type => <SystemMetricType>type.index)
+      ...this.aggregatedColumns.map(type => <SystemMetricType>type.index)
     ];
 
     this.labels[SystemMetricType.SELECTED_COUNT] = '# Selected';
-    this.types.forEach(type => this.labels[type.index] = type.label);
+    this.aggregatedColumns.forEach(type => this.labels[type.index] = type.label);
     this.typesIntValue = [
       SystemMetricType.SELECTED_COUNT,
       SystemMetricType.PHYSICAL_CAPACITY,
@@ -58,7 +58,7 @@ export class AggragatedStatisticsComponent extends CommonAggregatedStats impleme
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
-    const mean = new SasiWeightedArithmeticMean();
+    const mean = new SasiWeightedArithmeticMeanUtils();
     this.result = mean.computeSummaries(this.data, this.selectedRows);
   }
 }

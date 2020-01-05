@@ -11,7 +11,7 @@ import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-fo
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {TimeFormatterComponent} from '../../formatters/time-formatter/time-formatter.component';
-import {SumValueServiceImpl} from '../../utils/SumValueServiceImpl';
+import {SumValueServiceImpl} from '../../utils/sum-value-service.impl';
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
 
 

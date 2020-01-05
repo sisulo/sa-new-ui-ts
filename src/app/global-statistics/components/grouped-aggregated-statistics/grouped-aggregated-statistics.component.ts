@@ -1,10 +1,10 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SasiGroupRow} from '../../../common/components/sasi-table/sasi-table.component';
 import {LocalStorageService} from 'ngx-store';
-import {SasiWeightedArithmeticMean} from '../../utils/SasiWeightedArithmeticMean';
+import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
-import {CommonAggregatedStats} from '../aggragated-statistics/global-physical-capacity-statistics.component';
+import {CommonAggregatedStats} from '../aggregated-statistics/global-physical-capacity-statistics.component';
 
 @Component({
   selector: 'app-grouped-aggregated-statistics',
@@ -124,7 +124,7 @@ export class GroupedAggregatedStatisticsComponent extends CommonAggregatedStats 
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
-    const mean = new SasiWeightedArithmeticMean();
+    const mean = new SasiWeightedArithmeticMeanUtils();
     this.result = mean.computeSummaries(this.data, this.selectedRows);
   }
 
