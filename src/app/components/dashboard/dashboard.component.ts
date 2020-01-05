@@ -45,7 +45,6 @@ export class DashboardComponent implements OnInit {
     SystemMetricType.SUBSCRIBED_CAPACITY,
     SystemMetricType.LOGICAL_CAPACITY,
     SystemMetricType.PHYSICAL_CAPACITY,
-    // SystemMetricType.LOGICAL_CHANGE_1M
   ];
   capacityMetricSimple = [
     SystemMetricType.LOGICAL_CAPACITY,

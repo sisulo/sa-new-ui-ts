@@ -1,5 +1,15 @@
 <app-header></app-header>
 <app-side-menu></app-side-menu>
+<ngx-spinner
+  bdOpacity=0.5
+  bdColor="#333"
+  size="medium"
+  color="#fff"
+  type="line-scale"
+  [fullScreen]="true"
+>
+  <p style="color: white"> Loading... </p>
+</ngx-spinner>
 <div class="content-wrapper">
   <section class="container-fluid">
     <router-outlet></router-outlet>

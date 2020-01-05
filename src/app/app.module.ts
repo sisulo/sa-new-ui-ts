@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -19,6 +19,12 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HistoryChartComponent} from './components/dashboard/charts/history-chart/history-chart.component';
 import {CapacityHistoryChartComponent} from './components/dashboard/charts/capacity-history-chart/capacity-history-chart.component';
 import {BarChartComponent} from './components/dashboard/charts/bar-chart/bar-chart.component';
+import {NgxSpinnerModule} from 'ngx-spinner';
+import {HttpLoading} from './http-loading.interceptor';
+
+export const httpInterceptorProviders = [
+  {provide: HTTP_INTERCEPTORS, useClass: HttpLoading, multi: true},
+];
 
 @NgModule({
   declarations: [
@@ -42,8 +48,10 @@ import {BarChartComponent} from './components/dashboard/charts/bar-chart/bar-cha
     BrowserAnimationsModule,
     SaCommonModule,
     NgApexchartsModule,
+    NgxSpinnerModule,
+
   ],
-  providers: [SystemPool2SasiGroupTablePipe],
+  providers: [SystemPool2SasiGroupTablePipe, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
