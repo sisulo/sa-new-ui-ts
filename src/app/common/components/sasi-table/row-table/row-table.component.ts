@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../sasi-table.component';
-import {LocalStorage, LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store';
 import {SelectedRow} from './selected-row';
 import {OnSelectService} from '../on-select.service';
 import {Subscription} from 'rxjs';
+import {HighlightColumnService} from '../highlight-column.service';
 
 @Component({
   selector: 'app-row-table',
@@ -22,10 +23,12 @@ export class RowTableComponent implements OnInit, OnDestroy {
   selectedRows: Array<SelectedRow>;
   subscription: Subscription;
 
-  @LocalStorage() highlightedColumn = -1;
+  highlightedColumn = -1;
 
   constructor(private localStorageService: LocalStorageService,
-              private onSelectService: OnSelectService
+              private onSelectService: OnSelectService,
+              private highlightColumnService: HighlightColumnService,
+              private cd: ChangeDetectorRef
   ) {
   }
 
@@ -41,7 +44,13 @@ export class RowTableComponent implements OnInit, OnDestroy {
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
-
+    this.highlightColumnService.highlightColumn$.subscribe(
+      columnIndex => {
+        console.log('Setting in row: ' + columnIndex);
+        this.highlightedColumn = columnIndex;
+        this.cd.markForCheck();
+      }
+    );
   }
 
   /* HIGHLIGHTNING */
@@ -50,11 +59,13 @@ export class RowTableComponent implements OnInit, OnDestroy {
     if (!this.options.highlightColumn) {
       return false;
     }
+    // console.log(column);
+    // console.log(this.highlightedColumn);
     return column === this.highlightedColumn;
   }
 
   setHighlightedColumn(column: number) {
-    this.highlightedColumn = column;
+    this.highlightColumnService.setHighlightColumn(column);
   }
 
   isSelectedRow(name: string): boolean {

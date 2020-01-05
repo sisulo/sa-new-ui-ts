@@ -1,11 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {SasiGroupRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
-import {LocalStorage, LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store';
 import {SystemMetricType} from '../../../models/metrics/system-metric-type.enum';
 import {SelectedRow} from '../row-table/selected-row';
 import {keys} from 'd3-collection';
 import {ConditionEvaluateUtils} from '../../../../global-statistics/utils/condition-evaluate.utils';
 import {Metric} from '../../../models/metrics/metric.vo';
+import {HighlightColumnService} from '../highlight-column.service';
 
 export interface AggregatedValues {
   getValue(name: SystemMetricType | string): Metric;
@@ -36,17 +37,17 @@ export class RowGroupTableComponent implements OnInit {
   @Input() data: SasiGroupRow;
   @Input() columnHighlightEnable = false;
   @Input() options: SasiTableOptions;
-  @LocalStorage() highlightedColumn = -1;
+  highlightedColumn = -1;
 
   aggregatedValues = {};
   @Input() selectedRows: Array<SelectedRow>;
   collapsedRows: Array<string> = [];
-  alertGroup = '';
+
   alertSummary = [];
 
-  alertPriority = ['text-alert-yellow', 'text-orange', 'text-red'];
-
-  constructor(private localStorageService: LocalStorageService) {
+  constructor(private localStorageService: LocalStorageService,
+              private highlightColumnService: HighlightColumnService,
+              private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -60,6 +61,13 @@ export class RowGroupTableComponent implements OnInit {
     this.localStorageService.observe(this.options.storageNamePrefix + '_collapsed').subscribe(
       data => {
         this.collapsedRows = data.newValue;
+      }
+    );
+    this.highlightColumnService.highlightColumn$.subscribe(
+      columnIndex => {
+        console.log('Setting in row: ' + columnIndex);
+        this.highlightedColumn = columnIndex;
+        this.cd.markForCheck();
       }
     );
 
@@ -112,7 +120,7 @@ export class RowGroupTableComponent implements OnInit {
   }
 
   setHighlightedColumn(column: number) {
-    this.highlightedColumn = column;
+    this.highlightColumnService.setHighlightColumn(column);
   }
 
   isAggregatedValuesEmpty() {
