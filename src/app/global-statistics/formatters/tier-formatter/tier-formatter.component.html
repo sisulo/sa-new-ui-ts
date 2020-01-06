@@ -1,4 +1,4 @@
 <div *ngIf="isHidden()" class="col-val col">
-  <span *ngFor="let tier of getTierNameString(); index as i" class="badge" [class.bg-red]="isExceptionTier(i)"
-        [class.bg-aqua]="!isExceptionTier(i)" tooltip="{{label}}">{{tier}}</span>
+  <span *ngFor="let tier of getTierNameString(); index as i" [class]="getTierColor(tier)"
+        tooltip="{{label}}">{{tier}}</span>
 </div>

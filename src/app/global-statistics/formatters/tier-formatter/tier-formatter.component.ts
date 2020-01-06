@@ -14,11 +14,20 @@ export class TierFormatterComponent implements OnInit {
   @Input() public data: SystemMetric;
   @Input() public column: SasiColumn;
   @Input() public rowData: SasiRow;
+  colorMapping = [];
 
   constructor() {
   }
 
   ngOnInit() {
+    this.colorMapping['T0'] = 'bg-primary';
+    this.colorMapping['T1'] = 'bg-success';
+    this.colorMapping['T2'] = 'bg-warning';
+    this.colorMapping['T3'] = 'bg-danger';
+    this.colorMapping['T4'] = 'bg-teal';
+    this.colorMapping['T5'] = 'bg-purple';
+    this.colorMapping['T6'] = 'bg-maroon';
+
   }
 
   isHidden(): boolean {
@@ -30,7 +39,7 @@ export class TierFormatterComponent implements OnInit {
       .sort();
   }
 
-  isExceptionTier(i: number): boolean {
-    return i > 0;
+  getTierColor(name: string): string {
+    return 'badge ' + this.colorMapping[name];
   }
 }
