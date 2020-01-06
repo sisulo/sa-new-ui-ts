@@ -1,17 +1,6 @@
-i {
-  font-size: 11px;
-}
-
-.text-alert-yellow {
-  color: #ffd829;
-}
-
-.metric-value {
-  font-style: italic;
-}
-
-table {
-  width: 100%;
+.bg-progress-color {
+  background-color: #f94343;
+  color: white;
 }
 
 div.progress {
@@ -19,16 +8,12 @@ div.progress {
   /*float:left;*/
   padding: 0px;
   border: 1px solid darkgrey;
-  margin: 5px auto auto auto;
+  margin: 3px auto 3px auto;
   height: 20px;
 }
 
 div.progress-bar {
   text-align: center;
-}
-
-.row {
-  margin: 0px;
 }
 
 .progress-value {
@@ -37,5 +22,10 @@ div.progress-bar {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+  font-weight: bolder;
 
+}
+
+.component-name, .absolute-value-badge {
+  margin: 2px 0 3px 0;
 }
