@@ -1,0 +1,54 @@
+/*** Layout table ***/
+.col-control {
+  width: 3.5%;
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.col {
+  /*width: 13.33%;*/
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.col-control i {
+  font-size: 11px;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.col-control:after {
+  content: "";
+  font-size: 11px;
+  padding: 3px;
+}
+
+/**** Table data ****/
+div {
+  /*text-align: center;*/
+  border-right: 1px #EAEAEA solid;
+  display: inline-block;
+  vertical-align: middle;
+  margin: auto;
+}
+
+.selectedRow {
+  background-color: #BEECD1;
+  color: #3A738C;
+}
+
+.highlightColumn {
+  background-color: #b4d1ee !important;
+  color: #3A738C;
+}
+
+.highlight-row:hover {
+  background-color: #b4d1ee !important;
+  color: #3A738C;
+}
+
+div.alt-border {
+  /*border-left: 1px solid black;*/
+  border-right: 2px dotted darkgrey;
+}

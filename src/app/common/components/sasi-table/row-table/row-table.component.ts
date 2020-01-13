@@ -1,4 +1,14 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import {SasiRow, SasiTableOptions} from '../sasi-table.component';
 import {LocalStorageService} from 'ngx-store';
 import {SelectedRow} from './selected-row';
@@ -12,7 +22,7 @@ import {HighlightColumnService} from '../highlight-column.service';
   styleUrls: ['./row-table.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RowTableComponent implements OnInit, OnDestroy {
+export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
 
 
   @Input() data: SasiRow;
@@ -32,6 +42,10 @@ export class RowTableComponent implements OnInit, OnDestroy {
   ) {
   }
 
+  ngDoCheck(): void {
+
+  }
+
   ngOnDestroy(): void {
     if (this.subscription !== undefined) {
       this.subscription.unsubscribe();
@@ -44,30 +58,9 @@ export class RowTableComponent implements OnInit, OnDestroy {
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
-    this.highlightColumnService.highlightColumn$.subscribe(
-      columnIndex => {
-        console.log('Setting in row: ' + columnIndex);
-        this.highlightedColumn = columnIndex;
-        this.cd.markForCheck();
-      }
-    );
   }
 
   /* HIGHLIGHTNING */
-
-  isColumnHighlighted(column: number) {
-    if (!this.options.highlightColumn) {
-      return false;
-    }
-    // console.log(column);
-    // console.log(this.highlightedColumn);
-    return column === this.highlightedColumn;
-  }
-
-  setHighlightedColumn(column: number) {
-    this.highlightColumnService.setHighlightColumn(column);
-  }
-
   isSelectedRow(name: string): boolean {
     return this.findIndex(name) > -1;
   }

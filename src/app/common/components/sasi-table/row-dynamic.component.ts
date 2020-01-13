@@ -3,7 +3,6 @@ import {Component, ComponentFactoryResolver, Input, OnChanges, OnDestroy, OnInit
 import {FormatterHostDirective} from './formatter-host.directive';
 import {SasiTableFormatter} from './sasi-table-formatter';
 import {SasiGroupRow} from './sasi-table.component';
-import {SelectedRow} from './row-table/selected-row';
 
 @Component({
   selector: 'app-row-dynamic-table',
@@ -14,7 +13,6 @@ export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
   @Input() label;
   @Input() data: SasiGroupRow;
   @Input() options;
-  @Input() selectedRows: Array<SelectedRow>;
   @ViewChild(FormatterHostDirective) adHost: FormatterHostDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
@@ -41,6 +39,5 @@ export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
     (<SasiTableFormatter>componentRef.instance).data = this.data;
     (<SasiTableFormatter>componentRef.instance).label = this.label;
     (<SasiTableFormatter>componentRef.instance).options = this.options;
-    (<SasiTableFormatter>componentRef.instance).selectedRows = this.selectedRows;
   }
 }

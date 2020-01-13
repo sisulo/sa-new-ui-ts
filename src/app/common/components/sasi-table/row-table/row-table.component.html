@@ -10,17 +10,26 @@
                     [options]="options"
     ></app-cell-table>
   </div>
-  <div [ngClass]="'col-val col'" [style.width.%]="options.getColumnWidth(column.index)"
-       *ngFor="let column of options.columns; let colIndex = index"
-       (mouseout)="setHighlightedColumn(-1)"
-       (mouseover)="setHighlightedColumn(colIndex)"
-       [class.highlightColumn]="isColumnHighlighted(colIndex)"
-       [class.text-right]="colIndex > 0 && options.columnAlign === 'right'"
-       [class.text-center]="colIndex <= 0 || options.columnAlign !== 'right'"
-       [class.alt-border]="column.altBorder"
-  >
-    <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"
-                    [rowData]="data"
-                    [options]="options" [column]="column"></app-cell-table>
-  </div>
+  <!--  Create new element for following div, store colIndex in the new component, and subscribe to highlight column service and call cd.markCheck only when columns are same,
+  or previously my column was highlighted, then i have to remove the colors-->
+  <app-column
+    *ngFor="let column of options.columns; let colIndex=index"
+    [data]="data"
+    [options]="options"
+    [column]="column"
+    [colIndex]="colIndex">
+  </app-column>
+  <!--  <div [ngClass]="'col-val col'" [style.width.%]="options.getColumnWidth(column.index)"-->
+  <!--       *ngFor="let column of options.columns; let colIndex = index"-->
+  <!--       (mouseout)="setHighlightedColumn(-1)"-->
+  <!--       (mouseover)="setHighlightedColumn(colIndex)"-->
+  <!--       [class.highlightColumn]="isColumnHighlighted(colIndex)"-->
+  <!--       [class.text-right]="colIndex > 0 && options.columnAlign === 'right'"-->
+  <!--       [class.text-center]="colIndex <= 0 || options.columnAlign !== 'right'"-->
+  <!--       [class.alt-border]="column.altBorder"-->
+  <!--  >-->
+  <!--    <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"-->
+  <!--                    [rowData]="data"-->
+  <!--                    [options]="options" [column]="column"></app-cell-table>-->
+  <!--  </div>-->
 </div>

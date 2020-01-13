@@ -12,7 +12,7 @@ export class HighlightColumnService {
 
   // Service message commands
   setHighlightColumn(value) {
-    console.log('Highlight column: ' + value);
+    // console.log('Highlight column: ' + value);
     this.highlightColumn.next(value);
   }
 }

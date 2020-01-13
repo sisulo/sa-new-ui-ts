@@ -1,0 +1,12 @@
+<div [ngClass]="'col-val col'" [style.width.%]="options.getColumnWidth(column.index)"
+     (mouseout)="setHighlightedColumn(-1)"
+     (mouseover)="setHighlightedColumn(colIndex)"
+     [class.highlightColumn]="isColumnHighlighted(colIndex)"
+     [class.text-right]="colIndex > 0 && options.columnAlign === 'right'"
+     [class.text-center]="colIndex <= 0 || options.columnAlign !== 'right'"
+     [class.alt-border]="column.altBorder"
+>
+  <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"
+                  [rowData]="data"
+                  [options]="options" [column]="column"></app-cell-table>
+</div>

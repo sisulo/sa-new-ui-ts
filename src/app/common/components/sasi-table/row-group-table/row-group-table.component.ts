@@ -65,7 +65,6 @@ export class RowGroupTableComponent implements OnInit {
     );
     this.highlightColumnService.highlightColumn$.subscribe(
       columnIndex => {
-        console.log('Setting in row: ' + columnIndex);
         this.highlightedColumn = columnIndex;
         this.cd.markForCheck();
       }

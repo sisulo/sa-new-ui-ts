@@ -31,6 +31,7 @@ import {TierFormatterComponent} from '../global-statistics/formatters/tier-forma
 import {AdapterDisbalanceFormatterComponent} from '../global-statistics/formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 import {AlertInfoBoxComponent} from './components/info-box/alert-info-box.component';
 import {EmptyFormatterComponent} from '../global-statistics/formatters/empty-formatter/empty-formatter.component';
+import {ColumnComponent} from './components/sasi-table/column/column.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import {EmptyFormatterComponent} from '../global-statistics/formatters/empty-for
     FormatThousandsPipe,
     RouteLinkFormatterComponent,
     StorageConvertPipe,
-    AlertInfoBoxComponent
+    AlertInfoBoxComponent,
+    ColumnComponent
 
   ],
   imports: [
