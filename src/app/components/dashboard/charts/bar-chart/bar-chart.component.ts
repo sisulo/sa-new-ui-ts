@@ -45,36 +45,6 @@ export class BarChartComponent implements OnInit {
     }
   };
 
-
-  // plotOptions = {
-  //   pie: {
-  //     donut: {
-  //       labels: {
-  //         show: true,
-  //         name: {
-  //           show: true,
-  //           offsetY: -20,
-  //           fontSize: '12px'
-  //         },
-  //         value: {
-  //           offsetY: -10,
-  //         },
-  //         total: {
-  //           show: true,
-  //           showAlways: true,
-  //           offsetY: -10,
-  //           formatter: function (w) {
-  //             const aggValue = w.globals.seriesTotals.reduce((a, b) => {
-  //               return a + b;
-  //             }, 0);
-  //             return NumberFormatter.kFormat(parseFloat(aggValue).toFixed(0), w.config.labels.useKFormatter) + ' ' + w.config.labels.unit;
-  //           }
-  //         }
-  //       }
-  //     }
-  //   }
-
-  // };
   plotOptions = {
     bar: {
       horizontal: true,
@@ -84,10 +54,7 @@ export class BarChartComponent implements OnInit {
   };
   colors = ['rgb(0, 143, 251)', 'rgb(0, 227, 150)', 'rgb(254, 176, 25)'];
   yaxis = {
-    // range: 1,
-    title: {
-      // text: 'Age',
-    },
+    title: {},
   };
   private tooltip;
 

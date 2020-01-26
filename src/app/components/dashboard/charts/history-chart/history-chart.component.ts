@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {FormatThousandsPipe} from '../../../../common/utils/format-thousands.pipe';
 import {ApexYAxis} from 'ng-apexcharts/lib/model/apex-types';
 import {ArrayUtils} from '../../../../common/utils/array-utils';
@@ -6,7 +6,8 @@ import {ArrayUtils} from '../../../../common/utils/array-utils';
 @Component({
   selector: 'app-history-chart',
   templateUrl: './history-chart.component.html',
-  styleUrls: ['./history-chart.component.css']
+  styleUrls: ['./history-chart.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HistoryChartComponent implements OnInit {
 

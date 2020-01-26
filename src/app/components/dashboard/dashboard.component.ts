@@ -14,7 +14,7 @@ declare var $: any;
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
 
@@ -124,8 +124,8 @@ export class DashboardComponent implements OnInit {
       }
     );
     this.metricService.getGraphData([SystemMetricType.TRANSFER, SystemMetricType.WORKLOAD]).subscribe(dto => {
-      dto.data.forEach(serie => {
-        this.perfGraphSeries.push({name: serie.type, data: serie.data});
+      this.perfGraphSeries = dto.data.map(serie => {
+        return {name: serie.type, data: serie.data};
       });
     });
     this.metricService.getCapacityGraphData([
@@ -133,8 +133,8 @@ export class DashboardComponent implements OnInit {
       SystemMetricType.LOGICAL_CAPACITY,
       SystemMetricType.PHYSICAL_CAPACITY
     ]).subscribe(dto => {
-      dto.data.forEach(serie => {
-        this.capacityGraphSeries.push({name: serie.type, data: serie.data});
+      this.capacityGraphSeries = dto.data.map(serie => {
+        return {name: serie.type, data: serie.data};
       });
     });
     this.getMap();
@@ -172,7 +172,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getMetricValueInRegions(type: SystemMetricType, regionOrder: Region[]) {
-    const mappedValues: number[] = [];
+    const metricsInAllRegions: Metric[] = [];
     regionOrder.forEach(
       region => {
         const regionData = this.metrics.find(metrics => metrics.region === region);
@@ -180,11 +180,31 @@ export class DashboardComponent implements OnInit {
           console.error('Cannot find ' + region + ' in capacity statistics');
           return;
         }
-        const metricValue = this.findMetricInRegion(regionData, type).value;
-        mappedValues.push(this.roundNumber(metricValue));
+        const metric = this.findMetricInRegion(regionData, type);
+        metricsInAllRegions.push(metric);
       }
     );
-    return mappedValues;
+    return this.convertMetricsToSameUnit(metricsInAllRegions, type);
+  }
+
+  convertMetricsToSameUnit(metrics: Metric[], metricType: SystemMetricType) {
+    if (metrics.length === 0) {
+      return [];
+    }
+    const transformer = new StorageConvertPipe();
+    const units = StorageConvertPipe.unitOrder[metricType];
+    if (units === undefined) {
+      return metrics.map(metric => this.roundNumber(metric.value));
+    }
+    const targetUnit = metrics.map(
+      metric => units.findIndex(unit => unit === metric.unit)
+    )
+      .reduce((previousValue, currentValue) => previousValue > currentValue ? previousValue : currentValue);
+    return metrics.map(
+      metric => transformer.transform(metric, {targetedUnitIndex: targetUnit})
+    ).map(
+      metric => this.roundNumber(metric.value)
+    );
   }
 
   findMetricInRegion(regionData: RegionMetricDto, type): Metric {
@@ -199,7 +219,7 @@ export class DashboardComponent implements OnInit {
     if (value === undefined) {
       return 0;
     }
-    return parseFloat(value.toFixed(2));
+    return parseFloat(value.toFixed(1));
   }
 
   findUnitInMetric(type: SystemMetricType): string {

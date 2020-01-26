@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {NumberFormatter} from '../../../../global-statistics/utils/number.formatter';
 
 @Component({
   selector: 'app-region-donut',
   templateUrl: './region-donut.component.html',
-  styleUrls: ['./region-donut.component.css']
+  styleUrls: ['./region-donut.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegionDonutComponent implements OnInit {
   chart = {

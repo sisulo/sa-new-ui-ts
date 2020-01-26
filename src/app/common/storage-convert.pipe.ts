@@ -10,7 +10,7 @@ interface ConvertedValue {
   name: 'storageConvert'
 })
 export class StorageConvertPipe implements PipeTransform {
-  unitOrder = {
+  public static unitOrder = {
     'CAPACITY': ['MB', 'GB', 'TB', 'PB'],
     'TRANSFER': ['MBps', 'GBps', 'TBps'],
     'LOGICAL_CAPACITY': ['MB', 'GB', 'TB'],
@@ -20,15 +20,20 @@ export class StorageConvertPipe implements PipeTransform {
   };
 
   transform(metric: Metric, args?: any): any {
-    if (this.unitOrder[metric.type] === undefined) {
+    if (StorageConvertPipe.unitOrder[metric.type] === undefined) {
       return metric;
     }
-    const startingValue = this.unitOrder[metric.type].findIndex(unit => unit === metric.unit);
-    const convertedValue = this.convertValue(metric.value, startingValue, this.unitOrder[metric.type].length - 1);
+    const startingValue = StorageConvertPipe.unitOrder[metric.type].findIndex(unit => unit === metric.unit);
+    let convertedValue = null;
+    if (args !== undefined && args.targetedUnitIndex !== undefined) {
+      convertedValue = this.convertToMaximumUnit(metric.value, startingValue, args.targetedUnitIndex);
+    } else {
+      convertedValue = this.convertValue(metric.value, startingValue, StorageConvertPipe.unitOrder[metric.type].length - 1);
+    }
     const result = new Metric();
     result.value = convertedValue.value;
     result.type = metric.type;
-    result.unit = this.unitOrder[metric.type][convertedValue.countedOrder];
+    result.unit = StorageConvertPipe.unitOrder[metric.type][convertedValue.countedOrder];
     return result;
   }
 
@@ -42,5 +47,16 @@ export class StorageConvertPipe implements PipeTransform {
 
     return {value: countedValue, countedOrder: countedOrder} as ConvertedValue;
 
+  }
+
+  convertToMaximumUnit(value: number, startingOrder: number, maximumOrder: number): ConvertedValue {
+    let countedOrder = startingOrder;
+    let countedValue = value;
+    while (countedOrder < maximumOrder) {
+      countedValue = (countedValue / 1024);
+      countedOrder++;
+    }
+
+    return {value: countedValue, countedOrder: countedOrder} as ConvertedValue;
   }
 }
