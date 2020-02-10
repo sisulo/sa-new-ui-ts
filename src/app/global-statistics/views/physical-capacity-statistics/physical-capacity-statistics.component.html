@@ -1,6 +1,6 @@
 <div class="tab-pane" *ngIf="data.length > 0">
   <div class="container-fluid">
-    <div class="row col-md-12">
+    <div class="row">
       <app-sasi-table class="table-right" [data]="data | systemPool2SasiGroupTable: 'capacityAnalysis'"
                       [tableOptions]="options"></app-sasi-table>
       <app-aggregated-statistics class='col-md-12 sticky-bottom' [aggregatedColumns]="options.getAggregatedColumns()"

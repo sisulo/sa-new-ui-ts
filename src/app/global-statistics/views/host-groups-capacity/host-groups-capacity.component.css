@@ -16,16 +16,10 @@
   width: 8.88%;
 }
 
-.pool-name {
-  font-size: 14px;
-  font-style: italic;
-}
-
 /* TODO duplicated css definitions in all statistics component*/
 :host /deep/ .groupped-data .metric-value,
 :host /deep/ .aggregated-data .metric-value {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 :host /deep/ .groupped-data .metric-unit,

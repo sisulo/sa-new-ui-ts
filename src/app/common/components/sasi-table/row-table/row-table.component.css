@@ -24,6 +24,9 @@
   padding: 3px;
 }
 
+app-column {
+  height: 100%;
+}
 /**** Table data ****/
 .table-data {
   width: 100%;
@@ -54,5 +57,5 @@
 
 .table-data div.alt-border {
   /*border-left: 1px solid black;*/
-  border-right: 2px dotted darkgrey;
+  border-right: 3px double darkgrey;
 }

@@ -1,7 +1,7 @@
 :host /deep/ .col-val {
   padding-top: 5px;
   padding-bottom: 5px;
-  padding-right: 2px;
+  padding-right: 5px;
 }
 
 .alert-red {
@@ -16,15 +16,9 @@
   width: 8.88%;
 }
 
-.pool-name {
-  font-size: 14px;
-  font-style: italic;
-}
-
 :host /deep/ .groupped-data .metric-value,
 :host /deep/ .aggregated-data .metric-value {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 1.2rem;
 }
 
 :host /deep/ .groupped-data .metric-unit,

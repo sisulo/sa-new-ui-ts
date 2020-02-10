@@ -2,17 +2,6 @@
 div.collapsed ~ div.collapsable {
   display: none;
 }
-
-div.table-header > div.col.highlightColumn {
-  text-decoration: #334369 underline;
-}
-
-
-.selectedRow {
-  background-color: #BEECD1 !important;
-  color: #3A738C;
-}
-
 /*** Layout table ***/
 .col-control {
   width: 3.5%;
@@ -21,21 +10,9 @@ div.table-header > div.col.highlightColumn {
 }
 
 .col {
-  /*width: 13.33%;*/
   display: inline-block;
   vertical-align: middle;
-}
-
-.col-label {
-  width: 13%;
-  display: inline-block;
-
-  /*width: 100%;*/
-}
-
-.capacity-table .row {
-  margin-right: 0px;
-  margin-left: 0px;
+  min-height: 30px;
 }
 
 /*** Table header ***/
@@ -43,14 +20,21 @@ div.table-header > div.col.highlightColumn {
 div.table-header {
   border: 3px #EAEAEA solid;
   background-color: #3C8CBC;
-  font-size: 13px;
-  color: white;
+  font-size: 1.1rem;
   font-weight: bolder;
 }
 
 div.table-header > div {
   border-right: 1px #EAEAEA solid;
-  padding: 10px 0px 10px 0px;
+  padding: 5px 0px 5px 0px;
+}
+
+div.table-header > div > span {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
 }
 
 div.table-header > div {
@@ -89,7 +73,7 @@ app-row-dynamic-table.highlight-row:hover {
 .col-control:after {
   content: "";
   font-size: 11px;
-  padding: 3px;
+  padding: 1px;
 }
 
 div.sticky {
@@ -151,5 +135,3 @@ app-row-dynamic-table {
   cursor: pointer;
   text-decoration: white underline;
 }
-
-

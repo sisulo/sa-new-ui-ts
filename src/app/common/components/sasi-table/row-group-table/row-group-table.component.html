@@ -23,7 +23,9 @@
     <div class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)"
          (mouseout)="setHighlightedColumn(-1)"
          (mouseover)="setHighlightedColumn(0)"
-         [class.highlightColumn]="isColumnHighlighted(0)">
+         [class.highlightColumn]="isColumnHighlighted(0)"
+         [class.alt-border]="options.columns[0].altBorder"
+    >
       <app-cell-table
         [componentFormatter]="options.grIndexComponentFormatter" [data]="data.groupRow.getCell('name').rawData"
         [label]="''"
@@ -39,7 +41,6 @@
          [class.text-right]="options.columnAlign === 'right'"
          [class.text-center]="options.columnAlign !== 'right'"
          [class.alt-border]="column.altBorder"
-
     >
       <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.aggComponent"
                       [data]="getAggregatedValue(column.index)" [column]="column"

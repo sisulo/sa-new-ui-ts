@@ -8,6 +8,8 @@
   /*width: 13.33%;*/
   display: inline-block;
   vertical-align: middle;
+  padding-right: 10px;
+  min-height: 30px;
 }
 
 .col-control i {
@@ -25,19 +27,13 @@
 /**** Data group header ****/
 .table-group-header > div.table-group-label > div[class^="col"],
 .table-group-header > div.table-group-label > div.ignore > div {
-  /*text-align: center;*/
   border-right: 1px #EAEAEA solid;
   margin: 2px 0px 2px 0px;
-  font-weight: bold;
 }
 
 .table-group-header > div:first-child {
-  /*background-color: #BBD9E6;*/
   color: #35516A;
-  /*padding: 10px 0px 10px 0px;*/
-  /*border-top: 3px solid #EAEAEA;*/
   border-bottom: 3px solid #EAEAEA;
-  /*margin-top: 10px;*/
 }
 
 .table-group-header > div:first-child > div.col:last-child {
@@ -54,7 +50,8 @@ app-row-table.striped-row:nth-of-type(odd) {
 
 .col-label {
   display: inline-block;
-  text-align: center;
+  text-align: left;
+  padding-left: 1rem;
   /*width: 100%;*/
 }
 
@@ -69,6 +66,9 @@ app-row-table.striped-row:nth-of-type(odd) {
 }
 
 .table-group-header > div.table-group-label > div.alt-border {
-  /*border-left: 2px dotted darkgrey;*/
-  border-right: 2px dotted darkgrey;
+  border-right: 3px double darkgrey;
+}
+
+.table-group-header > div.table-group-label > div.alt-border-left {
+  border-left: 3px double darkgrey;
 }

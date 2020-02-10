@@ -66,6 +66,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
+        .withAltBorder(true)
         .build()
     );
     this.options.columns.push(
@@ -77,6 +78,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withIsAggregated(true)
         .withTooltipText('Subscribed Capacity')
         .withAltBorder(true)
+        // .withAltBorderLeft(true)
         .build()
     );
 
@@ -267,7 +269,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.TOTAL_SAVING_EFFECT)
-        .withLabel('Total Saving Effect')
+        .withLabel('Saving effect')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
@@ -278,8 +280,8 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
-    this.options.labelColumnWidth = '13';
-    this.options.valueColumnWidth = '4.17';
+    this.options.labelColumnWidth = '10.5';
+    this.options.valueColumnWidth = '4.30';
     this.options.storageNamePrefix = 'logicalCap';
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();

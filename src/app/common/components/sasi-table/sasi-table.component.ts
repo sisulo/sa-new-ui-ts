@@ -38,6 +38,8 @@ export class SasiColumnBuilder {
 
   private altBorder = false;
 
+  private altBorderLeft = false;
+
   private columnWidth = null;
 
   private constructor() {
@@ -92,6 +94,11 @@ export class SasiColumnBuilder {
     return this;
   }
 
+  withAltBorderLeft(altBorder: boolean) {
+    this.altBorderLeft = altBorder;
+    return this;
+  }
+
   withColumnWidth(width: string) {
     this.columnWidth = width;
     return this;
@@ -109,6 +116,7 @@ export class SasiColumnBuilder {
       this.infinity,
       this.altLabel,
       this.altBorder,
+      this.altBorderLeft,
       this.columnWidth
     );
   }
@@ -145,6 +153,7 @@ export class SasiColumn {
   altLabel: string;
 
   altBorder: boolean;
+  altBorderLeft: boolean;
 
   columnWidth: string;
 
@@ -159,6 +168,7 @@ export class SasiColumn {
     isInfinity: boolean,
     altLabel: string,
     altBorder: boolean,
+    altBorderLeft: boolean,
     columnWidth: string,
   ) {
     this.index = index;
@@ -171,6 +181,7 @@ export class SasiColumn {
     this.isInfinity = isInfinity;
     this.altLabel = altLabel;
     this.altBorder = altBorder;
+    this.altBorderLeft = altBorderLeft;
     this.columnWidth = columnWidth;
   }
 }

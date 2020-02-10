@@ -2,9 +2,10 @@
      (mouseout)="setHighlightedColumn(-1)"
      (mouseover)="setHighlightedColumn(colIndex)"
      [class.highlightColumn]="isColumnHighlighted(colIndex)"
-     [class.text-right]="colIndex > 0 && options.columnAlign === 'right'"
-     [class.text-center]="colIndex <= 0 || options.columnAlign !== 'right'"
+     [class.text-right]="colIndex >= 0 && options.columnAlign === 'right'"
+     [class.text-center]="options.columnAlign !== 'right'"
      [class.alt-border]="column.altBorder"
+     [class.alt-border-left]="column.altBorderLeft"
 >
   <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"
                   [rowData]="data"

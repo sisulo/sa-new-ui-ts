@@ -162,10 +162,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
     this.options.columnAlign = 'right';
-    //
-    // this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USED_PERC, new Threshold('text-green', 80, 84.9)));
-    // this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USED_PERC, new Threshold('text-alert-yellow', 85, 88)));
-    // this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USED_PERC, new Threshold('text-red', 88, 10000)));
+
   }
 
   // Todo common with logical stats

@@ -82,7 +82,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.PHYSICAL_CAPACITY)
-        .withLabel('Physical Capacity')
+        .withLabel('Physical\nCapacity')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
@@ -101,7 +101,8 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.AVAILABLE_CAPACITY)
-        .withLabel('Available Capacity')
+        .withLabel('Available\n' +
+          'Capacity')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)

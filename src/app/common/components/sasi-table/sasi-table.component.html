@@ -3,7 +3,7 @@
     TOP TABLE ROW
   -->
   <div class="row table-header sticky-top">
-    <div class="col-control">
+    <div class="col-control col">
       <i *ngIf="options.isDataGrouped" class="fa expand-collapse"
          [@iconRotate]="isCollapseAll()"
          [ngClass]="'fa-angle-down'"
@@ -15,14 +15,16 @@
       <i *ngIf="options.selectableRows && (!isPartiallySelected()) && (!isSelectedAll())" class="far fa-fw fa-square"
          (click)="selectAll()"></i>
     </div>
-    <div class="col-val col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
+    <div class="col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
       <i tooltip="Alerts" class="fa fa-exclamation-triangle text-orange"></i>
     </div>
     <div class="col" [style.width.%]="options.getColumnWidth(columnOption.index)"
+         [tooltip]="getColumnLabel(columnOption.index)"
          *ngFor="let columnOption of options.columns">
-      <span class="link" (click)="setSort(columnOption, false)">{{getColumnLabel(columnOption.index)}} <i
-        class="text-muted sorting sort-icon-right"
-        [ngClass]="getSortIconClass(columnOption.index, false)"></i>
+      <span class="link" (click)="setSort(columnOption, false)">{{getColumnLabel(columnOption.index)}}
+      </span> <span><i
+      class="text-muted sorting sort-icon-right"
+      [ngClass]="getSortIconClass(columnOption.index, false)"></i>
       </span>
       <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
       <br/>
