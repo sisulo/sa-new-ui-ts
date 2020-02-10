@@ -35,6 +35,11 @@ div {
   margin: auto;
 }
 
+div.center-margin {
+  text-align: left;
+  padding-left: 3rem;
+}
+
 .selectedRow {
   background-color: #BEECD1;
   color: #3A738C;

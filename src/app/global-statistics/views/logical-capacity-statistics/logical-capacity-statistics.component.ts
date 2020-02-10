@@ -78,7 +78,6 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withIsAggregated(true)
         .withTooltipText('Subscribed Capacity')
         .withAltBorder(true)
-        // .withAltBorderLeft(true)
         .build()
     );
 
@@ -100,16 +99,6 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Logical Subscription')
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.LOGICAL_USED_PERC)
-        .withLabel('Logical Used')
-        .withComponent(SimpleFormatterComponent)
-        .withAltSortEnable(false)
-        .withIsAggregated(true)
-        .withTooltipText('Logical Used')
         .build()
     );
     this.options.columns.push(
@@ -281,7 +270,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.labelColumnWidth = '10.5';
-    this.options.valueColumnWidth = '4.30';
+    this.options.valueColumnWidth = '4.52';
     this.options.storageNamePrefix = 'logicalCap';
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
