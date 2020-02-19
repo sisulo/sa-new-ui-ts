@@ -10,10 +10,13 @@ export class FilterListComponent implements OnInit {
 
   @Input()
   private valueList: string[];
-
+  @Input()
+  private title: string;
+  @Input()
   private selectedValues: string[] = [];
   @Output()
   valueListChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+
 
   constructor() {
   }
@@ -22,15 +25,8 @@ export class FilterListComponent implements OnInit {
 
   }
 
-  selectValue(selectedValue: string) {
-    const foundIndex = this.selectedValues.findIndex(val => val === selectedValue);
-    console.log(foundIndex);
-    if (foundIndex >= 0) {
-      this.selectedValues.splice(foundIndex, 1);
-    } else {
-      this.selectedValues.push(selectedValue);
-    }
+  selectValue(value) {
+    console.log(value);
     this.valueListChange.emit(this.selectedValues);
-    console.log(this.selectedValues);
   }
 }

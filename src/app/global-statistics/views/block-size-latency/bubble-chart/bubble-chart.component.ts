@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MetricService, OperationData} from '../../../../metric.service';
 import {ApexAxisChartSeries, ChartComponent} from 'ng-apexcharts';
 import {OperationType} from '../../../../common/models/metrics/operation-type.enum';
@@ -9,7 +9,7 @@ import {OperationType} from '../../../../common/models/metrics/operation-type.en
   templateUrl: './bubble-chart.component.html',
   styleUrls: ['./bubble-chart.component.css']
 })
-export class BubbleChartComponent implements OnInit {
+export class BubbleChartComponent implements OnInit, OnChanges {
 
   constructor(private readonly metricService: MetricService) {
   }
@@ -19,7 +19,7 @@ export class BubbleChartComponent implements OnInit {
   @Input()
   poolIds: number[] = [9];
   @Input()
-  dates: string[] = ['2019-09-12']; // TODO should be date
+  dates: string[] = []; // TODO should be date
   @Input()
   operations: string[] = ['READ', 'WRITE']; // TODO should be OperationType
 
@@ -63,6 +63,7 @@ export class BubbleChartComponent implements OnInit {
   };
 
   ngOnInit() {
+    console.log(this.dates);
     this.metricService.getLatencyData(this.poolIds, this.dates, this.operations).subscribe(data => {
         this.chartOptions.series = this.transformData(data);
         console.log(this.chartOptions.series);
@@ -80,6 +81,14 @@ export class BubbleChartComponent implements OnInit {
       }
     );
     return returned as ApexAxisChartSeries;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.metricService.getLatencyData(this.poolIds, this.dates, this.operations).subscribe(data => {
+        this.chartOptions.series = this.transformData(data);
+        console.log(this.chartOptions.series);
+      }
+    );
   }
 
 }

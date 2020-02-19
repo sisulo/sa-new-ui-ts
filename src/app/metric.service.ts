@@ -12,6 +12,7 @@ import {DatacenterCapacityListDto} from './common/models/dtos/datacenter-capacit
 import {SystemMetricType} from './common/models/metrics/system-metric-type.enum';
 import {GraphDataDto} from './common/models/dtos/graph-data.dto';
 import {OperationType} from './common/models/metrics/operation-type.enum';
+import {SystemPool} from './common/models/system-pool.vo';
 
 export enum PeriodType {
   DAY = 'DAY',
@@ -32,7 +33,7 @@ export interface OperationData {
 
 export interface LatencyMetadata {
   dates: string[]; // Instead of date string is used because locale didn't set correctly
-  // pools: Array<Partial<PoolEntity>>;
+  systems: Array<Partial<SystemPool>>;
 }
 
 export interface ThreeDimensionValue {

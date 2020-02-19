@@ -1,17 +1,31 @@
-<div class="row">
-  <app-filter-list [valueList]="latencyMetadata.dates" (valueListChange)="onDatesChanged($event)"></app-filter-list>
-</div>
-<div class="row">
-  <section class="content">
+<section class="content">
+  <div class="row">
+    <div class="col-md-4">
+      <app-filter-list *ngIf="dates !== undefined" [valueList]="dates" title="Dates"
+                       (valueListChange)="onDatesChanged($event)"></app-filter-list>
+    </div>
+    <div class="col-md-4">
+
+      <app-filter-list *ngIf="systems !== undefined" [valueList]="systems" title="Systems"
+                       (valueListChange)="onSystemChanged($event)"></app-filter-list>
+    </div>
+    <div class="col-md-4">
+
+      <app-filter-list *ngIf="pools !== undefined" [valueList]="pools" [selectedValues]="selectedPools" title="Pools"
+                       (valueListChange)="onPoolChanged($event)"></app-filter-list>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-12">
       <div class="box pad">
         <div class="box-header">
           <h3 class="box-title">Total Capacity History</h3>
         </div>
         <div class="box-body">
-          <app-bubble-chart [dates]="selectedDates"></app-bubble-chart>
+          <app-bubble-chart [dates]="selectedDates" [poolIds]="selectedPools"></app-bubble-chart>
         </div>
       </div>
     </div>
-  </section>
-</div>
+  </div>
+
+</section>
