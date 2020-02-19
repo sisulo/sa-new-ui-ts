@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InfrastructureDto} from './common/models/dtos/infrastructure.dto';
 import {environment} from '../environments/environment';
@@ -11,11 +11,34 @@ import {DatacenterListDto} from './common/models/dtos/datacenter-list.dto';
 import {DatacenterCapacityListDto} from './common/models/dtos/datacenter-capacity-list.dto';
 import {SystemMetricType} from './common/models/metrics/system-metric-type.enum';
 import {GraphDataDto} from './common/models/dtos/graph-data.dto';
+import {OperationType} from './common/models/metrics/operation-type.enum';
 
 export enum PeriodType {
   DAY = 'DAY',
   WEEK = 'WEEK',
   MONTH = 'MONTH'
+}
+
+export interface LatencyFilter {
+  poolIds: number[];
+  dates: string[];
+  operations: string[];
+}
+
+export interface OperationData {
+  values: ThreeDimensionValue[];
+  operation: OperationType;
+}
+
+export interface LatencyMetadata {
+  dates: string[]; // Instead of date string is used because locale didn't set correctly
+  // pools: Array<Partial<PoolEntity>>;
+}
+
+export interface ThreeDimensionValue {
+  x: number;
+  y: number;
+  z: number;
 }
 
 @Injectable({
@@ -126,6 +149,18 @@ export class MetricService {
     let url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity/graph');
     url = url + this.convertTypeToUrlParams('types', types);
     return this.http.get<GraphDataDto>(url);
+  }
+
+  getLatencyData(poolIdsIn: number[], datesIn: string[], operationTypes: string[]) {
+    const request: LatencyFilter = {operations: operationTypes, dates: datesIn, poolIds: poolIdsIn};
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/latency/data');
+    const headersParams = new HttpHeaders({'Content-Type': 'application/json'});
+    return this.http.post<OperationData[]>(url, request, {headers: headersParams});
+  }
+
+  getLatencyMetadata() {
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v1/latency/metadata');
+    return this.http.get<LatencyMetadata>(url);
   }
 
   private buildUrl(baseUrl, basePath, period?) {

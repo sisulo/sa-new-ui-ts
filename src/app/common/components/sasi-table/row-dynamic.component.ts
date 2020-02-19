@@ -13,7 +13,7 @@ export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
   @Input() label;
   @Input() data: SasiGroupRow;
   @Input() options;
-  @ViewChild(FormatterHostDirective) adHost: FormatterHostDirective;
+  @ViewChild(FormatterHostDirective, {static: true}) adHost: FormatterHostDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
   }

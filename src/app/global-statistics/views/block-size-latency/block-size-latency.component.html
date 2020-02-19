@@ -1,0 +1,17 @@
+<div class="row">
+  <app-filter-list [valueList]="latencyMetadata.dates" (valueListChange)="onDatesChanged($event)"></app-filter-list>
+</div>
+<div class="row">
+  <section class="content">
+    <div class="col-12">
+      <div class="box pad">
+        <div class="box-header">
+          <h3 class="box-title">Total Capacity History</h3>
+        </div>
+        <div class="box-body">
+          <app-bubble-chart [dates]="selectedDates"></app-bubble-chart>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

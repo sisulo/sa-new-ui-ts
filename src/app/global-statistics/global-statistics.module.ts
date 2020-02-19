@@ -26,6 +26,12 @@ import {GlobalHostGroupCapacityComponent} from './components/aggregated-statisti
 import {TierFormatterComponent} from './formatters/tier-formatter/tier-formatter.component';
 import {AdapterDisbalanceFormatterComponent} from './formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 import {EmptyFormatterComponent} from './formatters/empty-formatter/empty-formatter.component';
+import {BlockSizeLatencyComponent} from './views/block-size-latency/block-size-latency.component';
+import {BubbleChartComponent} from './views/block-size-latency/bubble-chart/bubble-chart.component';
+import {NgApexchartsModule} from 'ng-apexcharts';
+import {FilterListComponent} from './views/block-size-latency/filter-list/filter-list.component';
+import {FormsModule} from '@angular/forms';
+import {NgSelectModule} from '@ng-select/ng-select';
 
 @NgModule({
   declarations: [
@@ -51,14 +57,20 @@ import {EmptyFormatterComponent} from './formatters/empty-formatter/empty-format
     GlobalHostGroupCapacityComponent,
     TierFormatterComponent,
     AdapterDisbalanceFormatterComponent,
-    EmptyFormatterComponent
+    EmptyFormatterComponent,
+    BlockSizeLatencyComponent,
+    BubbleChartComponent,
+    FilterListComponent
   ],
   exports: [],
   imports: [
     CommonModule,
     GlobalStatisticsRoutingModule,
     SaCommonModule,
-    TooltipModule
+    TooltipModule,
+    NgApexchartsModule,
+    NgSelectModule,
+    FormsModule
   ]
 })
 export class GlobalStatisticsModule {

@@ -15,7 +15,7 @@ export class CellTableComponent implements OnInit, OnDestroy, OnChanges {
   @Input() options;
   @Input() column: SasiColumn;
   @Input() rowData: SasiRow;
-  @ViewChild(FormatterHostDirective) adHost: FormatterHostDirective;
+  @ViewChild(FormatterHostDirective, {static: true}) adHost: FormatterHostDirective;
 
   constructor(private componentFactoryResolver: ComponentFactoryResolver) {
   }

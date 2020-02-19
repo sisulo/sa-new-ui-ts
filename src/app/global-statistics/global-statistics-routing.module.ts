@@ -7,8 +7,10 @@ import {AdaptersComponent} from './views/adapters/adapters.component';
 import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-statistics/logical-capacity-statistics.component';
 import {PhysicalCapacityStatisticsComponent} from './views/physical-capacity-statistics/physical-capacity-statistics.component';
 import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
+import {BlockSizeLatencyComponent} from './views/block-size-latency/block-size-latency.component';
 
 const routes: Routes = [
+  {path: 'global-statistics/latency', component: BlockSizeLatencyComponent},
   {
     path: 'global-statistics',
     component: GlobalStatisticsComponent,
@@ -26,7 +28,7 @@ const routes: Routes = [
       {path: 'host-group-capacity/:id', component: HostGroupsCapacityComponent},
       {path: 'host-group-capacity', redirectTo: 'host-group-capacity/1', pathMatch: 'full'}
     ]
-  }
+  },
 ];
 
 @NgModule({
