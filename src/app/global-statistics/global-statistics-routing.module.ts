@@ -16,17 +16,17 @@ const routes: Routes = [
     component: GlobalStatisticsComponent,
     children: [
       {path: 'performance/:id', component: PerformanceStatisticsComponent},
-      {path: 'performance', redirectTo: 'performance/1', pathMatch: 'full'},
+      {path: 'performance', redirectTo: 'performance/-1', pathMatch: 'full'},
       {path: 'physical-capacity/:id', component: PhysicalCapacityStatisticsComponent},
-      {path: 'physical-capacity', redirectTo: 'physical-capacity/1', pathMatch: 'full'},
+      {path: 'physical-capacity', redirectTo: 'physical-capacity/-1', pathMatch: 'full'},
       {path: 'logical-capacity/:id', component: LogicalCapacityStatisticsComponent},
-      {path: 'logical-capacity', redirectTo: 'logical-capacity/1', pathMatch: 'full'},
+      {path: 'logical-capacity', redirectTo: 'logical-capacity/-1', pathMatch: 'full'},
       {path: 'dp-sla/:id', component: DpSlaComponent},
-      {path: 'dp-sla', redirectTo: 'dp-sla/1', pathMatch: 'full'},
+      {path: 'dp-sla', redirectTo: 'dp-sla/-1', pathMatch: 'full'},
       {path: 'adapters/:id', component: AdaptersComponent},
-      {path: 'adapters', redirectTo: 'adapters/1', pathMatch: 'full'},
+      {path: 'adapters', redirectTo: 'adapters/-1', pathMatch: 'full'},
       {path: 'host-group-capacity/:id', component: HostGroupsCapacityComponent},
-      {path: 'host-group-capacity', redirectTo: 'host-group-capacity/1', pathMatch: 'full'}
+      {path: 'host-group-capacity', redirectTo: 'host-group-capacity/-1', pathMatch: 'full'}
     ]
   },
 ];
