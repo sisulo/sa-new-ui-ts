@@ -100,7 +100,7 @@ export class GroupedAggregatedStatisticsComponent extends CommonAggregatedStats 
     this.labels[SystemMetricType.TOTAL_SAVING_EFFECT] = 'Savings';
 
     this.groupLabel.push('# Selected');
-    this.groupLabel.push('Subscribed capacity');
+    this.groupLabel.push('Subscribed');
     this.groupLabel.push('Subscription');
     this.groupLabel.push('Utilization');
     this.groupLabel.push('Physical Capacity');

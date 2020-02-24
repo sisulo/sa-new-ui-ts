@@ -7,11 +7,9 @@
 }
 
 .col {
-  /*width: 13.33%;*/
   display: inline-block;
   vertical-align: middle;
   padding-right: 10px;
-  min-height: 30px;
 }
 
 .col-control i {

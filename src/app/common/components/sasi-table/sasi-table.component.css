@@ -12,7 +12,6 @@ div.collapsed ~ div.collapsable {
 .col {
   display: inline-block;
   vertical-align: middle;
-  min-height: 30px;
 }
 
 /*** Table header ***/
@@ -26,7 +25,7 @@ div.table-header {
 
 div.table-header > div {
   border-right: 1px #EAEAEA solid;
-  padding: 5px 0px 5px 0px;
+  padding: 5px 0px 0px 0px;
 }
 
 div.table-header > div > span {
@@ -63,7 +62,7 @@ app-row-dynamic-table.highlight-row:hover {
 
 .col-control i {
   font-size: 11px;
-  padding: 3px;
+  padding: 5px;
 }
 
 .table-header .col-control i, .table-header i {

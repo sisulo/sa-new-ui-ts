@@ -12,7 +12,11 @@
 }
 
 :host /deep/ .groupped-data .metric-value {
-  font-size: 14px;
+  font-size: 1.1rem;
+}
+
+:host /deep/ .aggregated-data .metric-value {
+  font-style: italic;
   font-weight: 600;
 }
 

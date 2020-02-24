@@ -77,6 +77,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
+        .withAltBorder(true)
         .build()
     );
     this.options.columns.push(
@@ -92,7 +93,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.PHYSICAL_SUBS_PERC)
-        .withLabel('Physical Subscription')
+        .withLabel('Physical Subs.')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
@@ -129,10 +130,11 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.COMPRESS_RATIO)
-        .withLabel('Compression Ratio')
+        .withLabel('Comp. Ratio')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withAltBorder(true)
         .build()
     );
     this.options.columns.push(
@@ -166,6 +168,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withIsAggregated(false)
         .withTooltipText('Days to reach 88% of "Physical Used"')
         .withInfinity(true)
+        .withAltBorder(true)
         .build()
     );
     this.options.columns.push(

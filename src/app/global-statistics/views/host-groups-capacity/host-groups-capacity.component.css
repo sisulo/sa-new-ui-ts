@@ -1,11 +1,11 @@
 :host /deep/ .col-val {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  /*padding-top: 5px;*/
+  /*padding-bottom: 5px;*/
   padding-right: 2px;
 }
 
 .alert-red {
-  color: #900020;
+  /*color: #900020;*/
 }
 
 .alert-amber {
@@ -19,7 +19,12 @@
 /* TODO duplicated css definitions in all statistics component*/
 :host /deep/ .groupped-data .metric-value,
 :host /deep/ .aggregated-data .metric-value {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+}
+
+:host /deep/ .aggregated-data .metric-value {
+  font-style: italic;
+  font-weight: 600;
 }
 
 :host /deep/ .groupped-data .metric-unit,

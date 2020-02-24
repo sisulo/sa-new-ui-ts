@@ -87,7 +87,7 @@ export class GlobalLogicalStatisticsComponent extends CommonAggregatedStats impl
     this.labels[SystemMetricType.DEDUP_RATIO] = 'Dedup';
     this.labels[SystemMetricType.TOTAL_SAVING_EFFECT] = 'Savings';
 
-    this.groupLabel.push('Subscribed capacity');
+    this.groupLabel.push('Subscribed');
     this.groupLabel.push('Subscription');
     this.groupLabel.push('Utilization');
     this.groupLabel.push('Physical Capacity');
