@@ -1,0 +1,10 @@
+<svg>
+  <line [attr.x1]="x1" [attr.y1]="y1" [attr.x2]="x1"
+        [attr.y2]="y2" style="stroke:rgb(0,0,0);stroke-width:0.4px"></line>
+  <line *ngFor="let label of labels;index as i" [attr.x1]="x1"
+        [attr.y1]="getLabelPosition(i)"
+        [attr.x2]="markerEnds" [attr.y2]="getLabelPosition(i)"
+        style="stroke:rgb(0,0,0);stroke-width:0.4px">
+  </line>
+  <text *ngFor="let label of labels;index as i" [attr.x]="x1 - textOffset" [attr.text-anchor]="textAnchor" [attr.y]="getLabelPosition(i) + 4" fill="black">{{labels[i]}}</text>
+</svg>

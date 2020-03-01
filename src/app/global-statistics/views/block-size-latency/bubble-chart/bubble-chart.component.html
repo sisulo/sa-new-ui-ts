@@ -1,11 +1,14 @@
-<div id="chart" *ngIf="chartOptions.series !== null">
-  <apx-chart
-    [series]="chartOptions.series"
-    [chart]="chartOptions.chart"
-    [xaxis]="chartOptions.xaxis"
-    [fill]="chartOptions.fill"
-    [dataLabels]="chartOptions.dataLabels"
-    [yaxis]="chartOptions.yaxis"
-    [grid]="chartOptions.grid"
-  ></apx-chart>
+<div id="bubble" class="col-md-12">
+  <svg [attr.width]="optionsGraphic.width" [attr.height]="optionsGraphic.height" xmlns="http://www.w3.org/2000/svg" version="1.2">
+    <g id="quadrant-axis">
+      <svg:g app-xaxis #xaxis [labels]="this.chartData.xlabels" [canvas]="optionsGraphic" />
+      <svg:g app-yaxis #yaxis [labels]="this.chartData.ylabels" [canvas]="optionsGraphic" />
+    </g>
+    <g id="data">
+      <g *ngFor="let serie of chartData.series" [attr.id]="serie.name">
+        <circle stroke="purple" fill="#3c8dbc" stroke-width="2"
+                fill-opacity="0.5" stroke-opacity="0.8" *ngFor="let circle of serie.data" [attr.cx]="circle[0]" [attr.cy]="circle[1]" [attr.r]="circle[2]"></circle>
+      </g>
+    </g>
+  </svg>
 </div>

@@ -32,6 +32,8 @@ import {NgApexchartsModule} from 'ng-apexcharts';
 import {FilterListComponent} from './views/block-size-latency/filter-list/filter-list.component';
 import {FormsModule} from '@angular/forms';
 import {NgSelectModule} from '@ng-select/ng-select';
+import { XaxisComponent } from './views/block-size-latency/bubble-chart/xaxis/xaxis.component';
+import { YaxisComponent } from './views/block-size-latency/bubble-chart/yaxis/yaxis.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import {NgSelectModule} from '@ng-select/ng-select';
     EmptyFormatterComponent,
     BlockSizeLatencyComponent,
     BubbleChartComponent,
-    FilterListComponent
+    FilterListComponent,
+    XaxisComponent,
+    YaxisComponent
   ],
   exports: [],
   imports: [
