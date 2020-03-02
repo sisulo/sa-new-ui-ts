@@ -1,27 +1,31 @@
-import {AfterContentInit, AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {MetricService, OperationData, ThreeDimensionValue} from '../../../../metric.service';
-import {ApexAxisChartSeries, ChartComponent} from 'ng-apexcharts';
+import {ApexAxisChartSeries} from 'ng-apexcharts';
 import {OperationType} from '../../../../common/models/metrics/operation-type.enum';
-import {XaxisComponent} from './xaxis/xaxis.component';
+import {Coordinates, XaxisComponent} from './xaxis/xaxis.component';
 import {YaxisComponent} from './yaxis/yaxis.component';
-import {isEmpty} from 'rxjs/operators';
-import {ArrayUtils} from '../../../../common/utils/array-utils';
 
-interface Serie {
+export interface Serie {
   name: string;
   data: number[][];
 }
 
-interface BubbleChartData {
+export interface BubbleChartData {
   series: Serie[];
   xlabels: number[];
   ylabels: number[];
   crossing: { x: number, y: number };
+  xlabel: string;
+  ylabel: string;
+  colors: string[];
+  xFormatter: (value, index) => string;
+  yFormatter: (value, index) => string;
 }
 
 export interface BubbleChartGraphic {
   width: number;
   height: number;
+  biggestValueSize: number;
 }
 
 @Component({
@@ -30,6 +34,7 @@ export interface BubbleChartGraphic {
   styleUrls: ['./bubble-chart.component.css']
 })
 export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
+  private selectedSeries: string[];
 
   constructor(private readonly metricService: MetricService) {
   }
@@ -48,16 +53,26 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
   @Input()
   operations: string[] = ['READ', 'WRITE']; // TODO should be OperationType
 
+  dataToDisplay: Serie[];
+
   chartData: BubbleChartData = {
     series: [],
     xlabels: [0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024],
     ylabels: [0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256],
-    crossing: {x: 32, y: 1}
+    crossing: {x: 32, y: 1},
+    xlabel: 'Block Size [KB]',
+    ylabel: 'Latency [ms]',
+    colors: ['#008FFB', '#00E396'],
+    xFormatter: (value, index) => value + ' KB',
+    yFormatter: (value, index) => value + ' ms',
   };
   optionsGraphic: BubbleChartGraphic = {
-    width: 800,
-    height: 500
+    width: 900,
+    height: 500,
+    biggestValueSize: 70,
   };
+  coordinatesX: Coordinates;
+  coordinatesY: Coordinates;
 
   ngOnInit() {
     console.log(this.dates);
@@ -67,16 +82,18 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
     if (this.poolIds.length > 0 && this.dates.length > 0) {
       this.metricService.getLatencyData(this.poolIds, this.dates, this.operations).subscribe(data => {
           this.chartData.series = this.transformData(data);
+          this.selectedSeries = this.chartData.series.map(serie => serie.name);
+          console.log(this.selectedSeries);
         }
       );
     }
   }
 
   ngAfterViewInit(): void {
-    const coordinatesX = this.xaxis.getCoordinates();
-    const coordinatesY = this.yaxis.getCoordinates();
-    this.xaxis.setOffSetCoordinates(coordinatesY);
-    this.yaxis.setOffSetCoordinates(coordinatesX);
+    this.coordinatesX = this.xaxis.getCoordinates();
+    this.coordinatesY = this.yaxis.getCoordinates();
+    this.xaxis.setOffSetCoordinates(this.coordinatesY);
+    this.yaxis.setOffSetCoordinates(this.coordinatesX);
   }
 
   transformData(data: OperationData[]): Serie[] {
@@ -86,7 +103,9 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
         const max = this.max(operationData.values);
         return {
           name: OperationType[operationData.operation],
-          data: operationData.values.map(value => this.mapToCoordinates(value, min, max))
+          data: operationData.values
+            .filter(value => value.z > 0)
+            .map(value => this.mapToCoordinates(value, min, max))
         };
       }
     );
@@ -94,21 +113,21 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   countCircleSize(value, min, max) {
-    return (value / max) * 55;
+    return (value / max) * this.optionsGraphic.biggestValueSize;
   }
 
   max(data: ThreeDimensionValue[]) {
-    return data.reduce(
+    return data.filter(value => value.z > 0).reduce(
       (previousValue, currentValue) =>
         previousValue.z < currentValue.z ? currentValue : previousValue,
       {z: 0}).z;
   }
 
   min(data: ThreeDimensionValue[]) {
-    return data.reduce(
+    return data.filter(value => value.z > 0).reduce(
       (previousValue, currentValue) =>
         previousValue.z > currentValue.z ? currentValue : previousValue,
-      {z: 0}).z;
+      {z: Number.MAX_SAFE_INTEGER}).z;
   }
 
   mapToCoordinates(value: ThreeDimensionValue, min, max) {
@@ -117,5 +136,17 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
       this.yaxis.getCoordinateByLabel(value.y).y,
       this.countCircleSize(value.z, min, max)
     ];
+  }
+
+  getColor(index: number): string {
+    return this.chartData.colors[index];
+  }
+
+  filterSeries(selectedSeries: string[]) {
+    this.selectedSeries = selectedSeries;
+  }
+
+  isSelectedSerie(serieName: string) {
+    return this.selectedSeries.some(selectedSerie => selectedSerie === serieName);
   }
 }

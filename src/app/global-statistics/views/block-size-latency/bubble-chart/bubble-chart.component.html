@@ -1,14 +1,26 @@
-<div id="bubble" class="col-md-12">
-  <svg [attr.width]="optionsGraphic.width" [attr.height]="optionsGraphic.height" xmlns="http://www.w3.org/2000/svg" version="1.2">
+<div id="bubble" class="col-md-12" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <svg [attr.width]="optionsGraphic.width" [attr.height]="optionsGraphic.height" xmlns="http://www.w3.org/2000/svg"
+       version="1.2">
     <g id="quadrant-axis">
-      <svg:g app-xaxis #xaxis [labels]="this.chartData.xlabels" [canvas]="optionsGraphic" />
-      <svg:g app-yaxis #yaxis [labels]="this.chartData.ylabels" [canvas]="optionsGraphic" />
+      <svg:g app-xaxis #xaxis [labels]="this.chartData.xlabels" [canvas]="optionsGraphic" [chartData]="chartData"/>
+      <svg:g app-yaxis #yaxis [labels]="this.chartData.ylabels" [canvas]="optionsGraphic" [chartData]="chartData"/>
     </g>
     <g id="data">
-      <g *ngFor="let serie of chartData.series" [attr.id]="serie.name">
-        <circle stroke="purple" fill="#3c8dbc" stroke-width="2"
-                fill-opacity="0.5" stroke-opacity="0.8" *ngFor="let circle of serie.data" [attr.cx]="circle[0]" [attr.cy]="circle[1]" [attr.r]="circle[2]"></circle>
+      <g *ngFor="let serie of chartData.series;index as i" [attr.id]="serie.name">
+        <g *ngIf="isSelectedSerie(serie.name)">
+
+          <circle class="value" stroke="#ffffff" [attr.fill]="getColor(i)"
+                  *ngFor="let circle of serie.data" [attr.cx]="circle[0]" [attr.cy]="circle[1]"
+                  [attr.r]="circle[2]"></circle>
+        </g>
       </g>
+    </g>
+    <g id="legend">
+      <foreignObject x="50%" y="95%" width="50%" height="30" text-anchor="middle">
+        <xhtml:div app-legend [series]="chartData.series" [colors]="chartData.colors"
+                   (selectedSeriesEmit)="filterSeries($event)"/>
+      </foreignObject>
     </g>
   </svg>
 </div>

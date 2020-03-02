@@ -6,5 +6,8 @@
         [attr.x2]="markerEnds" [attr.y2]="getLabelPosition(i)"
         style="stroke:rgb(0,0,0);stroke-width:0.4px">
   </line>
-  <text *ngFor="let label of labels;index as i" [attr.x]="x1 - textOffset" [attr.text-anchor]="textAnchor" [attr.y]="getLabelPosition(i) + 4" fill="black">{{labels[i]}}</text>
+  <text class="axis-value" *ngFor="let label of labels;index as i" [attr.x]="x1 - textOffset"
+        [attr.text-anchor]="textAnchor" [attr.y]="getLabelPosition(i) + 4">{{formatLabel(label, i)}}</text>
+  <text class="axis-label" [attr.x]="x1" [attr.y]="10">{{chartData.ylabel}}</text>
+
 </svg>

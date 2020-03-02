@@ -1,0 +1,8 @@
+.axis-label {
+  font: italic 1.3rem 'Source Sans Pro', sans-serif;
+  text-anchor: middle;
+}
+
+.axis-value {
+  font: normal 1.0rem 'Source Sans Pro', sans-serif;
+}

@@ -1,0 +1,5 @@
+<div *ngIf="series.length != 0">
+  <div class="legend-item" *ngFor="let serie of series; index as i" (click)="toggle(serie.name)"
+       [class.disabled]="!isToggled(serie.name)"><i class="fa fa-circle" [style.color]="getColor(i)"></i>{{serie.name}}
+  </div>
+</div>

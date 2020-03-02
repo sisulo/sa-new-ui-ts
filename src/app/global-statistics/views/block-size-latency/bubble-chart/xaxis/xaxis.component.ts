@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {BubbleChartGraphic} from '../bubble-chart.component';
+import {Component, Input, OnInit} from '@angular/core';
+import {BubbleChartData, BubbleChartGraphic} from '../bubble-chart.component';
 
 export interface Coordinates {
   x: number;
@@ -17,6 +17,8 @@ export class XaxisComponent implements OnInit {
   labels: number[];
   @Input()
   canvas: BubbleChartGraphic;
+  @Input()
+  chartData: BubbleChartData;
 
   coordinates: Coordinates;
 
@@ -48,7 +50,7 @@ export class XaxisComponent implements OnInit {
     this.markerEnds = this.y1 + this.markerLength;
     this.axisLength = this.canvas.width - (2 * this.marginSize);
     this.y2 = this.axisLength + this.marginSize;
-    this.coordinates = {x: this.getLabelPosition(this.labels.findIndex(label => label === 32)), y: this.y1};
+    this.coordinates = {x: this.getLabelPosition(this.labels.findIndex(label => label === this.chartData.crossing.x)), y: this.y1};
     this.labels.forEach((label, index) => {
       this.labelsCoordinates[index] = {x: this.getLabelPosition(index), y: this.y1};
     });
@@ -74,5 +76,9 @@ export class XaxisComponent implements OnInit {
   getCoordinateByLabel(label: number) {
     const index = this.labels.findIndex(l => l === label);
     return this.labelsCoordinates[index];
+  }
+
+  formatLabel(label: number, index: number) {
+    return this.chartData.xFormatter.call(label, index) || label;
   }
 }

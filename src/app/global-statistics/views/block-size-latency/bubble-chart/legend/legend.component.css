@@ -1,0 +1,10 @@
+div.legend-item {
+  float: left;
+  margin: 0.5rem;
+  cursor: pointer;
+  cursor: pointer;
+}
+
+div.legend-item.disabled {
+  opacity: 0.5;
+}
