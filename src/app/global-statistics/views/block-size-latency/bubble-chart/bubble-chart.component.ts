@@ -10,6 +10,12 @@ export interface Serie {
   data: number[][];
 }
 
+export interface PopUpConfig {
+  positionX: number;
+  positionY: number;
+  value: number;
+}
+
 export interface BubbleChartData {
   series: Serie[];
   xlabels: number[];
@@ -54,6 +60,9 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
   operations: string[] = ['READ', 'WRITE']; // TODO should be OperationType
 
   dataToDisplay: Serie[];
+
+  popupDetail: PopUpConfig;
+  displayedPopup = false;
 
   chartData: BubbleChartData = {
     series: [],
@@ -106,6 +115,7 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
           data: operationData.values
             .filter(value => value.z > 0)
             .map(value => this.mapToCoordinates(value, min, max))
+
         };
       }
     );
@@ -148,5 +158,17 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   isSelectedSerie(serieName: string) {
     return this.selectedSeries.some(selectedSerie => selectedSerie === serieName);
+  }
+
+  displayPopup($event: MouseEvent, circle: number[]) {
+    console.log($event);
+    console.log(circle);
+    this.displayedPopup = true;
+    this.popupDetail = {positionX: $event.layerX, positionY: $event.layerY, value: Math.random()};
+  }
+
+  displayClose($event: MouseEvent) {
+    this.displayedPopup = false;
+    this.popupDetail = {positionX: $event.layerX, positionY: $event.layerY, value: null};
   }
 }

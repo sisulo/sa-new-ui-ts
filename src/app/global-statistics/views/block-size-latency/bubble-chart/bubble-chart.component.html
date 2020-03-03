@@ -12,7 +12,8 @@
 
           <circle class="value" stroke="#ffffff" [attr.fill]="getColor(i)"
                   *ngFor="let circle of serie.data" [attr.cx]="circle[0]" [attr.cy]="circle[1]"
-                  [attr.r]="circle[2]"></circle>
+                  [attr.r]="circle[2]" (mousemove)="displayPopup($event, circle)"
+                  (mouseout)="displayClose($event)"></circle>
         </g>
       </g>
     </g>
@@ -20,6 +21,10 @@
       <foreignObject x="50%" y="95%" width="50%" height="30" text-anchor="middle">
         <xhtml:div app-legend [series]="chartData.series" [colors]="chartData.colors"
                    (selectedSeriesEmit)="filterSeries($event)"/>
+      </foreignObject>
+      <foreignObject *ngIf="displayedPopup" [attr.x]="popupDetail.positionX" [attr.y]="popupDetail.positionY"
+                     width="50%" height="30" text-anchor="middle">
+        <xhtml:div app-popup-data [displayed]="displayedPopup" [config]="popupDetail"/>
       </foreignObject>
     </g>
   </svg>

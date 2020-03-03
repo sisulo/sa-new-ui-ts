@@ -35,6 +35,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
 import {XaxisComponent} from './views/block-size-latency/bubble-chart/xaxis/xaxis.component';
 import {YaxisComponent} from './views/block-size-latency/bubble-chart/yaxis/yaxis.component';
 import {LegendComponent} from './views/block-size-latency/bubble-chart/legend/legend.component';
+import {PopupDataComponent} from './views/block-size-latency/bubble-chart/popup-data/popup-data.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import {LegendComponent} from './views/block-size-latency/bubble-chart/legend/le
     FilterListComponent,
     XaxisComponent,
     YaxisComponent,
-    LegendComponent
+    LegendComponent,
+    PopupDataComponent
   ],
   exports: [],
   imports: [
