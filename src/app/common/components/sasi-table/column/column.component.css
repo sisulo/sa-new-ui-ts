@@ -8,7 +8,6 @@
 
 .col {
   display: inline-block;
-  vertical-align: middle;
   padding-right: 10px;
 }
 
@@ -29,7 +28,7 @@ div {
   /*text-align: center;*/
   border-right: 1px #EAEAEA solid;
   display: inline-block;
-  vertical-align: middle;
+  /*vertical-align: middle;*/
   margin: auto;
 }
 

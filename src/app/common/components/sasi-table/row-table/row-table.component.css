@@ -24,9 +24,6 @@
   padding: 3px;
 }
 
-app-column {
-  height: 100%;
-}
 /**** Table data ****/
 .table-data {
   width: 100%;
@@ -35,8 +32,6 @@ app-column {
 .table-data > div {
   /*text-align: center;*/
   border-right: 1px #EAEAEA solid;
-  display: inline-block;
-  vertical-align: middle;
   margin: auto;
 }
 
