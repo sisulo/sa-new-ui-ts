@@ -79,6 +79,7 @@ export class XaxisComponent implements OnInit {
   }
 
   formatLabel(label: number, index: number) {
-    return this.chartData.xFormatter.call(label, index) || label;
+
+    return this.chartData.xFormatter.call(this, label, index) || label;
   }
 }

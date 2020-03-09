@@ -76,6 +76,6 @@ export class YaxisComponent implements OnInit {
   }
 
   formatLabel(label: number, index: number) {
-    return this.chartData.yFormatter.call(label, index) || label;
+    return this.chartData.yFormatter.call(this, label, index) || label;
   }
 }
