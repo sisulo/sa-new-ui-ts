@@ -19,7 +19,7 @@
       <i tooltip="Alerts" class="fa fa-exclamation-triangle text-orange"></i>
     </div>
     <div class="col" [style.width.%]="options.getColumnWidth(columnOption.index)"
-         [tooltip]="getColumnLabel(columnOption.index)"
+         [tooltip]="getColumnTooltipText(columnOption.index)"
          *ngFor="let columnOption of options.columns">
       <span class="link" (click)="setSort(columnOption, false)">{{getColumnLabel(columnOption.index)}}
       </span> <span><i

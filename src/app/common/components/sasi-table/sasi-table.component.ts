@@ -31,6 +31,7 @@ export class SasiColumnBuilder {
   private isAggregated = false;
 
   private tooltipText: string = null;
+  private columnTooltipText: string = null;
 
   private infinity = true;
 
@@ -104,6 +105,11 @@ export class SasiColumnBuilder {
     return this;
   }
 
+  withColumnTooltipText(text: string) {
+    this.columnTooltipText = text;
+    return this;
+  }
+
   build(): SasiColumn {
     return new SasiColumn(
       this.index,
@@ -117,7 +123,8 @@ export class SasiColumnBuilder {
       this.altLabel,
       this.altBorder,
       this.altBorderLeft,
-      this.columnWidth
+      this.columnWidth,
+      this.columnTooltipText
     );
   }
 
@@ -147,6 +154,7 @@ export class SasiColumn {
   isAggregated: boolean;
 
   tooltipText: string;
+  columnTooltipText: string;
 
   isInfinity: boolean;
 
@@ -170,6 +178,7 @@ export class SasiColumn {
     altBorder: boolean,
     altBorderLeft: boolean,
     columnWidth: string,
+    columnTooltipText: string
   ) {
     this.index = index;
     this.label = label;
@@ -183,6 +192,7 @@ export class SasiColumn {
     this.altBorder = altBorder;
     this.altBorderLeft = altBorderLeft;
     this.columnWidth = columnWidth;
+    this.columnTooltipText = columnTooltipText;
   }
 }
 
@@ -411,6 +421,13 @@ export class SasiTableComponent implements OnInit {
     return column.altLabel !== undefined ? column.altLabel : column.label;
   }
 
+  getColumnTooltipText(type: string) {
+    const column: SasiColumn = this.options.columns.find(optionColumn => optionColumn.index === type);
+    if (column === undefined) {
+      return '';
+    }
+    return column.columnTooltipText !== null ? column.columnTooltipText : this.getColumnLabel(type);
+  }
 
   /* SORTING FEATURES */
   getSortIconClass(column: string, isAltSort: boolean) {
