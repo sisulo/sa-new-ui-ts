@@ -7,6 +7,8 @@ import {AlertType} from '../../common/models/metrics/alert-type.enum';
 import {RegionMetricDto} from '../../common/models/dtos/region-metric.dto';
 import {Region} from '../../common/models/dtos/region.enum';
 import {StorageConvertPipe} from '../../common/storage-convert.pipe';
+import {RouterModule, Routes, Router, ActivatedRoute} from '@angular/router';
+import {BreadcrumbComponent} from '../breacrumb/breadcrumb.component';
 
 declare var jquery: any;
 declare var $: any;
@@ -17,7 +19,7 @@ declare var $: any;
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-
+  breadcrumbs: [];
   metricLabels = {};
   alertLabels = {};
   metrics: RegionMetricDto[] = [];
