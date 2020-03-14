@@ -1,4 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {NgSelectComponent} from '@ng-select/ng-select';
+import {FilterListData} from '../block-size-latency.component';
 
 @Component({
   selector: 'app-filter-list',
@@ -9,13 +11,13 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
 export class FilterListComponent implements OnInit {
 
   @Input()
-  private valueList: string[];
+  private valueList: FilterListData[];
   @Input()
   private title: string;
   @Input()
-  private selectedValues: string[] = [];
+  private selectedValues: string[] | number[] = [];
   @Output()
-  valueListChange: EventEmitter<string[]> = new EventEmitter<string[]>();
+  valueListChange: EventEmitter<string[] | number[]> = new EventEmitter<string[] | number[]>();
 
 
   constructor() {
@@ -26,7 +28,15 @@ export class FilterListComponent implements OnInit {
   }
 
   selectValue(value) {
-    console.log(value);
+    this.valueListChange.emit(this.selectedValues);
+  }
+
+  selectAll() {
+    this.selectedValues = this.valueList.map(value => value.id as number);
+    this.valueListChange.emit(this.selectedValues);
+  }
+
+  clear() {
     this.valueListChange.emit(this.selectedValues);
   }
 }

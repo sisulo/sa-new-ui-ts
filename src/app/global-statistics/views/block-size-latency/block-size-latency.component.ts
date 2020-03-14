@@ -1,5 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {LatencyMetadata, MetricService} from '../../../metric.service';
+import {FilterListDataUtils} from './filter-list-data.utils';
+
+export interface FilterListData {
+  id: number | string;
+  name: string;
+  systemId: number;
+}
 
 @Component({
   selector: 'app-block-size-latency',
@@ -8,9 +15,9 @@ import {LatencyMetadata, MetricService} from '../../../metric.service';
 })
 export class BlockSizeLatencyComponent implements OnInit {
 
-  private dates: string[] = [];
-  private systems: { id: number, name: string }[] = [];
-  private pools: { id: number, name: string, systemId: number }[] = [];
+  private dates: FilterListData[] = [];
+  private systems: FilterListData[] = [];
+  private pools: FilterListData[] = [];
   private selectedDates: string[] = [];
   private selectedSystems: number[] = [];
   private selectedPools: number[] = [];
@@ -22,31 +29,25 @@ export class BlockSizeLatencyComponent implements OnInit {
   ngOnInit() {
     this.metricService.getLatencyMetadata().subscribe(
       data => {
-        this.dates = data.dates;
-        this.systems = this.setSystemFilters(data);
-        this.pools = this.setPoolFilters(data);
+        this.dates = FilterListDataUtils.sort(this.setDatesFilters(data));
+        this.systems = FilterListDataUtils.sort(this.setSystemFilters(data));
+        this.pools = FilterListDataUtils.sort(this.setPoolFilters(data));
       }
     );
   }
 
-  onDatesChanged(selectedDates: string[]) {
-    this.selectedDates = selectedDates.map(val => val);
-    console.log('BlockSizeComp: ' + selectedDates);
+  private setDatesFilters(data: LatencyMetadata): FilterListData[] {
+    return data.dates.map(date => {
+      return {id: date, name: date, systemId: null};
+    });
   }
 
-  private setSystemFilters(data: LatencyMetadata) {
+  private setSystemFilters(data: LatencyMetadata): FilterListData[] {
     return data.systems.map(
       system => {
-        return {id: system.id, name: system.name};
+        return {id: system.id, name: system.name, systemId: null};
       }
     );
-  }
-
-  onSystemChanged(selectedSystems: string[]) {
-    this.selectedSystems = selectedSystems.map(val => parseInt(val, 10));
-    console.log(selectedSystems);
-    this.selectedSystems.forEach(system => this.selectedPools = this.selectedPools.concat(this.pools.filter(pool => pool.systemId === system).map(pool => pool.id)));
-    console.log(this.selectedPools);
   }
 
   private setPoolFilters(data: LatencyMetadata) {
@@ -57,7 +58,30 @@ export class BlockSizeLatencyComponent implements OnInit {
     ).reduce((previousValue, currentValue) => previousValue.concat(...currentValue));
   }
 
-  onPoolChanged(selectedPools: string[]) {
-    this.selectedPools = selectedPools.map(val => parseInt(val, 10)) || [];
+  onDatesChanged(selectedDates: string[]) {
+    this.selectedDates = selectedDates.map(val => val);
+  }
+
+  onSystemChanged(selectedSystems: string[]) {
+    this.selectedSystems = selectedSystems.map(
+      val => parseInt(val, 10)
+    );
+    this.selectedPools = [];
+    this.selectedSystems.forEach(
+      system => this.selectedPools = this.selectedPools.concat(
+        this.pools.filter(pool => pool.systemId === system)
+          .map(pool => pool.id as number)
+      )
+    );
+  }
+
+  onPoolChanged(selectedPools: number[]) {
+    this.selectedPools = selectedPools.map(val => val) || [];
+    this.selectedSystems = this.systems.filter(systems => this.isAllPoolsSelected(systems.id)).map(system => system.id as number);
+  }
+
+  private isAllPoolsSelected(id: number | string) {
+    const allPools = this.pools.filter(pool => pool.systemId === id);
+    return allPools.every(pool => this.selectedPools.includes(pool.id as number));
   }
 }
