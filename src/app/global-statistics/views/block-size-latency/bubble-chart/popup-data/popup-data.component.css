@@ -1,6 +1,15 @@
-div {
+div.popup-data {
   position: absolute;
   z-index: 1000;
-  background-color: #0d6aad;
-
+  background-color: white;
+  border-radius: 5px;
+  border: 1px solid #b1b1b1;
+}
+div.popup-header {
+  background-color: #b1b1b1;
+  padding: 2px 10px 0px 10px;
+  border-radius: 5px 5px 0 0;
+}
+div.popup-body{
+  padding: 5px 10px 5px 10px;
 }

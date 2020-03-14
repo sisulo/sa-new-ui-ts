@@ -1,3 +1,8 @@
-<div *ngIf="displayed" [ngStyle]="{top: config.positionY, left: config.positionX}">
-  X: {{config.positionX}}, Y: {{config.positionY}}, Value: {{config.value}}
+<div class='popup-data' *ngIf="displayed" [style.top.px]="config.positionY" [style.left.px]="config.positionX + 15">
+  <div class="popup-header">Operation: {{config.serieName}}</div>
+  <div class="popup-body">
+    <div>Block: {{config.value.x}} KB</div>
+    <div>Latency: {{config.value.y}} ms</div>
+    <div>Size: {{config.value.z}}</div>
+  </div>
 </div>

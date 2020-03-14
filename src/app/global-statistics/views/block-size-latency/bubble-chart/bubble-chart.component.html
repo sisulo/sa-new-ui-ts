@@ -2,17 +2,13 @@
 
   <svg [attr.width]="optionsGraphic.width" [attr.height]="optionsGraphic.height" xmlns="http://www.w3.org/2000/svg"
        version="1.2">
-    <g id="quadrant-axis">
-      <svg:g app-xaxis #xaxis [labels]="this.chartData.xlabels" [canvas]="optionsGraphic" [chartData]="chartData"/>
-      <svg:g app-yaxis #yaxis [labels]="this.chartData.ylabels" [canvas]="optionsGraphic" [chartData]="chartData"/>
-    </g>
     <g id="data">
       <g *ngFor="let serie of chartData.series;index as i" [attr.id]="serie.name">
         <g *ngIf="isSelectedSerie(serie.name)">
 
           <circle class="value" stroke="#ffffff" [attr.fill]="getColor(i)"
-                  *ngFor="let circle of serie.data" [attr.cx]="circle[0]" [attr.cy]="circle[1]"
-                  [attr.r]="circle[2]" (mousemove)="displayPopup($event, circle)"
+                  *ngFor="let circle of serie.data" [attr.cx]="circle.coordinates[0]" [attr.cy]="circle.coordinates[1]"
+                  [attr.r]="circle.coordinates[2]" (mousemove)="displayPopup($event, circle, serie.name)"
                   (mouseout)="displayClose($event)"></circle>
         </g>
       </g>
@@ -22,10 +18,15 @@
         <xhtml:div app-legend [series]="chartData.series" [colors]="chartData.colors"
                    (selectedSeriesEmit)="filterSeries($event)"/>
       </foreignObject>
-      <foreignObject *ngIf="displayedPopup" [attr.x]="popupDetail.positionX" [attr.y]="popupDetail.positionY"
-                     width="50%" height="30" text-anchor="middle">
-        <xhtml:div app-popup-data [displayed]="displayedPopup" [config]="popupDetail"/>
-      </foreignObject>
+<!--      <foreignObject *ngIf="displayedPopup" [attr.x]="popupDetail.positionX" [attr.y]="popupDetail.positionY"-->
+<!--                     width="50%" height="100" text-anchor="middle">-->
+<!--        -->
+<!--      </foreignObject>-->
+    </g>
+    <g id="quadrant-axis">
+      <svg:g app-xaxis #xaxis [labels]="this.chartData.xlabels" [canvas]="optionsGraphic" [chartData]="chartData"/>
+      <svg:g app-yaxis #yaxis [labels]="this.chartData.ylabels" [canvas]="optionsGraphic" [chartData]="chartData"/>
     </g>
   </svg>
+  <app-popup-data [displayed]="displayedPopup" [config]="popupDetail"></app-popup-data>
 </div>

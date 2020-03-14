@@ -6,3 +6,7 @@
 .axis-value {
   font: normal 1.0rem 'Source Sans Pro', sans-serif;
 }
+
+line {
+  z-index: 50;
+}

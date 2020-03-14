@@ -5,15 +5,21 @@ import {OperationType} from '../../../../common/models/metrics/operation-type.en
 import {Coordinates, XaxisComponent} from './xaxis/xaxis.component';
 import {YaxisComponent} from './yaxis/yaxis.component';
 
+export interface BubbleData {
+  coordinates: number[];
+  values: { x: number, y: number, z: number };
+}
+
 export interface Serie {
   name: string;
-  data: number[][];
+  data: BubbleData[];
 }
 
 export interface PopUpConfig {
   positionX: number;
   positionY: number;
-  value: number;
+  value: { x: number, y: number, z: number };
+  serieName: string;
 }
 
 export interface BubbleChartData {
@@ -115,7 +121,9 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
           name: OperationType[operationData.operation],
           data: operationData.values
             .filter(value => value.z > 0)
-            .map(value => this.mapToCoordinates(value, min, max))
+            .map(value => {
+              return {coordinates: this.mapToCoordinates(value, min, max), values: this.mapToValues(value)};
+            })
 
         };
       }
@@ -161,15 +169,19 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
     return this.selectedSeries.some(selectedSerie => selectedSerie === serieName);
   }
 
-  displayPopup($event: MouseEvent, circle: number[]) {
+  displayPopup($event: MouseEvent, circle: BubbleData, serieName: string) {
     console.log($event);
     console.log(circle);
     this.displayedPopup = true;
-    this.popupDetail = {positionX: $event.layerX, positionY: $event.layerY, value: Math.random()};
+    this.popupDetail = {positionX: $event.layerX, positionY: $event.layerY, value: circle.values, serieName: serieName};
   }
 
   displayClose($event: MouseEvent) {
     this.displayedPopup = false;
-    this.popupDetail = {positionX: $event.layerX, positionY: $event.layerY, value: null};
+    this.popupDetail = {positionX: $event.screenX, positionY: $event.screenY, value: null, serieName: null};
+  }
+
+  private mapToValues(value: ThreeDimensionValue) {
+    return {x: value.x, y: value.y, z: value.z};
   }
 }
