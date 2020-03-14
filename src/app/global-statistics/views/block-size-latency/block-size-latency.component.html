@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-4">
 
-      <app-filter-list *ngIf="systems !== undefined" [valueList]="systems" title="Systems"
+      <app-filter-list *ngIf="systems !== undefined" [valueList]="systems" [selectedValues]="selectedSystems" title="Systems"
                        (valueListChange)="onSystemChanged($event)"></app-filter-list>
     </div>
     <div class="col-md-4">

@@ -1,18 +1,32 @@
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">{{title}}</h3>
+    <div class="box-tools pull-right">
+      <a type="button" class="btn btn-block btn-default" (click)="selectAll()" placement="left" tooltip="Select All"><i class="fas fa-check-double"></i></a>
+    </div>
   </div>
   <div class="box-body">
     <ng-select
+      #ngSelect
       [items]="valueList"
       [multiple]="true"
       [closeOnSelect]="false"
-      [hideSelected]="true"
+      [hideSelected]="false"
       bindLabel="name"
       bindValue="id"
       placeholder="Select"
       [(ngModel)]="selectedValues"
-      (change)="selectValue($event)">
+      (change)="selectValue($event)"
+    (clear)="clear()">
+      <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+        <div class="ng-value" *ngFor="let item of items | slice:0:2">
+          <span class="ng-value-label">{{item.name}}</span>
+          <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+        </div>
+        <div class="ng-value" *ngIf="items.length > 2">
+          <span class="ng-value-label">{{items.length - 2}} more...</span>
+        </div>
+      </ng-template>
     </ng-select>
   </div>
 </div>

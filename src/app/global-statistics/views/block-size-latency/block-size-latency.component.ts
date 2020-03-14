@@ -63,11 +63,25 @@ export class BlockSizeLatencyComponent implements OnInit {
   }
 
   onSystemChanged(selectedSystems: string[]) {
-    this.selectedSystems = selectedSystems.map(val => parseInt(val, 10));
-    this.selectedSystems.forEach(system => this.selectedPools = this.selectedPools.concat(this.pools.filter(pool => pool.systemId === system).map(pool => pool.id as number)));
+    this.selectedSystems = selectedSystems.map(
+      val => parseInt(val, 10)
+    );
+    this.selectedPools = [];
+    this.selectedSystems.forEach(
+      system => this.selectedPools = this.selectedPools.concat(
+        this.pools.filter(pool => pool.systemId === system)
+          .map(pool => pool.id as number)
+      )
+    );
   }
 
-  onPoolChanged(selectedPools: string[]) {
-    this.selectedPools = selectedPools.map(val => parseInt(val, 10)) || [];
+  onPoolChanged(selectedPools: number[]) {
+    this.selectedPools = selectedPools.map(val => val) || [];
+    this.selectedSystems = this.systems.filter(systems => this.isAllPoolsSelected(systems.id)).map(system => system.id as number);
+  }
+
+  private isAllPoolsSelected(id: number | string) {
+    const allPools = this.pools.filter(pool => pool.systemId === id);
+    return allPools.every(pool => this.selectedPools.includes(pool.id as number));
   }
 }

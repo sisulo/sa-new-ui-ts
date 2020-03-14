@@ -84,6 +84,9 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
           this.selectedSeries = this.chartData.series.map(serie => serie.name);
         }
       );
+    } else {
+      this.chartData.series = [];
+      this.selectedSeries = [];
     }
   }
 
