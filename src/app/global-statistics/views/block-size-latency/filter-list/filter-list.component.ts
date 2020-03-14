@@ -26,7 +26,6 @@ export class FilterListComponent implements OnInit {
   }
 
   selectValue(value) {
-    console.log(value);
     this.valueListChange.emit(this.selectedValues);
   }
 }

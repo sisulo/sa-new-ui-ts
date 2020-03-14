@@ -75,7 +75,6 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
   coordinatesY: Coordinates;
 
   ngOnInit() {
-    console.log(this.dates);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -83,7 +82,6 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
       this.metricService.getLatencyData(this.poolIds, this.dates, this.operations).subscribe(data => {
           this.chartData.series = this.transformData(data);
           this.selectedSeries = this.chartData.series.map(serie => serie.name);
-          console.log(this.selectedSeries);
         }
       );
     }
