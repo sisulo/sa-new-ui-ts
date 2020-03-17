@@ -170,8 +170,6 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   displayPopup($event: MouseEvent, circle: BubbleData, serieName: string) {
-    console.log($event);
-    console.log(circle);
     this.displayedPopup = true;
     this.popupDetail = {positionX: $event.layerX, positionY: $event.layerY, value: circle.values, serieName: serieName};
   }
