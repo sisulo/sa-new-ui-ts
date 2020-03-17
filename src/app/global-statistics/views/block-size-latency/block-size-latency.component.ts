@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LatencyMetadata, MetricService} from '../../../metric.service';
-import {FilterListDataUtils} from './filter-list-data.utils';
+import {FilterListDataUtils, SortType} from './filter-list-data.utils';
 
 export interface FilterListData {
   id: number | string;
@@ -29,9 +29,9 @@ export class BlockSizeLatencyComponent implements OnInit {
   ngOnInit() {
     this.metricService.getLatencyMetadata().subscribe(
       data => {
-        this.dates = FilterListDataUtils.sort(this.setDatesFilters(data));
-        this.systems = FilterListDataUtils.sort(this.setSystemFilters(data));
-        this.pools = FilterListDataUtils.sort(this.setPoolFilters(data));
+        this.dates = FilterListDataUtils.sort(this.setDatesFilters(data), SortType.DESC);
+        this.systems = FilterListDataUtils.sort(this.setSystemFilters(data), SortType.ASC);
+        this.pools = FilterListDataUtils.sort(this.setPoolFilters(data), SortType.ASC);
       }
     );
   }
