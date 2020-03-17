@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../../period.service';
 import {MetricService, PeriodType} from '../../../metric.service';
@@ -20,7 +20,7 @@ import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table
   templateUrl: './dp-sla-2.component.html',
   styleUrls: ['./dp-sla.component.css', '../../global-statistics.component.css']
 })
-export class DpSlaComponent implements OnInit {
+export class DpSlaComponent implements OnInit, OnDestroy {
 
   types = [
     SystemMetricType.SLA_EVENTS,
@@ -99,6 +99,10 @@ export class DpSlaComponent implements OnInit {
     );
     this.periodService.announceEnablePeriod(true);
     this.periodService.announcePeriod(this.currentPeriod);
+  }
+
+  ngOnDestroy(): void {
+    this.periodService.announceEnablePeriod(false);
   }
 
   getTableData(id: number): any[] { // TODO duplicated for all GS sasi tables

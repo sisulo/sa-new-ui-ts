@@ -3,7 +3,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../../metric.service';
 import {SystemPool} from '../../../common/models/system-pool.vo';
 import {SystemAggregatedStatistics} from '../../utils/weighted-arithmetic-mean.utils';
-import {PeriodService} from '../../../period.service';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {BusService} from '../../bus.service';
@@ -64,7 +63,6 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
   constructor(
     protected route: ActivatedRoute,
     protected router: Router,
-    protected periodService: PeriodService,
     protected metricService: MetricService,
     protected bus: BusService,
     protected localStorageService: LocalStorageService,
@@ -244,7 +242,6 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         this.getTableData(id);
       }
     );
-    this.periodService.announceEnablePeriod(false);
     this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
       data => {
         this.selectedRows = data.newValue;

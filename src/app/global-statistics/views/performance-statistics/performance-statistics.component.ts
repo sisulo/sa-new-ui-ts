@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MetricService, PeriodType} from '../../../metric.service';
 import {SystemDetail} from '../../../common/models/system-detail.vo';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -18,7 +18,7 @@ import {SimpleSortImpl} from '../../../common/components/sasi-table/simple-sort-
   templateUrl: './performance-statistics.component.html',
   styleUrls: ['./performance-statistics.component.css', '../../global-statistics.component.css'],
 })
-export class PerformanceStatisticsComponent implements OnInit {
+export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
 
   currentPeriod: PeriodType = PeriodType.WEEK;
   data: SystemDetail[] = []; // Todo caching data by datacenters
@@ -131,6 +131,9 @@ export class PerformanceStatisticsComponent implements OnInit {
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.WRITE_PENDING_PERC, new Threshold('text-orange', 30, 10000)));
   }
 
+  ngOnDestroy(): void {
+    this.periodService.announceEnablePeriod(false);
+  }
 
   getTableData(id: number): SystemDetail[] {
     this.currentDataCenterId = id;

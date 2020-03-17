@@ -4,7 +4,6 @@ import {SystemPool} from '../../../common/models/system-pool.vo';
 import {SystemAggregatedStatistics} from '../../utils/weighted-arithmetic-mean.utils';
 import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PeriodService} from '../../../period.service';
 import {MetricService} from '../../../metric.service';
 import {BusService} from '../../bus.service';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
@@ -53,7 +52,6 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
   constructor(
     protected route: ActivatedRoute,
     protected router: Router,
-    protected periodService: PeriodService,
     protected metricService: MetricService,
     protected bus: BusService,
     protected localStorageService: LocalStorageService,
@@ -312,8 +310,6 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         this.selectedRows = data.newValue;
       }
     );
-    this.periodService.announceEnablePeriod(false);
-
   }
 
   getTableData(id: number): SystemPool[] {

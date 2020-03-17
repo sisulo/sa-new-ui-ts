@@ -7,6 +7,7 @@ import {AlertType} from '../../common/models/metrics/alert-type.enum';
 import {RegionMetricDto} from '../../common/models/dtos/region-metric.dto';
 import {Region} from '../../common/models/dtos/region.enum';
 import {StorageConvertPipe} from '../../common/storage-convert.pipe';
+import {PeriodService} from '../../period.service';
 
 declare var jquery: any;
 declare var $: any;
@@ -57,7 +58,8 @@ export class DashboardComponent implements OnInit {
   allMetricType = [...this.perfMetricsType, ...this.capacityMetricsType];
   useKFormatter = [SystemMetricType.WORKLOAD];
 
-  constructor(private metricService: MetricService) {
+  constructor(private metricService: MetricService,
+              private periodService: PeriodService) {
   }
 
   ngOnInit() {
@@ -138,6 +140,7 @@ export class DashboardComponent implements OnInit {
       });
     });
     this.getMap();
+    this.periodService.announceEnablePeriod(false);
   }
 
   transformCapacityMetrics(regionData: RegionMetricDto[]) {

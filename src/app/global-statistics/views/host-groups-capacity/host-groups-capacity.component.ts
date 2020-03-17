@@ -5,7 +5,6 @@ import {SystemAggregatedStatistics} from '../../utils/weighted-arithmetic-mean.u
 import {SasiColumnBuilder, SasiTableOptions} from '../../../common/components/sasi-table/sasi-table.component';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PeriodService} from '../../../period.service';
 import {MetricService} from '../../../metric.service';
 import {BusService} from '../../bus.service';
 import {LocalStorageService} from 'ngx-store';
@@ -61,7 +60,6 @@ export class HostGroupsCapacityComponent implements OnInit {
   constructor(
     protected route: ActivatedRoute,
     protected router: Router,
-    protected periodService: PeriodService,
     protected metricService: MetricService,
     protected bus: BusService,
     protected localStorageService: LocalStorageService,
@@ -182,7 +180,6 @@ export class HostGroupsCapacityComponent implements OnInit {
         this.getTableData(id);
       }
     );
-    this.periodService.announceEnablePeriod(false);
     this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
       data => {
         this.selectedRows = data.newValue;

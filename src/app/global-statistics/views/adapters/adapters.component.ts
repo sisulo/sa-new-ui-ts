@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PeriodService} from '../../../period.service';
 import {MetricService, PeriodType} from '../../../metric.service';
@@ -22,7 +22,7 @@ import {EmptyFormatterComponent} from '../../formatters/empty-formatter/empty-fo
   templateUrl: './adapters.component.html',
   styleUrls: ['./adapters.component.css', '../../global-statistics.component.css']
 })
-export class AdaptersComponent implements OnInit {
+export class AdaptersComponent implements OnInit, OnDestroy {
 
   types = [
     SystemMetricType.IMBALANCE_EVENTS,
@@ -104,6 +104,10 @@ export class AdaptersComponent implements OnInit {
     );
     this.periodService.announceEnablePeriod(true);
     this.periodService.announcePeriod(this.currentPeriod);
+  }
+
+  ngOnDestroy(): void {
+    this.periodService.announceEnablePeriod(false);
   }
 
   getTableData(id: number): any[] { // TODO duplicated for all GS sasi tables
