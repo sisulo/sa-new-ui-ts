@@ -77,11 +77,11 @@ export class BlockSizeLatencyComponent implements OnInit {
 
   onPoolChanged(selectedPools: number[]) {
     this.selectedPools = selectedPools.map(val => val) || [];
-    this.selectedSystems = this.systems.filter(systems => this.isAllPoolsSelected(systems.id)).map(system => system.id as number);
+    this.selectedSystems = this.systems.filter(systems => this.isAnyPoolSelected(systems.id)).map(system => system.id as number);
   }
 
-  private isAllPoolsSelected(id: number | string) {
+  private isAnyPoolSelected(id: number | string) {
     const allPools = this.pools.filter(pool => pool.systemId === id);
-    return allPools.every(pool => this.selectedPools.includes(pool.id as number));
+    return allPools.some(pool => this.selectedPools.includes(pool.id as number));
   }
 }
