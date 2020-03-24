@@ -1,16 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import { from } from 'rxjs';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
 
 
 export interface IBreadCrumb {
   label: string;
-  url: string;
+  url: string; 
 } 
 
 @Component({
     selector: 'app-breadcrumb',
     templateUrl: './breadcrumb.component.html',
+    styleUrls:['./breadcrumb.component.css']
   })
 
 export class BreadcrumbComponent implements OnInit {
@@ -24,7 +25,12 @@ export class BreadcrumbComponent implements OnInit {
   }
   
   ngOnInit() {
-    
+    this.router.events.pipe(
+      filter( (event: any) => event instanceof NavigationEnd),
+      distinctUntilChanged(),
+    ).subscribe(() => {
+      this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
+    })
 }
 
     buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): IBreadCrumb[] {

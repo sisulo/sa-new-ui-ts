@@ -3,6 +3,7 @@ import {Datacenter} from '../common/models/datacenter.vo';
 import {MetricService} from '../metric.service';
 import {BusService} from './bus.service';
 
+
 @Component({
   selector: 'app-global-statistics',
   templateUrl: './global-statistics.component.html',

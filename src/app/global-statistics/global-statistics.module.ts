@@ -60,7 +60,7 @@ import {NgSelectModule} from '@ng-select/ng-select';
     EmptyFormatterComponent,
     BlockSizeLatencyComponent,
     BubbleChartComponent,
-    FilterListComponent
+    FilterListComponent,
   ],
   exports: [],
   imports: [

@@ -13,13 +13,13 @@ import {AlertRule, Threshold} from '../../alert-rule';
 import {RowTableComponent} from '../../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../../common/components/sasi-table/simple-sort-impl';
 
+
 @Component({
   selector: 'app-tab',
   templateUrl: './performance-statistics.component.html',
   styleUrls: ['./performance-statistics.component.css', '../../global-statistics.component.css'],
 })
 export class PerformanceStatisticsComponent implements OnInit {
-
   currentPeriod: PeriodType = PeriodType.WEEK;
   data: SystemDetail[] = []; // Todo caching data by datacenters
   options: SasiTableOptions = new SasiTableOptions();

@@ -4,7 +4,6 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {BreadcrumbComponent} from './components/breacrumb/breadcrumb.component';
 import {HeaderComponent} from './components/header/header.component';
 import {SideMenuComponent} from './components/side-menu/side-menu.component';
 import {IframeComponent} from './components/iframe/iframe.component';
@@ -22,7 +21,7 @@ import {CapacityHistoryChartComponent} from './components/dashboard/charts/capac
 import {BarChartComponent} from './components/dashboard/charts/bar-chart/bar-chart.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {HttpLoading} from './http-loading.interceptor';
-import { from } from 'rxjs';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 export const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: HttpLoading, multi: true},
@@ -52,7 +51,7 @@ export const httpInterceptorProviders = [
     SaCommonModule,
     NgApexchartsModule,
     NgxSpinnerModule,
-
+    
   ],
   providers: [SystemPool2SasiGroupTablePipe, httpInterceptorProviders],
   bootstrap: [AppComponent]
