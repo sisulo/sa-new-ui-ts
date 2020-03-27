@@ -8,8 +8,6 @@ import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-stati
 import {PhysicalCapacityStatisticsComponent} from './views/physical-capacity-statistics/physical-capacity-statistics.component';
 import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
 import {BlockSizeLatencyComponent} from './views/block-size-latency/block-size-latency.component';
-import { resolve } from 'dns';
-import { Title } from '@angular/platform-browser';
 
 
 const routes: Routes = [
@@ -21,11 +19,11 @@ const routes: Routes = [
     },
     children: [
       {path: 'performance/:id', component: PerformanceStatisticsComponent, data: {
-        breadcrumb: ' ' 
+        breadcrumb: ' '
       }},
       {path: 'performance', redirectTo: 'performance/1', pathMatch: 'full'},
       {path: 'physical-capacity/:id', component: PhysicalCapacityStatisticsComponent, data: {
-        breadcrumb: ' '
+        breadcrumb: 'Physical capacity'
       }},
       {path: 'physical-capacity', redirectTo: 'physical-capacity/1', pathMatch: 'full'},
       {path: 'logical-capacity/:id', component: LogicalCapacityStatisticsComponent, data: {

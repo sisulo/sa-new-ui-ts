@@ -80,6 +80,12 @@ export class MetricService {
     return datacenterObj.systems.find(system => system.id === systemId).name;
   }
 
+  public getDatacenterName(idDatacenter: number) {
+    // find object
+    // if exists
+    // return name
+  }
+
   getPerformanceStatistics(id: number, period: PeriodType): Observable<DatacenterListDto> {
     let url;
     if (id !== undefined && id !== -1) {
