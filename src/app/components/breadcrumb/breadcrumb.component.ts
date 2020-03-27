@@ -35,6 +35,7 @@ export class BreadcrumbComponent implements OnInit {
 
     buildBreadCrumb(route: ActivatedRoute, url: string = '', breadcrumbs: IBreadCrumb[] = []): IBreadCrumb[] {
       //If no routeConfig is avalailable we are on the root path
+      console.log(route);
       let label = route.routeConfig && route.routeConfig.data ? route.routeConfig.data.breadcrumb : '';
       let path = route.routeConfig && route.routeConfig.data ? route.routeConfig.path : '';
   
@@ -45,6 +46,7 @@ export class BreadcrumbComponent implements OnInit {
         const paramName = lastRoutePart.split(':')[1];
         path = path.replace(lastRoutePart, route.snapshot.params[paramName]);
         label = route.snapshot.params[paramName];
+      
       }
   
       //In the routeConfig the complete path is not available,

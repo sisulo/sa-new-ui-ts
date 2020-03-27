@@ -8,6 +8,8 @@ import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-stati
 import {PhysicalCapacityStatisticsComponent} from './views/physical-capacity-statistics/physical-capacity-statistics.component';
 import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
 import {BlockSizeLatencyComponent} from './views/block-size-latency/block-size-latency.component';
+import { resolve } from 'dns';
+import { Title } from '@angular/platform-browser';
 
 
 const routes: Routes = [
@@ -19,30 +21,30 @@ const routes: Routes = [
     },
     children: [
       {path: 'performance/:id', component: PerformanceStatisticsComponent, data: {
-        breadcrumb: 'Global Statistics'
+        breadcrumb: ' ' 
       }},
       {path: 'performance', redirectTo: 'performance/1', pathMatch: 'full'},
       {path: 'physical-capacity/:id', component: PhysicalCapacityStatisticsComponent, data: {
-        breadcrumb: 'Physical Capacity'
+        breadcrumb: ' '
       }},
       {path: 'physical-capacity', redirectTo: 'physical-capacity/1', pathMatch: 'full'},
       {path: 'logical-capacity/:id', component: LogicalCapacityStatisticsComponent, data: {
-        breadcrumb: 'Logical Capacity'
+        breadcrumb: ' '
       }},
       {path: 'logical-capacity', redirectTo: 'logical-capacity/1', pathMatch: 'full'},
       {path: 'dp-sla/:id', component: DpSlaComponent, data: {
-        breadcrumb: 'SLA events'
+        breadcrumb: ' '
       }},
       {path: 'dp-sla', redirectTo: 'dp-sla/1', pathMatch: 'full'},
       {path: 'adapters/:id', component: AdaptersComponent, data: {
-        breadcrumb: 'Adapters'
+        breadcrumb: ' '
       }},
       {path: 'adapters', redirectTo: 'adapters/1', pathMatch: 'full'},
       {path: 'host-group-capacity/:id', component: HostGroupsCapacityComponent, data: {
-        breadcrumb: 'Host Group Capacity'
+        breadcrumb: ' '
       }},
       {path: 'host-group-capacity', redirectTo: 'host-group-capacity/1', pathMatch: 'full', data: {
-        breadcrumb: 'Host Group Capacity'
+        breadcrumb: ' '
       }}
     ]
   },
