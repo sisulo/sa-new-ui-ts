@@ -1,4 +1,3 @@
-
 <section class="content">
   <div class="row">
     <div class="col-md-4">
@@ -7,13 +6,37 @@
     </div>
     <div class="col-md-4">
 
-      <app-filter-list *ngIf="systems !== undefined" [valueList]="systems" [selectedValues]="selectedSystems" title="Systems"
+      <app-filter-list *ngIf="systems !== undefined" [valueList]="systems" [selectedValues]="selectedSystems"
+                       title="Systems"
                        (valueListChange)="onSystemChanged($event)"></app-filter-list>
     </div>
     <div class="col-md-4">
 
       <app-filter-list *ngIf="pools !== undefined" [valueList]="pools" [selectedValues]="selectedPools" title="Pools"
                        (valueListChange)="onPoolChanged($event)"></app-filter-list>
+    </div>
+    <div class="col-md-4">
+
+      <app-filter-list *ngIf="blockSizes !== undefined" [valueList]="blockSizes" [selectedValues]="selectedBlockSizes"
+                       title="Block size"
+                       (valueListChange)="onBlockSizeChange($event)"></app-filter-list>
+    </div>
+    <div class="col-md-4">
+
+      <app-filter-list *ngIf="latencies !== undefined" [valueList]="latencies" [selectedValues]="selectedLatencies"
+                       title="Latency"
+                       (valueListChange)="onLatenciesChanged($event)"></app-filter-list>
+    </div>
+    <div class="col-md-4">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">Quadrant</h3>
+        </div>
+        <div class="box-body">
+          <button class="btn btn-sm" *ngFor="let item of predefinedFilters;let i = index;"
+                  (click)="onSelectFilter(i)">{{filtersName[i]}}</button>
+        </div>
+      </div>
     </div>
   </div>
   <div class="row">
@@ -23,7 +46,8 @@
           <h3 class="box-title">Total Capacity History</h3>
         </div>
         <div class="box-body">
-          <app-bubble-chart [dates]="selectedDates" [poolIds]="selectedPools"></app-bubble-chart>
+          <app-bubble-chart [dates]="selectedDates" [poolIds]="selectedPools" [blockSizes]="selectedBlockSizes"
+                            [latencies]="selectedLatencies"></app-bubble-chart>
         </div>
       </div>
     </div>

@@ -64,6 +64,10 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
   dates: string[] = []; // TODO should be date
   @Input()
   operations: string[] = ['READ', 'WRITE']; // TODO should be OperationType
+  @Input()
+  blockSizes: number[];
+  @Input()
+  latencies: number[];
 
   dataToDisplay: Serie[];
 
@@ -94,7 +98,7 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (this.poolIds.length > 0 && this.dates.length > 0) {
-      this.metricService.getLatencyData(this.poolIds, this.dates, this.operations).subscribe(data => {
+      this.metricService.getLatencyData(this.poolIds, this.dates, this.operations, this.blockSizes, this.latencies).subscribe(data => {
           this.chartData.series = this.transformData(data);
           this.selectedSeries = this.chartData.series.map(serie => serie.name);
         }

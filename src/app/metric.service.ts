@@ -24,6 +24,8 @@ export interface LatencyFilter {
   poolIds: number[];
   dates: string[];
   operations: string[];
+  latencies: number[];
+  blockSizes: number[];
 }
 
 export interface OperationData {
@@ -152,8 +154,8 @@ export class MetricService {
     return this.http.get<GraphDataDto>(url);
   }
 
-  getLatencyData(poolIdsIn: number[], datesIn: string[], operationTypes: string[]) {
-    const request: LatencyFilter = {operations: operationTypes, dates: datesIn, poolIds: poolIdsIn};
+  getLatencyData(poolIdsIn: number[], datesIn: string[], operationTypes: string[], blockSizes: number[], latencies: number[]) {
+    const request: LatencyFilter = {operations: operationTypes, dates: datesIn, poolIds: poolIdsIn, latencies: latencies, blockSizes: blockSizes};
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/latency/data');
     const headersParams = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post<OperationData[]>(url, request, {headers: headersParams});
