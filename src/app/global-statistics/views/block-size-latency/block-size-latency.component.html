@@ -10,10 +10,25 @@
                        title="Systems"
                        (valueListChange)="onSystemChanged($event)"></app-filter-list>
     </div>
+
     <div class="col-md-4">
 
       <app-filter-list *ngIf="pools !== undefined" [valueList]="pools" [selectedValues]="selectedPools" title="Pools"
                        (valueListChange)="onPoolChanged($event)"></app-filter-list>
+    </div>
+    <div class="col-md-4">
+      <div class="box">
+        <div class="box-header with-border">
+          <h3 class="box-title">SLA Filters</h3>
+        </div>
+        <div class="box-body">
+          <div class="col-md-3" *ngFor="let item of predefinedFilters;let i = index;">
+            <button class="btn btn-sm {{filterColors[i]}}" [class.active]="isSelected(i)" [class.disabled]="!isSelected(i)"
+                    (click)="onSelectFilter(i)">{{filtersName[i]}}</button>
+
+          </div>
+        </div>
+      </div>
     </div>
     <div class="col-md-4">
 
@@ -27,17 +42,7 @@
                        title="Latency"
                        (valueListChange)="onLatenciesChanged($event)"></app-filter-list>
     </div>
-    <div class="col-md-4">
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Quadrant</h3>
-        </div>
-        <div class="box-body">
-          <button class="btn btn-sm" *ngFor="let item of predefinedFilters;let i = index;"
-                  (click)="onSelectFilter(i)">{{filtersName[i]}}</button>
-        </div>
-      </div>
-    </div>
+
   </div>
   <div class="row">
     <div class="col-12">

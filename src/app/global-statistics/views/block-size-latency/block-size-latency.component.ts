@@ -32,8 +32,10 @@ export class BlockSizeLatencyComponent implements OnInit {
   private selectedPools: number[] = [];
   private selectedLatencies: number[] = [];
   private selectedBlockSizes: number[] = [];
+  private selectedFilters: number[] = [];
   private predefinedFilters = [];
   private filtersName = [];
+  private filterColors = [];
 
   constructor(private readonly metricService: MetricService) {
     this.predefinedFilters[Quadrant.ONE] = {blockSize: [0.5, 1, 2, 4, 8, 16, 32], latency: [0.0625, 0.125, 0.25, 0.5, 1]};
@@ -41,10 +43,19 @@ export class BlockSizeLatencyComponent implements OnInit {
     this.predefinedFilters[Quadrant.THREE] = {blockSize: [64, 128, 256, 512, 1024], latency: [2, 4, 8, 16, 32, 64, 128, 256]};
     this.predefinedFilters[Quadrant.FOUR] = {blockSize: [0.5, 1, 2, 4, 8, 16, 32], latency: [2, 4, 8, 16, 32, 64, 128, 256]};
 
-    this.filtersName[Quadrant.ONE] = 'OK';
-    this.filtersName[Quadrant.TWO] = 'OK-BUT';
-    this.filtersName[Quadrant.THREE] = 'SLA-breac';
-    this.filtersName[Quadrant.FOUR] = 'SLA';
+    this.filtersName[Quadrant.ONE] = 'SLA-OK-CUS';
+    this.filtersName[Quadrant.TWO] = 'SLA-OK-SUP';
+    this.filtersName[Quadrant.THREE] = 'BREACH-CUS';
+    this.filtersName[Quadrant.FOUR] = 'BREACH-SUP';
+
+    this.filterColors[Quadrant.ONE] = 'btn-success';
+    this.filterColors[Quadrant.TWO] = 'btn-success';
+    this.filterColors[Quadrant.THREE] = 'btn-danger';
+    this.filterColors[Quadrant.FOUR] = 'btn-danger';
+    this.latencies = this.setNumberValues([0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256]);
+    this.blockSizes = this.setNumberValues([0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]);
+    this.selectedBlockSizes = this.blockSizes.map(value => value.id as number);
+    this.selectedLatencies = this.latencies.map(value => value.id as number);
   }
 
 
@@ -54,8 +65,6 @@ export class BlockSizeLatencyComponent implements OnInit {
         this.dates = FilterListDataUtils.sort(this.setDatesFilters(data), SortType.DESC);
         this.systems = FilterListDataUtils.sort(this.setSystemFilters(data), SortType.ASC);
         this.pools = FilterListDataUtils.sort(this.setPoolFilters(data), SortType.ASC);
-        this.latencies = this.setNumberValues([0.0625, 0.125, 0.25, 0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256]);
-        this.blockSizes = this.setNumberValues([0.5, 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024]);
       }
     );
   }
@@ -114,16 +123,32 @@ export class BlockSizeLatencyComponent implements OnInit {
   }
 
   onSelectFilter(quadrant: Quadrant) {
-    const predefinedFilter = this.predefinedFilters[quadrant];
-    console.log(predefinedFilter);
-    this.selectedBlockSizes = predefinedFilter.blockSize.map(value => value);
-    this.selectedLatencies = predefinedFilter.latency.map(value => value);
+    if (!this.selectedFilters.includes(quadrant)) {
+      this.selectedFilters.push(quadrant);
+    } else {
+      this.selectedFilters = this.selectedFilters.filter(value => value !== quadrant);
+    }
+    this.selectedLatencies = [];
+    this.selectedBlockSizes = [];
+    this.selectedFilters.forEach(
+      filter => {
+        this.selectedLatencies = [...this.selectedLatencies, ...this.predefinedFilters[filter].latency];
+        this.selectedBlockSizes = [...this.selectedBlockSizes, ...this.predefinedFilters[filter].blockSize];
+      }
+    );
 
+    console.log(this.selectedFilters);
+    console.log(this.selectedLatencies);
+    console.log(this.selectedBlockSizes);
   }
 
   onPoolChanged(selectedPools: number[]) {
     this.selectedPools = selectedPools.map(val => val) || [];
     this.selectedSystems = this.systems.filter(systems => this.isAnyPoolSelected(systems.id)).map(system => system.id as number);
+  }
+
+  isSelected(quadrant: Quadrant) {
+    return this.selectedFilters.includes(quadrant);
   }
 
   private isAnyPoolSelected(id: number | string) {
