@@ -309,7 +309,7 @@ export enum SasiSortType {
 
 export const slideInOutAnimation = [ // TODO reuse animation in all collapsed sasi-table group
   trigger('slideInOut', [
-    state('true', style({height: '0px', overflow: 'hidden', margin: '0'})),
+    state('true', style({height: '0px', overflow: 'hidden', margin: '0', display: 'none'})),
     state('false', style({height: '*', overflow: 'hidden', margin: '0'})),
     transition('1 => 0', animate('500ms ease-in')),
     transition('0 => 1', animate('500ms ease-out'))

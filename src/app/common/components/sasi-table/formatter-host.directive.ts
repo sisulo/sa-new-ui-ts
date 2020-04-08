@@ -1,7 +1,7 @@
 import {Directive, ViewContainerRef} from '@angular/core';
 
 @Directive({
-  selector: '[appFormatterHost]'
+  selector: '[appFormatterHost]',
 })
 export class FormatterHostDirective {
 

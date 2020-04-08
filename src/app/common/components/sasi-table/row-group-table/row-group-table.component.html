@@ -1,61 +1,115 @@
-<!--
-          SYSTEM PART
-        -->
-<div class="table-group-header">
-  <!--
-    SYSTEM LABEL
-  -->
-  <div class="table-group-label">
-    <div class="col-val col-control text-center">
-      <i class="fa expand-collapse"
-         [@iconRotate]="isCollapsed(data.groupRow.getCell('name').value)"
-         [ngClass]="'fa-angle-down'"
-         (click)="addCollapsed(data.groupRow.getCell('name').value)"
-         [tooltip]="isCollapsed(data.groupRow.getCell('name').value) ? 'Expand':'Collapse'"></i>
-
-    </div>
-    <div class="col-val col-control text-center" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
+<div class="sasi-table-item sasi-table-controls">
+  <i class="fa expand-collapse"
+     [@iconRotate]="isCollapsed(data.groupRow.getCell('name').value)"
+     [ngClass]="'fa-angle-down'"
+     (click)="addCollapsed(data.groupRow.getCell('name').value)"
+     [tooltip]="isCollapsed(data.groupRow.getCell('name').value) ? 'Expand':'Collapse'"></i>
+</div>
+<div class="sasi-table-item sasi-table-alerts" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">
       <span *ngFor="let alertSum of alertSummary">
         <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fa fa-exclamation-triangle"
                                            [ngClass]="alertSum.type"></i></span>
       </span>
-    </div>
-    <div class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)"
-         (mouseout)="setHighlightedColumn(-1)"
-         (mouseover)="setHighlightedColumn(0)"
-         [class.highlightColumn]="isColumnHighlighted(0)"
-         [class.alt-border]="options.columns[0].altBorder"
-    >
-      <app-cell-table
-        [componentFormatter]="options.grIndexComponentFormatter" [data]="data.groupRow.getCell('name').rawData"
-        [label]="''"
-        [options]="options"
+</div>
+<div class="sasi-table-item sasi-table-data"
+     (mouseout)="setHighlightedColumn(-1)"
+     (mouseover)="setHighlightedColumn(0)"
+     [class.highlightColumn]="isColumnHighlighted(0)"
+     [class.alt-border]="options.columns[0].altBorder"
+>
+  <div class="sasi-table-cell">
 
-      ></app-cell-table>
-    </div>
-    <div class="col-val col aggregated-data" *ngFor="let column of options.getDataColumns(); let colIndex=index"
-         [style.width.%]="options.getColumnWidth(column.index)"
-         (mouseout)="setHighlightedColumn(-1)"
-         (mouseover)="setHighlightedColumn(colIndex+1)"
-         [class.highlightColumn]="isColumnHighlighted(colIndex+1)"
-         [class.text-right]="options.columnAlign === 'right'"
-         [class.text-center]="options.columnAlign !== 'right'"
-         [class.alt-border]="column.altBorder"
-    >
-      <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.aggComponent"
-                      [data]="getAggregatedValue(column.index)" [column]="column"
-                      [label]="column.label" [options]="options"
-      ></app-cell-table>
-    </div>
-  </div>
-  <!---->
-  <!--POOL ROWS-->
-  <!---->
-  <div class="groupped-data" [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">
-    <app-row-table *ngFor="let row of data.rows"
-                   [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"
-                   [groupName]="data.groupRow.getCell('name').value"
-                   (selectEmit)="onSelectRow($event)"
-    ></app-row-table>
+    <app-cell-table
+      [componentFormatter]="options.grIndexComponentFormatter" [data]="data.groupRow.getCell('name').rawData"
+      [label]="''"
+      [options]="options"
+    ></app-cell-table>
   </div>
 </div>
+<div *ngFor="let column of options.getDataColumns(); let colIndex=index"
+     [class.alt-border]="column.altBorder"
+     class="sasi-table-item sasi-table-data">
+  <div class="sasi-table-cell">
+    <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.aggComponent"
+                    [data]="getAggregatedValue(column.index)" [column]="column"
+                    [label]="column.label" [options]="options"
+                    (mouseout)="setHighlightedColumn(-1)"
+                    (mouseover)="setHighlightedColumn(colIndex+1)"
+                    [class.highlightColumn]="isColumnHighlighted(colIndex+1)"
+                    [class.text-right]="options.columnAlign === 'right'"
+                    [class.text-center]="options.columnAlign !== 'right'"
+
+
+    ></app-cell-table>
+  </div>
+  <div *ngIf="aggregatedValues[column.index] == undefined"></div>
+</div>
+<!--<div class="groupped-data" [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">-->
+<app-row-table *ngFor="let row of data.rows"
+               [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"
+               [groupName]="data.groupRow.getCell('name').value"
+               (selectEmit)="onSelectRow($event)"
+               [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)"
+></app-row-table>
+<!--</div>-->
+<!--&lt;!&ndash;-->
+<!--          SYSTEM PART-->
+<!--        &ndash;&gt;-->
+<!--<div class="table-group-header">-->
+<!--  &lt;!&ndash;-->
+<!--    SYSTEM LABEL-->
+<!--  &ndash;&gt;-->
+<!--  <div class="table-group-label">-->
+<!--    <div class="col-val col-control text-center">-->
+<!--      <i class="fa expand-collapse"-->
+<!--         [@iconRotate]="isCollapsed(data.groupRow.getCell('name').value)"-->
+<!--         [ngClass]="'fa-angle-down'"-->
+<!--         (click)="addCollapsed(data.groupRow.getCell('name').value)"-->
+<!--         [tooltip]="isCollapsed(data.groupRow.getCell('name').value) ? 'Expand':'Collapse'"></i>-->
+
+<!--    </div>-->
+<!--    <div class="col-val col-control text-center" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">-->
+<!--      <span *ngFor="let alertSum of alertSummary">-->
+<!--        <span [ngClass]="alertSum.type"><i tooltip="Warning for one or more metrics" class="fa fa-exclamation-triangle"-->
+<!--                                           [ngClass]="alertSum.type"></i></span>-->
+<!--      </span>-->
+<!--    </div>-->
+<!--    <div class="col-val col-label" [style.width.%]="options.getColumnWidth(options.columns[0].index)"-->
+<!--         (mouseout)="setHighlightedColumn(-1)"-->
+<!--         (mouseover)="setHighlightedColumn(0)"-->
+<!--         [class.highlightColumn]="isColumnHighlighted(0)"-->
+<!--         [class.alt-border]="options.columns[0].altBorder"-->
+<!--    >-->
+<!--      <app-cell-table-->
+<!--        [componentFormatter]="options.grIndexComponentFormatter" [data]="data.groupRow.getCell('name').rawData"-->
+<!--        [label]="''"-->
+<!--        [options]="options"-->
+
+<!--      ></app-cell-table>-->
+<!--    </div>-->
+<!--    <div class="col-val col aggregated-data" *ngFor="let column of options.getDataColumns(); let colIndex=index"-->
+<!--         [style.width.%]="options.getColumnWidth(column.index)"-->
+<!--         (mouseout)="setHighlightedColumn(-1)"-->
+<!--         (mouseover)="setHighlightedColumn(colIndex+1)"-->
+<!--         [class.highlightColumn]="isColumnHighlighted(colIndex+1)"-->
+<!--         [class.text-right]="options.columnAlign === 'right'"-->
+<!--         [class.text-center]="options.columnAlign !== 'right'"-->
+<!--         [class.alt-border]="column.altBorder"-->
+<!--    >-->
+<!--      <app-cell-table *ngIf="aggregatedValues[column.index] !== undefined" [componentFormatter]="column.aggComponent"-->
+<!--                      [data]="getAggregatedValue(column.index)" [column]="column"-->
+<!--                      [label]="column.label" [options]="options"-->
+<!--      ></app-cell-table>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  &lt;!&ndash;&ndash;&gt;-->
+<!--  &lt;!&ndash;POOL ROWS&ndash;&gt;-->
+<!--  &lt;!&ndash;&ndash;&gt;-->
+<!--  <div class="groupped-data" [@slideInOut]="isCollapsed(data.groupRow.getCell('name').value)">-->
+<!--    <app-row-table *ngFor="let row of data.rows"-->
+<!--                   [class.striped-row]="options.isDataGrouped" [data]="row" [options]="options"-->
+<!--                   [groupName]="data.groupRow.getCell('name').value"-->
+<!--                   (selectEmit)="onSelectRow($event)"-->
+<!--    ></app-row-table>-->
+<!--  </div>-->
+<!--</div>-->
