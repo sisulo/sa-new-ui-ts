@@ -1,69 +1,15 @@
+:host /deep/ .sasi-table-item {
+  display: flex;
+  align-items: stretch;
+  /*justify-content: center;*/
+}
+:host /deep/ .sasi-table-cell {
+  align-self: center;
+}
 /**
   TODO this is duplicated in row-group-table. Each grid item should be as separete component and content should be dynamically rendered
  */
-.sasi-table-item.alt-border {
-  border-right: 3px double darkgrey;
+.highlightColumn {
+  background-color: #b4d1ee !important;
+  color: #3A738C;
 }
-
-/*.sasi-table-controls i,*/
-/*.sasi-table-alerts i{*/
-/*  font-size: 1.1rem;*/
-/*  !*display: flex;*!*/
-/*  align-self: center;*/
-/*}*/
-/*!*** Layout table ***!*/
-/*.col-control {*/
-/*  width: 3.5%;*/
-/*  display: inline-block;*/
-/*  vertical-align: middle;*/
-/*  text-align: center;*/
-/*}*/
-
-/*.col {*/
-/*  !*width: 13.33%;*!*/
-/*  display: inline-block;*/
-/*  vertical-align: middle;*/
-/*}*/
-
-/*.col-control i {*/
-/*  font-size: 11px;*/
-/*  padding: 3px;*/
-/*  cursor: pointer;*/
-/*}*/
-
-/*.col-control:after {*/
-/*  content: "";*/
-/*  font-size: 11px;*/
-/*  padding: 3px;*/
-/*}*/
-
-/*!**** Table data ****!*/
-/*.table-data {*/
-/*  width: 100%;*/
-/*}*/
-
-/*.table-data > div {*/
-/*  !*text-align: center;*!*/
-/*  border-right: 1px #EAEAEA solid;*/
-/*  margin: auto;*/
-/*}*/
-
-/*.selectedRow {*/
-/*  background-color: #BEECD1;*/
-/*  color: #3A738C;*/
-/*}*/
-
-/*.table-data .highlightColumn {*/
-/*  background-color: #b4d1ee !important;*/
-/*  color: #3A738C;*/
-/*}*/
-
-/*.highlight-row:hover {*/
-/*  background-color: #b4d1ee !important;*/
-/*  color: #3A738C;*/
-/*}*/
-
-/*.table-data div.alt-border {*/
-/*  !*border-left: 1px solid black;*!*/
-/*  border-right: 3px double darkgrey;*/
-/*}*/

@@ -1,26 +1,16 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  DoCheck,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output
-} from '@angular/core';
-import {SasiRow, SasiTableOptions} from '../sasi-table.component';
+import {ChangeDetectionStrategy, Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {SasiRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
 import {LocalStorageService} from 'ngx-store';
 import {SelectedRow} from './selected-row';
 import {OnSelectService} from '../on-select.service';
 import {Subscription} from 'rxjs';
-import {HighlightColumnService} from '../highlight-column.service';
 
 @Component({
   selector: 'app-row-table',
   templateUrl: './row-table.component.html',
   styleUrls: ['./row-table.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: slideInOutAnimation
 })
 export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
 
@@ -29,16 +19,13 @@ export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
   @Input() groupName: string;
   @Input() columnHighlightEnable = false;
   @Input() options: SasiTableOptions;
+  @Input() isCollapsed = false;
   @Output() selectEmit = new EventEmitter<Array<SelectedRow>>();
   selectedRows: Array<SelectedRow>;
   subscription: Subscription;
 
-  highlightedColumn = -1;
-
   constructor(private localStorageService: LocalStorageService,
-              private onSelectService: OnSelectService,
-              private highlightColumnService: HighlightColumnService,
-              private cd: ChangeDetectorRef
+              private onSelectService: OnSelectService
   ) {
   }
 
@@ -88,4 +75,6 @@ export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
     }
     return this.selectedRows.findIndex(value => value.rowName === name && value.groupName === this.groupName);
   }
+
+
 }

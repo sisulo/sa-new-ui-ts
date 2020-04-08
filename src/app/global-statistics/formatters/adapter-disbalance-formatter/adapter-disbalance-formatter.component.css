@@ -3,6 +3,11 @@
   color: white;
 }
 
+.formatter-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+}
+
 div.progress {
   /*width: 90%;*/
   /*float:left;*/
@@ -10,6 +15,8 @@ div.progress {
   border: 1px solid darkgrey;
   margin: 3px auto 3px auto;
   height: 20px;
+  min-width: 130px;
+  flex-grow: 2;
 }
 
 div.progress-bar {
@@ -28,4 +35,5 @@ div.progress-bar {
 
 .component-name, .absolute-value-badge {
   margin: 2px 0 3px 0;
+  flex-grow: 1;
 }

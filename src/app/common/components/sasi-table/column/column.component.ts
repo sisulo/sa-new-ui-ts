@@ -1,28 +1,32 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import {SasiColumn, SasiRow, SasiTableOptions} from '../sasi-table.component';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit, OnDestroy} from '@angular/core';
+import {SasiColumn, SasiRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
 import {HighlightColumnService} from '../highlight-column.service';
 
 @Component({
   selector: 'app-column',
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: slideInOutAnimation
 })
-export class ColumnComponent implements OnInit {
+export class ColumnComponent implements OnInit, OnDestroy {
 
   @Input() options: SasiTableOptions;
   @Input() column: SasiColumn;
   @Input() colIndex = -1;
   @Input() data: SasiRow;
+  @Input() isCollapsed = false;
 
   highlightedColumn = -1;
+
+  highLightSubscription;
 
   constructor(private highlightColumnService: HighlightColumnService,
               private cd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    this.highlightColumnService.highlightColumn$.subscribe(
+    this.highLightSubscription = this.highlightColumnService.highlightColumn$.subscribe(
       columnIndex => {
 
         if (this.highlightedColumn === this.colIndex || columnIndex === this.colIndex) {
@@ -34,6 +38,9 @@ export class ColumnComponent implements OnInit {
     );
   }
 
+  ngOnDestroy(): void {
+    this.highLightSubscription.unsubscribe();
+  }
 
   isColumnHighlighted(column: number) {
     if (!this.options.highlightColumn) {

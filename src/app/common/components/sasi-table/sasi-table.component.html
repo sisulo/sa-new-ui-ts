@@ -1,4 +1,5 @@
-<div class="sasi-table-container">
+<div class="sasi-table-container"
+     [style]="style">
   <div class="sasi-table-header">
     <div class="sasi-table-item sasi-table-controls">
       <i *ngIf="options.isDataGrouped" class="fa expand-collapse"
@@ -19,24 +20,32 @@
     <div [tooltip]="getColumnTooltipText(columnOption.index)"
          *ngFor="let columnOption of options.columns"
          class="sasi-table-item sasi-table-data">
-      <span (click)="setSort(columnOption, false)" class="link sasi-header-label" >{{getColumnLabel(columnOption.index)}}</span>
-      <span class="sasi-header-icon">
-        <i [ngClass]="getSortIconClass(columnOption.index, false)"
-           class="text-muted sorting sort-icon-right"></i>
+      <span>
+        <span (click)="setSort(columnOption, false)"
+              class="link sasi-header-label">{{getColumnLabel(columnOption.index)}}</span>
+        <span class="sasi-header-icon">
+          <i [ngClass]="getSortIconClass(columnOption.index, false)"
+             class="text-muted sorting sort-icon-right"></i>
+        </span>
       </span>
       <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
-      <span *ngIf="columnOption.altSortEnable === true" (click)="setSort(columnOption, true)" class="link sasi-header-icon"><i
-        class="fa fa-angle-up text-red sort-icon-left"></i>
-          <span class="peak-label">Peak</span> <i
-          class='sorting sort-icon-right' [ngClass]="getSortIconClass(columnOption.index, true)"
-        ></i></span>
+      <span *ngIf="columnOption.altSortEnable === true"
+            (click)="setSort(columnOption, true)"
+            class="link sasi-header-icon">
+        <i class="fa fa-angle-up text-red sort-icon-left"></i>
+        <span class="peak-label">Peak</span>
+        <i class='sorting sort-icon-right'
+           [ngClass]="getSortIconClass(columnOption.index, true)"></i>
+      </span>
     </div>
   </div>
   <app-row-dynamic-table *ngFor="let row of data"
                          [class.highlight-row]="options.highlightRow && !options.isDataGrouped"
                          [class.striped-row]="!options.isDataGrouped"
+                         [class.not-data-grouped]="!options.isDataGrouped"
                          [componentFormatter]="options.rowComponentFormatter" [data]="row"
-                         [options]="options"></app-row-dynamic-table>
+                         [options]="options">
+  </app-row-dynamic-table>
 </div>
 
 <!--<div class="capacity-table sticky col-md-12">-->

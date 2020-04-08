@@ -17,18 +17,13 @@
 }
 
 /* TODO duplicated css definitions in all statistics component*/
-:host /deep/ .groupped-data .metric-value,
-:host /deep/ .aggregated-data .metric-value {
+:host /deep/ .metric-value,
+:host /deep/ .metric-value {
   font-size: 1.1rem;
 }
 
-:host /deep/ .aggregated-data .metric-value {
-  font-style: italic;
-  font-weight: 600;
-}
-
-:host /deep/ .groupped-data .metric-unit,
-:host /deep/ .aggregated-data .metric-unit {
+:host /deep/ .metric-unit,
+:host /deep/ .metric-unit {
   font-size: 8px;
   margin-left: 3px;
 }
