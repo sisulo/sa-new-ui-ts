@@ -5,13 +5,22 @@ import {DashboardComponent} from './components/dashboard/dashboard.component';
 
 const routes: Routes = [
 
-  {path: 'dashboard', component: DashboardComponent},
+  {
+    path: 'dashboard', component: DashboardComponent,
+    data: {
+      breadcrumb: 'Dashboard'
+    },
+  },
   {path: 'iframe/:url', component: IframeComponent},
   {
     path: 'global-statistics',
     loadChildren: './global-statistics/global-statistics.module#GlobalStatisticsModule',
   },
-  {path: '', component: DashboardComponent},
+  {
+    path: '', component: DashboardComponent, data: {
+      breadcrumb: 'Dashboard'
+    }
+  },
 ];
 
 @NgModule({

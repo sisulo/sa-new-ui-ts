@@ -10,23 +10,98 @@ import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-gro
 import {BlockSizeLatencyComponent} from './views/block-size-latency/block-size-latency.component';
 
 const routes: Routes = [
-  {path: 'global-statistics/latency', component: BlockSizeLatencyComponent},
+  {
+    path: 'global-statistics/latency',
+    component: BlockSizeLatencyComponent,
+    data: {
+      breadcrumb: 'Workload Structure'
+    }
+  },
   {
     path: 'global-statistics',
-    component: GlobalStatisticsComponent,
+    component: GlobalStatisticsComponent, data: {
+      breadcrumb: 'Global Statistics',
+      url: '/'
+    },
     children: [
-      {path: 'performance/:id', component: PerformanceStatisticsComponent},
-      {path: 'performance', redirectTo: 'performance/-1', pathMatch: 'full'},
-      {path: 'physical-capacity/:id', component: PhysicalCapacityStatisticsComponent},
-      {path: 'physical-capacity', redirectTo: 'physical-capacity/-1', pathMatch: 'full'},
-      {path: 'logical-capacity/:id', component: LogicalCapacityStatisticsComponent},
-      {path: 'logical-capacity', redirectTo: 'logical-capacity/-1', pathMatch: 'full'},
-      {path: 'dp-sla/:id', component: DpSlaComponent},
-      {path: 'dp-sla', redirectTo: 'dp-sla/-1', pathMatch: 'full'},
-      {path: 'adapters/:id', component: AdaptersComponent},
-      {path: 'adapters', redirectTo: 'adapters/-1', pathMatch: 'full'},
-      {path: 'host-group-capacity/:id', component: HostGroupsCapacityComponent},
-      {path: 'host-group-capacity', redirectTo: 'host-group-capacity/-1', pathMatch: 'full'}
+      {
+        path: 'performance/:id',
+        component: PerformanceStatisticsComponent,
+        data: {
+          breadcrumb: 'Performance Statistics'
+        }
+      },
+      {
+        path: 'performance',
+        redirectTo: 'performance/-1',
+        pathMatch: 'full'
+      },
+      {
+        path: 'physical-capacity/:id',
+        component: PhysicalCapacityStatisticsComponent,
+        data: {
+          breadcrumb: 'Physical Capacity'
+        }
+      },
+      {
+        path: 'physical-capacity',
+        redirectTo: 'physical-capacity/-1',
+        pathMatch: 'full'
+      },
+      {
+        path: 'logical-capacity/:id',
+        component: LogicalCapacityStatisticsComponent,
+        data: {
+          breadcrumb: 'Logical Capacity'
+        }
+      },
+      {
+        path: 'logical-capacity',
+        redirectTo: 'logical-capacity/-1',
+        pathMatch: 'full'
+      },
+
+      {
+        path: 'dp-sla/:id',
+        component: DpSlaComponent,
+        data: {
+          breadcrumb: 'SLA Events'
+        }
+      },
+      {
+        path: 'dp-sla',
+        redirectTo: 'dp-sla/1',
+        pathMatch: 'full'
+      },
+
+      {
+        path: 'adapters/:id',
+        component: AdaptersComponent,
+        data: {
+          breadcrumb: 'CHA & Port Imbalances '
+        }
+      },
+      {
+        path: 'adapters',
+        redirectTo: 'adapters/-1',
+        pathMatch: 'full'
+      },
+
+      {
+        path: 'host-group-capacity/:id',
+        component: HostGroupsCapacityComponent,
+        data: {
+          breadcrumb: 'VMWare Capacity'
+        }
+      },
+      {
+        path: 'host-group-capacity',
+        redirectTo: 'host-group-capacity/-1',
+        pathMatch: 'full',
+        data: {
+          breadcrumb: ' '
+        }
+      }
     ]
   },
 ];

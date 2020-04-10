@@ -21,6 +21,7 @@ import {CapacityHistoryChartComponent} from './components/dashboard/charts/capac
 import {BarChartComponent} from './components/dashboard/charts/bar-chart/bar-chart.component';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {HttpLoading} from './http-loading.interceptor';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 export const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: HttpLoading, multi: true},
@@ -37,6 +38,7 @@ export const httpInterceptorProviders = [
     HistoryChartComponent,
     CapacityHistoryChartComponent,
     BarChartComponent,
+    BreadcrumbComponent,
   ],
   imports: [
     GlobalStatisticsModule,
@@ -49,7 +51,7 @@ export const httpInterceptorProviders = [
     SaCommonModule,
     NgApexchartsModule,
     NgxSpinnerModule,
-
+    
   ],
   providers: [SystemPool2SasiGroupTablePipe, httpInterceptorProviders],
   bootstrap: [AppComponent]

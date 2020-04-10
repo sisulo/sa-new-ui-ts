@@ -50,6 +50,7 @@ export interface ThreeDimensionValue {
 export class MetricService {
 
   infrastructure: Datacenter[];
+  dataCenterObservable = null;
   currentDate: Date = new Date();
 
   constructor(private http: HttpClient) {
@@ -62,12 +63,15 @@ export class MetricService {
   }
 
   getDatacenters(): Observable<DatacenterDto> {
+    if (this.dataCenterObservable !== null) {
+      return this.dataCenterObservable;
+    }
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters');
-    const dtoObservable = this.http.get<DatacenterDto>(url);
-    dtoObservable.subscribe(
+    this.dataCenterObservable = this.http.get<DatacenterDto>(url);
+    this.dataCenterObservable.subscribe(
       dto => this.infrastructure = dto.datacenters
     );
-    return dtoObservable;
+    return this.dataCenterObservable;
   }
 
   public getSystemName(datacenterId: number, systemId: number): string {

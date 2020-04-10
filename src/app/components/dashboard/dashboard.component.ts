@@ -9,6 +9,7 @@ import {Region} from '../../common/models/dtos/region.enum';
 import {StorageConvertPipe} from '../../common/storage-convert.pipe';
 import {PeriodService} from '../../period.service';
 
+
 declare var jquery: any;
 declare var $: any;
 
@@ -18,7 +19,6 @@ declare var $: any;
   styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent implements OnInit {
-
   metricLabels = {};
   alertLabels = {};
   metrics: RegionMetricDto[] = [];
