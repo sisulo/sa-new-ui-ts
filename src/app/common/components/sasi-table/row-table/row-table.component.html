@@ -1,35 +1,23 @@
-<div class="table-data " [class.selectedRow]="isSelectedRow(data.getCell('name').value)"
-     [class.highlight-row]="options.highlightRow">
-  <div class="col-val col-control" *ngIf="options.selectableRows">
-    <i
-      [ngClass]="isSelectedRow(data.getCell('name').value) ? 'fa-check-square' : 'fa-square'" class="far fa-fw"
-      (click)="selectRow(data.getCell('name').value)"></i>
-  </div>
-  <div *ngIf="options.colControlFormatter != null" class="col-val col-control">
-    <app-cell-table [componentFormatter]="options.colControlFormatter" [data]="data" [label]="''"
-                    [options]="options"
-    ></app-cell-table>
-  </div>
-  <!--  Create new element for following div, store colIndex in the new component, and subscribe to highlight column service and call cd.markCheck only when columns are same,
-  or previously my column was highlighted, then i have to remove the colors-->
-  <app-column
-    *ngFor="let column of options.columns; let colIndex=index"
-    [data]="data"
-    [options]="options"
-    [column]="column"
-    [colIndex]="colIndex">
-  </app-column>
-  <!--  <div [ngClass]="'col-val col'" [style.width.%]="options.getColumnWidth(column.index)"-->
-  <!--       *ngFor="let column of options.columns; let colIndex = index"-->
-  <!--       (mouseout)="setHighlightedColumn(-1)"-->
-  <!--       (mouseover)="setHighlightedColumn(colIndex)"-->
-  <!--       [class.highlightColumn]="isColumnHighlighted(colIndex)"-->
-  <!--       [class.text-right]="colIndex > 0 && options.columnAlign === 'right'"-->
-  <!--       [class.text-center]="colIndex <= 0 || options.columnAlign !== 'right'"-->
-  <!--       [class.alt-border]="column.altBorder"-->
-  <!--  >-->
-  <!--    <app-cell-table [componentFormatter]="column.component" [data]="data.getCellRawData(column)" [label]="column.label"-->
-  <!--                    [rowData]="data"-->
-  <!--                    [options]="options" [column]="column"></app-cell-table>-->
-  <!--  </div>-->
+<div class="sasi-table-item sasi-table-controls"
+     *ngIf="options.selectableRows"
+     [@slideInOut]="isCollapsed">
+  <i
+    [ngClass]="isSelectedRow(data.getCell('name').value) ? 'fa-check-square' : 'fa-square'" class="far fa-fw"
+    (click)="selectRow(data.getCell('name').value)"></i>
 </div>
+<div *ngIf="options.colControlFormatter != null"
+     class="sasi-table-item sasi-table-alerts"
+     [@slideInOut]="isCollapsed">
+  <app-cell-table [componentFormatter]="options.colControlFormatter" [data]="data" [label]="''"
+                  [options]="options"
+  ></app-cell-table>
+</div>
+
+<app-column *ngFor="let column of options.columns; let colIndex=index"
+            [data]="data"
+            [options]="options"
+            [column]="column"
+            [colIndex]="colIndex"
+            [isCollapsed]="isCollapsed"
+>
+</app-column>

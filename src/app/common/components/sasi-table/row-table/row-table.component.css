@@ -1,56 +1,15 @@
-/*** Layout table ***/
-.col-control {
-  width: 3.5%;
-  display: inline-block;
-  vertical-align: middle;
-  text-align: center;
+:host /deep/ .sasi-table-item {
+  display: flex;
+  align-items: stretch;
+  /*justify-content: center;*/
 }
-
-.col {
-  /*width: 13.33%;*/
-  display: inline-block;
-  vertical-align: middle;
+:host /deep/ .sasi-table-cell {
+  align-self: center;
 }
-
-.col-control i {
-  font-size: 11px;
-  padding: 3px;
-  cursor: pointer;
-}
-
-.col-control:after {
-  content: "";
-  font-size: 11px;
-  padding: 3px;
-}
-
-/**** Table data ****/
-.table-data {
-  width: 100%;
-}
-
-.table-data > div {
-  /*text-align: center;*/
-  border-right: 1px #EAEAEA solid;
-  margin: auto;
-}
-
-.selectedRow {
-  background-color: #BEECD1;
-  color: #3A738C;
-}
-
-.table-data .highlightColumn {
+/**
+  TODO this is duplicated in row-group-table. Each grid item should be as separete component and content should be dynamically rendered
+ */
+.highlightColumn {
   background-color: #b4d1ee !important;
   color: #3A738C;
-}
-
-.highlight-row:hover {
-  background-color: #b4d1ee !important;
-  color: #3A738C;
-}
-
-.table-data div.alt-border {
-  /*border-left: 1px solid black;*/
-  border-right: 3px double darkgrey;
 }

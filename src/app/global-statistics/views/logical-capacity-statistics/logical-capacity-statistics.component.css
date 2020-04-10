@@ -1,9 +1,3 @@
-:host /deep/ .col-val {
-  /*padding-top: 1px;*/
-  /*padding-bottom: 1px;*/
-  padding-right: 5px;
-}
-
 .alert-red {
   color: #900020;
 }
@@ -12,22 +6,11 @@
   color: #db8b0b;
 }
 
-.col {
-  width: 8.88%;
-}
-
-:host /deep/ .groupped-data .metric-value,
-:host /deep/ .aggregated-data .metric-value {
+:host /deep/ .metric-value {
   font-size: 1.1rem;
 }
 
-:host /deep/ .aggregated-data .metric-value {
-  font-style: italic;
-  font-weight: 600;
-}
-
-:host /deep/ .groupped-data .metric-unit,
-:host /deep/ .aggregated-data .metric-unit {
+:host /deep/ .metric-unit {
   font-size: 8px;
   margin-left: 3px;
 }

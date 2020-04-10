@@ -7,6 +7,7 @@ import {Sort} from './sort';
 import {SelectedRow} from './row-table/selected-row';
 import {OnSelectService} from './on-select.service';
 import {SystemMetricType} from '../../models/metrics/system-metric-type.enum';
+import {DomSanitizer, SafeStyle} from '@angular/platform-browser';
 
 /**
  * SasiColumn is metadata object for columns.
@@ -279,6 +280,9 @@ export class SasiTableOptions {
   public sortService: Sort;
   public aggregateValuesService: AggregateValueService;
   public columnAlign: string;
+  public alertColumnSize: string;
+  public controlColumnSize: string;
+  public nameColumnSize: string;
 
   getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
     const columnOption = this.columns.find(column => column.index === name);
@@ -309,18 +313,18 @@ export enum SasiSortType {
 
 export const slideInOutAnimation = [ // TODO reuse animation in all collapsed sasi-table group
   trigger('slideInOut', [
-    state('true', style({height: '0px', overflow: 'hidden', margin: '0'})),
-    state('false', style({height: '*', overflow: 'hidden', margin: '0'})),
-    transition('1 => 0', animate('500ms ease-in')),
-    transition('0 => 1', animate('500ms ease-out'))
+    state('true', style({display: 'none'})),
+    state('false', style({display: '*'})),
+    transition('1 => 0', animate('200ms ease-in')),
+    transition('0 => 1', animate('200ms ease-out'))
   ]),
   trigger('iconRotate', [
     state('false', style({transform: 'rotate(0deg)'})),
     state('true', style({transform: 'rotate(90deg)'})),
-    transition('1 => 0', animate('500ms')),
+    transition('1 => 0', animate('200ms')),
     transition(':enter', animate('0ms')),
     transition(':leave', animate('0ms')),
-    transition('0 => 1', animate('500ms'))
+    transition('0 => 1', animate('200ms'))
   ])
 ];
 
@@ -361,6 +365,9 @@ export class SasiTableComponent implements OnInit {
     sortService: null,
     storageNamePrefix: 'sasi_default',
     columnAlign: 'center',
+    controlColumnSize: '30px',
+    alertColumnSize: '40px',
+    nameColumnSize: '130px',
     getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
       const columnOption = this.columns.find(column => column.index === name);
       if (columnOption !== undefined && columnOption.columnWidth !== null) {
@@ -383,9 +390,11 @@ export class SasiTableComponent implements OnInit {
   };
 
   altSort = false;
+  style: SafeStyle;
 
   constructor(private localStorageService: LocalStorageService,
-              private onSelectService: OnSelectService) {
+              private onSelectService: OnSelectService,
+              private domSanitizer: DomSanitizer) {
 
   }
 
@@ -411,6 +420,25 @@ export class SasiTableComponent implements OnInit {
     } else {
       this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
     }
+    this.style = this.domSanitizer.bypassSecurityTrustStyle(
+      'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
+      ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');
+  }
+
+  getGridColumnCount() {
+    return this.options.columns.length - 1;
+  }
+
+  getNameColumnSize() {
+    return this.options.nameColumnSize;
+  }
+
+  getColControlSize() {
+    return this.options.controlColumnSize;
+  }
+
+  getAlertColumnSize() {
+    return this.options.isDataGrouped && this.options.cellDecoratorRules.length > 0 ? this.options.alertColumnSize : '';
   }
 
   getColumnLabel(type: string) {
@@ -543,4 +571,5 @@ export class SasiTableComponent implements OnInit {
       this.onSelectService.announceSelectAll(false);
     }
   }
+
 }

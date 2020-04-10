@@ -6,7 +6,7 @@ import {SasiGroupRow} from './sasi-table.component';
 
 @Component({
   selector: 'app-row-dynamic-table',
-  template: '<ng-template appFormatterHost></ng-template>'
+  template: '<ng-template appFormatterHost></ng-template>',
 })
 export class RowDynamicComponent implements OnInit, OnDestroy, OnChanges {
   @Input() componentFormatter;
