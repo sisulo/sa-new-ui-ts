@@ -42,13 +42,19 @@ app-row-dynamic-table,
   font-weight: bolder;
   color: white;
   display: flex;
-  flex-flow: column;
+  /*flex-flow: column;*/
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   align-content: center;
+  text-align: center;
 }
 .sasi-table-header > .sasi-table-item.sasi-table-controls {
   flex-flow: row;
+}
+
+.sasi-table-header > .sasi-table-header-group {
+  border-bottom: 1px #EAEAEA solid;
 }
 :host /deep/ app-row-dynamic-table.striped-row:nth-of-type(odd) .sasi-table-item,
 :host /deep/ app-row-table.striped-row:nth-of-type(odd) .sasi-table-item {

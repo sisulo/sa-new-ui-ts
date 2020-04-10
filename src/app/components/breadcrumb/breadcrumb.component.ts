@@ -37,7 +37,6 @@ export class BreadcrumbComponent implements OnInit {
 
       this.metricService.getDatacenters().subscribe(
         dto => {
-          console.log(dto);
           this.dataCenters = dto.datacenters;
           this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
         }

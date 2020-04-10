@@ -21,6 +21,8 @@ export class SasiColumnBuilder {
    * @var label in header
    */
   private label: string;
+
+  private shortLabel: string;
   /**
    * @var data formatter
    */
@@ -125,12 +127,18 @@ export class SasiColumnBuilder {
       this.altBorder,
       this.altBorderLeft,
       this.columnWidth,
-      this.columnTooltipText
+      this.columnTooltipText,
+      this.shortLabel === undefined ? this.label : this.shortLabel
     );
   }
 
   withInfinity(isInfinity: boolean) {
     this.infinity = isInfinity;
+    return this;
+  }
+
+  withShortLabel(shortLabel: string) {
+    this.shortLabel = shortLabel;
     return this;
   }
 }
@@ -144,6 +152,8 @@ export class SasiColumn {
    * @var label in header
    */
   label: string;
+
+  shortLabel: string;
   /**
    * @var data formatter
    */
@@ -179,7 +189,8 @@ export class SasiColumn {
     altBorder: boolean,
     altBorderLeft: boolean,
     columnWidth: string,
-    columnTooltipText: string
+    columnTooltipText: string,
+    shortLabel: string
   ) {
     this.index = index;
     this.label = label;
@@ -194,6 +205,7 @@ export class SasiColumn {
     this.altBorderLeft = altBorderLeft;
     this.columnWidth = columnWidth;
     this.columnTooltipText = columnTooltipText;
+    this.shortLabel = shortLabel;
   }
 }
 
@@ -255,6 +267,11 @@ export class SasiGroupRow {
   public aggregatedValues: AggregatedValues;
 }
 
+export interface HeaderGroup {
+  name: string;
+  columns: SystemMetricType[] | string[];
+}
+
 /**
  * SasiTableOptions is class holding options to be set in table, and define behavior, features etc. for sasi table.
  */
@@ -283,6 +300,7 @@ export class SasiTableOptions {
   public alertColumnSize: string;
   public controlColumnSize: string;
   public nameColumnSize: string;
+  public headerGroups: HeaderGroup[];
 
   getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
     const columnOption = this.columns.find(column => column.index === name);
@@ -368,6 +386,7 @@ export class SasiTableComponent implements OnInit {
     controlColumnSize: '30px',
     alertColumnSize: '40px',
     nameColumnSize: '130px',
+    headerGroups: [],
     getColumnWidth(name) { // TODO should be part of the SasiTableOptions but Object.assign will not copy it
       const columnOption = this.columns.find(column => column.index === name);
       if (columnOption !== undefined && columnOption.columnWidth !== null) {
@@ -445,6 +464,9 @@ export class SasiTableComponent implements OnInit {
     const column: SasiColumn = this.options.columns.find(optionColumn => optionColumn.index === type);
     if (column === undefined) {
       return '';
+    }
+    if (this.options.headerGroups.length > 0) {
+      return column.shortLabel;
     }
     return column.altLabel !== undefined ? column.altLabel : column.label;
   }
@@ -572,4 +594,24 @@ export class SasiTableComponent implements OnInit {
     }
   }
 
+  getColumns() {
+    // if (this.options.headerGroups.length > 0) {
+    //   return this.options.headerGroups;
+    // }
+    return this.options.columns;
+  }
+
+  getHeaderGridStyle(i: number) {
+    const offsetPosition = 1;
+    const groupsBefore = this.options.headerGroups.slice(0, i);
+    const startPosition = groupsBefore.reduce((previousValue, currentValue) => previousValue + currentValue.columns.length, offsetPosition);
+    const headerGroup = this.options.headerGroups[i];
+    const endPosition = startPosition + headerGroup.columns.length;
+    return this.domSanitizer.bypassSecurityTrustStyle(
+      'grid-column-start: ' + startPosition + ';' +
+      'grid-column-end: ' + endPosition + ';' +
+      'grid-row-start: 1;'
+    );
+
+  }
 }

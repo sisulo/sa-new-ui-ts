@@ -1,4 +1,4 @@
-export enum SystemMetricType {
+export enum  SystemMetricType {
   SELECTED_COUNT = 'SELECTED_COUNT',
   PHYSICAL_CAPACITY = 'PHYSICAL_CAPACITY',
   PHYSICAL_SUBS_PERC = 'PHYSICAL_SUBS_PERC',

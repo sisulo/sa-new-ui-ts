@@ -1,6 +1,14 @@
 <div class="sasi-table-container"
      [style]="style">
   <div class="sasi-table-header">
+<!--    <div class="sasi-table-item sasi-table-controls"-->
+<!--    style="grid-column-start: 1"></div>-->
+<!--    <div class="sasi-table-item sasi-table-alerts"></div>-->
+    <div *ngFor="let headerGroup of options.headerGroups; let i = index;" class="sasi-table-item sasi-table-data sasi-table-header-group"
+        [style]="getHeaderGridStyle(i)">
+      {{headerGroup.name}}
+    </div>
+    <!-- Labels -->
     <div class="sasi-table-item sasi-table-controls">
       <i *ngIf="options.isDataGrouped" class="fa expand-collapse"
          [@iconRotate]="isCollapseAll()"
@@ -17,17 +25,22 @@
          class="sasi-table-item sasi-table-alerts">
       <i tooltip="Alerts" class="fa fa-exclamation-triangle text-orange"></i>
     </div>
+    <!--
+      Non-Group header
+    -->
+
     <div [tooltip]="getColumnTooltipText(columnOption.index)"
-         *ngFor="let columnOption of options.columns"
+         *ngFor="let columnOption of getColumns()"
          class="sasi-table-item sasi-table-data">
+
       <span>
         <span (click)="setSort(columnOption, false)"
               class="link sasi-header-label">{{getColumnLabel(columnOption.index)}}</span>
-        <span class="sasi-header-icon">
+      </span>
+      <span class="sasi-header-icon">
           <i [ngClass]="getSortIconClass(columnOption.index, false)"
              class="text-muted sorting sort-icon-right"></i>
         </span>
-      </span>
       <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
       <span *ngIf="columnOption.altSortEnable === true"
             (click)="setSort(columnOption, true)"

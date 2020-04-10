@@ -89,6 +89,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Physical Subscription')
+        .withShortLabel('Physical')
         .build()
     );
     this.options.columns.push(
@@ -100,6 +101,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Logical Subscription')
+        .withShortLabel('Logical')
         .build()
     );
     this.options.columns.push(
@@ -111,6 +113,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Net Subscription')
+        .withShortLabel('Net')
         .withAltBorder(true)
         .build()
     );
@@ -123,6 +126,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Physical Capacity (Physical data occupation on HDD/FMD/SSD)')
+        .withShortLabel('Capacity')
         .build()
     );
     this.options.columns.push(
@@ -134,6 +138,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Physical Used')
+        .withShortLabel('Used')
         .build()
     );
     this.options.columns.push(
@@ -145,6 +150,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Physical Free')
+        .withShortLabel('Free')
         .build()
     );
     this.options.columns.push(
@@ -157,6 +163,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withIsAggregated(true)
         .withTooltipText('Physical Used')
         .withAltBorder(true)
+        .withShortLabel('Used [%]')
         .build()
     );
     this.options.columns.push(
@@ -168,6 +175,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Logical Capacity')
+        .withShortLabel('Capacity')
         .build()
     );
     this.options.columns.push(
@@ -179,6 +187,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Logical Used')
+        .withShortLabel('Used')
         .build()
     );
     this.options.columns.push(
@@ -190,6 +199,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Logical Free')
+        .withShortLabel('Free')
         .build()
     );
     this.options.columns.push(
@@ -202,6 +212,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withIsAggregated(true)
         .withTooltipText('Logical Used')
         .withAltBorder(true)
+        .withShortLabel('Used [%]')
         .build()
     );
     this.options.columns.push(
@@ -213,6 +224,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Net Capacity (Virtual capacity without any saving mechanism)')
+        .withShortLabel('Total')
         .build()
     );
     this.options.columns.push(
@@ -224,6 +236,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Net Used')
+        .withShortLabel('Used')
         .build()
     );
     this.options.columns.push(
@@ -235,6 +248,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Net Free')
+        .withShortLabel('Free')
         .build()
     );
     this.options.columns.push(
@@ -246,6 +260,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Net Used')
+        .withShortLabel('Used [%]')
         .withAltBorder(true)
         .build()
     );
@@ -258,6 +273,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Compression Ratio')
+        .withShortLabel('Compression')
         .build()
     );
     this.options.columns.push(
@@ -269,6 +285,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Deduplication Ratio')
+        .withShortLabel('Dedup')
         .build()
     );
     this.options.columns.push(
@@ -280,6 +297,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Total Saving Effect')
+        .withShortLabel('Total')
         .build()
     );
     this.options.rowComponentFormatter = RowGroupTableComponent;
@@ -293,6 +311,63 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
     this.options.columnAlign = 'right';
+    this.options.headerGroups = [
+      {
+        name: '',
+        columns: ['controls']
+      },
+      {
+        name: '',
+        columns: ['name']
+      },
+      {
+        name: '',
+        columns: [SystemMetricType.SUBSCRIBED_CAPACITY]
+      },
+      {
+        name: 'Subscriptions',
+        columns: [
+          SystemMetricType.PHYSICAL_SUBS_PERC,
+          SystemMetricType.LOGICAL_SUBS_PERC,
+          SystemMetricType.NET_SUBS_PERC
+        ]
+      },
+      {
+        name: 'Physical',
+        columns: [
+          SystemMetricType.PHYSICAL_CAPACITY,
+          SystemMetricType.PHYSICAL_USED,
+          SystemMetricType.PHYSICAL_FREE,
+          SystemMetricType.PHYSICAL_USED
+        ]
+      },
+      {
+        name: 'Logical',
+        columns: [
+          SystemMetricType.LOGICAL_CAPACITY,
+          SystemMetricType.LOGICAL_USED,
+          SystemMetricType.LOGICAL_FREE,
+          SystemMetricType.LOGICAL_USED
+        ]
+      },
+      {
+        name: 'Network',
+        columns: [
+          SystemMetricType.NET_TOTAL,
+          SystemMetricType.NET_USED,
+          SystemMetricType.NET_FREE,
+          SystemMetricType.NET_SUBS_PERC
+        ]
+      },
+      {
+        name: 'Savings',
+        columns: [
+          SystemMetricType.COMPRESS_RATIO,
+          SystemMetricType.DEDUP_RATIO,
+          SystemMetricType.TOTAL_SAVING_EFFECT
+        ]
+      },
+    ];
 
   }
 
