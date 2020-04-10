@@ -1,19 +1,26 @@
 <section class="content">
   <div class="row">
     <div class="col-md-4">
-      <app-filter-list *ngIf="dates !== undefined" [valueList]="dates" title="Dates"
+      <app-filter-list *ngIf="dates !== undefined"
+                       [valueList]="dates"
+                       title="Dates"
                        (valueListChange)="onDatesChanged($event)"></app-filter-list>
     </div>
     <div class="col-md-4">
 
-      <app-filter-list *ngIf="systems !== undefined" [valueList]="systems" [selectedValues]="selectedSystems"
+      <app-filter-list *ngIf="systems !== undefined"
+                       [valueList]="systems"
+                       [selectedValues]="selectedSystems"
                        title="Systems"
                        (valueListChange)="onSystemChanged($event)"></app-filter-list>
     </div>
 
     <div class="col-md-4">
 
-      <app-filter-list *ngIf="pools !== undefined" [valueList]="pools" [selectedValues]="selectedPools" title="Pools"
+      <app-filter-list *ngIf="pools !== undefined"
+                       [valueList]="pools"
+                       [selectedValues]="selectedPools"
+                       title="Pools"
                        (valueListChange)="onPoolChanged($event)"></app-filter-list>
     </div>
     <div class="col-md-4">
@@ -32,13 +39,17 @@
     </div>
     <div class="col-md-4">
 
-      <app-filter-list *ngIf="blockSizes !== undefined" [valueList]="blockSizes" [selectedValues]="selectedBlockSizes"
-                       title="Block size"
+      <app-filter-list *ngIf="blockSizes !== undefined"
+                       [valueList]="blockSizes"
+                       [selectedValues]="selectedBlockSizes"
+                       title="Block Size"
                        (valueListChange)="onBlockSizeChange($event)"></app-filter-list>
     </div>
     <div class="col-md-4">
 
-      <app-filter-list *ngIf="latencies !== undefined" [valueList]="latencies" [selectedValues]="selectedLatencies"
+      <app-filter-list *ngIf="latencies !== undefined"
+                       [valueList]="latencies"
+                       [selectedValues]="selectedLatencies"
                        title="Latency"
                        (valueListChange)="onLatenciesChanged($event)"></app-filter-list>
     </div>
@@ -48,7 +59,7 @@
     <div class="col-12">
       <div class="box pad">
         <div class="box-header">
-          <h3 class="box-title">Total Capacity History</h3>
+          <h3 class="box-title">W History</h3>
         </div>
         <div class="box-body">
           <app-bubble-chart [dates]="selectedDates" [poolIds]="selectedPools" [blockSizes]="selectedBlockSizes"
