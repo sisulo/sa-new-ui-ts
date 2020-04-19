@@ -1,11 +1,12 @@
 <div class="sasi-table-container"
      [style]="style">
   <div class="sasi-table-header">
-<!--    <div class="sasi-table-item sasi-table-controls"-->
-<!--    style="grid-column-start: 1"></div>-->
-<!--    <div class="sasi-table-item sasi-table-alerts"></div>-->
-    <div *ngFor="let headerGroup of options.headerGroups; let i = index;" class="sasi-table-item sasi-table-data sasi-table-header-group"
-        [style]="getHeaderGridStyle(i)">
+    <!--    <div class="sasi-table-item sasi-table-controls"-->
+    <!--    style="grid-column-start: 1"></div>-->
+    <!--    <div class="sasi-table-item sasi-table-alerts"></div>-->
+    <div *ngFor="let headerGroup of options.headerGroups; let i = index;"
+         class="sasi-table-item sasi-table-data sasi-table-header-group"
+         [style]="getHeaderGridStyle(i)">
       {{headerGroup.name}}
     </div>
     <!-- Labels -->
@@ -36,12 +37,12 @@
       <span>
         <span (click)="setSort(columnOption, false)"
               class="link sasi-header-label">{{getColumnLabel(columnOption.index)}}</span>
-      </span>
-      <span class="sasi-header-icon">
+        <span class="sasi-header-icon">
           <i [ngClass]="getSortIconClass(columnOption.index, false)"
              class="text-muted sorting sort-icon-right"></i>
         </span>
-      <!-- [class.highlightColumn]="isColumnHighlighted(column)" -->
+      </span>
+
       <span *ngIf="columnOption.altSortEnable === true"
             (click)="setSort(columnOption, true)"
             class="link sasi-header-icon">

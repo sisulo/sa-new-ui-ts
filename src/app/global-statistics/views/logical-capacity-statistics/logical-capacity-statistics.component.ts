@@ -76,7 +76,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Subscribed Capacity')
-        .withAltBorder(true)
+        .withAltBorder(false)
         .build()
     );
 
@@ -321,12 +321,9 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         columns: ['name']
       },
       {
-        name: '',
-        columns: [SystemMetricType.SUBSCRIBED_CAPACITY]
-      },
-      {
-        name: 'Subscriptions',
+        name: 'Subscription',
         columns: [
+          SystemMetricType.SUBSCRIBED_CAPACITY,
           SystemMetricType.PHYSICAL_SUBS_PERC,
           SystemMetricType.LOGICAL_SUBS_PERC,
           SystemMetricType.NET_SUBS_PERC
@@ -351,7 +348,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         ]
       },
       {
-        name: 'Network',
+        name: 'Net',
         columns: [
           SystemMetricType.NET_TOTAL,
           SystemMetricType.NET_USED,

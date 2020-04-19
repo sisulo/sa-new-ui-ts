@@ -47,6 +47,8 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     this.mapSystemToDirectory[25] = '63';
     this.mapSystemToDirectory[26] = '12';
     this.mapSystemToDirectory[27] = '13';
+    this.mapSystemToDirectory[28] = '11';
+    this.mapSystemToDirectory[29] = '32';
   }
 
   transform(value: any, args: any): any {
@@ -66,7 +68,7 @@ export class IframeUrlCreatorPipe implements PipeTransform {
 
   normalizeAnchor(value) {
     if (value != null) {
-      return value.replace(/[#\-\s\,]+/g, '_');
+      return value.replace(/[#\-\s,]+/g, '_');
     }
     return '';
   }

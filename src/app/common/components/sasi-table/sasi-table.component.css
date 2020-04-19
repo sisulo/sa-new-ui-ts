@@ -10,8 +10,8 @@
 .sasi-table-container {
   display: grid;
   /*grid-template-columns: 40px 120px repeat(19, 1fr);*/
-  grid-template-rows: minmax(40px, max-content);
-  grid-auto-rows: minmax(30px, max-content);
+  grid-template-rows: minmax(25px, max-content);
+  grid-auto-rows: minmax(20px, max-content);
 }
 
 /*
@@ -42,7 +42,7 @@ app-row-dynamic-table,
   font-weight: bolder;
   color: white;
   display: flex;
-  /*flex-flow: column;*/
+  flex-flow: column;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
