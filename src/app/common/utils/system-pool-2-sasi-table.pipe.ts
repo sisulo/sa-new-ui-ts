@@ -13,11 +13,11 @@ import {Metric} from '../models/metrics/metric.vo';
 })
 export class SystemPool2SasiTablePipe implements PipeTransform {
 
-  transform(systems: SystemDetail[], context: string, linkId?: number): SasiRow[] {
+  transform(systems: SystemDetail[], context: string, linkId?: string): SasiRow[] {
     return systems.map(
       system => {
         const row = new SasiRow();
-        let linkIdInput = system.id;
+        let linkIdInput = system.name;
         if (linkId != null) {
           linkIdInput = linkId;
         }

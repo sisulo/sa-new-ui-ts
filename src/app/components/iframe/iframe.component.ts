@@ -22,6 +22,7 @@ export class IframeComponent implements OnInit {
     this.route.paramMap.subscribe(
       (params: ParamMap) => {
         this.url = this.sanitizer.bypassSecurityTrustResourceUrl(atob(params.get('url')));
+        console.log(atob(params.get('url')));
       }
     );
   }

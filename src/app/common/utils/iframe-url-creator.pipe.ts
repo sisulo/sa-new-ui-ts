@@ -20,35 +20,35 @@ export class IframeUrlCreatorPipe implements PipeTransform {
   mapSystemToDirectory = [];
 
   constructor() {
-    this.mapSystemToDirectory[1] = '01';
-    this.mapSystemToDirectory[2] = '02';
-    this.mapSystemToDirectory[3] = '03';
-    this.mapSystemToDirectory[4] = '04';
-    this.mapSystemToDirectory[5] = '05';
-    this.mapSystemToDirectory[6] = '06';
+    this.mapSystemToDirectory['XP7_G11_58417'] = '01';
+    this.mapSystemToDirectory['XP7_G12_58416'] = '02';
+    this.mapSystemToDirectory['XP7_G13_58734'] = '03';
+    this.mapSystemToDirectory['XP7_G14_10560'] = '04';
+    this.mapSystemToDirectory['XP7_G15_20028'] = '05';
+    this.mapSystemToDirectory['XP7_G16_20359'] = '06';
     // this.mapToDirectory[7] = '';
-    this.mapSystemToDirectory[8] = '22';
-    this.mapSystemToDirectory[9] = '23';
-    this.mapSystemToDirectory[10] = '24';
-    this.mapSystemToDirectory[11] = '25';
-    this.mapSystemToDirectory[12] = '26';
+    this.mapSystemToDirectory['XP7_B12_58678'] = '22';
+    this.mapSystemToDirectory['XP7_B13_59006'] = '23';
+    this.mapSystemToDirectory['XP7_B14_10554'] = '24';
+    this.mapSystemToDirectory['XP7_B15_10640'] = '25';
+    this.mapSystemToDirectory['XP7_B16_11114'] = '26';
     // this.mapToDirectory[13] = '';
-    this.mapSystemToDirectory[14] = '62';
-    this.mapSystemToDirectory[15] = '41';
-    this.mapSystemToDirectory[16] = '42';
-    this.mapSystemToDirectory[17] = '43';
-    this.mapSystemToDirectory[18] = '44';
-    this.mapSystemToDirectory[19] = '81';
-    this.mapSystemToDirectory[20] = '51';
-    this.mapSystemToDirectory[21] = '52';
+    this.mapSystemToDirectory['XP7_STL2_10558'] = '62';
+    this.mapSystemToDirectory['XP7_CBJ2_57216'] = '41';
+    this.mapSystemToDirectory['XP7_CBJ3_57222'] = '42';
+    this.mapSystemToDirectory['XP7_CBJ4_20575'] = '43';
+    this.mapSystemToDirectory['XP7_CBJ5_56053'] = '44';
+    this.mapSystemToDirectory['XP7_AIMS1_20627'] = '81';
+    this.mapSystemToDirectory['XP7_QAS1_20610'] = '51';
+    this.mapSystemToDirectory['XP7_QAS2_56139'] = '52';
     // this.mapSystemToDirectory[22] = '71';
-    this.mapSystemToDirectory[23] = '72';
-    this.mapSystemToDirectory[24] = '27';
-    this.mapSystemToDirectory[25] = '63';
-    this.mapSystemToDirectory[26] = '12';
-    this.mapSystemToDirectory[27] = '13';
-    this.mapSystemToDirectory[28] = '11';
-    this.mapSystemToDirectory[29] = '32';
+    this.mapSystemToDirectory['XP7_MEG2_20725'] = '72';
+    this.mapSystemToDirectory['XP7_B17_50225'] = '27';
+    this.mapSystemToDirectory['XP7_STL3_58634'] = '63';
+    this.mapSystemToDirectory['XP8_G22_30738'] = '12';
+    this.mapSystemToDirectory['XP8_G23_30739'] = '13';
+    this.mapSystemToDirectory['XP8_G21_30759'] = '32';
+    this.mapSystemToDirectory['XP8_B22_30754'] = '11';
   }
 
   transform(value: any, args: any): any {
@@ -59,11 +59,11 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     return UrlCreator.url(this.mapToDirectory(value), this.iFrameLinks[args.iframeLink] + anchorParam);
   }
 
-  mapToDirectory(id: number) {
+  mapToDirectory(id: string) {
     if (this.mapSystemToDirectory[id] !== undefined) {
       return this.mapSystemToDirectory[id];
     }
-    throw new Error(`ID: ${id} not found in mapping`);
+    // throw new Error(`ID: ${id} not found in mapping`);
   }
 
   normalizeAnchor(value) {
