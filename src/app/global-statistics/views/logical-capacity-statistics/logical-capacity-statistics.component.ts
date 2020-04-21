@@ -61,6 +61,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withIndex('name')
         .withLabel('Pool')
         .withAltLabel('System')
+        .withShortLabel('System')
         .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -70,7 +71,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.SUBSCRIBED_CAPACITY)
-        .withLabel('Subs. Capacity')
+        .withLabel('Total')
         .withColumnTooltipText('Total Subscribed capacity (TB) of the DP Pool.')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
@@ -120,13 +121,13 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.PHYSICAL_CAPACITY)
-        .withLabel('Physical Capacity')
+        .withLabel('Total')
         .withColumnTooltipText('Total physical capacity (TB) of the DP Pool. Physical capacity = capacity of the real HW components (HDDs/FMDs/Spindles).')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Physical Capacity (Physical data occupation on HDD/FMD/SSD)')
-        .withShortLabel('Capacity')
+        .withShortLabel('Total')
         .build()
     );
     this.options.columns.push(
@@ -163,19 +164,19 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withIsAggregated(true)
         .withTooltipText('Physical Used')
         .withAltBorder(true)
-        .withShortLabel('Used [%]')
+        .withShortLabel('Used')
         .build()
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.LOGICAL_CAPACITY)
-        .withLabel('Logical Capacity')
+        .withLabel('Total')
         .withColumnTooltipText('Logical capacity (TB) of the DP Pool. Logical capacity is "virtual" capacity for non-spindle disk pools. It is calculated as [physical capacity] x [constant]. In common cases [constant] is set to 2 (because of default compression on FMDs)')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Logical Capacity')
-        .withShortLabel('Capacity')
+        .withShortLabel('Total')
         .build()
     );
     this.options.columns.push(
@@ -212,7 +213,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withIsAggregated(true)
         .withTooltipText('Logical Used')
         .withAltBorder(true)
-        .withShortLabel('Used [%]')
+        .withShortLabel('Used')
         .build()
     );
     this.options.columns.push(
@@ -260,7 +261,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Net Used')
-        .withShortLabel('Used [%]')
+        .withShortLabel('Used')
         .withAltBorder(true)
         .build()
     );
@@ -273,7 +274,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withAltSortEnable(false)
         .withIsAggregated(true)
         .withTooltipText('Compression Ratio')
-        .withShortLabel('Compression')
+        .withShortLabel('Comp')
         .build()
     );
     this.options.columns.push(
