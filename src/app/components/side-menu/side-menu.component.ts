@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {MenuTree} from '../../common/models/menu-tree.vo';
 import {MetricService} from '../../metric.service';
-import {Datacenter} from '../../common/models/datacenter.vo';
 import {MenuItem} from '../../common/models/menu-item.vo';
+import {StorageEntityResponseDto} from '../../common/models/dtos/storage-entity-response.dto';
 
 @Component({
   selector: 'app-side-menu',
@@ -31,16 +31,16 @@ export class SideMenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.metricService.getDatacenters().subscribe(data => {
-      this.items = this.convertMenu(data.datacenters);
-      this.setDefaultDataCenter(data.datacenters);
+    this.metricService.getDataCenters().subscribe(data => {
+      this.items = this.convertMenu(data);
+      this.setDefaultDataCenter(data);
       this.filteredItems = this.items;
     });
   }
 
-  private setDefaultDataCenter(dataCenters: Datacenter[]) {
+  private setDefaultDataCenter(dataCenters: StorageEntityResponseDto[]) {
     if (dataCenters.length > 0) {
-      this.defaultDataCenter = dataCenters[0].id;
+      this.defaultDataCenter = dataCenters[0].storageEntity.id;
       this.setGlobalStatisticsLinks();
     }
   }
@@ -80,14 +80,14 @@ export class SideMenuComponent implements OnInit {
     }
   }
 
-  private convertMenu(data: Datacenter[]): MenuTree[] {
+  private convertMenu(data: StorageEntityResponseDto[]): MenuTree[] {
     const menu: MenuTree[] = [];
     for (const dataCenter of data) {
       const items: MenuItem[] = [];
-      for (const system of dataCenter.systems) {
+      for (const system of dataCenter.storageEntity.children) {
         items.push(new MenuItem(system.id, system.name));
       }
-      menu.push(new MenuTree(dataCenter.label, items));
+      menu.push(new MenuTree(dataCenter.storageEntity.name, items));
     }
     return menu;
   }

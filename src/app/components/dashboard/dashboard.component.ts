@@ -113,15 +113,15 @@ export class DashboardComponent implements OnInit {
       this.alerts = stats.alerts;
       this.metrics = this.transformCapacityMetrics(stats.metrics);
     });
-    this.metricService.getDatacenters().subscribe(
+    this.metricService.getDataCenters().subscribe(
       data => {
         this.datacenters = new Metric();
-        this.datacenters.value = data.datacenters.length;
+        this.datacenters.value = data.length;
         this.datacenters.unit = '';
         this.registeredSystems = new Metric();
         this.registeredSystems.unit = '';
-        this.registeredSystems.value = data.datacenters.reduce((previousValue, currentValue) => {
-          return previousValue + currentValue.systems.length;
+        this.registeredSystems.value = data.reduce((previousValue, currentValue) => {
+          return previousValue + currentValue.storageEntity.children.length;
         }, 0);
       }
     );

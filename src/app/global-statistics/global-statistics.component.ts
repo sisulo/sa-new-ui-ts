@@ -23,7 +23,7 @@ export class GlobalStatisticsComponent implements OnInit {
 
   ngOnInit(): void {
     this.bus.datacenterAnnouncement$.subscribe(
-      id => this.getDatacenters(id)
+      id => this.getDataCenters(id)
     );
     this.bus.contextAnnouncement$.subscribe(
       context => {
@@ -43,15 +43,15 @@ export class GlobalStatisticsComponent implements OnInit {
     return id === this.currentTab;
   }
 
-  getDatacenters(currentTab: number) {
-    this.metricService.getDatacenters().subscribe(
+  getDataCenters(currentTab: number) {
+    this.metricService.getDataCenters().subscribe(
       data => {
         this.dataCenters = [];
         const defaultDatacenter = new Datacenter();
         defaultDatacenter.label = 'All';
         defaultDatacenter.id = -1;
         this.dataCenters.push(defaultDatacenter);
-        this.dataCenters = [...this.dataCenters, ...data.datacenters];
+        this.dataCenters = [...this.dataCenters, ...data.map(Datacenter.of)];
         this.currentTab = currentTab;
       }
     );

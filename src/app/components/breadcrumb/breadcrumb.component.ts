@@ -35,9 +35,9 @@ export class BreadcrumbComponent implements OnInit {
       distinctUntilChanged(),
     ).subscribe(() => {
 
-      this.metricService.getDatacenters().subscribe(
+      this.metricService.getDataCenters().subscribe(
         dto => {
-          this.dataCenters = dto.datacenters;
+          this.dataCenters = dto.map(Datacenter.of);
           this.breadcrumbs = this.buildBreadCrumb(this.activatedRoute.root);
         }
       );
