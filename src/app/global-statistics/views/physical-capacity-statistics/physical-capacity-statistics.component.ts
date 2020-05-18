@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../../metric.service';
-import {SystemPool} from '../../../common/models/system-pool.vo';
 import {SystemAggregatedStatistics} from '../../utils/weighted-arithmetic-mean.utils';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -16,6 +15,8 @@ import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithme
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {LocalStorageService} from 'ngx-store';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
+import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
+import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
 
 @Component({
   selector: 'app-capacity-statistics',
@@ -51,7 +52,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     SystemMetricType.PREDICTION_L2,
     SystemMetricType.PREDICTION_L3
   ];
-  data: SystemPool[] = []; // Todo caching data by dataCenters
+  data: StorageEntityMetricDto[] = []; // Todo caching data by dataCenters
 
   aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
 
@@ -250,16 +251,10 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
 
   }
 
-  getTableData(id: number): SystemPool[] {
+  getTableData(id: number): StorageEntityMetricDto[] {
     this.metricService.getCapacityStatistics(id).subscribe(
-      data => {
-        this.data = [];
-        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
-      },
-      error => {
-        console.log(error);
-        this.data = [];
-      }
+      data => this.data = MetricHandlerUtils.success(data),
+      error => this.data = MetricHandlerUtils.error(error)
     );
     return this.data;
   }

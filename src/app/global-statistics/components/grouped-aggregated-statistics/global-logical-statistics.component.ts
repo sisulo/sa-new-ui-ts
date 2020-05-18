@@ -105,13 +105,14 @@ export class GlobalLogicalStatisticsComponent extends CommonAggregatedStats impl
       data => {
         const average = new SasiWeightedArithmeticMeanUtils();
         const filter: SelectedRow[] = [];
-        data.systems.forEach(
-          system => system.pools.forEach(
+        data.forEach(
+          system => system.children.forEach(
             pool => {
               const row = new SelectedRow(system.name, pool.name);
               filter.push(row);
             }));
-        this.result = average.computeSummaries(this.transformer.transform(data.systems, ''), filter);
+        this.result = average.computeSummaries(this.transformer.transform(data, ''), filter);
+        console.log(this.result);
       },
       error => {
         console.log(error);

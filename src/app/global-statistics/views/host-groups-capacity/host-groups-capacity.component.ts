@@ -15,6 +15,8 @@ import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithme
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {TierFormatterComponent} from '../../formatters/tier-formatter/tier-formatter.component';
+import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
+import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
 
 @Component({
   selector: 'app-host-groups-capacity',
@@ -48,7 +50,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     SystemMetricType.CAPACITY_CHANGE_1W,
     SystemMetricType.CAPACITY_CHANGE_1M
   ];
-  data: SystemPool[] = []; // Todo caching data by dataCenters
+  data: StorageEntityMetricDto[] = []; // Todo caching data by dataCenters
 
   aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
 
@@ -188,16 +190,10 @@ export class HostGroupsCapacityComponent implements OnInit {
 
   }
 
-  getTableData(id: number): SystemPool[] {
+  getTableData(id: number): StorageEntityMetricDto[] {
     this.metricService.getHostGroupCapacityStatistics(id).subscribe(
-      data => {
-        this.data = [];
-        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
-      },
-      error => {
-        console.log(error);
-        this.data = [];
-      }
+      data => this.data = MetricHandlerUtils.success(data),
+      error => this.data = MetricHandlerUtils.error(error)
     );
     return this.data;
   }

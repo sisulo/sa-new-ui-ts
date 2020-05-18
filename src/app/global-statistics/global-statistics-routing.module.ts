@@ -70,7 +70,7 @@ const routes: Routes = [
       },
       {
         path: 'dp-sla',
-        redirectTo: 'dp-sla/1',
+        redirectTo: 'dp-sla/-1',
         pathMatch: 'full'
       },
 

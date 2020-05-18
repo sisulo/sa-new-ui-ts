@@ -12,6 +12,8 @@ import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-fo
 import {AlertRule, Threshold} from '../../alert-rule';
 import {RowTableComponent} from '../../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../../common/components/sasi-table/simple-sort-impl';
+import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
+import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
 
 @Component({
   selector: 'app-tab',
@@ -21,7 +23,7 @@ import {SimpleSortImpl} from '../../../common/components/sasi-table/simple-sort-
 export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
 
   currentPeriod: PeriodType = PeriodType.WEEK;
-  data: SystemDetail[] = []; // Todo caching data by datacenters
+  data: StorageEntityMetricDto[] = []; // Todo caching data by datacenters
   options: SasiTableOptions = new SasiTableOptions();
   currentDataCenterId;
 
@@ -135,17 +137,11 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     this.periodService.announceEnablePeriod(false);
   }
 
-  getTableData(id: number): SystemDetail[] {
+  getTableData(id: number): StorageEntityMetricDto[] {
     this.currentDataCenterId = id;
     this.metricService.getPerformanceStatistics(id, this.currentPeriod).subscribe(
-      data => {
-        this.data = [];
-        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
-      },
-      error => {
-        console.log(error);
-        this.data = [];
-      }
+      data => this.data = MetricHandlerUtils.success(data),
+      error => this.data = MetricHandlerUtils.error(error)
     );
     return this.data;
   }

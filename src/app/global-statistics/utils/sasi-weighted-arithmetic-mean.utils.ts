@@ -22,13 +22,21 @@ export class SystemAggregatedStatistics implements AggregatedValues {
   }
 
   setValue(type, value, unit: string) {
+    if (value === null || value === undefined) {
+      return;
+    }
     if (this.values[type] === undefined) {
       const metric = new Metric();
       metric.type = type;
       metric.unit = unit;
       metric.value = 0;
       this.setMetric(type, metric);
+    } else {
+      if (this.values[type].unit === null && unit != null) {
+        this.values[type].unit = unit;
+      }
     }
+
     this.values[type].value += value;
   }
 }
@@ -79,52 +87,29 @@ export class SasiWeightedArithmeticMeanUtils implements AggregateValueService {
         }
         const physicalCapacity = this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY);
         const netTotal = this.getMetricValueByName(sasiRow, SystemMetricType.NET_TOTAL);
-        this.partiallySummarizedValues.setValue(
-          SystemMetricType.PHYSICAL_CAPACITY,
-          this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY),
-          this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_CAPACITY)
-        );
-        this.partiallySummarizedValues.setValue(SystemMetricType.SUBSCRIBED_CAPACITY, this.getMetricValueByName(sasiRow, SystemMetricType.SUBSCRIBED_CAPACITY), this.getUnitByName(sasiRow, SystemMetricType.SUBSCRIBED_CAPACITY));
-        this.partiallySummarizedValues.setValue(SystemMetricType.LOGICAL_CAPACITY, this.getMetricValueByName(sasiRow, SystemMetricType.LOGICAL_CAPACITY), this.getUnitByName(sasiRow, SystemMetricType.LOGICAL_CAPACITY));
-        this.partiallySummarizedValues.setValue(SystemMetricType.AVAILABLE_CAPACITY, this.getMetricValueByName(sasiRow, SystemMetricType.AVAILABLE_CAPACITY), this.getUnitByName(sasiRow, SystemMetricType.AVAILABLE_CAPACITY));
-        this.partiallySummarizedValues.setValue(SystemMetricType.LOGICAL_USED, this.getMetricValueByName(sasiRow, SystemMetricType.LOGICAL_USED), this.getUnitByName(sasiRow, SystemMetricType.LOGICAL_USED));
-        this.partiallySummarizedValues.setValue(SystemMetricType.LOGICAL_FREE, this.getMetricValueByName(sasiRow, SystemMetricType.LOGICAL_FREE), this.getUnitByName(sasiRow, SystemMetricType.LOGICAL_FREE));
-        this.partiallySummarizedValues.setValue(SystemMetricType.PHYSICAL_USED, this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_USED), this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_USED));
-        this.partiallySummarizedValues.setValue(SystemMetricType.PHYSICAL_FREE, this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_FREE), this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_FREE));
-        this.partiallySummarizedValues.setValue(SystemMetricType.NET_TOTAL, this.getMetricValueByName(sasiRow, SystemMetricType.NET_TOTAL), this.getUnitByName(sasiRow, SystemMetricType.NET_TOTAL));
-        this.partiallySummarizedValues.setValue(SystemMetricType.NET_USED, this.getMetricValueByName(sasiRow, SystemMetricType.NET_USED), this.getUnitByName(sasiRow, SystemMetricType.NET_USED));
-        this.partiallySummarizedValues.setValue(SystemMetricType.NET_FREE, this.getMetricValueByName(sasiRow, SystemMetricType.NET_FREE), this.getUnitByName(sasiRow, SystemMetricType.NET_FREE));
-        this.partiallySummarizedValues.setValue(SystemMetricType.PHYSICAL_SUBS_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_SUBS_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_SUBS_PERC));
-        this.partiallySummarizedValues.setValue(SystemMetricType.LOGICAL_SUBS_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.LOGICAL_SUBS_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.LOGICAL_SUBS_PERC));
-        this.partiallySummarizedValues.setValue(SystemMetricType.NET_SUBS_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.NET_SUBS_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.NET_SUBS_PERC));
-        this.partiallySummarizedValues.setValue(SystemMetricType.LOGICAL_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.LOGICAL_USED_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.LOGICAL_USED_PERC));
-        this.partiallySummarizedValues.setValue(SystemMetricType.PHYSICAL_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.PHYSICAL_USED_PERC) * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.PHYSICAL_USED_PERC));
-        this.partiallySummarizedValues.setValue(SystemMetricType.NET_USED_PERC, this.getMetricValueByName(sasiRow, SystemMetricType.NET_USED_PERC) * netTotal, this.getUnitByName(sasiRow, SystemMetricType.NET_USED_PERC));
-        const compRatio = this.getMetricValueByName(sasiRow, SystemMetricType.COMPRESS_RATIO);
-        if (compRatio > 0) {
-          this.physicalCapacityCompRatio += physicalCapacity;
-          this.partiallySummarizedValues.setValue(SystemMetricType.COMPRESS_RATIO, compRatio * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.COMPRESS_RATIO));
-        } else {
-          this.partiallySummarizedValues.setValue(SystemMetricType.COMPRESS_RATIO, 0, this.getUnitByName(sasiRow, SystemMetricType.COMPRESS_RATIO));
-        }
-        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1D, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1D));
-        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1W, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1W));
-        this.partiallySummarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1M, this.getMetricValueByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M), this.getUnitByName(sasiRow, SystemMetricType.CAPACITY_CHANGE_1M));
-        const dedupRatio = this.getMetricValueByName(sasiRow, SystemMetricType.DEDUP_RATIO);
-
-        if (dedupRatio > 0) {
-          this.partiallySummarizedValues.setValue(SystemMetricType.DEDUP_RATIO, dedupRatio * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.DEDUP_RATIO));
-          this.physicalCapacityDedupRatio += physicalCapacity;
-        } else {
-          this.partiallySummarizedValues.setValue(SystemMetricType.DEDUP_RATIO, 0, this.getUnitByName(sasiRow, SystemMetricType.DEDUP_RATIO));
-        }
-        const totalSaving = this.getMetricValueByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT);
-        if (totalSaving > 1) {
-          this.partiallySummarizedValues.setValue(SystemMetricType.TOTAL_SAVING_EFFECT, totalSaving * physicalCapacity, this.getUnitByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT));
-          this.physicalCapacityTotalSaving += physicalCapacity;
-        } else {
-          this.partiallySummarizedValues.setValue(SystemMetricType.TOTAL_SAVING_EFFECT, 0, this.getUnitByName(sasiRow, SystemMetricType.TOTAL_SAVING_EFFECT));
-        }
+        this.setPartialValue(SystemMetricType.PHYSICAL_CAPACITY, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.SUBSCRIBED_CAPACITY, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.LOGICAL_CAPACITY, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.AVAILABLE_CAPACITY, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.LOGICAL_USED, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.LOGICAL_FREE, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.PHYSICAL_USED, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.PHYSICAL_FREE, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.NET_TOTAL, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.NET_USED, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.NET_FREE, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.PHYSICAL_SUBS_PERC, sasiRow, this.partiallySummarizedValues, physicalCapacity);
+        this.setPartialValue(SystemMetricType.LOGICAL_SUBS_PERC, sasiRow, this.partiallySummarizedValues, physicalCapacity);
+        this.setPartialValue(SystemMetricType.NET_SUBS_PERC, sasiRow, this.partiallySummarizedValues, physicalCapacity);
+        this.setPartialValue(SystemMetricType.LOGICAL_USED_PERC, sasiRow, this.partiallySummarizedValues, physicalCapacity);
+        this.setPartialValue(SystemMetricType.PHYSICAL_USED_PERC, sasiRow, this.partiallySummarizedValues, physicalCapacity);
+        this.setPartialValue(SystemMetricType.NET_USED_PERC, sasiRow, this.partiallySummarizedValues, netTotal);
+        this.setPartialValue(SystemMetricType.COMPRESS_RATIO, sasiRow, this.partiallySummarizedValues, physicalCapacity, 0);
+        this.setPartialValue(SystemMetricType.CAPACITY_CHANGE_1D, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.CAPACITY_CHANGE_1W, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.CAPACITY_CHANGE_1M, sasiRow, this.partiallySummarizedValues);
+        this.setPartialValue(SystemMetricType.DEDUP_RATIO, sasiRow, this.partiallySummarizedValues, physicalCapacity, 0);
+        this.setPartialValue(SystemMetricType.TOTAL_SAVING_EFFECT, sasiRow, this.partiallySummarizedValues, physicalCapacity, 1);
       }
     );
     const result = this.summarizeStats(this.partiallySummarizedValues, 'all');
@@ -134,29 +119,34 @@ export class SasiWeightedArithmeticMeanUtils implements AggregateValueService {
 
   summarizeStats(values: SystemAggregatedStatistics, name: string): SystemAggregatedStatistics {
     const summarizedValues = new SystemAggregatedStatistics(name);
-    summarizedValues.setValue(SystemMetricType.SUBSCRIBED_CAPACITY, values.getValue(SystemMetricType.SUBSCRIBED_CAPACITY).value, values.getValue(SystemMetricType.SUBSCRIBED_CAPACITY).unit);
-    summarizedValues.setValue(SystemMetricType.PHYSICAL_CAPACITY, values.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_CAPACITY).unit);
-    summarizedValues.setValue(SystemMetricType.LOGICAL_CAPACITY, values.getValue(SystemMetricType.LOGICAL_CAPACITY).value, values.getValue(SystemMetricType.LOGICAL_CAPACITY).unit);
-    summarizedValues.setValue(SystemMetricType.AVAILABLE_CAPACITY, values.getValue(SystemMetricType.AVAILABLE_CAPACITY).value, values.getValue(SystemMetricType.AVAILABLE_CAPACITY).unit);
-    summarizedValues.setValue(SystemMetricType.LOGICAL_USED, values.getValue(SystemMetricType.LOGICAL_USED).value, values.getValue(SystemMetricType.LOGICAL_USED).unit);
-    summarizedValues.setValue(SystemMetricType.LOGICAL_FREE, values.getValue(SystemMetricType.LOGICAL_FREE).value, values.getValue(SystemMetricType.LOGICAL_FREE).unit);
-    summarizedValues.setValue(SystemMetricType.PHYSICAL_USED, values.getValue(SystemMetricType.PHYSICAL_USED).value, values.getValue(SystemMetricType.PHYSICAL_USED).unit);
-    summarizedValues.setValue(SystemMetricType.PHYSICAL_FREE, values.getValue(SystemMetricType.PHYSICAL_FREE).value, values.getValue(SystemMetricType.PHYSICAL_FREE).unit);
-    summarizedValues.setValue(SystemMetricType.NET_TOTAL, values.getValue(SystemMetricType.NET_TOTAL).value, values.getValue(SystemMetricType.NET_TOTAL).unit);
-    summarizedValues.setValue(SystemMetricType.NET_USED, values.getValue(SystemMetricType.NET_USED).value, values.getValue(SystemMetricType.NET_USED).unit);
-    summarizedValues.setValue(SystemMetricType.NET_FREE, values.getValue(SystemMetricType.NET_FREE).value, values.getValue(SystemMetricType.NET_FREE).unit);
-    summarizedValues.setValue(SystemMetricType.PHYSICAL_SUBS_PERC, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
-    summarizedValues.setValue(SystemMetricType.LOGICAL_SUBS_PERC, values.getValue(SystemMetricType.LOGICAL_SUBS_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
-    summarizedValues.setValue(SystemMetricType.NET_SUBS_PERC, values.getValue(SystemMetricType.NET_SUBS_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
-    summarizedValues.setValue(SystemMetricType.LOGICAL_USED_PERC, values.getValue(SystemMetricType.LOGICAL_USED_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
-    summarizedValues.setValue(SystemMetricType.PHYSICAL_USED_PERC, values.getValue(SystemMetricType.PHYSICAL_USED_PERC).value / summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY).value, values.getValue(SystemMetricType.PHYSICAL_SUBS_PERC).unit);
-    summarizedValues.setValue(SystemMetricType.NET_USED_PERC, values.getValue(SystemMetricType.NET_USED_PERC).value / summarizedValues.getValue(SystemMetricType.NET_TOTAL).value, values.getValue(SystemMetricType.NET_USED_PERC).unit);
-    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1D, values.getValue(SystemMetricType.CAPACITY_CHANGE_1D).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1D).unit);
-    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1W, values.getValue(SystemMetricType.CAPACITY_CHANGE_1W).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1W).unit);
-    summarizedValues.setValue(SystemMetricType.CAPACITY_CHANGE_1M, values.getValue(SystemMetricType.CAPACITY_CHANGE_1M).value, values.getValue(SystemMetricType.CAPACITY_CHANGE_1M).unit);
-    summarizedValues.setValue(SystemMetricType.COMPRESS_RATIO, values.getValue(SystemMetricType.COMPRESS_RATIO).value / (this.physicalCapacityCompRatio === 0 ? 1 : this.physicalCapacityCompRatio), values.getValue(SystemMetricType.COMPRESS_RATIO).unit);
-    summarizedValues.setValue(SystemMetricType.DEDUP_RATIO, values.getValue(SystemMetricType.DEDUP_RATIO).value / (this.physicalCapacityDedupRatio === 0 ? 1 : this.physicalCapacityDedupRatio), values.getValue(SystemMetricType.DEDUP_RATIO).unit);
-    summarizedValues.setValue(SystemMetricType.TOTAL_SAVING_EFFECT, values.getValue(SystemMetricType.TOTAL_SAVING_EFFECT).value / (this.physicalCapacityTotalSaving === 0 ? 1 : this.physicalCapacityTotalSaving), values.getValue(SystemMetricType.TOTAL_SAVING_EFFECT).unit);
+    this.setSummarizeValue(SystemMetricType.SUBSCRIBED_CAPACITY, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.PHYSICAL_CAPACITY, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.LOGICAL_CAPACITY, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.AVAILABLE_CAPACITY, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.LOGICAL_USED, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.LOGICAL_FREE, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.PHYSICAL_USED, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.PHYSICAL_FREE, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.NET_TOTAL, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.NET_USED, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.NET_FREE, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.CAPACITY_CHANGE_1D, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.CAPACITY_CHANGE_1W, values, summarizedValues);
+    this.setSummarizeValue(SystemMetricType.CAPACITY_CHANGE_1M, values, summarizedValues);
+    const physicalCapacitySummarized = this.getSafeValue(summarizedValues.getValue(SystemMetricType.PHYSICAL_CAPACITY));
+    this.setSummarizeValue(SystemMetricType.PHYSICAL_SUBS_PERC, values, summarizedValues, physicalCapacitySummarized);
+    this.setSummarizeValue(SystemMetricType.LOGICAL_SUBS_PERC, values, summarizedValues, physicalCapacitySummarized);
+    this.setSummarizeValue(SystemMetricType.NET_SUBS_PERC, values, summarizedValues, physicalCapacitySummarized);
+    this.setSummarizeValue(SystemMetricType.LOGICAL_USED_PERC, values, summarizedValues, physicalCapacitySummarized);
+    this.setSummarizeValue(SystemMetricType.PHYSICAL_USED_PERC, values, summarizedValues, physicalCapacitySummarized);
+    const netTotalSummarized = this.getSafeValue(summarizedValues.getValue(SystemMetricType.NET_TOTAL));
+    this.setSummarizeValue(SystemMetricType.NET_USED_PERC, values, summarizedValues, netTotalSummarized);
+    const compRatio = (this.physicalCapacityCompRatio === 0 ? 1 : this.physicalCapacityCompRatio);
+    this.setSummarizeValue(SystemMetricType.COMPRESS_RATIO, values, summarizedValues, compRatio);
+    const dedupRatio = (this.physicalCapacityDedupRatio === 0 ? 1 : this.physicalCapacityDedupRatio);
+    this.setSummarizeValue(SystemMetricType.DEDUP_RATIO, values, summarizedValues, dedupRatio);
+    const totalSaving = (this.physicalCapacityTotalSaving === 0 ? 1 : this.physicalCapacityTotalSaving);
+    this.setSummarizeValue(SystemMetricType.TOTAL_SAVING_EFFECT, values, summarizedValues, totalSaving);
     return summarizedValues;
   }
 
@@ -176,13 +166,44 @@ export class SasiWeightedArithmeticMeanUtils implements AggregateValueService {
     return Number(metric.value);
   }
 
-  getUnitByName(metrics: SasiRow, type: SystemMetricType) {
-    const metric = this.getMetricByName(metrics, type);
-    if (metric == null || metric.rawData == null) {
-      return null;
+  setPartialValue(metricType: SystemMetricType, values: SasiRow, summarizeValue, meanValue = 1, minimalValue = null) {
+    const metric = this.getMetricByName(values, metricType);
+    let computedValue = 0;
+    if (metric !== null) {
+      if (minimalValue === null || metric.value > minimalValue) {
+        if (metricType === SystemMetricType.COMPRESS_RATIO) {
+          this.physicalCapacityCompRatio += meanValue;
+        }
+        if (metricType === SystemMetricType.DEDUP_RATIO) {
+          this.physicalCapacityDedupRatio += meanValue;
+        }
+        if (metricType === SystemMetricType.TOTAL_SAVING_EFFECT) {
+          this.physicalCapacityTotalSaving += meanValue;
+        }
+        computedValue = Number(metric.value) * meanValue;
+      } else {
+        computedValue = 0;
+      }
+
+      summarizeValue.setValue(metricType, computedValue, metric.rawData.unit);
     }
-    return metric.rawData.unit;
   }
 
+  setSummarizeValue(metricType: SystemMetricType, values: SystemAggregatedStatistics, summarizedValue, meanValue = null) {
+    const metric = values.getValue(metricType);
+    if (metric !== undefined) {
+      if (meanValue != null) {
+        summarizedValue.setValue(metricType, metric.value / meanValue, metric.unit);
+      } else {
+        summarizedValue.setValue(metricType, metric.value, metric.unit);
+      }
+    }
+  }
 
+  getSafeValue(metric: Metric) {
+    if (metric === undefined) {
+      return 0;
+    }
+    return metric.value;
+  }
 }

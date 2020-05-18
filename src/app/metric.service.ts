@@ -13,6 +13,8 @@ import {SystemMetricType} from './common/models/metrics/system-metric-type.enum'
 import {GraphDataDto} from './common/models/dtos/graph-data.dto';
 import {OperationType} from './common/models/metrics/operation-type.enum';
 import {SystemPool} from './common/models/system-pool.vo';
+import {StorageEntityResponseDto} from './common/models/dtos/storage-entity-response.dto';
+import {StorageEntityMetricDto} from './common/models/dtos/storage-entity-metric.dto';
 
 export enum PeriodType {
   DAY = 'DAY',
@@ -49,12 +51,12 @@ export interface ThreeDimensionValue {
 })
 export class MetricService {
 
-  infrastructure: Datacenter[];
+  infrastructure: StorageEntityResponseDto[];
   dataCenterObservable = null;
   currentDate: Date = new Date();
 
   constructor(private http: HttpClient) {
-    this.getDatacenters();
+    this.getDataCenters();
   }
 
   getInfrastructureStats(): Observable<InfrastructureDto> {
@@ -62,88 +64,88 @@ export class MetricService {
     return this.http.get<InfrastructureDto>(url);
   }
 
-  getDatacenters(): Observable<DatacenterDto> {
+  getDataCenters(): Observable<StorageEntityResponseDto[]> {
     if (this.dataCenterObservable !== null) {
       return this.dataCenterObservable;
     }
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters');
-    this.dataCenterObservable = this.http.get<DatacenterDto>(url);
+    this.dataCenterObservable = this.http.get<StorageEntityResponseDto[]>(url);
     this.dataCenterObservable.subscribe(
-      dto => this.infrastructure = dto.datacenters
+      dto => this.infrastructure = dto
     );
     return this.dataCenterObservable;
   }
 
   public getSystemName(datacenterId: number, systemId: number): string {
-    const datacenterObj = this.infrastructure.find(datacenter => datacenter.id === datacenterId);
+    const datacenterObj = this.infrastructure.find(datacenter => datacenter.storageEntity.id === datacenterId);
     if (datacenterObj === undefined) {
       return '';
     }
-    const systemObj = datacenterObj.systems.find(system => system.id === systemId);
+    const systemObj = datacenterObj.storageEntity.children.find(system => system.id === systemId);
     if (systemObj === undefined) {
       return '';
     }
-    return datacenterObj.systems.find(system => system.id === systemId).name;
+    return systemObj.name;
   }
 
-  getPerformanceStatistics(id: number, period: PeriodType): Observable<DatacenterListDto> {
+  getPerformanceStatistics(id: number, period: PeriodType): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/performance', period);
     } else {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/performance', period);
     }
-    return this.http.get<DatacenterListDto>(url);
+    return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getCapacityStatistics(id: number): Observable<DatacenterCapacityListDto> {
+  getCapacityStatistics(id: number): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/capacity');
     } else {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/capacity');
     }
-    return this.http.get<DatacenterCapacityListDto>(url);
+    return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getDpSlaStatistics(id: number, period: PeriodType): Observable<DatacenterCapacityListDto> {
+  getDpSlaStatistics(id: number, period: PeriodType): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/sla', period);
     } else {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/sla', period);
     }
-    return this.http.get<DatacenterCapacityListDto>(url);
+    return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getAdaptersStatistics(id: number, period: PeriodType): Observable<DatacenterCapacityListDto> {
+  getAdaptersStatistics(id: number, period: PeriodType): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/adapters', period);
     } else {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/adapters', period);
     }
-    return this.http.get<DatacenterCapacityListDto>(url);
+    return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getGlobalCapacityStatistics(): Observable<GlobalCapacityStatisticsDto> {
+  getGlobalCapacityStatistics(): Observable<StorageEntityMetricDto[]> {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/capacity');
-    return this.http.get<GlobalCapacityStatisticsDto>(url);
+    return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getGlobalHostGroupCapacityStatistics(): Observable<GlobalCapacityStatisticsDto> {
+  getGlobalHostGroupCapacityStatistics(): Observable<StorageEntityMetricDto[]> {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/infrastructure/host-group-capacity');
-    return this.http.get<GlobalCapacityStatisticsDto>(url);
+    return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
-  getHostGroupCapacityStatistics(id: number): Observable<DatacenterCapacityListDto> {
+  getHostGroupCapacityStatistics(id: number): Observable<StorageEntityMetricDto[]> {
     let url;
     if (id !== undefined && id !== -1) {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/' + id + '/host-groups');
     } else {
       url = this.buildUrl(environment.metricsBaseUrl, '/v1/datacenters/host-groups');
     }
-    return this.http.get<DatacenterCapacityListDto>(url);
+    return this.http.get<StorageEntityMetricDto[]>(url);
   }
 
   getGraphData(types: SystemMetricType[]): Observable<GraphDataDto> {

@@ -3,6 +3,7 @@ import {SystemDetail} from '../models/system-detail.vo';
 import {SasiCell, SasiRow} from '../components/sasi-table/sasi-table.component';
 import {SystemMetricType} from '../models/metrics/system-metric-type.enum';
 import {Metric} from '../models/metrics/metric.vo';
+import {StorageEntityMetricDto} from '../models/dtos/storage-entity-metric.dto';
 
 // TODO move to the global statistics module
 @Injectable({
@@ -13,7 +14,7 @@ import {Metric} from '../models/metrics/metric.vo';
 })
 export class SystemPool2SasiTablePipe implements PipeTransform {
 
-  transform(systems: SystemDetail[], context: string, linkId?: string): SasiRow[] {
+  transform(systems: StorageEntityMetricDto[], context: string, linkId?: string): SasiRow[] {
     return systems.map(
       system => {
         const row = new SasiRow();
@@ -22,11 +23,13 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
           linkIdInput = linkId;
         }
         row.cells['name'] = new SasiCell(system.name, {id: linkIdInput, iFrameLink: context, value: system.name});
-        system.metrics.forEach(
-          metric => row.cells[metric.type] = new SasiCell(metric.value, metric)
-        );
-        if (system.ports !== undefined) {
-          row.subRows = this.transform(system.ports, null, null);
+        if (system.metrics !== undefined) {
+          system.metrics.forEach(
+            metric => row.cells[metric.type] = new SasiCell(metric.value, metric)
+          );
+        }
+        if (system.children !== undefined) {
+          row.subRows = this.transform(system.children, null, null);
           const metric = new Metric();
           metric.value = this.countPortImbalances(row.subRows);
           metric.type = SystemMetricType.PORT_IMBALANCE_EVENTS;

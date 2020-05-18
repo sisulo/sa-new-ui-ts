@@ -13,6 +13,8 @@ import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple
 import {TimeFormatterComponent} from '../../formatters/time-formatter/time-formatter.component';
 import {SumValueServiceImpl} from '../../utils/sum-value-service.impl';
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
+import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
+import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
 
 
 @Component({
@@ -30,7 +32,7 @@ export class DpSlaComponent implements OnInit, OnDestroy {
 
   options: SasiTableOptions = new SasiTableOptions();
 
-  data: SystemPool[] = []; // TODO duplicated in all Global statistics - grouped
+  data: StorageEntityMetricDto[] = []; // TODO duplicated in all Global statistics - grouped
   currentDataCenterId; // TODO duplicated iin all Global statistics
 
   constructor(
@@ -105,18 +107,11 @@ export class DpSlaComponent implements OnInit, OnDestroy {
     this.periodService.announceEnablePeriod(false);
   }
 
-  getTableData(id: number): any[] { // TODO duplicated for all GS sasi tables
+  getTableData(id: number): StorageEntityMetricDto[] { // TODO duplicated for all GS sasi tables
     this.currentDataCenterId = id;
     this.metricService.getDpSlaStatistics(id, this.currentPeriod).subscribe(
-      data => {
-        this.data = [];
-
-        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
-      },
-      error => {
-        console.log(error);
-        this.data = [];
-      }
+      data => this.data = MetricHandlerUtils.success(data),
+      error => this.data = MetricHandlerUtils.error(error)
     );
     return this.data;
   }

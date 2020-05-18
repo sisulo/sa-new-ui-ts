@@ -13,6 +13,8 @@ import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithme
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 import {LocalStorageService} from 'ngx-store';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
+import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
+import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
 
 @Component({
   selector: 'app-physical-statistics',
@@ -42,7 +44,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     SystemMetricType.TOTAL_SAVING_EFFECT,
 
   ];
-  data: SystemPool[] = [];
+  data: StorageEntityMetricDto[] = [];
 
   aggregatedStats: SystemAggregatedStatistics[] = new Array<SystemAggregatedStatistics>();
 
@@ -385,16 +387,10 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     );
   }
 
-  getTableData(id: number): SystemPool[] {
+  getTableData(id: number): StorageEntityMetricDto[] {
     this.metricService.getCapacityStatistics(id).subscribe(
-      data => {
-        this.data = [];
-        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
-      },
-      error => {
-        console.log(error);
-        this.data = [];
-      }
+      data => this.data = MetricHandlerUtils.success(data),
+      error => this.data = MetricHandlerUtils.error(error)
     );
     return this.data;
   }

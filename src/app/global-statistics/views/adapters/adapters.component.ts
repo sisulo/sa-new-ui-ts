@@ -15,6 +15,8 @@ import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
 import {AdapterDisbalanceFormatterComponent} from '../../formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 import {EmptyFormatterComponent} from '../../formatters/empty-formatter/empty-formatter.component';
+import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
+import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
 
 // TODO separate components, pipes, utils to own directories
 @Component({
@@ -31,7 +33,7 @@ export class AdaptersComponent implements OnInit, OnDestroy {
   currentPeriod: PeriodType = PeriodType.WEEK;
 
   options: SasiTableOptions = new SasiTableOptions();
-  data: SystemPool[] = [];
+  data: StorageEntityMetricDto[] = [];
   currentDataCenterId;
 
   constructor(
@@ -110,20 +112,16 @@ export class AdaptersComponent implements OnInit, OnDestroy {
     this.periodService.announceEnablePeriod(false);
   }
 
-  getTableData(id: number): any[] { // TODO duplicated for all GS sasi tables
+  getTableData(id: number): StorageEntityMetricDto[] { // TODO duplicated for all GS sasi tables
     this.currentDataCenterId = id;
     this.metricService.getAdaptersStatistics(id, this.currentPeriod).subscribe(
       data => {
-        this.data = [] as SystemPool[];
-        data.datacenters.forEach(datacenter => this.data = [...this.data, ...datacenter.systems]);
+        this.data = MetricHandlerUtils.success(data);
         // TODO change this filtering. checking first metric for non-null is not good, and make it as some named function for readability
-        this.data.forEach(system => system.pools.forEach(pool => pool.ports = pool.ports.filter(port => port.metrics.length > 0 && port.metrics[0].value > 0)));
-        this.data.forEach(system => system.pools = system.pools.filter(pool => (pool.metrics.length > 0 && pool.metrics[0].value > 0) || pool.ports.length > 0));
+        this.data.forEach(system => system.children.forEach(pool => pool.children = pool.children.filter(port => port.metrics.length > 0 && port.metrics[0].value > 0)));
+        this.data.forEach(system => system.children = system.children.filter(pool => (pool.metrics.length > 0 && pool.metrics[0].value > 0) || pool.children.length > 0));
       },
-      error => {
-        console.log(error);
-        this.data = [];
-      }
+      error => this.data = MetricHandlerUtils.error(error)
     );
     return this.data;
   }
