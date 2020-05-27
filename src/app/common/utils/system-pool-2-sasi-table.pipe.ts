@@ -28,7 +28,7 @@ export class SystemPool2SasiTablePipe implements PipeTransform {
             metric => row.cells[metric.type] = new SasiCell(metric.value, metric)
           );
         }
-        if (system.children !== undefined) {
+        if (system.children !== undefined && system.children.length > 0) {
           row.subRows = this.transform(system.children, null, null);
           const metric = new Metric();
           metric.value = this.countPortImbalances(row.subRows);

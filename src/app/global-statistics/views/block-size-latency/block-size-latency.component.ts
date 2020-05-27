@@ -91,7 +91,7 @@ export class BlockSizeLatencyComponent implements OnInit {
 
   private setPoolFilters(data: LatencyMetadata) {
     return data.systems.map(
-      system => system.pools.map(pool => {
+      system => system.children.map(pool => {
         return {id: pool.id, name: pool.name + '@' + system.name, systemId: system.id};
       })
     ).reduce((previousValue, currentValue) => previousValue.concat(...currentValue));
