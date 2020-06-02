@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Datacenter} from '../common/models/datacenter.vo';
 import {MetricService} from '../metric.service';
 import {BusService} from './bus.service';
@@ -7,7 +7,7 @@ import {BusService} from './bus.service';
 @Component({
   selector: 'app-global-statistics',
   templateUrl: './global-statistics.component.html',
-  styleUrls: ['./global-statistics.component.css']
+  styleUrls: ['./global-statistics.component.css'],
 })
 export class GlobalStatisticsComponent implements OnInit {
 
