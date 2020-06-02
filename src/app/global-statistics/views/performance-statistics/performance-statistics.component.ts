@@ -123,8 +123,10 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
     );
     this.periodService.periodAnnouncement$.subscribe(
       period => {
-        this.currentPeriod = period;
-        this.getTableData(this.currentDataCenterId);
+        if (this.currentPeriod !== period) {
+          this.currentPeriod = period;
+          this.getTableData(this.currentDataCenterId);
+        }
       }
     );
     this.periodService.announceEnablePeriod(true);
