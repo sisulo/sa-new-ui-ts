@@ -25,6 +25,7 @@ export class SideMenuComponent implements OnInit {
     {id: 8, linkPart: 'capacityAnalysis', name: 'Capacity Analysis'}
   ];
   globalStatisticsLinks = [];
+  storageConfigurationLinks = [];
   private defaultDataCenter: number;
 
   constructor(private metricService: MetricService) {
@@ -42,6 +43,7 @@ export class SideMenuComponent implements OnInit {
     if (dataCenters.length > 0) {
       this.defaultDataCenter = dataCenters[0].storageEntity.id;
       this.setGlobalStatisticsLinks();
+      this.setSystemConfigurationLinks();
     }
   }
 
@@ -54,6 +56,12 @@ export class SideMenuComponent implements OnInit {
       {id: 5, linkPart: `/global-statistics/adapters`, name: 'CHA&Port Imbalances'},
       {id: 6, linkPart: `/global-statistics/host-group-capacity`, name: 'VMware Capacity'},
       {id: 7, linkPart: `/global-statistics/latency`, name: 'Latency Analysis'},
+    ];
+  }
+
+  private setSystemConfigurationLinks() {
+    this.storageConfigurationLinks = [
+      {id: 1, linkPart: `/storage-config/locations`, name: 'Systems by locations'},
     ];
   }
 

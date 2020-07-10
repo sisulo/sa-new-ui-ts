@@ -22,6 +22,7 @@ import {BarChartComponent} from './components/dashboard/charts/bar-chart/bar-cha
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {HttpLoading} from './http-loading.interceptor';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import {StorageConfigurationModule} from './storage-configuration/storage-configuration.module';
 
 export const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: HttpLoading, multi: true},
@@ -51,7 +52,7 @@ export const httpInterceptorProviders = [
     SaCommonModule,
     NgApexchartsModule,
     NgxSpinnerModule,
-    
+    StorageConfigurationModule
   ],
   providers: [SystemPool2SasiGroupTablePipe, httpInterceptorProviders],
   bootstrap: [AppComponent]

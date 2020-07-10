@@ -13,6 +13,13 @@ const routes: Routes = [
   },
   {path: 'iframe/:url', component: IframeComponent},
   {
+    path: 'storage-config',
+    loadChildren: './storage-configuration/storage-configuration.module#StorageConfigurationModule',
+    data: {
+      breadcrumb: 'Storage Configuration'
+    }
+  },
+  {
     path: 'global-statistics',
     loadChildren: './global-statistics/global-statistics.module#GlobalStatisticsModule',
   },

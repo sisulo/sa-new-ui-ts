@@ -45,6 +45,7 @@ export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
+    console.log(this.data);
   }
 
   /* HIGHLIGHTNING */

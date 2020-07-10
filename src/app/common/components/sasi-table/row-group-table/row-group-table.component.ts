@@ -91,7 +91,9 @@ export class RowGroupTableComponent implements OnInit {
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
-    this.aggregateValues(this.selectedRows);
+    if (this.options.aggregateValuesService !== undefined && this.options.aggregateValuesService !== null) {
+      this.aggregateValues(this.selectedRows);
+    }
   }
 
   addCollapsed(systemName: string) {
@@ -128,7 +130,7 @@ export class RowGroupTableComponent implements OnInit {
 
   onSelectRow(selectedRows: Array<SelectedRow>) {
     this.selectedRows = selectedRows;
-    if (this.options.aggregateValuesService !== undefined) {
+    if (this.options.aggregateValuesService !== undefined && this.options.aggregateValuesService !== null) {
       this.aggregateValues(selectedRows);
     }
   }

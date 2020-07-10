@@ -161,10 +161,21 @@ export class MetricService {
   }
 
   getLatencyData(poolIdsIn: number[], datesIn: string[], operationTypes: string[], blockSizes: number[], latencies: number[]) {
-    const request: LatencyFilter = {operations: operationTypes, dates: datesIn, poolIds: poolIdsIn, latencies: latencies, blockSizes: blockSizes};
+    const request: LatencyFilter = {
+      operations: operationTypes,
+      dates: datesIn,
+      poolIds: poolIdsIn,
+      latencies: latencies,
+      blockSizes: blockSizes
+    };
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/latency/data');
     const headersParams = new HttpHeaders({'Content-Type': 'application/json'});
     return this.http.post<OperationData[]>(url, request, {headers: headersParams});
+  }
+
+  getSystemsDetail() {
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v2/storage-entities');
+    return this.http.get<StorageEntityResponseDto[]>(url);
   }
 
   getLatencyMetadata() {

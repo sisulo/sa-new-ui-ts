@@ -32,6 +32,8 @@ import {AdapterDisbalanceFormatterComponent} from '../global-statistics/formatte
 import {AlertInfoBoxComponent} from './components/info-box/alert-info-box.component';
 import {EmptyFormatterComponent} from '../global-statistics/formatters/empty-formatter/empty-formatter.component';
 import {ColumnComponent} from './components/sasi-table/column/column.component';
+import {StorageEntity2SasiGroupTablePipe} from './utils/storage-entity-2-sasi-group-table.pipe';
+import {StorageEntityDetail2SasiTablePipe} from './utils/storage-entity-detail-2-sasi-table.pipe';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import {ColumnComponent} from './components/sasi-table/column/column.component';
     RowDynamicComponent,
     SmallBoxComponent,
     SystemPool2SasiGroupTablePipe,
+    StorageEntity2SasiGroupTablePipe,
+    StorageEntityDetail2SasiTablePipe,
     RowGroupTableComponent,
     KnobSaComponent,
     Ng2KnobDirective,
@@ -67,6 +71,8 @@ import {ColumnComponent} from './components/sasi-table/column/column.component';
     InfoBoxComponent,
     SystemPool2SasiTablePipe,
     SystemPool2SasiGroupTablePipe,
+    StorageEntity2SasiGroupTablePipe,
+    StorageEntityDetail2SasiTablePipe,
     SasiTableComponent,
     KnobSaComponent,
     SmallBoxComponent,

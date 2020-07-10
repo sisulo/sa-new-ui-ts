@@ -418,6 +418,7 @@ export class SasiTableComponent implements OnInit {
   }
 
   async ngOnInit() {
+    console.log(this.data);
     this.options = Object.assign(this.defaultOptions, this.tableOptions);
     this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
       data => this.selectedRows = data.newValue

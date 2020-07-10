@@ -1,3 +1,5 @@
+import {StorageEntityDetailResponseDto} from './storage-entity-detail-response.dto';
+
 export enum StorageEntityType {
   DATA_CENTER = 1,
   SYSTEM,
@@ -15,4 +17,5 @@ export class Owner {
   serialNumber: string;
   parent: Owner;
   children: Owner[];
+  detail: StorageEntityDetailResponseDto;
 }
