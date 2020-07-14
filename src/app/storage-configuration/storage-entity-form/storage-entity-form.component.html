@@ -1,0 +1,67 @@
+<div *ngIf="displayForm" class="modal fade in" id="modal-default" style="display: block; padding-right: 15px;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" (click)="closeForm()">×</span></button>
+        <h4 class="modal-title">Add / Edit System</h4>
+      </div>
+      <div class="modal-body">
+        <form role="form">
+          <div class="box-body">
+            <div class="col-md-12 form-group">
+              <label for="datacenter">Datacenter:</label>
+              <ng-select id="datacenter" [items]="dataCenterList"
+                         [(ngModel)]="data.parentId" name="parentId">
+              </ng-select>
+            </div>
+            <div class="col-md-12 form-group">
+              <label for="name">Name: </label>
+              <input id="name" class="form-control" type="text" [(ngModel)]="data.name" name="name">
+            </div>
+            <div class="col-md-12 form-group">
+              <div class="">
+                <label for="serial">Serial Number: </label>
+              </div>
+              <div class="col-md-2">
+                <input id="prefix" class="form-control" type="text" [(ngModel)]="data.prefixReferenceId"
+                       name="prefixReferenceId"/>
+              </div>
+              <div class="col-md-2"><input id="serial" class="form-control" type="text" [(ngModel)]="data.serialNumber"
+                                           name="serialNumber"/></div>
+            </div>
+            <div class="col-md-12 form-group">
+              <label for="model">Model: </label>
+              <input id="model" class="form-control" type="text" [(ngModel)]="data.arrayModel" name="arrayModel">
+            </div>
+            <div class="col-md-12 form-group">
+              <label for="dkc">Dkc: </label>
+              <input id="dkc" class="form-control" type="text" [(ngModel)]="data.dkc" name="dkc">
+            </div>
+            <div class="col-md-12 form-group">
+              <label for="room">Room: </label>
+              <input id="room" class="form-control" type="text" [(ngModel)]="data.room" name="room">
+            </div>
+            <div class="col-md-12 form-group">
+              <label for="rack">Rack: </label>
+              <input id="rack" class="form-control" type="text" [(ngModel)]="data.rack" name="rack">
+            </div>
+            <div class="col-md-12 form-group">
+              <label for="managementIp">Management IP: </label>
+              <input id="managementIp" class="form-control" type="text" [(ngModel)]="data.managementIp" name="managementIp">
+            </div>
+          </div>
+          <!-- /.box-body -->
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" (click)="closeForm()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+

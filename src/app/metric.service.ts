@@ -15,6 +15,8 @@ import {OperationType} from './common/models/metrics/operation-type.enum';
 import {SystemPool} from './common/models/system-pool.vo';
 import {StorageEntityResponseDto} from './common/models/dtos/storage-entity-response.dto';
 import {StorageEntityMetricDto} from './common/models/dtos/storage-entity-metric.dto';
+import {StorageEntityRequestDto} from './common/models/dtos/storage-entity-request.dto';
+import {StorageEntityDetailRequestDto} from './common/models/dtos/storage-entity-detail-request.dto';
 
 export enum PeriodType {
   DAY = 'DAY',
@@ -181,6 +183,16 @@ export class MetricService {
   getLatencyMetadata() {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v1/latency/metadata');
     return this.http.get<LatencyMetadata>(url);
+  }
+
+  createStorageEntity(dto: StorageEntityRequestDto) {
+    const url = this.buildUrl(environment.metricsBaseUrl, '/v2/storage-entities');
+    return this.http.post<StorageEntityResponseDto>(url, dto);
+  }
+
+  updateStorageEntity(id: number, dto: StorageEntityDetailRequestDto) {
+    const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id;
+    return this.http.put<StorageEntityResponseDto>(url, dto);
   }
 
   private buildUrl(baseUrl, basePath, period?) {

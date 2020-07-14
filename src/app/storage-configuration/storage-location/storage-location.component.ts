@@ -16,6 +16,7 @@ export class StorageLocationComponent implements OnInit {
   data: StorageEntityResponseDto[] = [];
   options: SasiTableOptions = new SasiTableOptions();
   displayForm = false;
+  datacenterList = [];
 
   constructor(private metricService: MetricService) {
   }
@@ -91,6 +92,11 @@ export class StorageLocationComponent implements OnInit {
     // this.options.sortService = new GroupSortAggregateValueImpl();
     this.metricService.getSystemsDetail().subscribe(data => {
       this.data = data;
+      this.datacenterList = this.data.map(datacenter => {
+        return {
+          value: datacenter.storageEntity.id, label: datacenter.storageEntity.name
+        };
+      });
       console.log(data);
     });
   }
@@ -105,7 +111,8 @@ export class StorageLocationComponent implements OnInit {
   openForm() {
     this.displayForm = true;
   }
-  closeForm() {
-    this.displayForm = false;
+
+  changeFormState(displayed: boolean) {
+    this.displayForm = displayed;
   }
 }

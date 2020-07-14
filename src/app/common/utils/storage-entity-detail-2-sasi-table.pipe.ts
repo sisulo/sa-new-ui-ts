@@ -14,6 +14,7 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
       system => {
         const row = new SasiRow();
         row.cells['name'] = new SasiCell(system.name, {value: system.name});
+        row.cells['id'] = new SasiCell(system.id, {value: system.id});
         if (system.detail !== undefined) {
           const detail = system.detail;
           row.cells['arrayModel'] = new SasiCell(detail.arrayModel, {value: detail.arrayModel});

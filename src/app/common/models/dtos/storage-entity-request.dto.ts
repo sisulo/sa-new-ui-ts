@@ -3,6 +3,6 @@ import {StorageEntityType} from './owner.dto';
 export class StorageEntityRequestDto {
   name: string;
   serialNumber: string;
-  type: StorageEntityType;
+  type: string;
   parentId: number;
 }

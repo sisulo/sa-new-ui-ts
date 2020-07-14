@@ -1,74 +1,22 @@
-<!--<div class="col-md-12">-->
-<!--  <div class="grid">-->
-<!--    <div></div>-->
-<!--    <div>Model</div>-->
-<!--    <div>Name</div>-->
-<!--    <div>Physical Serial Number</div>-->
-<!--    <div class="in-header">-->
-<!--      <div class="top">-->
-<!--        <div>Virtual DKCs</div>-->
-<!--      </div>-->
-<!--      <div class="bottom">-->
-<!--        <div>Default</div>-->
-<!--        <div>Migration</div>-->
-<!--        <div>MAV / HA</div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div>Management IP</div>-->
-<!--    <div>Rack</div>-->
-<!--    <div>Room</div>-->
-<!--  </div>-->
-<!--  <div *ngFor="let storageEntity of data; let i = index; " class="data-grid">-->
-<!--    <div class="data-center-column">{{storageEntity.storageEntity.name}}</div>-->
-<!--    <div>-->
-
-<!--      <div *ngFor="let system of storageEntity.storageEntity.children" class="sub-grid">-->
-<!--        <div>{{getValue(system, 'arrayModel')}}</div>-->
-<!--        <div>{{system.name}}</div>-->
-<!--        <div>{{getValue(system, 'prefixReferenceId')}}-{{system.serialNumber}}</div>-->
-<!--        <div>{{getValue(system, 'dkcDefault')}}</div>-->
-<!--        <div>{{getValue(system, 'dkcMigration')}}</div>-->
-<!--        <div>{{getValue(system, 'dkcMvaHa')}}</div>-->
-<!--        <div>{{getValue(system, 'managementIp')}}</div>-->
-<!--        <div>{{getValue(system, 'room')}}</div>-->
-<!--        <div>{{getValue(system, 'rack')}}</div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
 <div class="box" *ngIf="data.length > 0">
   <div class="box-header">
     <h3 class="box-title">Storage Locations</h3>
   </div>
   <div class="box-body">
-
-    <button type="button" class="btn btn-default" (click)="openForm()">
-      Add system
-    </button>
-    <div *ngIf="displayForm" class="modal fade in" id="modal-default" style="display: block; padding-right: 15px;">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span></button>
-            <h4 class="modal-title">Add / Edit System</h4>
-          </div>
-          <div class="modal-body">
-            <form *ngForm=""></form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default pull-left" (click)="closeForm()">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-        <!-- /.modal-content -->
-      </div>
-      <!-- /.modal-dialog -->
-    </div>
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-
+          <button type="button" class="btn btn-default" (click)="openForm()">
+            Add system
+          </button>
+        </div>
+      </div>
+    </div>
+    <app-storage-entity-form [dataCenterList]="datacenterList" [displayForm]="displayForm"
+                             (displayed)="changeFormState($event)"></app-storage-entity-form>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
           <app-sasi-table [data]="data | storageEntity2SasiGroupTable: 'dc'" [tableOptions]="options"></app-sasi-table>
         </div>
       </div>

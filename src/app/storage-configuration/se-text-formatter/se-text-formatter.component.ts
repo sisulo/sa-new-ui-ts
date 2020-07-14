@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {SystemMetric} from '../../common/models/metrics/system-metric.vo';
-import {SasiColumn} from '../../common/components/sasi-table/sasi-table.component';
+import {SasiColumn, SasiRow} from '../../common/components/sasi-table/sasi-table.component';
 
 @Component({
   selector: 'app-se-text-formatter',
@@ -12,6 +12,7 @@ export class SeTextFormatterComponent implements OnInit {
   @Input() label;
   @Input() public data: SystemMetric;
   @Input() public column: SasiColumn;
+  @Input() public rowData: SasiRow;
   constructor() { }
 
   ngOnInit() {

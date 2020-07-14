@@ -7,7 +7,10 @@ export class UrlCreator {
   }
 
   static url(systemId: number, linkPart: string) {
-    const systemPrefix = systemId.toString().length === 1 ? '0' + systemId : systemId;
-    return this.hrefEncode(environment.iframeBaseUrl + systemPrefix + linkPart);
+    if (systemId !== undefined) {
+      const systemPrefix = systemId.toString().length === 1 ? '0' + systemId : systemId;
+      return this.hrefEncode(environment.iframeBaseUrl + systemPrefix + linkPart);
+    }
+    return '';
   }
 }
