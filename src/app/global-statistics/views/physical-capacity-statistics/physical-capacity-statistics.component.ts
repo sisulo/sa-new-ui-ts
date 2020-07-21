@@ -133,12 +133,14 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.COMPRESS_RATIO)
-        .withLabel('Comp. Ratio')
-        .withColumnTooltipText('Compression Ratio of the FMD\'s in the DP Pool. Summary calculation is performed on pools with compression ration >0')
+        .withIndex(SystemMetricType.TOTAL_SAVING_EFFECT)
+        .withLabel('Saving effect')
+        .withColumnTooltipText('Total saving effect of Deduplication (SW feature) + Compression (FMD\'s). Summmary calculation is performed on pools with total saving effect >1)')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(true)
+        .withTooltipText('Total Saving Effect')
+        .withShortLabel('Total')
         .withAltBorder(true)
         .build()
     );
