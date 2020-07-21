@@ -9,12 +9,13 @@ import {Owner} from '../models/dtos/owner.dto';
 })
 export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
 
-  transform(systems: Owner[], context?: string): SasiRow[] {
+  transform(systems: Owner[], parent: Owner): SasiRow[] {
     return systems.map(
       system => {
         const row = new SasiRow();
         row.cells['name'] = new SasiCell(system.name, {value: system.name});
         row.cells['id'] = new SasiCell(system.id, {value: system.id});
+        row.cells['parentId'] = new SasiCell(parent.id, {value: parent.id});
         if (system.detail !== undefined) {
           const detail = system.detail;
           row.cells['arrayModel'] = new SasiCell(detail.arrayModel, {value: detail.arrayModel});
@@ -24,6 +25,7 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
           row.cells['room'] = new SasiCell(detail.room, {value: detail.room});
           row.cells['prefixReferenceId'] = new SasiCell(detail.prefixReferenceId, {value: detail.prefixReferenceId});
           row.cells['serialNumber'] = new SasiCell(system.serialNumber, {value: detail.serialNumber});
+
         }
         return row;
       }

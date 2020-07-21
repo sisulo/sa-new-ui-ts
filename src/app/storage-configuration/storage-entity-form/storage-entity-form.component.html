@@ -7,57 +7,74 @@
         <h4 class="modal-title">Add / Edit System</h4>
       </div>
       <div class="modal-body">
-        <form role="form">
+        <form role="form" [formGroup]="form">
           <div class="box-body">
-            <div class="col-md-12 form-group">
+            <div class="col-md-12 form-group"
+                 [class.has-error]="dataCenter.invalid && (dataCenter.dirty || dataCenter.touched || submitted)">
               <label for="datacenter">Datacenter:</label>
               <ng-select id="datacenter" [items]="dataCenterList"
-                         [(ngModel)]="data.parentId" name="parentId">
+                         bindValue="value" formControlName="datacenter">
               </ng-select>
+              <span *ngIf="dataCenter.invalid && (dataCenter.dirty || dataCenter.touched || submitted)" class="help-block">Datacenter must be chosen</span>
             </div>
-            <div class="col-md-12 form-group">
+            <div class="col-md-12 form-group" [class.has-error]="name.invalid && (name.dirty || name.touched || submitted)">
               <label for="name">Name: </label>
-              <input id="name" class="form-control" type="text" [(ngModel)]="data.name" name="name">
+              <input type="text" class="form-control" formControlName="name">
+              <span *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="help-block">Name must be set</span>
             </div>
+
             <div class="col-md-12 form-group">
               <div class="">
                 <label for="serial">Serial Number: </label>
               </div>
-              <div class="col-md-2">
-                <input id="prefix" class="form-control" type="text" [(ngModel)]="data.prefixReferenceId"
-                       name="prefixReferenceId"/>
+              <div class="col-md-3">
+                <input id="prefix" class="form-control" type="text" formControlName="prefixReferenceId"/>
               </div>
-              <div class="col-md-2"><input id="serial" class="form-control" type="text" [(ngModel)]="data.serialNumber"
-                                           name="serialNumber"/></div>
+              <div class="col-md-3">
+                <input id="serial" class="form-control" type="text" formControlName="serialNumber"
+                       name="serialNumber"/>
+              </div>
             </div>
             <div class="col-md-12 form-group">
               <label for="model">Model: </label>
-              <input id="model" class="form-control" type="text" [(ngModel)]="data.arrayModel" name="arrayModel">
+              <input id="model" class="form-control" type="text" formControlName="arrayModel">
             </div>
             <div class="col-md-12 form-group">
               <label for="dkc">Dkc: </label>
-              <input id="dkc" class="form-control" type="text" [(ngModel)]="data.dkc" name="dkc">
+              <input id="dkc" class="form-control" type="text" formControlName="dkc">
             </div>
             <div class="col-md-12 form-group">
               <label for="room">Room: </label>
-              <input id="room" class="form-control" type="text" [(ngModel)]="data.room" name="room">
+              <input id="room" class="form-control" type="text" formControlName="room">
             </div>
             <div class="col-md-12 form-group">
               <label for="rack">Rack: </label>
-              <input id="rack" class="form-control" type="text" [(ngModel)]="data.rack" name="rack">
+              <input id="rack" class="form-control" type="text" formControlName="rack">
             </div>
             <div class="col-md-12 form-group">
               <label for="managementIp">Management IP: </label>
-              <input id="managementIp" class="form-control" type="text" [(ngModel)]="data.managementIp" name="managementIp">
+              <input id="managementIp" class="form-control" type="text" formControlName="managementIp">
             </div>
           </div>
-          <!-- /.box-body -->
+          <!--           /.box-body -->
         </form>
 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" (click)="closeForm()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveChanges()">Save changes</button>
+
+        <div class="btn-group">
+          <button [class.disabled]="form.invalid" type="button" class="btn btn-primary"
+                  (click)="form.valid ? saveChanges() : submitted = true">Save changes
+          </button>
+          <button type="button" [class.disabled]="form.invalid" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a (click)="form.valid ? saveChanges(true) : submitted = true">Save as new</a></li>
+          </ul>
+        </div>
       </div>
     </div>
     <!-- /.modal-content -->

@@ -6,6 +6,8 @@ import {AlertFormatterComponent} from '../../global-statistics/formatters/alert-
 import {RowGroupTableComponent} from '../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SeTextFormatterComponent} from '../se-text-formatter/se-text-formatter.component';
 import {SerialNumberFormatterComponent} from '../serial-number-formatter/serial-number-formatter.component';
+import {FormBusService} from '../form-bus.service';
+import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 
 @Component({
   selector: 'app-storage-location',
@@ -18,7 +20,8 @@ export class StorageLocationComponent implements OnInit {
   displayForm = false;
   datacenterList = [];
 
-  constructor(private metricService: MetricService) {
+  constructor(private metricService: MetricService,
+              private formBus: FormBusService) {
   }
 
   ngOnInit() {
@@ -90,15 +93,7 @@ export class StorageLocationComponent implements OnInit {
     this.options.highlightColumn = false;
     // this.options.aggregateValuesService = new SumValueServiceImpl();
     // this.options.sortService = new GroupSortAggregateValueImpl();
-    this.metricService.getSystemsDetail().subscribe(data => {
-      this.data = data;
-      this.datacenterList = this.data.map(datacenter => {
-        return {
-          value: datacenter.storageEntity.id, label: datacenter.storageEntity.name
-        };
-      });
-      console.log(data);
-    });
+    this.loadData();
   }
 
   getValue(system, property) {
@@ -109,10 +104,19 @@ export class StorageLocationComponent implements OnInit {
   }
 
   openForm() {
-    this.displayForm = true;
+    this.formBus.sendFormData(new StorageEntityVo());
   }
 
-  changeFormState(displayed: boolean) {
-    this.displayForm = displayed;
+  loadData(force: boolean = true) {
+    if (force) {
+      this.metricService.getSystemsDetail().subscribe(data => {
+        this.data = data;
+        this.datacenterList = this.data.map(datacenter => {
+          return {
+            value: datacenter.storageEntity.id, label: datacenter.storageEntity.name
+          };
+        });
+      });
+    }
   }
 }

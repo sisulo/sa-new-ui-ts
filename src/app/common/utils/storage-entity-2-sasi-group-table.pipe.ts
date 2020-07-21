@@ -19,7 +19,7 @@ export class StorageEntity2SasiGroupTablePipe implements PipeTransform {
         const data = storageEntity.storageEntity;
         groupRow.cells['name'] = new SasiCell(data.name, {id: data.name, iFrameLink: context, value: data.name});
         row.groupRow = groupRow;
-        row.rows = this.rowPipe.transform(data.children);
+        row.rows = this.rowPipe.transform(data.children, data);
         return row;
       }
     );

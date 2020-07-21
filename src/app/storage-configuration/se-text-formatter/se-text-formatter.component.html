@@ -1,3 +1,6 @@
-<div *ngIf="data != null && data != undefined" class="metric-value">
-  <span >{{getValue()}}</span>
+<div class="open-form col-md-12" (click)="openForm()">
+
+  <div *ngIf="data != null && data != undefined" class="metric-value" >
+    <span >{{getValue()}}</span>
+  </div>
 </div>
