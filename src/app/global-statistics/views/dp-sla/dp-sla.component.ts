@@ -82,6 +82,7 @@ export class DpSlaComponent implements OnInit, OnDestroy {
     this.options.valueColumnWidth = '35.75';
     this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortAggregateValueImpl();
+    this.options.sortColumnName = 'name';
   }
 
   ngOnInit() {

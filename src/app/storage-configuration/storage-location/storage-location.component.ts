@@ -8,6 +8,7 @@ import {SeTextFormatterComponent} from '../se-text-formatter/se-text-formatter.c
 import {SerialNumberFormatterComponent} from '../serial-number-formatter/serial-number-formatter.component';
 import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
+import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
 
 @Component({
   selector: 'app-storage-location',
@@ -92,7 +93,8 @@ export class StorageLocationComponent implements OnInit {
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
     // this.options.aggregateValuesService = new SumValueServiceImpl();
-    // this.options.sortService = new GroupSortAggregateValueImpl();
+    this.options.sortService = new GroupSortImpl();
+    this.options.sortColumnName = 'name';
     this.loadData();
   }
 

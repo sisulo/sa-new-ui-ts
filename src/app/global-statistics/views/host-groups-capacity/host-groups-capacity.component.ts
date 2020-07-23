@@ -168,6 +168,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
+    this.options.sortColumnName = 'name';
     this.options.columnAlign = 'right';
 
   }

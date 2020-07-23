@@ -25,11 +25,15 @@ export class SimpleSortImpl implements Sort {
   }
 
   compare(valueA, valueB) {
-    if (valueA > valueB) {
+    const a = valueA || '';
+    const b = valueB || '';
+
+    if (a > b) {
       return 1;
-    } else if (valueA < valueB) {
+    } else if (a < b) {
       return -1;
     }
     return 0;
   }
+
 }

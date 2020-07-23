@@ -439,6 +439,16 @@ export class SasiTableComponent implements OnInit {
     } else {
       this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
     }
+    if (this.options.sortColumnName !== undefined) {
+
+      this.data = this.options.sortService.sort(
+        this.data,
+        this.getColumns().find(column => column.index === this.options.sortColumnName),
+        this.options.sortType,
+        this.altSort ? this.options.altSortColumnName : null,
+        ((row, column1) => row.getCellValue(column1)));
+    }
+
     this.style = this.domSanitizer.bypassSecurityTrustStyle(
       'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
       ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');

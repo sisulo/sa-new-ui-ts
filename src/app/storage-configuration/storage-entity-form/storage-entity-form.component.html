@@ -7,6 +7,9 @@
         <h4 class="modal-title">Add / Edit System</h4>
       </div>
       <div class="modal-body">
+        <div *ngIf="httpErrorDisplayed" class="col-md-12 http-error-box">
+          {{httpError}}
+        </div>
         <form role="form" [formGroup]="form">
           <div class="box-body">
             <div class="col-md-12 form-group"
@@ -15,9 +18,11 @@
               <ng-select id="datacenter" [items]="dataCenterList"
                          bindValue="value" formControlName="datacenter">
               </ng-select>
-              <span *ngIf="dataCenter.invalid && (dataCenter.dirty || dataCenter.touched || submitted)" class="help-block">Datacenter must be chosen</span>
+              <span *ngIf="dataCenter.invalid && (dataCenter.dirty || dataCenter.touched || submitted)"
+                    class="help-block">Datacenter must be chosen</span>
             </div>
-            <div class="col-md-12 form-group" [class.has-error]="name.invalid && (name.dirty || name.touched || submitted)">
+            <div class="col-md-12 form-group"
+                 [class.has-error]="name.invalid && (name.dirty || name.touched || submitted)">
               <label for="name">Name: </label>
               <input type="text" class="form-control" formControlName="name">
               <span *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="help-block">Name must be set</span>
@@ -67,7 +72,8 @@
           <button [class.disabled]="form.invalid" type="button" class="btn btn-primary"
                   (click)="form.valid ? saveChanges() : submitted = true">Save changes
           </button>
-          <button type="button" [class.disabled]="form.invalid" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+          <button type="button" [class.disabled]="form.invalid" class="btn btn-primary dropdown-toggle"
+                  data-toggle="dropdown" aria-expanded="true">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
           </button>

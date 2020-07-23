@@ -33,6 +33,8 @@ export class StorageEntityFormComponent implements OnInit {
   @Output()
   dataSaved = new EventEmitter<boolean>();
   submitted = false;
+  httpErrorDisplayed = false;
+  httpError = null;
 
   data = new StorageEntityVo();
   form: FormGroup;
@@ -123,9 +125,17 @@ export class StorageEntityFormComponent implements OnInit {
           );
         }
       },
-      error => {
-        console.error(error);
-        console.error('Cannot store the entity: ' + error);
+      response => {
+        if (response.error.code === 1002) {
+          this.httpErrorDisplayed = true;
+          this.httpError = 'System already exists under the datacenter.';
+          setTimeout(
+            () => this.httpErrorDisplayed = false,
+            10000
+          );
+        }
+        console.error(response.error);
+        console.error('Cannot store the entity: ');
       }
     );
   }

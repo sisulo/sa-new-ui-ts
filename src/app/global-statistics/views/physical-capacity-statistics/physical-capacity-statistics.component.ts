@@ -228,6 +228,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
+    this.options.sortColumnName = 'name';
     this.options.columnAlign = 'right';
 
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USED_PERC, new Threshold('text-green', 80, 84.9)));

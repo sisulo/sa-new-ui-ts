@@ -86,6 +86,7 @@ export class AdaptersComponent implements OnInit, OnDestroy {
     this.options.valueColumnWidth = '36.5';
     this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortAggregateValueImpl();
+    this.options.sortColumnName = 'name';
   }
 
   ngOnInit() {
