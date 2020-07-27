@@ -75,7 +75,7 @@ export class GlobalPhysicalCapacityStatisticsComponent extends CommonAggregatedS
     this.labels[SystemMetricType.AVAILABLE_CAPACITY] = 'Available Capacity';
     this.labels[SystemMetricType.LOGICAL_USED_PERC] = 'Logical Used';
     this.labels[SystemMetricType.PHYSICAL_USED_PERC] = 'Physical Used';
-    this.labels[SystemMetricType.TOTAL_SAVING_EFFECT] = 'Saving Effect';
+    this.labels[SystemMetricType.TOTAL_SAVING_EFFECT] = 'Total Savings';
     this.labels[SystemMetricType.CAPACITY_CHANGE_1D] = 'Daily Change';
     this.labels[SystemMetricType.CAPACITY_CHANGE_1W] = 'Weekly Change';
     this.labels[SystemMetricType.CAPACITY_CHANGE_1M] = 'Monthly Change';

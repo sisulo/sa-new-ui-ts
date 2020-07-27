@@ -134,7 +134,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.TOTAL_SAVING_EFFECT)
-        .withLabel('Saving Effect')
+        .withLabel('Total Savings')
         .withColumnTooltipText('Total saving effect of Deduplication (SW feature) + Compression (FMD\'s). Summmary calculation is performed on pools with total saving effect >1)')
         .withComponent(SimpleFormatterComponent)
         .withAltSortEnable(false)
