@@ -23,14 +23,14 @@
             </div>
             <div class="col-md-12 form-group"
                  [class.has-error]="name.invalid && (name.dirty || name.touched || submitted)">
-              <label for="name">Name: </label>
+              <label for="name">System Name: </label>
               <input type="text" class="form-control" formControlName="name">
               <span *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="help-block">Name must be set</span>
             </div>
 
             <div class="col-md-12 form-group">
               <div class="">
-                <label for="serial">Serial Number: </label>
+                <label for="serial">Physical Serial Number: </label>
               </div>
               <div class="col-md-3">
                 <input id="prefix" class="form-control" type="text" formControlName="prefixReferenceId"/>
@@ -41,11 +41,11 @@
               </div>
             </div>
             <div class="col-md-12 form-group">
-              <label for="model">Model: </label>
+              <label for="model">Array Model: </label>
               <input id="model" class="form-control" type="text" formControlName="arrayModel">
             </div>
             <div class="col-md-12 form-group">
-              <label for="dkc">Dkc: </label>
+              <label for="dkc">Virtual DKCs: </label>
               <input id="dkc" class="form-control" type="text" formControlName="dkc">
             </div>
             <div class="col-md-12 form-group">

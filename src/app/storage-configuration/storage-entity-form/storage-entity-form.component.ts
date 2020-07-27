@@ -125,6 +125,7 @@ export class StorageEntityFormComponent implements OnInit {
           );
         }
       },
+      // TODO error code as ENUM
       response => {
         if (response.error.code === 1002) {
           this.httpErrorDisplayed = true;
