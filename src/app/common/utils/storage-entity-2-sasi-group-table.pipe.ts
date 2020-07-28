@@ -17,7 +17,7 @@ export class StorageEntity2SasiGroupTablePipe implements PipeTransform {
         const row = new SasiGroupRow();
         const groupRow = new SasiRow();
         const data = storageEntity.storageEntity;
-        groupRow.cells['name'] = new SasiCell(data.name, {id: data.name, iFrameLink: context, value: data.name});
+        groupRow.cells['name'] = new SasiCell(data.name, {id: data.name, iFrameLink: context, value: data.name, dbId: data.id});
         row.groupRow = groupRow;
         row.rows = this.rowPipe.transform(data.children, data);
         return row;

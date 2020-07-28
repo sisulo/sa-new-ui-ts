@@ -9,6 +9,7 @@ import {SerialNumberFormatterComponent} from '../serial-number-formatter/serial-
 import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
+import {StorageEntityType} from '../../common/models/dtos/owner.dto';
 
 @Component({
   selector: 'app-storage-location',
@@ -18,8 +19,8 @@ import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl'
 export class StorageLocationComponent implements OnInit {
   data: StorageEntityResponseDto[] = [];
   options: SasiTableOptions = new SasiTableOptions();
-  displayForm = false;
   datacenterList = [];
+  type = StorageEntityType;
 
   constructor(private metricService: MetricService,
               private formBus: FormBusService) {
@@ -105,8 +106,10 @@ export class StorageLocationComponent implements OnInit {
     return null;
   }
 
-  openForm() {
-    this.formBus.sendFormData(new StorageEntityVo());
+  openForm(type: StorageEntityType) {
+    const data = new StorageEntityVo();
+    data.type = type;
+    this.formBus.sendFormData(data);
   }
 
   loadData(force: boolean = true) {

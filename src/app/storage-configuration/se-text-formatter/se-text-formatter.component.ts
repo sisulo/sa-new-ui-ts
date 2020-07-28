@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../common/models/metrics/system-metric.vo';
 import {SasiColumn, SasiRow} from '../../common/components/sasi-table/sasi-table.component';
 import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
+import {StorageEntityType} from '../../common/models/dtos/owner.dto';
 
 @Component({
   selector: 'app-se-text-formatter',
@@ -30,17 +31,28 @@ export class SeTextFormatterComponent implements OnInit {
   }
 
   openForm() {
+    console.log(this.rowData);
+    console.log(this.column);
+    console.log(this.data);
     const formData = new StorageEntityVo();
-    formData.serialNumber = this.getCellValue('serialNumber');
-    formData.parentId = this.getCellValue('parentId');
-    formData.prefixReferenceId = this.getCellValue('prefixReferenceId');
-    formData.name = this.getCellValue('name');
-    formData.id = this.getCellValue('id');
-    formData.dkc = this.getCellValue('dkc');
-    formData.room = this.getCellValue('room');
-    formData.rack = this.getCellValue('rack');
-    formData.arrayModel = this.getCellValue('arrayModel');
-    formData.managementIp = this.getCellValue('managementIp');
+    if (this.column === undefined) {
+      formData.id = this.data['dbId'];
+      formData.name = this.data['value'].toString();
+      formData.type = StorageEntityType.DATA_CENTER;
+    } else {
+      formData.type = StorageEntityType.SYSTEM;
+      formData.serialNumber = this.getCellValue('serialNumber');
+      formData.parentId = this.getCellValue('parentId');
+      formData.prefixReferenceId = this.getCellValue('prefixReferenceId');
+      formData.name = this.getCellValue('name');
+      formData.id = this.getCellValue('id');
+      formData.dkc = this.getCellValue('dkc');
+      formData.room = this.getCellValue('room');
+      formData.rack = this.getCellValue('rack');
+      formData.arrayModel = this.getCellValue('arrayModel');
+      formData.managementIp = this.getCellValue('managementIp');
+
+    }
     this.formBus.sendFormData(formData);
   }
 

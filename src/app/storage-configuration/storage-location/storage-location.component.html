@@ -2,24 +2,28 @@
   <div class="box-header">
     <h3 class="box-title">Storage Locations</h3>
   </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <app-sasi-table [data]="data | storageEntity2SasiGroupTable: 'dc'" [tableOptions]="options"></app-sasi-table>
+      </div>
+    </div>
+  </div>
   <div class="box-body">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
-          <button type="button" class="btn btn-default" (click)="openForm()">
+          <button type="button" class="btn btn-default" (click)="openForm(type.SYSTEM)">
             Add system
+          </button>
+          <button type="button" class="btn btn-default" (click)="openForm(type.DATA_CENTER)">
+            Add datacenter
           </button>
         </div>
       </div>
     </div>
     <app-storage-entity-form [dataCenterList]="datacenterList"
                              (dataSaved)="loadData($event)"></app-storage-entity-form>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <app-sasi-table [data]="data | storageEntity2SasiGroupTable: 'dc'" [tableOptions]="options"></app-sasi-table>
-        </div>
-      </div>
-    </div>
   </div>
 </div>

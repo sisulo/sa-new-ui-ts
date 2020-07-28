@@ -1,8 +1,9 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../common/models/metrics/system-metric.vo';
 import {SasiColumn, SasiRow} from '../../common/components/sasi-table/sasi-table.component';
 import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
+import {StorageEntityType} from '../../common/models/dtos/owner.dto';
 
 @Component({
   selector: 'app-serial-number-formatter',
@@ -24,6 +25,7 @@ export class SerialNumberFormatterComponent implements OnInit {
 
   openForm() {
     const formData = new StorageEntityVo();
+    formData.type = StorageEntityType.SYSTEM;
     formData.serialNumber = this.getCellValue('serialNumber');
     formData.parentId = this.getCellValue('parentId');
     formData.prefixReferenceId = this.getCellValue('prefixReferenceId');

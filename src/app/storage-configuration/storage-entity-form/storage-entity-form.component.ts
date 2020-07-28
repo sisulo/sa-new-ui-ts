@@ -38,6 +38,7 @@ export class StorageEntityFormComponent implements OnInit {
 
   data = new StorageEntityVo();
   form: FormGroup;
+  staticType = StorageEntityType;
 
   constructor(private metricService: MetricService,
               private formBusService: FormBusService) {
@@ -47,24 +48,30 @@ export class StorageEntityFormComponent implements OnInit {
     this.formBusService.storageEntityFormStream.subscribe(data => {
       this.data = data;
       this.displayForm = true;
-      this.data.type = StorageEntityType.SYSTEM;
       this.initFormControls();
     });
     this.initFormControls();
   }
 
   initFormControls() {
-    this.form = new FormGroup({
-      'datacenter': new FormControl(this.data.parentId, [Validators.required]),
-      'name': new FormControl(this.data.name, [Validators.required]),
-      'prefixReferenceId': new FormControl(this.data.prefixReferenceId),
-      'serialNumber': new FormControl(this.data.serialNumber),
-      'arrayModel': new FormControl(this.data.arrayModel),
-      'dkc': new FormControl(this.data.dkc),
-      'room': new FormControl(this.data.room),
-      'rack': new FormControl(this.data.rack),
-      'managementIp': new FormControl(this.data.managementIp),
-    });
+    if (this.data.type !== StorageEntityType.DATA_CENTER) {
+
+      this.form = new FormGroup({
+        'datacenter': new FormControl(this.data.parentId, [Validators.required]),
+        'name': new FormControl(this.data.name, [Validators.required]),
+        'prefixReferenceId': new FormControl(this.data.prefixReferenceId),
+        'serialNumber': new FormControl(this.data.serialNumber),
+        'arrayModel': new FormControl(this.data.arrayModel),
+        'dkc': new FormControl(this.data.dkc),
+        'room': new FormControl(this.data.room),
+        'rack': new FormControl(this.data.rack),
+        'managementIp': new FormControl(this.data.managementIp),
+      });
+    } else {
+      this.form = new FormGroup({
+        'name': new FormControl(this.data.name, [Validators.required]),
+      });
+    }
   }
 
   closeForm() {
@@ -78,6 +85,7 @@ export class StorageEntityFormComponent implements OnInit {
   get dataCenter() {
     return this.form.get('datacenter');
   }
+
   saveChanges(forceAsNew: boolean = false) {
     const {dto, detailDto} = this.transformDataToDto();
 
@@ -100,29 +108,35 @@ export class StorageEntityFormComponent implements OnInit {
   private transformDataToDto() {
     const dto = new StorageEntityRequestDto();
     dto.name = this.form.value.name;
-    dto.parentId = this.form.value.datacenter;
     dto.type = StorageEntityType[this.data.type];
-    dto.serialNumber = this.form.value.serialNumber;
-
-    const detailDto = new StorageEntityDetailRequestDto();
-    detailDto.arrayModel = this.form.value.arrayModel;
-    detailDto.dkc = this.form.value.dkc;
-    detailDto.managementIp = this.form.value.managementIp;
-    detailDto.prefixReferenceId = this.form.value.prefixReferenceId;
-    detailDto.rack = this.form.value.rack;
-    detailDto.room = this.form.value.room;
+    let detailDto = new StorageEntityDetailRequestDto();
     detailDto.name = this.form.value.name;
-    detailDto.serialNumber = this.form.value.serialNumber;
+    if (this.data.type !== StorageEntityType.DATA_CENTER) {
+      dto.parentId = this.form.value.datacenter;
+      dto.serialNumber = this.form.value.serialNumber;
+
+      detailDto = new StorageEntityDetailRequestDto();
+      detailDto.arrayModel = this.form.value.arrayModel;
+      detailDto.dkc = this.form.value.dkc;
+      detailDto.managementIp = this.form.value.managementIp;
+      detailDto.prefixReferenceId = this.form.value.prefixReferenceId;
+      detailDto.rack = this.form.value.rack;
+      detailDto.room = this.form.value.room;
+      detailDto.name = this.form.value.name;
+      detailDto.serialNumber = this.form.value.serialNumber;
+    }
     return {dto, detailDto};
   }
 
   private saveAsNew(dto: StorageEntityRequestDto, detailDto: StorageEntityDetailRequestDto) {
     this.metricService.createStorageEntity(dto).subscribe(
       response => {
-        if (response.storageEntity.id != null) {
+        if (response.storageEntity.id != null && StorageEntityType[response.storageEntity.type] !== StorageEntityType.DATA_CENTER) {
           this.metricService.updateStorageEntity(response.storageEntity.id, detailDto).subscribe(
             () => this.success()
           );
+        } else {
+          this.success();
         }
       },
       // TODO error code as ENUM

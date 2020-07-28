@@ -6,7 +6,7 @@ import {StorageEntityVo} from './storage-entity-form/storage-entity-form.compone
   providedIn: 'root'
 })
 export class FormBusService {
-  // Observable string sources
+
   private storageEntityForm = new Subject<StorageEntityVo>();
 
   storageEntityFormStream = this.storageEntityForm.asObservable();
