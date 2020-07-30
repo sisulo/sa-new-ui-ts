@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Type} from '@angular/core';
+import {Component, Input, OnInit, Type, OnChanges, SimpleChanges} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/alert-rule';
 import {LocalStorageService} from 'ngx-store';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -355,7 +355,7 @@ export const slideInOutAnimation = [ // TODO reuse animation in all collapsed sa
 /**
  * Storage analytics simple interactive table
  */
-export class SasiTableComponent implements OnInit {
+export class SasiTableComponent implements OnInit, OnChanges {
 
   @Input() data: SasiRow[] = [];
   @Input() tableOptions: SasiTableOptions = new SasiTableOptions();
@@ -439,19 +439,25 @@ export class SasiTableComponent implements OnInit {
     } else {
       this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
     }
-    if (this.options.sortColumnName !== undefined) {
+    this.style = this.domSanitizer.bypassSecurityTrustStyle(
+      'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
+      ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.sortData(changes.data.currentValue);
+  }
+
+  private sortData(changes) {
+    if (this.options !== undefined && this.options.sortColumnName !== undefined) {
 
       this.data = this.options.sortService.sort(
-        this.data,
+        changes,
         this.getColumns().find(column => column.index === this.options.sortColumnName),
         this.options.sortType,
         this.altSort ? this.options.altSortColumnName : null,
         ((row, column1) => row.getCellValue(column1)));
     }
-
-    this.style = this.domSanitizer.bypassSecurityTrustStyle(
-      'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
-      ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');
   }
 
   getGridColumnCount() {

@@ -63,8 +63,8 @@ export class StorageEntityFormComponent implements OnInit {
         'serialNumber': new FormControl(this.data.serialNumber),
         'arrayModel': new FormControl(this.data.arrayModel),
         'dkc': new FormControl(this.data.dkc),
-        'room': new FormControl(this.data.room),
-        'rack': new FormControl(this.data.rack),
+        'room': new FormControl(this.data.room, [Validators.maxLength(32)]),
+        'rack': new FormControl(this.data.rack, [Validators.maxLength(32)]),
         'managementIp': new FormControl(this.data.managementIp),
       });
     } else {
@@ -84,6 +84,15 @@ export class StorageEntityFormComponent implements OnInit {
 
   get dataCenter() {
     return this.form.get('datacenter');
+  }
+
+  get room() {
+    return this.form.get('room');
+  }
+
+  get rack() {
+    console.log(this.form.get('rack').errors);
+    return this.form.get('rack');
   }
 
   saveChanges(forceAsNew: boolean = false) {
