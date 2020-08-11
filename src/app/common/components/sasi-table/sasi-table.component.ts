@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Type, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/alert-rule';
 import {LocalStorageService} from 'ngx-store';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -439,6 +439,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
     } else {
       this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
     }
+    this.sortData(this.data);
     this.style = this.domSanitizer.bypassSecurityTrustStyle(
       'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
       ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');
