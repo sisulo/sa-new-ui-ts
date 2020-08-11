@@ -54,7 +54,7 @@ export class StorageEntityFormComponent implements OnInit {
   }
 
   initFormControls() {
-    if (this.data.type !== StorageEntityType.DATA_CENTER) {
+    if (this.data.type !== StorageEntityType.DATACENTER) {
 
       this.form = new FormGroup({
         'datacenter': new FormControl(this.data.parentId, [Validators.required]),
@@ -120,7 +120,7 @@ export class StorageEntityFormComponent implements OnInit {
     dto.type = StorageEntityType[this.data.type];
     let detailDto = new StorageEntityDetailRequestDto();
     detailDto.name = this.form.value.name;
-    if (this.data.type !== StorageEntityType.DATA_CENTER) {
+    if (this.data.type !== StorageEntityType.DATACENTER) {
       dto.parentId = this.form.value.datacenter;
       dto.serialNumber = this.form.value.serialNumber;
 
@@ -140,7 +140,7 @@ export class StorageEntityFormComponent implements OnInit {
   private saveAsNew(dto: StorageEntityRequestDto, detailDto: StorageEntityDetailRequestDto) {
     this.metricService.createStorageEntity(dto).subscribe(
       response => {
-        if (response.storageEntity.id != null && StorageEntityType[response.storageEntity.type] !== StorageEntityType.DATA_CENTER) {
+        if (response.storageEntity.id != null && StorageEntityType[response.storageEntity.type] !== StorageEntityType.DATACENTER) {
           this.metricService.updateStorageEntity(response.storageEntity.id, detailDto).subscribe(
             () => this.success()
           );

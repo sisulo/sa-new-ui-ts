@@ -38,7 +38,7 @@ export class SeTextFormatterComponent implements OnInit {
     if (this.column === undefined) {
       formData.id = this.data['dbId'];
       formData.name = this.data['value'].toString();
-      formData.type = StorageEntityType.DATA_CENTER;
+      formData.type = StorageEntityType.DATACENTER;
     } else {
       formData.type = StorageEntityType.SYSTEM;
       formData.serialNumber = this.getCellValue('serialNumber');
