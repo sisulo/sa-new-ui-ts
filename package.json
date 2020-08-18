@@ -26,7 +26,7 @@
     "core-js": "^3.6.4",
     "jquery": "^3.3.1",
     "jvectormap-next": "^3.0.0",
-    "ng-apexcharts": "^1.2.0",
+    "ng-apexcharts": "^1.5.1",
     "ng2-tooltip-directive": "^2.9.22",
     "ngx-spinner": "^8.1.0",
     "ngx-store": "^2.1.0",
