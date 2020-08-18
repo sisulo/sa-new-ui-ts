@@ -24,7 +24,7 @@
     "angular2-knob": "^1.1.15",
     "apexcharts": "^3.15.6",
     "core-js": "^3.6.4",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "jvectormap-next": "^3.0.0",
     "ng-apexcharts": "^1.5.1",
     "ng2-tooltip-directive": "^2.9.22",
