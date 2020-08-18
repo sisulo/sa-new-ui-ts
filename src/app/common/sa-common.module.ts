@@ -84,19 +84,8 @@ import {StorageEntityDetail2SasiTablePipe} from './utils/storage-entity-detail-2
     AlertInfoBoxComponent,
   ],
   entryComponents: [
-    UnitFormatterComponent,
-    AlertFormatterComponent,
-    SimpleFormatterComponent,
     RowTableComponent,
     RowGroupTableComponent,
-    TimeFormatterComponent,
-    TextFormatterComponent,
-    EmphFormatterComponent,
-    PortDisbalanceFormatterComponent,
-    RouteLinkFormatterComponent,
-    TierFormatterComponent,
-    AdapterDisbalanceFormatterComponent,
-    EmptyFormatterComponent
   ]
 })
 export class SaCommonModule {

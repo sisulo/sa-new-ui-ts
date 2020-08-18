@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/alert-rule';
-import {LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store-9';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {AggregatedValues, AggregateValueService} from './row-group-table/row-group-table.component';
 import {Sort} from './sort';

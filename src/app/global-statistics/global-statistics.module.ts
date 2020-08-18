@@ -70,7 +70,9 @@ import {PopupDataComponent} from './views/block-size-latency/bubble-chart/popup-
     LegendComponent,
     PopupDataComponent
   ],
-  exports: [],
+  exports: [
+    UnitFormatterComponent
+  ],
   imports: [
     CommonModule,
     GlobalStatisticsRoutingModule,

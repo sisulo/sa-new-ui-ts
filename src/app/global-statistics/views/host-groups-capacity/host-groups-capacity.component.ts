@@ -7,7 +7,7 @@ import {SelectedRow} from '../../../common/components/sasi-table/row-table/selec
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../../metric.service';
 import {BusService} from '../../bus.service';
-import {LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store-9';
 import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {RouteLinkFormatterComponent} from '../../../common/components/route-link-formatter/route-link-formatter.component';

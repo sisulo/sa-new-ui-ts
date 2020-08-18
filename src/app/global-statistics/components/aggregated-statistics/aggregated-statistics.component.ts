@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SasiColumn, SasiGroupRow} from '../../../common/components/sasi-table/sasi-table.component';
-import {LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store-9';
 import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {AggregatedValues} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';

@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {SasiRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
-import {LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store-9';
 import {SelectedRow} from './selected-row';
 import {OnSelectService} from '../on-select.service';
 import {Subscription} from 'rxjs';

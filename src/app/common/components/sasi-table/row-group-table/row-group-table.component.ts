@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {SasiGroupRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
-import {LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store-9';
 import {SystemMetricType} from '../../../models/metrics/system-metric-type.enum';
 import {SelectedRow} from '../row-table/selected-row';
 import {keys} from 'd3-collection';

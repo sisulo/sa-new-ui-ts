@@ -51,11 +51,11 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
   constructor(private readonly metricService: MetricService) {
   }
 
-  @ViewChild('bubble', {static: false})
+  @ViewChild('bubble')
   bubbleChart: BubbleChartComponent;
-  @ViewChild('xaxis', {static: false})
+  @ViewChild('xaxis')
   xaxis: XaxisComponent;
-  @ViewChild('yaxis', {static: false})
+  @ViewChild('yaxis')
   yaxis: YaxisComponent;
   data: ApexAxisChartSeries;
   @Input()
@@ -175,7 +175,7 @@ export class BubbleChartComponent implements OnInit, AfterViewInit, OnChanges {
 
   displayPopup($event: MouseEvent, circle: BubbleData, serieName: string) {
     this.displayedPopup = true;
-    this.popupDetail = {positionX: $event.layerX, positionY: $event.layerY, value: circle.values, serieName: serieName};
+    this.popupDetail = {positionX: $event.offsetX, positionY: $event.offsetY, value: circle.values, serieName: serieName};
   }
 
   displayClose($event: MouseEvent) {

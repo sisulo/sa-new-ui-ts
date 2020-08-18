@@ -13,7 +13,7 @@ import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-
 import {AlertRule, Threshold} from '../../alert-rule';
 import {SasiWeightedArithmeticMeanUtils} from '../../utils/sasi-weighted-arithmetic-mean.utils';
 import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
-import {LocalStorageService} from 'ngx-store';
+import {LocalStorageService} from 'ngx-store-9';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
 import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
