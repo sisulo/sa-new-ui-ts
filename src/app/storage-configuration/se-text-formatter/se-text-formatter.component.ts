@@ -51,6 +51,7 @@ export class SeTextFormatterComponent implements OnInit {
       formData.rack = this.getCellValue('rack');
       formData.arrayModel = this.getCellValue('arrayModel');
       formData.managementIp = this.getCellValue('managementIp');
+      formData.sortId = this.getCellValue('sortId');
 
     }
     this.formBus.sendFormData(formData);

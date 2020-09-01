@@ -18,6 +18,12 @@ export class SystemPool2SasiGroupTablePipe implements PipeTransform {
         const row = new SasiGroupRow();
         const groupRow = new SasiRow();
         groupRow.cells['name'] = new SasiCell(system.name, {id: system.name, iFrameLink: context, value: system.name});
+        if (system.detail !== undefined) {
+          groupRow.cells['sortId'] = new SasiCell(
+            system.detail.sortId,
+            {id: system.detail.sortId, iFrameLink: context, value: system.detail.sortId}
+            );
+        }
         row.groupRow = groupRow;
         row.rows = this.rowPipe.transform(system.children, context, system.name);
         return row;

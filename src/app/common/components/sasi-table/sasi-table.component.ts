@@ -46,6 +46,8 @@ export class SasiColumnBuilder {
 
   private columnWidth = null;
 
+  private hidden = false;
+
   private constructor() {
   }
 
@@ -128,7 +130,8 @@ export class SasiColumnBuilder {
       this.altBorderLeft,
       this.columnWidth,
       this.columnTooltipText,
-      this.shortLabel === undefined ? this.label : this.shortLabel
+      this.shortLabel === undefined ? this.label : this.shortLabel,
+      this.hidden
     );
   }
 
@@ -139,6 +142,10 @@ export class SasiColumnBuilder {
 
   withShortLabel(shortLabel: string) {
     this.shortLabel = shortLabel;
+    return this;
+  }
+  withHidden(hidden: boolean) {
+    this.hidden = hidden;
     return this;
   }
 }
@@ -175,6 +182,7 @@ export class SasiColumn {
   altBorderLeft: boolean;
 
   columnWidth: string;
+  hidden: boolean;
 
   constructor(
     index: string,
@@ -190,7 +198,8 @@ export class SasiColumn {
     altBorderLeft: boolean,
     columnWidth: string,
     columnTooltipText: string,
-    shortLabel: string
+    shortLabel: string,
+    hidden: boolean
   ) {
     this.index = index;
     this.label = label;
@@ -206,6 +215,7 @@ export class SasiColumn {
     this.columnWidth = columnWidth;
     this.columnTooltipText = columnTooltipText;
     this.shortLabel = shortLabel;
+    this.hidden = hidden;
   }
 }
 
@@ -280,7 +290,7 @@ export class SasiTableOptions {
   public sortDescIcon;
   public sortAscIcon;
   public sortDefaultIcon;
-  public sortColumnName: string;
+  public sortColumnNames: String[];
   public sortType: SasiSortType;
   public altSortColumnName: string;
   public highlightColumn: boolean;
@@ -320,7 +330,11 @@ export class SasiTableOptions {
   }
 
   getDataColumns(): SasiColumn[] {
-    return this.columns.filter(column => column.index !== 'name');
+    return this.columns.filter(column => column.index !== 'name' && column.hidden !== true);
+  }
+
+  getVisibleColumns(): SasiColumn[] {
+    return this.columns.filter(column => column.hidden !== true);
   }
 }
 
@@ -404,7 +418,10 @@ export class SasiTableComponent implements OnInit, OnChanges {
       );
     },
     getDataColumns(): SasiColumn[] {
-      return this.columns.filter(column => column.index !== 'name');
+      return this.columns.filter(column => column.index !== 'name' && column.hidden !== true);
+    },
+    getVisibleColumns(): SasiColumn[] {
+      return this.columns.filter(column => column.hidden !== true);
     }
   };
 
@@ -450,19 +467,25 @@ export class SasiTableComponent implements OnInit, OnChanges {
   }
 
   private sortData(changes) {
-    if (this.options !== undefined && this.options.sortColumnName !== undefined) {
+    if (this.options !== undefined && this.options.sortColumnNames !== undefined) {
 
       this.data = this.options.sortService.sort(
         changes,
-        this.getColumns().find(column => column.index === this.options.sortColumnName),
+        this.getSortColumns(),
         this.options.sortType,
         this.altSort ? this.options.altSortColumnName : null,
         ((row, column1) => row.getCellValue(column1)));
     }
   }
 
+  private getSortColumns() {
+    return this.options.sortColumnNames.map(
+      sortColumn => this.options.columns.find(column => column.index === sortColumn)
+    );
+  }
+
   getGridColumnCount() {
-    return this.options.columns.length - 1;
+    return this.options.getDataColumns().length;
   }
 
   getNameColumnSize() {
@@ -499,7 +522,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
   /* SORTING FEATURES */
   getSortIconClass(column: string, isAltSort: boolean) {
     let sortIconClass = this.options.sortDefaultIcon;
-    if (this.options.sortColumnName === column) {
+    if (this.options.sortColumnNames.includes(column)) {
       if (this.options.sortType === SasiSortType.ASC) {
         sortIconClass = this.options.sortAscIcon;
       } else {
@@ -513,7 +536,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
   }
 
   setSort(column: SasiColumn, isAltSort: boolean) {
-    if (this.options.sortColumnName === column.index) {
+    if (this.options.sortColumnNames.includes(column.index)) {
       if (this.options.sortType === SasiSortType.ASC) {
         this.options.sortType = SasiSortType.DESC;
       } else {
@@ -521,12 +544,12 @@ export class SasiTableComponent implements OnInit, OnChanges {
       }
     } else {
       this.options.sortType = SasiSortType.DESC;
-      this.options.sortColumnName = column.index;
+      this.options.sortColumnNames = [column.index];
     }
     this.altSort = isAltSort;
     this.data = this.options.sortService.sort(
       this.data,
-      column,
+      [column],
       this.options.sortType,
       this.altSort ? this.options.altSortColumnName : null,
       ((row, column1) => row.getCellValue(column1)));
@@ -615,7 +638,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
     // if (this.options.headerGroups.length > 0) {
     //   return this.options.headerGroups;
     // }
-    return this.options.columns;
+    return this.options.columns.filter(column => column.hidden !== true);
   }
 
   getHeaderGridStyle(i: number) {

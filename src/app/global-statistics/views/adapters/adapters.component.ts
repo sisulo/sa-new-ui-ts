@@ -16,6 +16,7 @@ import {AdapterDisbalanceFormatterComponent} from '../../formatters/adapter-disb
 import {EmptyFormatterComponent} from '../../formatters/empty-formatter/empty-formatter.component';
 import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
 import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
+import {SeTextFormatterComponent} from '../../../storage-configuration/se-text-formatter/se-text-formatter.component';
 
 // TODO separate components, pipes, utils to own directories
 @Component({
@@ -76,6 +77,15 @@ export class AdaptersComponent implements OnInit, OnDestroy {
         .withIsAggregated(true)
         .build()
     );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('sortId')
+        .withLabel('Sort ID')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .withHidden(true)
+        .build()
+    );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
@@ -86,7 +96,7 @@ export class AdaptersComponent implements OnInit, OnDestroy {
     this.options.valueColumnWidth = '36.5';
     this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortAggregateValueImpl();
-    this.options.sortColumnName = 'name';
+    this.options.sortColumnNames = ['sortId', 'name'];
   }
 
   ngOnInit() {

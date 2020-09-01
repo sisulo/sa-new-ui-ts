@@ -86,6 +86,14 @@ export class StorageLocationComponent implements OnInit {
         .withAltSortEnable(false)
         .build()
     );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('sortId')
+        .withLabel('Sort ID')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .build()
+    );
 
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
@@ -95,7 +103,7 @@ export class StorageLocationComponent implements OnInit {
     this.options.highlightColumn = false;
     // this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortImpl();
-    this.options.sortColumnName = 'name';
+    this.options.sortColumnNames = ['sortId', 'name'];
     this.loadData();
   }
 

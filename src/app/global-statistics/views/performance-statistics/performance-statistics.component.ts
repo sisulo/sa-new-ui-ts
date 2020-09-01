@@ -13,6 +13,7 @@ import {RowTableComponent} from '../../../common/components/sasi-table/row-table
 import {SimpleSortImpl} from '../../../common/components/sasi-table/simple-sort-impl';
 import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
 import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
+import {SeTextFormatterComponent} from '../../../storage-configuration/se-text-formatter/se-text-formatter.component';
 
 @Component({
   selector: 'app-tab',
@@ -102,13 +103,22 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
         .withIsAggregated(false)
         .build()
     );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('sortId')
+        .withLabel('Sort ID')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .withHidden(true)
+        .build()
+    );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
     this.options.labelColumnWidth = '13.78';
     this.options.valueColumnWidth = '13.78';
     this.options.sortService = new SimpleSortImpl();
     this.options.altSortColumnName = 'peak';
-    this.options.sortColumnName = 'name';
+    this.options.sortColumnNames = ['sortId', 'name'];
     this.options.sortType = SasiSortType.ASC;
 
   }

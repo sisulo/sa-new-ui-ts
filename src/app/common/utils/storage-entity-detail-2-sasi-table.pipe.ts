@@ -25,6 +25,7 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
           row.cells['room'] = new SasiCell(detail.room, {value: detail.room});
           row.cells['prefixReferenceId'] = new SasiCell(detail.prefixReferenceId, {value: detail.prefixReferenceId});
           row.cells['serialNumber'] = new SasiCell(system.serialNumber, {value: detail.serialNumber});
+          row.cells['sortId'] = new SasiCell(detail.sortId, {value: detail.sortId});
 
         }
         return row;

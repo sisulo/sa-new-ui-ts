@@ -14,6 +14,7 @@ import {LocalStorageService} from 'ngx-store-9';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
 import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
+import {SeTextFormatterComponent} from '../../../storage-configuration/se-text-formatter/se-text-formatter.component';
 
 @Component({
   selector: 'app-physical-statistics',
@@ -302,6 +303,15 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
         .withShortLabel('Total')
         .build()
     );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('sortId')
+        .withLabel('Sort ID')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .withHidden(true)
+        .build()
+    );
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
     this.options.isDataGrouped = true;
@@ -312,7 +322,7 @@ export class LogicalCapacityStatisticsComponent implements OnInit {
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
-    this.options.sortColumnName = 'name';
+    this.options.sortColumnNames = ['sortId', 'name'];
     this.options.columnAlign = 'right';
     this.options.headerGroups = [
       {

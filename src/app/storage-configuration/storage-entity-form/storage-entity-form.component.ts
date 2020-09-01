@@ -18,6 +18,7 @@ export class StorageEntityVo {
   rack: string;
   prefixReferenceId: string;
   room: string;
+  sortId: number;
 }
 
 @Component({
@@ -66,6 +67,7 @@ export class StorageEntityFormComponent implements OnInit {
         'room': new FormControl(this.data.room, [Validators.maxLength(32)]),
         'rack': new FormControl(this.data.rack, [Validators.maxLength(32)]),
         'managementIp': new FormControl(this.data.managementIp),
+        'sortId': new FormControl(this.data.sortId),
       });
     } else {
       this.form = new FormGroup({
@@ -133,6 +135,7 @@ export class StorageEntityFormComponent implements OnInit {
       detailDto.room = this.form.value.room;
       detailDto.name = this.form.value.name;
       detailDto.serialNumber = this.form.value.serialNumber;
+      detailDto.sortId = this.form.value.sortId;
     }
     return {dto, detailDto};
   }

@@ -13,7 +13,7 @@
   ></app-cell-table>
 </div>
 
-<app-column *ngFor="let column of options.columns; let colIndex=index"
+<app-column *ngFor="let column of options.getVisibleColumns(); let colIndex=index"
             [data]="data"
             [options]="options"
             [column]="column"

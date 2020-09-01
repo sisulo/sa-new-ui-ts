@@ -8,4 +8,5 @@ export class StorageEntityDetailRequestDto {
   rack: string;
   prefixReferenceId: string;
   room: string;
+  sortId: number;
 }

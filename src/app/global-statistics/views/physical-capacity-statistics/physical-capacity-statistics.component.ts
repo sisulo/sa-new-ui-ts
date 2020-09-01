@@ -17,6 +17,7 @@ import {LocalStorageService} from 'ngx-store-9';
 import {SelectedRow} from '../../../common/components/sasi-table/row-table/selected-row';
 import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
 import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
+import {SeTextFormatterComponent} from '../../../storage-configuration/se-text-formatter/se-text-formatter.component';
 
 @Component({
   selector: 'app-capacity-statistics',
@@ -217,6 +218,15 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
         .withTooltipText('One Month Change')
         .build()
     );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('sortId')
+        .withLabel('Sort ID')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .withHidden(true)
+        .build()
+    );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
@@ -228,7 +238,7 @@ export class PhysicalCapacityStatisticsComponent implements OnInit {
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
-    this.options.sortColumnName = 'name';
+    this.options.sortColumnNames = ['sortId', 'name'];
     this.options.columnAlign = 'right';
 
     this.options.cellDecoratorRules.push(new AlertRule(SystemMetricType.PHYSICAL_USED_PERC, new Threshold('text-green', 80, 84.9)));

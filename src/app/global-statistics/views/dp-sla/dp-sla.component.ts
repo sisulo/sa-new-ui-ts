@@ -15,6 +15,7 @@ import {SumValueServiceImpl} from '../../utils/sum-value-service.impl';
 import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
 import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
 import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
+import {SeTextFormatterComponent} from '../../../storage-configuration/se-text-formatter/se-text-formatter.component';
 
 
 @Component({
@@ -72,6 +73,15 @@ export class DpSlaComponent implements OnInit, OnDestroy {
         .withIsAggregated(true)
         .build()
     );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('sortId')
+        .withLabel('Sort ID')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .withHidden(true)
+        .build()
+    );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
@@ -82,7 +92,7 @@ export class DpSlaComponent implements OnInit, OnDestroy {
     this.options.valueColumnWidth = '35.75';
     this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortAggregateValueImpl();
-    this.options.sortColumnName = 'name';
+    this.options.sortColumnNames = ['sortId', 'name'];
   }
 
   ngOnInit() {

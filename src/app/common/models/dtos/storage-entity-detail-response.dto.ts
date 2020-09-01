@@ -7,4 +7,5 @@ export class StorageEntityDetailResponseDto {
   rack: string;
   prefixReferenceId: string;
   room: string;
+  sortId: number;
 }

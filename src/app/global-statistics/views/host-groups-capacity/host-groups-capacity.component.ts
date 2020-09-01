@@ -17,6 +17,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 import {TierFormatterComponent} from '../../formatters/tier-formatter/tier-formatter.component';
 import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
 import {StorageEntityMetricDto} from '../../../common/models/dtos/storage-entity-metric.dto';
+import {SeTextFormatterComponent} from '../../../storage-configuration/se-text-formatter/se-text-formatter.component';
 
 @Component({
   selector: 'app-host-groups-capacity',
@@ -157,7 +158,15 @@ export class HostGroupsCapacityComponent implements OnInit {
         .withInfinity(false)
         .build()
     );
-
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('sortId')
+        .withLabel('Sort ID')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .withHidden(true)
+        .build()
+    );
     this.options.rowComponentFormatter = RowGroupTableComponent;
     this.options.grIndexComponentFormatter = RouteLinkFormatterComponent;
     this.options.isDataGrouped = true;
@@ -168,7 +177,7 @@ export class HostGroupsCapacityComponent implements OnInit {
     this.options.selectableRows = true;
     this.options.aggregateValuesService = new SasiWeightedArithmeticMeanUtils();
     this.options.sortService = new GroupSortImpl();
-    this.options.sortColumnName = 'name';
+    this.options.sortColumnNames = ['sortId', 'name'];
     this.options.columnAlign = 'right';
 
   }

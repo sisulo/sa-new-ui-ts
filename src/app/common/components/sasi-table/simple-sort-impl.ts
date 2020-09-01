@@ -3,20 +3,30 @@ import {Sort} from './sort';
 
 export class SimpleSortImpl implements Sort {
 
-  public sort(data, column: SasiColumn, sortType: SasiSortType, sortByRawValue: string, getValue: (row, column) => any) {
+  public sort(data, columns: SasiColumn[], sortType: SasiSortType, sortByRawValue: string, getValue: (row, column) => any) {
     const dataReturned = data.sort(
       (rowA, rowB) => {
         if (sortType === SasiSortType.ASC) {
           if (sortByRawValue !== null) {
-            return this.compare(rowA.getCellRawData(column)[sortByRawValue], rowB.getCellRawData(column)[sortByRawValue]);
+            return this.compare(rowA.getCellRawData(columns[0])[sortByRawValue], rowB.getCellRawData(columns[0])[sortByRawValue]);
           } else {
-            return this.compare(getValue(rowA, column), getValue(rowB, column));
+            const compareColumn = columns.find(
+              column => {
+                return this.compare(getValue(rowA, column), getValue(rowB, column)) !== 0;
+              }
+            );
+            return this.compare(getValue(rowA, compareColumn), getValue(rowB, compareColumn));
           }
         } else {
           if (sortByRawValue !== null) {
-            return this.compare(rowB.getCellRawData(column)[sortByRawValue], rowA.getCellRawData(column)[sortByRawValue]);
+            return this.compare(rowB.getCellRawData(columns[0])[sortByRawValue], rowA.getCellRawData(columns[0])[sortByRawValue]);
           } else {
-            return this.compare(getValue(rowB, column), getValue(rowA, column));
+            const compareColumn = columns.find(
+              column => {
+                return this.compare(getValue(rowB, column), getValue(rowA, column)) !== 0;
+              }
+            );
+            return this.compare(getValue(rowB, compareColumn), getValue(rowA, compareColumn));
           }
         }
       }
