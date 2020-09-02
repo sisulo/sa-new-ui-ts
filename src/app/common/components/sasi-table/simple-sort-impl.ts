@@ -15,6 +15,9 @@ export class SimpleSortImpl implements Sort {
                 return this.compare(getValue(rowA, column), getValue(rowB, column)) !== 0;
               }
             );
+            if (compareColumn === undefined) {
+              return 0;
+            }
             return this.compare(getValue(rowA, compareColumn), getValue(rowB, compareColumn));
           }
         } else {
@@ -26,6 +29,9 @@ export class SimpleSortImpl implements Sort {
                 return this.compare(getValue(rowB, column), getValue(rowA, column)) !== 0;
               }
             );
+            if (compareColumn === undefined) {
+              return 0;
+            }
             return this.compare(getValue(rowB, compareColumn), getValue(rowA, compareColumn));
           }
         }
