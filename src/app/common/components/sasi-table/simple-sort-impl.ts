@@ -4,7 +4,7 @@ import {Sort} from './sort';
 export class SimpleSortImpl implements Sort {
 
   public sort(data, columns: SasiColumn[], sortType: SasiSortType, sortByRawValue: string, getValue: (row, column) => any) {
-    const dataReturned = data.sort(
+    return data.sort(
       (rowA, rowB) => {
         if (sortType === SasiSortType.ASC) {
           if (sortByRawValue !== null) {
@@ -37,7 +37,6 @@ export class SimpleSortImpl implements Sort {
         }
       }
     );
-    return dataReturned;
   }
 
   compare(valueA, valueB) {

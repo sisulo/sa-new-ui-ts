@@ -3,6 +3,7 @@ import {MenuTree} from '../../common/models/menu-tree.vo';
 import {MetricService} from '../../metric.service';
 import {MenuItem} from '../../common/models/menu-item.vo';
 import {StorageEntityResponseDto} from '../../common/models/dtos/storage-entity-response.dto';
+import {SortStorageEntity} from '../../common/utils/sort-storage-entity';
 
 @Component({
   selector: 'app-side-menu',
@@ -90,7 +91,10 @@ export class SideMenuComponent implements OnInit {
 
   private convertMenu(data: StorageEntityResponseDto[]): MenuTree[] {
     const menu: MenuTree[] = [];
-    for (const dataCenter of data) {
+    console.log(data);
+    const sortedData = SortStorageEntity.sort(data);
+    console.log(sortedData);
+    for (const dataCenter of sortedData) {
       const items: MenuItem[] = [];
       for (const system of dataCenter.storageEntity.children) {
         items.push(new MenuItem(system.id, system.name));

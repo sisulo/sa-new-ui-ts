@@ -63,7 +63,6 @@ export class IframeUrlCreatorPipe implements PipeTransform {
     if (this.mapSystemToDirectory[id] !== undefined) {
       return this.mapSystemToDirectory[id];
     }
-    // throw new Error(`ID: ${id} not found in mapping`);
   }
 
   normalizeAnchor(value) {
