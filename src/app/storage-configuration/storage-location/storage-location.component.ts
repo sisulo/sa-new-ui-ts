@@ -102,7 +102,7 @@ export class StorageLocationComponent implements OnInit {
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
     // this.options.aggregateValuesService = new SumValueServiceImpl();
-    this.options.sortService = new GroupSortImpl();
+    this.options.sortService = new GroupSortImpl(true);
     this.options.sortColumnNames = ['sortId', 'name'];
     this.loadData();
   }

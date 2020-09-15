@@ -4,6 +4,10 @@ import {SimpleSortImpl} from './simple-sort-impl';
 
 export class GroupSortImpl extends SimpleSortImpl implements Sort {
 
+  constructor(groupSortingWithSubRow = false) {
+    super(groupSortingWithSubRow);
+  }
+
   sort(data: SasiGroupRow[], columns: SasiColumn[], sortType: SasiSortType, sortByRawValue: string) {
     data.forEach(
       groupRow => groupRow.rows = super.sort(
@@ -18,22 +22,13 @@ export class GroupSortImpl extends SimpleSortImpl implements Sort {
           return null;
         })
     );
-    if (columns.find(column => column.index === 'name') || columns.find(column => column.index === 'sortId')) {
-      return super.sort(data, columns, sortType, sortByRawValue, (row, columnIndex) => {
-        if (row !== undefined) {
-          return row.groupRow.getCellValue(columnIndex);
-        }
-        return null;
-      });
-    } else {
-      return super.sort(data, columns, sortType, sortByRawValue, (row, columnIndex) => {
-        if (row !== undefined && row.rows[0] !== undefined) {
-          return row.rows[0].getCellValue(columnIndex);
-        }
-        return null;
-      });
 
-    }
+    return super.sort(data, columns, sortType, sortByRawValue, (row, columnIndex) => {
+      if (row !== undefined && row.rows[0] !== undefined) {
+        return row.rows[0].getCellValue(columnIndex);
+      }
+      return null;
+    });
   }
 
 }
