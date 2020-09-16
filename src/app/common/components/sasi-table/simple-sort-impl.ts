@@ -38,7 +38,7 @@ export class SimpleSortImpl implements Sort {
   }
 
   private compareCells(rowA, rowB, column: SasiColumn, getValue: (row, column) => any) {
-    if (['name', 'sortId'].includes(column.index) && rowA.groupRow !== undefined && this.groupSortingWithSubRow) {
+    if (['name', 'sortId'].includes(column.index) && rowA.groupRow !== undefined && !this.groupSortingWithSubRow) {
       getValue = (row, columnIndex) => {
         if (row !== undefined) {
           return row.groupRow.getCellValue(columnIndex);
