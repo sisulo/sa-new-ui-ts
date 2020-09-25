@@ -4,7 +4,8 @@ import {MetricService} from '../../metric.service';
 import {StorageEntityRequestDto} from '../../common/models/dtos/storage-entity-request.dto';
 import {StorageEntityDetailRequestDto} from '../../common/models/dtos/storage-entity-detail-request.dto';
 import {FormBusService} from '../form-bus.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
+import {SystemData} from '../storage-location/storage-location.component';
 
 export class StorageEntityVo {
   id: number;
@@ -30,12 +31,15 @@ export class StorageEntityFormComponent implements OnInit {
   @Input()
   dataCenterList: { value, label }[];
   @Input()
-  private displayForm: boolean;
+  displayForm: boolean;
+  @Input()
+  private systemList: SystemData[];
   @Output()
   dataSaved = new EventEmitter<boolean>();
   submitted = false;
   httpErrorDisplayed = false;
   httpError = null;
+  forceAsNew = false;
 
   data = new StorageEntityVo();
   form: FormGroup;
@@ -58,6 +62,7 @@ export class StorageEntityFormComponent implements OnInit {
     if (this.data.type !== StorageEntityType.DATACENTER) {
 
       this.form = new FormGroup({
+        'id': new FormControl(this.data.id),
         'datacenter': new FormControl(this.data.parentId, [Validators.required]),
         'name': new FormControl(this.data.name, [Validators.required]),
         'prefixReferenceId': new FormControl(this.data.prefixReferenceId),
@@ -68,7 +73,8 @@ export class StorageEntityFormComponent implements OnInit {
         'rack': new FormControl(this.data.rack, [Validators.maxLength(32)]),
         'managementIp': new FormControl(this.data.managementIp),
         'sortId': new FormControl(this.data.sortId),
-      });
+        'forceAsNew': new FormControl(this.forceAsNew),
+      }, [duplicatedSerialNumber(this.systemList)]);
     } else {
       this.form = new FormGroup({
         'name': new FormControl(this.data.name, [Validators.required]),
@@ -88,12 +94,15 @@ export class StorageEntityFormComponent implements OnInit {
     return this.form.get('datacenter');
   }
 
+  get serial() {
+    return this.form.get('serialNumber');
+  }
+
   get room() {
     return this.form.get('room');
   }
 
   get rack() {
-    console.log(this.form.get('rack').errors);
     return this.form.get('rack');
   }
 
@@ -103,7 +112,18 @@ export class StorageEntityFormComponent implements OnInit {
     if (this.data.id !== undefined && !forceAsNew) {
       this.updateDetails(detailDto);
     } else {
-      this.saveAsNew(dto, detailDto);
+      this.form.get('forceAsNew').setValue(true);
+      this.submitted = true;
+      if (this.form.valid) {
+        this.saveAsNew(dto, detailDto);
+      }
+      setTimeout(
+        () => {
+          this.form.get('forceAsNew').setValue(false);
+          this.submitted = false;
+        },
+        2000
+      );
     }
   }
 
@@ -155,7 +175,7 @@ export class StorageEntityFormComponent implements OnInit {
       response => {
         if (response.error.code === 1002) {
           this.httpErrorDisplayed = true;
-          this.httpError = 'System already exists under the datacenter.';
+          this.httpError = 'System already exists under the same or different datacenter.';
           setTimeout(
             () => this.httpErrorDisplayed = false,
             10000
@@ -171,4 +191,21 @@ export class StorageEntityFormComponent implements OnInit {
     this.closeForm();
     this.dataSaved.emit(true);
   }
+}
+
+export function duplicatedSerialNumber(systemList: SystemData[]): ValidatorFn {
+  return (control: FormGroup): ValidationErrors | null => {
+    const serialNumber = control.get('serialNumber').value;
+    const id = control.get('id').value;
+    const prefix = control.get('prefixReferenceId').value;
+    const forceAsNew = control.get('forceAsNew').value;
+    const foundSystem = systemList.find(system => {
+      if (forceAsNew) {
+        return system.serial === serialNumber && system.prefix === prefix;
+      } else {
+        return system.serial === serialNumber && system.prefix === prefix && system.id !== id;
+      }
+    });
+    return foundSystem ? {duplicatedSerialNumber: {value: control.value}} : null;
+  };
 }

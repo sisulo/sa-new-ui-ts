@@ -11,6 +11,13 @@ import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.compon
 import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
 import {StorageEntityType} from '../../common/models/dtos/owner.dto';
 
+export class SystemData {
+  serial: string;
+  prefix: string;
+  id: number;
+  systemName: string;
+}
+
 @Component({
   selector: 'app-storage-location',
   templateUrl: './storage-location.component.html',
@@ -20,6 +27,7 @@ export class StorageLocationComponent implements OnInit {
   data: StorageEntityResponseDto[] = [];
   options: SasiTableOptions = new SasiTableOptions();
   datacenterList = [];
+  systemList: SystemData[] = [];
   type = StorageEntityType;
 
   constructor(private metricService: MetricService,
@@ -124,6 +132,16 @@ export class StorageLocationComponent implements OnInit {
     if (force) {
       this.metricService.getSystemsDetail().subscribe(data => {
         this.data = data;
+        this.data.forEach(datacenter => {
+          datacenter.storageEntity.children.forEach(system => {
+            this.systemList.push({
+              systemName: system.name,
+              id: system.id,
+              serial: system.serialNumber,
+              prefix: system.detail.prefixReferenceId
+            });
+          });
+        });
         this.datacenterList = this.data.map(datacenter => {
           return {
             value: datacenter.storageEntity.id, label: datacenter.storageEntity.name

@@ -31,7 +31,9 @@
             </div>
             <div *ngIf="data.type !== staticType.DATACENTER">
 
-              <div class="col-md-12 form-group" *ngIf="data.type !== staticType.DATACENTER">
+              <div class="col-md-12 form-group" *ngIf="data.type !== staticType.DATACENTER"
+                   [class.has-error]="form.invalid && form.errors.duplicatedSerialNumber !== null && (serial.dirty || serial.touched || submitted)"
+              >
                 <div class="">
                   <label for="serial">Physical Serial Number: </label>
                 </div>
@@ -41,6 +43,9 @@
                 <div class="col-md-3">
                   <input id="serial" class="form-control" type="text" formControlName="serialNumber"
                          name="serialNumber"/>
+                </div>
+                <div class="col-md-12">
+                  <span *ngIf="form.invalid && form.errors.duplicatedSerialNumber !== null" class="help-block">Same serial number is already used</span>
                 </div>
               </div>
               <div class="col-md-12 form-group">
@@ -61,7 +66,7 @@
                    [class.has-error]="rack.invalid && (rack.dirty || rack.touched || submitted)">
                 <label for="rack">Rack: </label>
                 <input id="rack" class="form-control" type="text" formControlName="rack">
-                <span *ngIf="rack.invalid && rack.errors.maxlength !== null" class="help-block">Length must be less than 32 characters</span>
+
               </div>
               <div class="col-md-12 form-group">
                 <label for="managementIp">Management IP: </label>
