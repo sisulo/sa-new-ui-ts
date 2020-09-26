@@ -6,6 +6,8 @@ import {StorageEntityDetailRequestDto} from '../../common/models/dtos/storage-en
 import {FormBusService} from '../form-bus.service';
 import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
 import {SystemData} from '../storage-location/storage-location.component';
+import {ChangeStatusRequestDto} from '../../common/models/dtos/change-status-request.dto';
+import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 
 export class StorageEntityVo {
   id: number;
@@ -20,6 +22,7 @@ export class StorageEntityVo {
   prefixReferenceId: string;
   room: string;
   sortId: number;
+  status: ComponentStatus;
 }
 
 @Component({
@@ -60,7 +63,7 @@ export class StorageEntityFormComponent implements OnInit {
 
   initFormControls() {
     if (this.data.type !== StorageEntityType.DATACENTER) {
-
+      console.log(this.data);
       this.form = new FormGroup({
         'id': new FormControl(this.data.id),
         'datacenter': new FormControl(this.data.parentId, [Validators.required]),
@@ -78,6 +81,7 @@ export class StorageEntityFormComponent implements OnInit {
     } else {
       this.form = new FormGroup({
         'name': new FormControl(this.data.name, [Validators.required]),
+        'forceAsNew': new FormControl(this.forceAsNew),
       });
     }
   }
@@ -129,7 +133,16 @@ export class StorageEntityFormComponent implements OnInit {
 
   private updateDetails(detailDto: StorageEntityDetailRequestDto) {
     this.metricService.updateStorageEntity(this.data.id, detailDto).subscribe(
-      () => this.success(),
+      () => {
+        const datacenterId = this.form.get('datacenter').value;
+        if (this.data.id != null && this.data.parentId !== datacenterId) {
+          this.metricService.moveStorageEntity(this.data.id, datacenterId).subscribe(
+            () => this.success()
+          );
+        } else {
+          this.success();
+        }
+      },
       error => {
         console.log(error);
       }
@@ -190,6 +203,18 @@ export class StorageEntityFormComponent implements OnInit {
   private success() {
     this.closeForm();
     this.dataSaved.emit(true);
+  }
+
+  deactivate() {
+    if (this.data.id !== undefined) {
+      console.log(this.data.status);
+      const newStatus = this.data.status === ComponentStatus.ACTIVE ? ComponentStatus.INACTIVE : ComponentStatus.ACTIVE;
+      console.log(newStatus);
+      const dto = new ChangeStatusRequestDto(ComponentStatus[newStatus]);
+      this.metricService.updateStatus(this.data.id, dto).subscribe(
+        () => this.success()
+      );
+    }
   }
 }
 

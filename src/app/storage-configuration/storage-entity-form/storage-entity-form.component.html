@@ -84,11 +84,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" (click)="closeForm()">Close</button>
-
+        <button [class.disabled]="data.id === undefined" type="button" class="btn btn-danger"
+                (click)="deactivate()">Deactivate
+        </button>
         <div class="btn-group">
           <button [class.disabled]="form.invalid" type="button" class="btn btn-primary"
                   (click)="form.valid ? saveChanges() : submitted = true">Save changes
           </button>
+
           <button type="button" [class.disabled]="form.invalid" class="btn btn-primary dropdown-toggle"
                   data-toggle="dropdown" aria-expanded="true">
             <span class="caret"></span>

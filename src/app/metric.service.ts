@@ -3,12 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InfrastructureDto} from './common/models/dtos/infrastructure.dto';
 import {environment} from '../environments/environment';
-import {DatacenterDto} from './common/models/dtos/datacenter.dto';
-import {Datacenter} from './common/models/datacenter.vo';
 import {DatePipe} from '@angular/common';
-import {GlobalCapacityStatisticsDto} from './common/models/dtos/global-capacity-statistics.dto';
-import {DatacenterListDto} from './common/models/dtos/datacenter-list.dto';
-import {DatacenterCapacityListDto} from './common/models/dtos/datacenter-capacity-list.dto';
 import {SystemMetricType} from './common/models/metrics/system-metric-type.enum';
 import {GraphDataDto} from './common/models/dtos/graph-data.dto';
 import {OperationType} from './common/models/metrics/operation-type.enum';
@@ -17,6 +12,7 @@ import {StorageEntityResponseDto} from './common/models/dtos/storage-entity-resp
 import {StorageEntityMetricDto} from './common/models/dtos/storage-entity-metric.dto';
 import {StorageEntityRequestDto} from './common/models/dtos/storage-entity-request.dto';
 import {StorageEntityDetailRequestDto} from './common/models/dtos/storage-entity-detail-request.dto';
+import {ChangeStatusRequestDto} from './common/models/dtos/change-status-request.dto';
 
 export enum PeriodType {
   DAY = 'DAY',
@@ -195,6 +191,11 @@ export class MetricService {
     return this.http.put<StorageEntityResponseDto>(url, dto);
   }
 
+  moveStorageEntity(id: number, parentId: number) {
+    const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id + '/new-parent/' + parentId;
+    return this.http.put<any>(url, null);
+  }
+
   private buildUrl(baseUrl, basePath, period?) {
     let periodParam = '';
     if (period != null) {
@@ -219,5 +220,15 @@ export class MetricService {
         return previous + paramNameUrl + current;
       }, ''
     );
+  }
+
+  deleteStorageEntity(id: number) {
+    const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id;
+    return this.http.delete<any>(url);
+  }
+
+  updateStatus(id: number, dto: ChangeStatusRequestDto) {
+    const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id + '/status';
+    return this.http.put<any>(url, dto);
   }
 }

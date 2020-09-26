@@ -26,6 +26,7 @@ export class SerialNumberFormatterComponent implements OnInit {
   openForm() {
     const formData = new StorageEntityVo();
     formData.type = StorageEntityType.SYSTEM;
+    formData.status = this.getCellValue('status');
     formData.serialNumber = this.getCellValue('serialNumber');
     formData.parentId = this.getCellValue('parentId');
     formData.prefixReferenceId = this.getCellValue('prefixReferenceId');

@@ -31,17 +31,16 @@ export class SeTextFormatterComponent implements OnInit {
   }
 
   openForm() {
-    console.log(this.rowData);
-    console.log(this.column);
-    console.log(this.data);
     const formData = new StorageEntityVo();
     if (this.column === undefined) {
       formData.id = this.data['dbId'];
       formData.name = this.data['value'].toString();
+      formData.status = this.data['status'];
       formData.type = StorageEntityType.DATACENTER;
     } else {
       formData.type = StorageEntityType.SYSTEM;
       formData.serialNumber = this.getCellValue('serialNumber');
+      formData.status = this.getCellValue('status');
       formData.parentId = this.getCellValue('parentId');
       formData.prefixReferenceId = this.getCellValue('prefixReferenceId');
       formData.name = this.getCellValue('name');

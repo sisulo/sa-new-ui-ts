@@ -1,6 +1,7 @@
 import {SasiCell, SasiRow} from '../components/sasi-table/sasi-table.component';
 import {Pipe, PipeTransform, Injectable} from '@angular/core';
 import {Owner} from '../models/dtos/owner.dto';
+import {ComponentStatus} from '../models/dtos/enums/component.status';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +17,7 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
         row.cells['name'] = new SasiCell(system.name, {value: system.name});
         row.cells['id'] = new SasiCell(system.id, {value: system.id});
         row.cells['parentId'] = new SasiCell(parent.id, {value: parent.id});
+        row.cells['status'] = new SasiCell(ComponentStatus[system.status], {value: ComponentStatus[system.status]});
         if (system.detail !== undefined) {
           const detail = system.detail;
           row.cells['arrayModel'] = new SasiCell(detail.arrayModel, {value: detail.arrayModel});
