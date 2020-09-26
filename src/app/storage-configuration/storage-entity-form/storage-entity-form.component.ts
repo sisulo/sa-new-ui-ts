@@ -43,7 +43,7 @@ export class StorageEntityFormComponent implements OnInit {
   httpErrorDisplayed = false;
   httpError = null;
   forceAsNew = false;
-
+  confirmWindowDisplay = false;
   data = new StorageEntityVo();
   form: FormGroup;
   staticType = StorageEntityType;
@@ -206,6 +206,7 @@ export class StorageEntityFormComponent implements OnInit {
   }
 
   deactivate() {
+    this.confirmWindowDisplay = false;
     if (this.data.id !== undefined) {
       console.log(this.data.status);
       const newStatus = this.data.status === ComponentStatus.ACTIVE ? ComponentStatus.INACTIVE : ComponentStatus.ACTIVE;
@@ -215,6 +216,14 @@ export class StorageEntityFormComponent implements OnInit {
         () => this.success()
       );
     }
+  }
+
+  confirmDisplayWindow() {
+    this.confirmWindowDisplay = true;
+  }
+
+  closeConfirmationWindow() {
+    this.confirmWindowDisplay = false;
   }
 }
 
