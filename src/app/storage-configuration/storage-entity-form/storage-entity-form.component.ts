@@ -121,13 +121,6 @@ export class StorageEntityFormComponent implements OnInit {
       if (this.form.valid) {
         this.saveAsNew(dto, detailDto);
       }
-      setTimeout(
-        () => {
-          this.form.get('forceAsNew').setValue(false);
-          this.submitted = false;
-        },
-        2000
-      );
     }
   }
 
@@ -189,10 +182,6 @@ export class StorageEntityFormComponent implements OnInit {
         if (response.error.code === 1002) {
           this.httpErrorDisplayed = true;
           this.httpError = 'System already exists under the same or different datacenter.';
-          setTimeout(
-            () => this.httpErrorDisplayed = false,
-            10000
-          );
         }
         console.error(response.error);
         console.error('Cannot store the entity: ');
