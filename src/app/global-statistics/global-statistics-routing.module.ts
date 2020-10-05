@@ -8,6 +8,7 @@ import {LogicalCapacityStatisticsComponent} from './views/logical-capacity-stati
 import {PhysicalCapacityStatisticsComponent} from './views/physical-capacity-statistics/physical-capacity-statistics.component';
 import {HostGroupsCapacityComponent} from './views/host-groups-capacity/host-groups-capacity.component';
 import {BlockSizeLatencyComponent} from './views/block-size-latency/block-size-latency.component';
+import {ParityGroupEventsComponent} from './views/parity-group-events/parity-group-events.component';
 
 const routes: Routes = [
   {
@@ -97,6 +98,21 @@ const routes: Routes = [
       {
         path: 'host-group-capacity',
         redirectTo: 'host-group-capacity/-1',
+        pathMatch: 'full',
+        data: {
+          breadcrumb: ' '
+        }
+      },
+      {
+        path: 'parity-group-events/:id',
+        component: ParityGroupEventsComponent,
+        data: {
+          breadcrumb: 'Parity Group Events'
+        }
+      },
+      {
+        path: 'parity-group-events',
+        redirectTo: 'parity-group-events/-1',
         pathMatch: 'full',
         data: {
           breadcrumb: ' '

@@ -12,6 +12,9 @@ import {SortStorageEntity} from '../../common/utils/sort-storage-entity';
 })
 export class SideMenuComponent implements OnInit {
 
+  constructor(private metricService: MetricService) {
+  }
+
   items: MenuTree[];
   filteredItems: MenuTree[];
   searchExpression: string;
@@ -29,12 +32,22 @@ export class SideMenuComponent implements OnInit {
   storageConfigurationLinks = [];
   private defaultDataCenter: number;
 
-  constructor(private metricService: MetricService) {
+  static convertMenu(data: StorageEntityResponseDto[]): MenuTree[] {
+    const menu: MenuTree[] = [];
+    const sortedData = SortStorageEntity.sort(data);
+    for (const dataCenter of sortedData) {
+      const items: MenuItem[] = [];
+      for (const system of dataCenter.storageEntity.children) {
+        items.push(new MenuItem(system.id, system.name));
+      }
+      menu.push(new MenuTree(dataCenter.storageEntity.name, items));
+    }
+    return menu;
   }
 
   ngOnInit() {
     this.metricService.getDataCenters().subscribe(data => {
-      this.items = this.convertMenu(data);
+      this.items = SideMenuComponent.convertMenu(data);
       this.setDefaultDataCenter(data);
       this.filteredItems = this.items;
     });
@@ -57,6 +70,7 @@ export class SideMenuComponent implements OnInit {
       {id: 5, linkPart: `/global-statistics/adapters`, name: 'CHA&Port Imbalances'},
       {id: 6, linkPart: `/global-statistics/host-group-capacity`, name: 'VMware Capacity'},
       {id: 7, linkPart: `/global-statistics/latency`, name: 'Latency Analysis'},
+      {id: 8, linkPart: `/global-statistics/parity-group-events`, name: 'Parity Group Events'},
     ];
   }
 
@@ -87,21 +101,6 @@ export class SideMenuComponent implements OnInit {
       }
       filteredTree = null;
     }
-  }
-
-  private convertMenu(data: StorageEntityResponseDto[]): MenuTree[] {
-    const menu: MenuTree[] = [];
-    console.log(data);
-    const sortedData = SortStorageEntity.sort(data);
-    console.log(sortedData);
-    for (const dataCenter of sortedData) {
-      const items: MenuItem[] = [];
-      for (const system of dataCenter.storageEntity.children) {
-        items.push(new MenuItem(system.id, system.name));
-      }
-      menu.push(new MenuTree(dataCenter.storageEntity.name, items));
-    }
-    return menu;
   }
 }
 

@@ -1,0 +1,8 @@
+<div class="tab-pane" *ngIf="data.length > 0">
+  <div class="container-fluid">
+    <div class="row col-md-12">
+      <app-sasi-table class="table-right" [data]="data | parityGroup2SasiGroupTable: 'parityGroups'"
+                      [tableOptions]="options"></app-sasi-table>
+    </div>
+  </div>
+</div>

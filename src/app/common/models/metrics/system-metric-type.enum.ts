@@ -44,4 +44,6 @@ export enum  SystemMetricType {
   LOGICAL_CHANGE_1M = 'LOGICAL_CHANGE_MONTH',
   // Mocked extarnal type for metric type,
   TIER = 'TIER',
+  PARITY_GROUP_NAME =  'PARITY_GROUP_NAME',
+  DURATION =  'DURATION',
 }

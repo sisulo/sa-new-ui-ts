@@ -371,6 +371,12 @@ export const slideInOutAnimation = [ // TODO reuse animation in all collapsed sa
  */
 export class SasiTableComponent implements OnInit, OnChanges {
 
+  constructor(private localStorageService: LocalStorageService,
+              private onSelectService: OnSelectService,
+              private domSanitizer: DomSanitizer) {
+
+  }
+
   @Input() data: SasiRow[] = [];
   @Input() tableOptions: SasiTableOptions = new SasiTableOptions();
   collapsedRows: Array<string>;
@@ -428,10 +434,8 @@ export class SasiTableComponent implements OnInit, OnChanges {
   altSort = false;
   style: SafeStyle;
 
-  constructor(private localStorageService: LocalStorageService,
-              private onSelectService: OnSelectService,
-              private domSanitizer: DomSanitizer) {
-
+  static isSelected(row: SasiRow, selectedRow: SelectedRow, rowGroup: SasiGroupRow) {
+    return selectedRow.rowName === row.getCell('name').value && selectedRow.groupName === rowGroup.groupRow.getCell('name').value;
   }
 
   async ngOnInit() {
@@ -457,6 +461,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
       this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
     }
     this.sortData(this.data);
+    console.log(this.data);
     this.style = this.domSanitizer.bypassSecurityTrustStyle(
       'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
       ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');
@@ -594,14 +599,10 @@ export class SasiTableComponent implements OnInit, OnChanges {
     return d.every(
       // @ts-ignore
       rowGroup => rowGroup.rows.every(
-        row => this.selectedRows.find(selectedRow => this.isSelected(row, selectedRow, rowGroup)
+        row => this.selectedRows.find(selectedRow => SasiTableComponent.isSelected(row, selectedRow, rowGroup)
         ) !== undefined
       )
     );
-  }
-
-  private isSelected(row: SasiRow, selectedRow: SelectedRow, rowGroup: SasiGroupRow) {
-    return selectedRow.rowName === row.getCell('name').value && selectedRow.groupName === rowGroup.groupRow.getCell('name').value;
   }
 
   isPartiallySelected() {
@@ -617,7 +618,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
       // @ts-ignore
       rowGroup => rowGroup.rows.find(
         row => this.selectedRows.find(
-          selectedRow => this.isSelected(row, selectedRow, rowGroup)
+          selectedRow => SasiTableComponent.isSelected(row, selectedRow, rowGroup)
         ) !== undefined
       )
     ) !== undefined;

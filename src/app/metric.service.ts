@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {InfrastructureDto} from './common/models/dtos/infrastructure.dto';
 import {environment} from '../environments/environment';
@@ -49,12 +49,16 @@ export interface ThreeDimensionValue {
 })
 export class MetricService {
 
+  constructor(private http: HttpClient) {
+    this.getDataCenters();
+  }
+
   infrastructure: StorageEntityResponseDto[];
   dataCenterObservable = null;
   currentDate: Date = new Date();
 
-  constructor(private http: HttpClient) {
-    this.getDataCenters();
+  static generateSaltValue(): string {
+    return Math.random().toString(36).substring(2, 15);
   }
 
   getInfrastructureStats(): Observable<InfrastructureDto> {
@@ -181,6 +185,21 @@ export class MetricService {
     return this.http.get<LatencyMetadata>(url);
   }
 
+  getParityGroupEvents(id: number, period: PeriodType): Observable<StorageEntityMetricDto[]> {
+    let url;
+    if (id !== undefined && id !== -1) {
+      url = environment.metricsBaseUrl + '/v1/datacenters/' + id + '/parity-groups/events';
+    } else {
+      url = environment.metricsBaseUrl + '/v1/datacenters/parity-groups/events';
+    }
+    const toDate = new Date().getTime();
+    const fromDate = this.calculateDateByPeriodType(new Date(), period);
+    const httpParams = new HttpParams()
+      .append('toDate', toDate.toString())
+      .append('fromDate', fromDate.toString());
+    return this.http.get<StorageEntityMetricDto[]>(url, {params: httpParams});
+  }
+
   createStorageEntity(dto: StorageEntityRequestDto) {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v2/storage-entities');
     return this.http.post<StorageEntityResponseDto>(url, dto);
@@ -201,11 +220,7 @@ export class MetricService {
     if (period != null) {
       periodParam = 'period=' + period + '&';
     }
-    return baseUrl + basePath + '?' + periodParam + 't=' + this.generateSaltValue() + '&date=' + this.generateDate();
-  }
-
-  private generateSaltValue(): string {
-    return Math.random().toString(36).substring(2, 15);
+    return baseUrl + basePath + '?' + periodParam + 't=' + MetricService.generateSaltValue() + '&date=' + this.generateDate();
   }
 
   private generateDate(): string {
@@ -230,5 +245,27 @@ export class MetricService {
   updateStatus(id: number, dto: ChangeStatusRequestDto) {
     const url = environment.metricsBaseUrl + '/v2/storage-entities/' + id + '/status';
     return this.http.put<any>(url, dto);
+  }
+
+  calculateDateByPeriodType(date: Date, period: PeriodType): number {
+    let days: number;
+    switch (period) {
+      case PeriodType.DAY:
+        days = 1;
+        break;
+      case PeriodType.MONTH:
+        days = 30;
+        break;
+      case PeriodType.WEEK:
+        days = 7;
+        break;
+      default:
+        days = 0;
+    }
+    return this.calculateDate(date, days);
+  }
+
+  calculateDate(date: Date, minusDays: number) {
+    return date.getTime() - (minusDays * 24 * 60 * 60 * 1000);
   }
 }

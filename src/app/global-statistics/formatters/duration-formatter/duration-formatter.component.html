@@ -1,0 +1,3 @@
+<div *ngIf="data != null && data.value != null" class="metric-value">
+  <span tooltip="{{column.tooltipText}}" hide-delay="0">{{getValue() | seconds2FullTime}}</span>
+</div>

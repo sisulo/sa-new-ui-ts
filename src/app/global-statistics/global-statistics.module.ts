@@ -36,6 +36,10 @@ import {XaxisComponent} from './views/block-size-latency/bubble-chart/xaxis/xaxi
 import {YaxisComponent} from './views/block-size-latency/bubble-chart/yaxis/yaxis.component';
 import {LegendComponent} from './views/block-size-latency/bubble-chart/legend/legend.component';
 import {PopupDataComponent} from './views/block-size-latency/bubble-chart/popup-data/popup-data.component';
+import { ParityGroupEventsComponent } from './views/parity-group-events/parity-group-events.component';
+import { TimestampToDateComponent } from './formatters/timestamp-to-date/timestamp-to-date.component';
+import { TimeIntervalFormatterComponent } from './formatters/time-interval-formatter/time-interval-formatter.component';
+import { DurationFormatterComponent } from './formatters/duration-formatter/duration-formatter.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +72,11 @@ import {PopupDataComponent} from './views/block-size-latency/bubble-chart/popup-
     XaxisComponent,
     YaxisComponent,
     LegendComponent,
-    PopupDataComponent
+    PopupDataComponent,
+    ParityGroupEventsComponent,
+    TimestampToDateComponent,
+    TimeIntervalFormatterComponent,
+    DurationFormatterComponent
   ],
   exports: [
     UnitFormatterComponent

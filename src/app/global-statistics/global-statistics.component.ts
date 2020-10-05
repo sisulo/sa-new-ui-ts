@@ -1,4 +1,4 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Datacenter} from '../common/models/datacenter.vo';
 import {MetricService} from '../metric.service';
 import {BusService} from './bus.service';
@@ -71,6 +71,8 @@ export class GlobalStatisticsComponent implements OnInit {
         return 'SLA Events';
       case 'adapters':
         return 'CHA&Port Imbalances';
+      case 'parity-group-events':
+        return 'Parity Group Utilization';
       default:
         return 'Statistics';
     }

@@ -7,33 +7,25 @@ import {SystemPool2SasiTablePipe} from './utils/system-pool-2-sasi-table.pipe';
 import {SasiTableComponent} from './components/sasi-table/sasi-table.component';
 import {CellTableComponent} from './components/sasi-table/cell-table.component';
 import {FormatterHostDirective} from './components/sasi-table/formatter-host.directive';
-import {UnitFormatterComponent} from '../global-statistics/formatters/unit-formatter/unit-formatter.component';
 import {TooltipModule} from 'ng2-tooltip-directive';
 import {RowTableComponent} from './components/sasi-table/row-table/row-table.component';
-import {AlertFormatterComponent} from '../global-statistics/formatters/alert-formatter/alert-formatter.component';
 import {SmallBoxComponent} from './components/small-box/small-box.component';
 import {RouterModule} from '@angular/router';
 import {SystemPool2SasiGroupTablePipe} from './utils/system-pool-2-sasi-group-table.pipe';
 import {RowGroupTableComponent} from './components/sasi-table/row-group-table/row-group-table.component';
 import {RowDynamicComponent} from './components/sasi-table/row-dynamic.component';
-import {SimpleFormatterComponent} from '../global-statistics/formatters/simple-formatter/simple-formatter.component';
 import {Ng2KnobDirective} from './components/knob/ng-2-knob.directive';
 import {LocaleNumberFormatPipe} from './components/small-box/locale-number-format.pipe';
-import {TimeFormatterComponent} from '../global-statistics/formatters/time-formatter/time-formatter.component';
-import {TextFormatterComponent} from '../global-statistics/formatters/text-formatter/text-formatter.component';
-import {EmphFormatterComponent} from '../global-statistics/formatters/emph-formatter/emph-formatter.component';
 import {SafeHtmlPipe} from './utils/safe-html.pipe';
-import {PortDisbalanceFormatterComponent} from '../global-statistics/formatters/port-disbalance-formatter/port-disbalance-formatter.component';
 import {FormatThousandsPipe} from './utils/format-thousands.pipe';
 import {RouteLinkFormatterComponent} from './components/route-link-formatter/route-link-formatter.component';
 import {StorageConvertPipe} from './storage-convert.pipe';
-import {TierFormatterComponent} from '../global-statistics/formatters/tier-formatter/tier-formatter.component';
-import {AdapterDisbalanceFormatterComponent} from '../global-statistics/formatters/adapter-disbalance-formatter/adapter-disbalance-formatter.component';
 import {AlertInfoBoxComponent} from './components/info-box/alert-info-box.component';
-import {EmptyFormatterComponent} from '../global-statistics/formatters/empty-formatter/empty-formatter.component';
 import {ColumnComponent} from './components/sasi-table/column/column.component';
 import {StorageEntity2SasiGroupTablePipe} from './utils/storage-entity-2-sasi-group-table.pipe';
 import {StorageEntityDetail2SasiTablePipe} from './utils/storage-entity-detail-2-sasi-table.pipe';
+import {ParityGroup2SasiGroupTablePipe} from './utils/parity-group-2-sasi-group-table.pipe';
+import {ParityGroup2SasiTablePipe} from './utils/parity-group-2-sasi-table.pipe';
 
 @NgModule({
   declarations: [
@@ -49,6 +41,8 @@ import {StorageEntityDetail2SasiTablePipe} from './utils/storage-entity-detail-2
     SystemPool2SasiGroupTablePipe,
     StorageEntity2SasiGroupTablePipe,
     StorageEntityDetail2SasiTablePipe,
+    ParityGroup2SasiGroupTablePipe,
+    ParityGroup2SasiTablePipe,
     RowGroupTableComponent,
     KnobSaComponent,
     Ng2KnobDirective,
@@ -71,6 +65,7 @@ import {StorageEntityDetail2SasiTablePipe} from './utils/storage-entity-detail-2
     InfoBoxComponent,
     SystemPool2SasiTablePipe,
     SystemPool2SasiGroupTablePipe,
+    ParityGroup2SasiGroupTablePipe,
     StorageEntity2SasiGroupTablePipe,
     StorageEntityDetail2SasiTablePipe,
     SasiTableComponent,
