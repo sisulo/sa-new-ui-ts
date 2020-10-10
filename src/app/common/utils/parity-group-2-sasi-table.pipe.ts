@@ -21,7 +21,7 @@ export class ParityGroup2SasiTablePipe implements PipeTransform {
           linkIdInput = linkId;
         }
         if (pool.children !== undefined && pool.children.length > 0) {
-          this.transformParityGroups(pool.children, pool.name, null, null).forEach(row => rows.push(row));
+          this.transformParityGroups(pool.children, pool.name, context, linkIdInput).forEach(row => rows.push(row));
         }
       }
     );
@@ -35,8 +35,8 @@ export class ParityGroup2SasiTablePipe implements PipeTransform {
         parityGroup.metrics.forEach(metric => {
 
           const row = new SasiRow();
-          row.cells['poolName'] = new SasiCell(poolName, {id: poolName, iFrameLink: 'pools', value: poolName});
-          row.cells['name'] = new SasiCell(parityGroup.name, {id: poolName, iFrameLink: 'parityGroups', value: parityGroup.name});
+          row.cells['poolName'] = new SasiCell(poolName, {id: linkId, iFrameLink: context, value: poolName});
+          row.cells['name'] = new SasiCell(parityGroup.name, {id: linkId, iFrameLink: context, value: parityGroup.name});
           row.cells[SystemMetricType.HDD] = new SasiCell(metric.value, metric);
           row.cells[SystemMetricType.DURATION] = new SasiCell(metric.startTime, metric);
           row.cells['date'] = new SasiCell(metric.startTime, metric);

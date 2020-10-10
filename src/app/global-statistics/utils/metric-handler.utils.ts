@@ -3,7 +3,6 @@ import {StorageEntityMetricDto} from '../../common/models/dtos/storage-entity-me
 export class MetricHandlerUtils {
   public static success(data: StorageEntityMetricDto[]) {
     const d = data.reduce((previousValue, currentValue) => [...previousValue, ...currentValue.children], []);
-    console.log(d);
     return d;
   }
 

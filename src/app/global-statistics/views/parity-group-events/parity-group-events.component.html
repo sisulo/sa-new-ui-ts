@@ -1,8 +1,23 @@
+
 <div class="tab-pane" *ngIf="data.length > 0">
+  <div class="box box-info box-solid">
+    <div class="box-body">
+      Utilization Over 55% more than 10 minutes
+    </div>
+  </div>
   <div class="container-fluid">
     <div class="row col-md-12">
-      <app-sasi-table class="table-right" [data]="data | parityGroup2SasiGroupTable: 'parityGroups'"
+    </div>
+    <div class="row col-md-12">
+      <app-sasi-table class="table-right" [data]="data | parityGroup2SasiGroupTable: 'dpSla'"
                       [tableOptions]="options"></app-sasi-table>
+    </div>
+  </div>
+</div>
+<div class="tab-pane" *ngIf="data.length == 0">
+  <div class="box box-danger box-solid">
+    <div class="box-body">
+      No data available
     </div>
   </div>
 </div>

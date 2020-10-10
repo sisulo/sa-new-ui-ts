@@ -7,7 +7,6 @@ import {PeriodService} from '../../../period.service';
 import {BusService} from '../../bus.service';
 import {RouteLinkFormatterComponent} from '../../../common/components/route-link-formatter/route-link-formatter.component';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
-import {SimpleFormatterComponent} from '../../formatters/simple-formatter/simple-formatter.component';
 import {SeTextFormatterComponent} from '../../../storage-configuration/se-text-formatter/se-text-formatter.component';
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
@@ -17,6 +16,7 @@ import {TextFormatterComponent} from '../../formatters/text-formatter/text-forma
 import {TimestampToDateComponent} from '../../formatters/timestamp-to-date/timestamp-to-date.component';
 import {TimeIntervalFormatterComponent} from '../../formatters/time-interval-formatter/time-interval-formatter.component';
 import {DurationFormatterComponent} from '../../formatters/duration-formatter/duration-formatter.component';
+import {UnitFormatterComponent} from '../../formatters/unit-formatter/unit-formatter.component';
 
 @Component({
   selector: 'app-parity-group-events',
@@ -43,7 +43,7 @@ export class ParityGroupEventsComponent implements OnInit {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('name')
-        .withLabel('System')
+        .withLabel('Parity Group')
         .withComponent(RouteLinkFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -53,7 +53,8 @@ export class ParityGroupEventsComponent implements OnInit {
       SasiColumnBuilder.getInstance()
         .withIndex('poolName')
         .withLabel('Pool Name')
-        .withComponent(TextFormatterComponent)
+        .withComponent(RouteLinkFormatterComponent)
+        .withColumnTooltipText('DP Pool where Parity Group is used')
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
@@ -62,6 +63,7 @@ export class ParityGroupEventsComponent implements OnInit {
       SasiColumnBuilder.getInstance()
         .withIndex('date')
         .withLabel('Date')
+        .withColumnTooltipText('Date of event when threshold was breached')
         .withComponent(TimestampToDateComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -71,6 +73,7 @@ export class ParityGroupEventsComponent implements OnInit {
       SasiColumnBuilder.getInstance()
         .withIndex('timeInterval')
         .withLabel('Time')
+        .withColumnTooltipText('Time interval when treshold was breached')
         .withComponent(TimeIntervalFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -80,8 +83,9 @@ export class ParityGroupEventsComponent implements OnInit {
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.HDD)
         .withLabel('Utilization')
-        .withComponent(SimpleFormatterComponent)
-        .withAltSortEnable(false)
+        .withColumnTooltipText('Highest peak of the Parity Group utilization within event time interval')
+        .withComponent(UnitFormatterComponent)
+        .withAltSortEnable(true)
         .withIsAggregated(false)
         .build()
     );
@@ -89,6 +93,7 @@ export class ParityGroupEventsComponent implements OnInit {
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.DURATION)
         .withLabel('Duration')
+        .withColumnTooltipText('Duration of the event')
         .withComponent(DurationFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)

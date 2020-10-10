@@ -461,7 +461,6 @@ export class SasiTableComponent implements OnInit, OnChanges {
       this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
     }
     this.sortData(this.data);
-    console.log(this.data);
     this.style = this.domSanitizer.bypassSecurityTrustStyle(
       'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
       ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');
