@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Datacenter} from '../common/models/datacenter.vo';
 import {MetricService} from '../metric.service';
 import {BusService} from './bus.service';
+import {SortStorageEntity} from '../common/utils/sort-storage-entity';
 
 
 @Component({
@@ -46,12 +47,13 @@ export class GlobalStatisticsComponent implements OnInit {
   getDataCenters(currentTab: number) {
     this.metricService.getDataCenters().subscribe(
       data => {
+        const sortedData = SortStorageEntity.sort(data);
         this.dataCenters = [];
         const defaultDatacenter = new Datacenter();
         defaultDatacenter.label = 'All';
         defaultDatacenter.id = -1;
         this.dataCenters.push(defaultDatacenter);
-        this.dataCenters = [...this.dataCenters, ...data.map(Datacenter.of)];
+        this.dataCenters = [...this.dataCenters, ...sortedData.map(Datacenter.of)];
         this.currentTab = currentTab;
       }
     );
