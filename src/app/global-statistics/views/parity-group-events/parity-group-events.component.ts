@@ -17,6 +17,7 @@ import {TimestampToDateComponent} from '../../formatters/timestamp-to-date/times
 import {TimeIntervalFormatterComponent} from '../../formatters/time-interval-formatter/time-interval-formatter.component';
 import {DurationFormatterComponent} from '../../formatters/duration-formatter/duration-formatter.component';
 import {UnitFormatterComponent} from '../../formatters/unit-formatter/unit-formatter.component';
+import {GroupSortImpl} from '../../../common/components/sasi-table/group-sort-impl';
 
 @Component({
   selector: 'app-parity-group-events',
@@ -83,7 +84,7 @@ export class ParityGroupEventsComponent implements OnInit {
       SasiColumnBuilder.getInstance()
         .withIndex(SystemMetricType.HDD)
         .withLabel('Utilization')
-        .withColumnTooltipText('Highest peak of the Parity Group utilization within event time interval')
+        .withColumnTooltipText('Average/Peak value of the Parity Group utilization within event time interval')
         .withComponent(UnitFormatterComponent)
         .withAltSortEnable(true)
         .withIsAggregated(false)
@@ -117,7 +118,8 @@ export class ParityGroupEventsComponent implements OnInit {
     this.options.labelColumnWidth = '25';
     this.options.valueColumnWidth = '35.75';
     // this.options.aggregateValuesService = new SumValueServiceImpl();
-    this.options.sortService = new GroupSortAggregateValueImpl();
+    this.options.sortService = new GroupSortImpl();
+    this.options.altSortColumnName = 'peak';
     this.options.sortColumnNames = ['sortId', 'name'];
   }
 

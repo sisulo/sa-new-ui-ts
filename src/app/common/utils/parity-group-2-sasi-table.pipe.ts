@@ -38,7 +38,7 @@ export class ParityGroup2SasiTablePipe implements PipeTransform {
           row.cells['poolName'] = new SasiCell(poolName, {id: linkId, iFrameLink: context, value: poolName});
           row.cells['name'] = new SasiCell(parityGroup.name, {id: linkId, iFrameLink: context, value: parityGroup.name});
           row.cells[SystemMetricType.HDD] = new SasiCell(metric.value, metric);
-          row.cells[SystemMetricType.DURATION] = new SasiCell(metric.startTime, metric);
+          row.cells[SystemMetricType.DURATION] = new SasiCell(metric.endTime - metric.startTime, metric);
           row.cells['date'] = new SasiCell(metric.startTime, metric);
           row.cells['timeInterval'] = new SasiCell(metric.startTime, metric);
           rows.push(row);

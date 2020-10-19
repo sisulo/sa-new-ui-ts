@@ -144,6 +144,7 @@ export class SasiColumnBuilder {
     this.shortLabel = shortLabel;
     return this;
   }
+
   withHidden(hidden: boolean) {
     this.hidden = hidden;
     return this;
@@ -556,7 +557,12 @@ export class SasiTableComponent implements OnInit, OnChanges {
       [column],
       this.options.sortType,
       this.altSort ? this.options.altSortColumnName : null,
-      ((row, column1) => row.getCellValue(column1)));
+      (row, column1, altSort) => {
+        if (altSort !== undefined && altSort !== null) {
+          return row.getCellRawData(column1)[altSort];
+        }
+        return row.getCellValue(column1);
+      });
   }
 
   collapseAll() {
