@@ -13,6 +13,7 @@ import {StorageEntityMetricDto} from './common/models/dtos/storage-entity-metric
 import {StorageEntityRequestDto} from './common/models/dtos/storage-entity-request.dto';
 import {StorageEntityDetailRequestDto} from './common/models/dtos/storage-entity-detail-request.dto';
 import {ChangeStatusRequestDto} from './common/models/dtos/change-status-request.dto';
+import {StorageEntityType} from './common/models/dtos/owner.dto';
 
 export enum PeriodType {
   DAY = 'DAY',
@@ -175,9 +176,15 @@ export class MetricService {
     return this.http.post<OperationData[]>(url, request, {headers: headersParams});
   }
 
-  getSystemsDetail() {
+  getSystemsDetail(entityType: StorageEntityType = StorageEntityType.SYSTEM, id: number = null) {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v2/storage-entities');
-    return this.http.get<StorageEntityResponseDto[]>(url);
+    const callParams: { type, systemId? } = {type: entityType};
+    if (id !== null) {
+      callParams.systemId = id.toString();
+    }
+    return this.http.get<StorageEntityResponseDto[]>(url, {
+      params: callParams
+    });
   }
 
   getLatencyMetadata() {

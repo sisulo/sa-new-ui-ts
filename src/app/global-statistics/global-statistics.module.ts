@@ -40,6 +40,8 @@ import { ParityGroupEventsComponent } from './views/parity-group-events/parity-g
 import { TimestampToDateComponent } from './formatters/timestamp-to-date/timestamp-to-date.component';
 import { TimeIntervalFormatterComponent } from './formatters/time-interval-formatter/time-interval-formatter.component';
 import { DurationFormatterComponent } from './formatters/duration-formatter/duration-formatter.component';
+import {ParityGroup2SasiGroupTablePipe} from './views/parity-group-events/parity-group-2-sasi-group-table.pipe';
+import {ParityGroup2SasiTablePipe} from './views/parity-group-events/parity-group-2-sasi-table.pipe';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,9 @@ import { DurationFormatterComponent } from './formatters/duration-formatter/dura
     ParityGroupEventsComponent,
     TimestampToDateComponent,
     TimeIntervalFormatterComponent,
-    DurationFormatterComponent
+    DurationFormatterComponent,
+    ParityGroup2SasiGroupTablePipe,
+    ParityGroup2SasiTablePipe,
   ],
   exports: [
     UnitFormatterComponent

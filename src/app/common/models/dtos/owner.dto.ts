@@ -4,9 +4,14 @@ export enum StorageEntityType {
   DATACENTER = 1,
   SYSTEM,
   POOL,
-  ADAPTER,
-  PORT,
+  ADAPTER_GROUP,
+  PORT_GROUP,
   HOST_GROUP,
+  PARITY_GROUP,
+  PORT,
+  CHANNEL_BOARD,
+  DKC,
+  CONTROLLER
 }
 
 export class Owner {

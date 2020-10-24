@@ -1,0 +1,16 @@
+<div *ngIf="data.length > 0">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+        <app-sasi-table [data]="data | StorageEntityDetail2SasiTablePipe: null" [tableOptions]="options"></app-sasi-table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="tab-pane col-md-3" *ngIf="data.length == 0">
+  <div class="box box-danger box-solid">
+    <div class="box-body">
+      No data available.
+    </div>
+  </div>
+</div>

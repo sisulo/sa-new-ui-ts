@@ -1,8 +1,8 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {SasiCell, SasiGroupRow, SasiRow} from '../components/sasi-table/sasi-table.component';
-import {StorageEntityResponseDto} from '../models/dtos/storage-entity-response.dto';
+import {SasiCell, SasiGroupRow, SasiRow} from '../../common/components/sasi-table/sasi-table.component';
+import {StorageEntityResponseDto} from '../../common/models/dtos/storage-entity-response.dto';
 import {StorageEntityDetail2SasiTablePipe} from './storage-entity-detail-2-sasi-table.pipe';
-import {ComponentStatus} from '../models/dtos/enums/component.status';
+import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 
 @Pipe({
   name: 'storageEntity2SasiGroupTable'

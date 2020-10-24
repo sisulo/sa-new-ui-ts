@@ -77,6 +77,7 @@ export class SideMenuComponent implements OnInit {
   private setSystemConfigurationLinks() {
     this.storageConfigurationLinks = [
       {id: 1, linkPart: `/storage-config/locations`, name: 'Systems by locations'},
+      {id: 2, linkPart: `/storage-config/port-connectivity`, name: 'Port connectivity'},
     ];
   }
 

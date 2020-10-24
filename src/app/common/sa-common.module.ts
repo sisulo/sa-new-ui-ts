@@ -22,10 +22,8 @@ import {RouteLinkFormatterComponent} from './components/route-link-formatter/rou
 import {StorageConvertPipe} from './storage-convert.pipe';
 import {AlertInfoBoxComponent} from './components/info-box/alert-info-box.component';
 import {ColumnComponent} from './components/sasi-table/column/column.component';
-import {StorageEntity2SasiGroupTablePipe} from './utils/storage-entity-2-sasi-group-table.pipe';
-import {StorageEntityDetail2SasiTablePipe} from './utils/storage-entity-detail-2-sasi-table.pipe';
-import {ParityGroup2SasiGroupTablePipe} from './utils/parity-group-2-sasi-group-table.pipe';
-import {ParityGroup2SasiTablePipe} from './utils/parity-group-2-sasi-table.pipe';
+import {ParityGroup2SasiGroupTablePipe} from '../global-statistics/views/parity-group-events/parity-group-2-sasi-group-table.pipe';
+import {ParityGroup2SasiTablePipe} from '../global-statistics/views/parity-group-events/parity-group-2-sasi-table.pipe';
 
 @NgModule({
   declarations: [
@@ -39,10 +37,6 @@ import {ParityGroup2SasiTablePipe} from './utils/parity-group-2-sasi-table.pipe'
     RowDynamicComponent,
     SmallBoxComponent,
     SystemPool2SasiGroupTablePipe,
-    StorageEntity2SasiGroupTablePipe,
-    StorageEntityDetail2SasiTablePipe,
-    ParityGroup2SasiGroupTablePipe,
-    ParityGroup2SasiTablePipe,
     RowGroupTableComponent,
     KnobSaComponent,
     Ng2KnobDirective,
@@ -65,9 +59,6 @@ import {ParityGroup2SasiTablePipe} from './utils/parity-group-2-sasi-table.pipe'
     InfoBoxComponent,
     SystemPool2SasiTablePipe,
     SystemPool2SasiGroupTablePipe,
-    ParityGroup2SasiGroupTablePipe,
-    StorageEntity2SasiGroupTablePipe,
-    StorageEntityDetail2SasiTablePipe,
     SasiTableComponent,
     KnobSaComponent,
     SmallBoxComponent,
