@@ -21,6 +21,7 @@ export class Owner {
   status: string;
   serialNumber: string;
   parent: Owner;
+  parentId: number;
   children: Owner[];
   detail: StorageEntityDetailResponseDto;
 }

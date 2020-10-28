@@ -61,37 +61,3 @@
                          [options]="options">
   </app-row-dynamic-table>
 </div>
-
-<!--<div class="capacity-table sticky col-md-12">-->
-<!--  &lt;!&ndash;-->
-<!--    TOP TABLE ROW-->
-<!--  &ndash;&gt;-->
-<!--  <div class="row table-header sticky-top">-->
-<!--    <div class="col-control col">-->
-<!--      <i *ngIf="options.isDataGrouped" class="fa expand-collapse"-->
-<!--         [@iconRotate]="isCollapseAll()"-->
-<!--         [ngClass]="'fa-angle-down'"-->
-<!--         (click)="collapseAll()"-->
-<!--         [tooltip]="isCollapseAll() ? 'Expand All':'Collapse All'"></i>-->
-<!--      <i *ngIf="options.selectableRows && isSelectedAll()" class="far fa-check-square" (click)="selectAll()"></i>-->
-<!--      <i *ngIf="options.selectableRows && isPartiallySelected() && !isSelectedAll()" class="far fa-fw fa-minus-square"-->
-<!--         (click)="selectAll()"></i>-->
-<!--      <i *ngIf="options.selectableRows && (!isPartiallySelected()) && (!isSelectedAll())" class="far fa-fw fa-square"-->
-<!--         (click)="selectAll()"></i>-->
-<!--    </div>-->
-<!--    <div class="col-control" *ngIf="options.isDataGrouped && options.cellDecoratorRules.length > 0">-->
-<!--      <i tooltip="Alerts" class="fa fa-exclamation-triangle text-orange"></i>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--  &lt;!&ndash;POOL ROWS&ndash;&gt;-->
-<!--  &lt;!&ndash;&ndash;&gt;-->
-<!--<div class="row" *ngIf="selectedRows !== undefined">-->
-<!--  &lt;!&ndash;<div  [class.highlight-row]="options.highlightRow">&ndash;&gt;-->
-<!--  <app-row-dynamic-table *ngFor="let row of data"-->
-<!--                         [class.highlight-row]="options.highlightRow && !options.isDataGrouped"-->
-<!--                         [class.striped-row]="!options.isDataGrouped"-->
-<!--                         [componentFormatter]="options.rowComponentFormatter" [data]="row"-->
-<!--                         [options]="options"></app-row-dynamic-table>-->
-<!--  &lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-<!--</div>-->

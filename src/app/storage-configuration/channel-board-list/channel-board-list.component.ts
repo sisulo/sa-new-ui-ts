@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {SasiColumnBuilder, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {SystemData} from '../storage-location/storage-location.component';
@@ -9,13 +9,14 @@ import {AlertFormatterComponent} from '../../global-statistics/formatters/alert-
 import {RowTableComponent} from '../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
-import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
 
-export abstract class StorageEntityList implements OnInit, OnChanges {
+export abstract class StorageEntityList implements OnInit {
   @Input()
-  selectedSystem: number;
-
   data: Owner[] = [];
+  @Input()
+  displayAddButton = false;
+  @Input()
+  parentsData: Owner[] = [];
   options: SasiTableOptions = new SasiTableOptions();
   datacenterList = [];
   systemList: SystemData[] = [];
@@ -34,11 +35,6 @@ export abstract class StorageEntityList implements OnInit, OnChanges {
 
   abstract ngOnInit();
 
-  ngOnChanges(changes: SimpleChanges) {
-    this.selectedSystem = changes.selectedSystem.currentValue;
-    this.loadData();
-  }
-
   getValue(system, property) {
     if (system.detail !== undefined) {
       return system.detail[property];
@@ -46,22 +42,10 @@ export abstract class StorageEntityList implements OnInit, OnChanges {
     return null;
   }
 
-  openForm(type: StorageEntityType) {
+  public openForm(type: StorageEntityType) {
     const data = new StorageEntityVo();
     data.type = type;
     this.formBus.sendFormData(data);
-  }
-
-  loadData(force: boolean = true) {
-    if (force && this.selectedSystem !== undefined) {
-      this.metricService.getSystemsDetail(this.type, this.selectedSystem).subscribe(data => {
-        if (data.length > 0) {
-          console.log(data);
-          this.data = ExtractStorageEntityUtils.extractByType(data, this.type);
-        }
-        console.log(this.data);
-      });
-    }
   }
 }
 
@@ -72,19 +56,16 @@ export abstract class StorageEntityList implements OnInit, OnChanges {
 })
 export class ChannelBoardListComponent extends StorageEntityList {
 
-
   constructor(protected metricService: MetricService,
               protected formBus: FormBusService) {
     super(metricService, formBus, StorageEntityType.CHANNEL_BOARD);
   }
 
-
   ngOnInit() {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex('id')
-        .withAltLabel('ID')
-        .withLabel('System')
+        .withIndex('parentName')
+        .withLabel('Controller')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -93,8 +74,7 @@ export class ChannelBoardListComponent extends StorageEntityList {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('name')
-        .withAltLabel('Name')
-        .withLabel('DKC')
+        .withLabel('Name')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -103,7 +83,6 @@ export class ChannelBoardListComponent extends StorageEntityList {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('speed')
-        .withAltLabel('Speed')
         .withLabel('Speed')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
@@ -113,7 +92,6 @@ export class ChannelBoardListComponent extends StorageEntityList {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('note')
-        .withAltLabel('Description')
         .withLabel('Description')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
@@ -128,7 +106,6 @@ export class ChannelBoardListComponent extends StorageEntityList {
     this.options.highlightColumn = false;
     this.options.sortService = new SimpleSortImpl();
     this.options.sortColumnNames = ['name'];
-    this.loadData();
   }
 
 }

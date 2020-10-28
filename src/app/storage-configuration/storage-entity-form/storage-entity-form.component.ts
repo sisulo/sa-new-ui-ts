@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {StorageEntityType} from '../../common/models/dtos/owner.dto';
+import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {MetricService} from '../../metric.service';
 import {StorageEntityRequestDto} from '../../common/models/dtos/storage-entity-request.dto';
 import {StorageEntityDetailRequestDto} from '../../common/models/dtos/storage-entity-detail-request.dto';
@@ -23,6 +23,18 @@ export class StorageEntityVo {
   room: string;
   sortId: number;
   status: ComponentStatus;
+  speed: number;
+  note: string;
+  cables: string;
+  switch: string;
+  slot: string;
+  wwn: string;
+}
+
+interface FormStaticData {
+  storageEntityLabel;
+  parentNameLabel;
+  parents;
 }
 
 @Component({
@@ -32,11 +44,21 @@ export class StorageEntityVo {
 })
 export class StorageEntityFormComponent implements OnInit {
   @Input()
-  dataCenterList: { value, label }[];
+  dataCenterList: Owner[];
   @Input()
-  displayForm: boolean;
+  dkcList: Owner[];
+  @Input()
+  controllerList: Owner[];
+  @Input()
+  channelBoardList: Owner[];
+  @Input()
+  parentSystemList: Owner[];
   @Input()
   private systemList: SystemData[];
+  @Input()
+  private selectedParent: number;
+  @Input()
+  displayForm: boolean;
   @Output()
   dataSaved = new EventEmitter<boolean>();
   submitted = false;
@@ -47,26 +69,62 @@ export class StorageEntityFormComponent implements OnInit {
   data = new StorageEntityVo();
   form: FormGroup;
   staticType = StorageEntityType;
+  staticData: FormStaticData[] = [];
 
   constructor(private metricService: MetricService,
               private formBusService: FormBusService) {
   }
 
   ngOnInit() {
+    this.staticData[StorageEntityType.DKC] = {
+      storageEntityLabel: 'DKC',
+      parentNameLabel: 'System',
+      parents: this.parentSystemList
+    };
+    this.staticData[StorageEntityType.CONTROLLER] = {
+      storageEntityLabel: 'Controller',
+      parentNameLabel: 'DKC',
+      parents: this.dkcList
+    };
+    this.staticData[StorageEntityType.CHANNEL_BOARD] = {
+      storageEntityLabel: 'Channel Board',
+      parentNameLabel: 'Controller',
+      parents: this.dkcList
+    };
+    this.staticData[StorageEntityType.PORT] = {
+      storageEntityLabel: 'Port',
+      parentNameLabel: 'Channel Board',
+      parents: this.dkcList
+    };
+    this.staticData[StorageEntityType.SYSTEM] = {
+      storageEntityLabel: 'System',
+      parentNameLabel: 'Datacenter',
+      parents: this.dataCenterList
+    };
+    this.staticData[StorageEntityType.DATACENTER] = {
+      storageEntityLabel: 'Datacenter',
+      parentNameLabel: '',
+      parents: []
+    };
     this.formBusService.storageEntityFormStream.subscribe(data => {
       this.data = data;
-      this.displayForm = true;
+      if (data.type === StorageEntityType.DKC) {
+        this.data.parentId = this.selectedParent;
+      }
       this.initFormControls();
+      this.form.markAsUntouched();
+      this.submitted = false;
+      this.httpErrorDisplayed = false;
+      this.displayForm = true;
     });
     this.initFormControls();
   }
 
   initFormControls() {
-    if (this.data.type !== StorageEntityType.DATACENTER) {
-      console.log(this.data);
+    if (this.data.type === StorageEntityType.SYSTEM) {
       this.form = new FormGroup({
         'id': new FormControl(this.data.id),
-        'datacenter': new FormControl(this.data.parentId, [Validators.required]),
+        'parent': new FormControl(this.data.parentId, [Validators.required]),
         'name': new FormControl(this.data.name, [Validators.required]),
         'prefixReferenceId': new FormControl(this.data.prefixReferenceId),
         'serialNumber': new FormControl(this.data.serialNumber),
@@ -78,9 +136,36 @@ export class StorageEntityFormComponent implements OnInit {
         'sortId': new FormControl(this.data.sortId),
         'forceAsNew': new FormControl(this.forceAsNew),
       }, [duplicatedSerialNumber(this.systemList)]);
-    } else {
+    } else if (this.data.type === StorageEntityType.DATACENTER) {
       this.form = new FormGroup({
         'name': new FormControl(this.data.name, [Validators.required]),
+        'forceAsNew': new FormControl(this.forceAsNew),
+      });
+    } else if (this.data.type === StorageEntityType.DKC
+      || this.data.type === StorageEntityType.CONTROLLER) {
+      this.form = new FormGroup({
+        'name': new FormControl(this.data.name, [Validators.required]),
+        'parent': new FormControl(this.data.parentId, [Validators.required]),
+        'forceAsNew': new FormControl(this.forceAsNew),
+      });
+    } else if (this.data.type === StorageEntityType.CHANNEL_BOARD) {
+      this.form = new FormGroup({
+        'name': new FormControl(this.data.name, [Validators.required]),
+        'parent': new FormControl(this.data.parentId, [Validators.required]),
+        'speed': new FormControl(this.data.speed),
+        'note': new FormControl(this.data.note),
+        'forceAsNew': new FormControl(this.forceAsNew),
+      });
+    } else if (this.data.type === StorageEntityType.PORT) {
+      this.form = new FormGroup({
+        'name': new FormControl(this.data.name, [Validators.required]),
+        'parent': new FormControl(this.data.parentId, [Validators.required]),
+        'speed': new FormControl(this.data.speed),
+        'note': new FormControl(this.data.note),
+        'cables': new FormControl(this.data.cables),
+        'wwn': new FormControl(this.data.wwn),
+        'slot': new FormControl(this.data.slot),
+        'switch': new FormControl(this.data.switch),
         'forceAsNew': new FormControl(this.forceAsNew),
       });
     }
@@ -94,8 +179,8 @@ export class StorageEntityFormComponent implements OnInit {
     return this.form.get('name');
   }
 
-  get dataCenter() {
-    return this.form.get('datacenter');
+  get parent() {
+    return this.form.get('parent');
   }
 
   get serial() {
@@ -108,6 +193,30 @@ export class StorageEntityFormComponent implements OnInit {
 
   get rack() {
     return this.form.get('rack');
+  }
+
+  get speed() {
+    return this.form.get('speed');
+  }
+
+  get note() {
+    return this.form.get('note');
+  }
+
+  get cables() {
+    return this.form.get('cables');
+  }
+
+  get wwn() {
+    return this.form.get('wwn');
+  }
+
+  get slot() {
+    return this.form.get('slot');
+  }
+
+  get switch() {
+    return this.form.get('switch');
   }
 
   saveChanges(forceAsNew: boolean = false) {
@@ -127,7 +236,7 @@ export class StorageEntityFormComponent implements OnInit {
   private updateDetails(detailDto: StorageEntityDetailRequestDto) {
     this.metricService.updateStorageEntity(this.data.id, detailDto).subscribe(
       () => {
-        const datacenterId = this.form.get('datacenter').value;
+        const datacenterId = this.form.get('parent').value;
         if (this.data.id != null && this.data.parentId !== datacenterId) {
           this.metricService.moveStorageEntity(this.data.id, datacenterId).subscribe(
             () => this.success()
@@ -149,7 +258,7 @@ export class StorageEntityFormComponent implements OnInit {
     let detailDto = new StorageEntityDetailRequestDto();
     detailDto.name = this.form.value.name;
     if (this.data.type !== StorageEntityType.DATACENTER) {
-      dto.parentId = this.form.value.datacenter;
+      dto.parentId = this.form.value.parent;
       dto.serialNumber = this.form.value.serialNumber;
 
       detailDto = new StorageEntityDetailRequestDto();
@@ -162,6 +271,12 @@ export class StorageEntityFormComponent implements OnInit {
       detailDto.name = this.form.value.name;
       detailDto.serialNumber = this.form.value.serialNumber;
       detailDto.sortId = this.form.value.sortId;
+      detailDto.note = this.form.value.note;
+      detailDto.speed = this.form.value.speed;
+      detailDto.cables = this.form.value.cables;
+      detailDto.switch = this.form.value.switch;
+      detailDto.slot = this.form.value.slot;
+      detailDto.wwn = this.form.value.wwn;
     }
     return {dto, detailDto};
   }
@@ -181,7 +296,7 @@ export class StorageEntityFormComponent implements OnInit {
       response => {
         if (response.error.code === 1002) {
           this.httpErrorDisplayed = true;
-          this.httpError = 'System already exists under the same or different datacenter.';
+          this.httpError = this.getStaticData(StorageEntityType[dto.type]).storageEntityLabel + ' already exists under the same or different ' + this.getStaticData(StorageEntityType[dto.type]).parentNameLabel;
         }
         console.error(response.error);
         console.error('Cannot store the entity: ');
@@ -213,6 +328,10 @@ export class StorageEntityFormComponent implements OnInit {
 
   closeConfirmationWindow() {
     this.confirmWindowDisplay = false;
+  }
+
+  getStaticData(type: StorageEntityType) {
+    return this.staticData[type];
   }
 }
 

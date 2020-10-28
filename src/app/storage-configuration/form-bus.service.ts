@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Subject} from 'rxjs';
 import {StorageEntityVo} from './storage-entity-form/storage-entity-form.component';
 
 @Injectable({
@@ -12,7 +12,10 @@ export class FormBusService {
   storageEntityFormStream = this.storageEntityForm.asObservable();
 
   sendFormData(data: StorageEntityVo) {
+    console.log(data);
     this.storageEntityForm.next(data);
   }
-  constructor() { }
+
+  constructor() {
+  }
 }

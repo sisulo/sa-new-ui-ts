@@ -4,8 +4,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" (click)="closeForm()">&#735;</span></button>
-        <h4 class="modal-title" *ngIf="data.type === staticType.SYSTEM">Add / Edit System</h4>
-        <h4 class="modal-title" *ngIf="data.type === staticType.DATACENTER">Add / Edit Datacenter</h4>
+        <h4 class="modal-title" *ngIf="data.type === staticType.SYSTEM">Add / Edit {{getStaticData(data.type).storageEntityLabel}}</h4>
       </div>
       <div class="modal-body">
         <div *ngIf="httpErrorDisplayed" class="col-md-12 http-error-box">
@@ -14,22 +13,22 @@
         <form role="form" [formGroup]="form">
           <div class="box-body">
             <div class="col-md-12 form-group" *ngIf="data.type !== staticType.DATACENTER"
-                 [class.has-error]="dataCenter.invalid && (dataCenter.dirty || dataCenter.touched || submitted)">
-              <label for="datacenter">Datacenter:</label>
-              <ng-select id="datacenter" [items]="dataCenterList"
-                         bindValue="value" formControlName="datacenter">
+                 [class.has-error]="parent.invalid && (parent.dirty || parent.touched || submitted)">
+              <label for="parent">{{getStaticData(data.type).parentNameLabel}}:</label>
+              <ng-select id="parent" [items]="getStaticData(data.type).parents"
+                         bindValue="id" bindLabel="name" formControlName="parent">
               </ng-select>
-              <span *ngIf="dataCenter.invalid && (dataCenter.dirty || dataCenter.touched || submitted)"
-                    class="help-block">Datacenter must be chosen</span>
+              <span *ngIf="parent.invalid && (parent.dirty || parent.touched || submitted)"
+
+                    class="help-block">{{getStaticData(data.type).parentNameLabel}} must be chosen</span>
             </div>
             <div class="col-md-12 form-group"
                  [class.has-error]="name.invalid && (name.dirty || name.touched || submitted)">
-              <label for="name" *ngIf="data.type === staticType.SYSTEM">System Name: </label>
-              <label for="name" *ngIf="data.type === staticType.DATACENTER">Datacenter Name: </label>
-              <input type="text" class="form-control" formControlName="name">
+              <label for="name">{{getStaticData(data.type).storageEntityLabel}} Name: </label>
+              <input type="text" class="form-control" formControlName="name" id="name">
               <span *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="help-block">Name must be set</span>
             </div>
-            <div *ngIf="data.type !== staticType.DATACENTER">
+            <div *ngIf="data.type === staticType.SYSTEM">
 
               <div class="col-md-12 form-group" *ngIf="data.type !== staticType.DATACENTER"
                    [class.has-error]="form.invalid && form.errors.duplicatedSerialNumber !== null && (serial.dirty || serial.touched || submitted)"
@@ -75,6 +74,42 @@
               <div class="col-md-12 form-group">
                 <label for="sortId">Sort ID: </label>
                 <input id="sortId" class="form-control" type="text" formControlName="sortId">
+              </div>
+            </div>
+            <div *ngIf="speed !== null">
+              <div class="col-md-12 form-group">
+                <label for="speed">Speed: </label>
+                <input id="speed" class="form-control" type="text" formControlName="speed">
+              </div>
+            </div>
+            <div *ngIf="note !== null">
+              <div class="col-md-12 form-group">
+                <label for="note">Description: </label>
+                <input id="note" class="form-control" type="text" formControlName="note">
+              </div>
+            </div>
+            <div *ngIf="cables !== null">
+              <div class="col-md-12 form-group">
+                <label for="cables">Cables: </label>
+                <input id="cables" class="form-control" type="text" formControlName="cables">
+              </div>
+            </div>
+            <div *ngIf="switch !== null">
+              <div class="col-md-12 form-group">
+                <label for="switch">Switch: </label>
+                <input id="switch" class="form-control" type="text" formControlName="switch">
+              </div>
+            </div>
+            <div *ngIf="slot !== null">
+              <div class="col-md-12 form-group">
+                <label for="slot">Slot/Port: </label>
+                <input id="slot" class="form-control" type="text" formControlName="slot">
+              </div>
+            </div>
+            <div *ngIf="wwn !== null">
+              <div class="col-md-12 form-group">
+                <label for="wwn">WWN: </label>
+                <input id="wwn" class="form-control" type="text" formControlName="wwn">
               </div>
             </div>
           </div>

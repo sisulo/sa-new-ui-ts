@@ -24,9 +24,8 @@ export class ControllerListComponent extends StorageEntityList {
   ngOnInit() {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex('id')
-        .withAltLabel('ID')
-        .withLabel('System')
+        .withIndex('parentName')
+        .withLabel('DKC')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -35,13 +34,13 @@ export class ControllerListComponent extends StorageEntityList {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('name')
-        .withAltLabel('Name')
-        .withLabel('DKC')
+        .withLabel('Name')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
     );
+
 
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
@@ -51,6 +50,5 @@ export class ControllerListComponent extends StorageEntityList {
     this.options.highlightColumn = false;
     this.options.sortService = new SimpleSortImpl();
     this.options.sortColumnNames = ['name'];
-    this.loadData();
   }
 }

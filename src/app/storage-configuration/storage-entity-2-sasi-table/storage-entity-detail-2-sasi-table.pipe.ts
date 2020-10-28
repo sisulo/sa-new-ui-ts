@@ -1,6 +1,6 @@
 import {SasiCell, SasiRow} from '../../common/components/sasi-table/sasi-table.component';
 import {Pipe, PipeTransform, Injectable} from '@angular/core';
-import {Owner} from '../../common/models/dtos/owner.dto';
+import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 
 @Injectable({
@@ -11,15 +11,21 @@ import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 })
 export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
 
-  transform(systems: Owner[], parent: Owner): SasiRow[] {
+
+  transform(systems: Owner[], parent: Owner, parentsData: Owner[] = []): SasiRow[] {
+
+
     return systems.map(
       system => {
         const row = new SasiRow();
         row.cells['name'] = new SasiCell(system.name, {value: system.name});
         row.cells['id'] = new SasiCell(system.id, {value: system.id});
-        if (parent !== null) {
-          row.cells['parentId'] = new SasiCell(parent.id, {value: parent.id});
-        }
+        const type = StorageEntityType[system.type];
+        row.cells['type'] = new SasiCell(type, {value: type});
+        const parentId = parent !== null ? parent.id : system.parentId;
+        const parentName = parent != null ? parent.name : this.getParentName(parentId, parentsData);
+        row.cells['parentId'] = new SasiCell(parentId, {value: parentId});
+        row.cells['parentName'] = new SasiCell(parentName, {value: parentName});
         row.cells['status'] = new SasiCell(ComponentStatus[system.status], {value: ComponentStatus[system.status]});
         if (system.detail !== undefined) {
           const detail = system.detail;
@@ -43,4 +49,13 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
       }
     );
   }
+
+  getParentName(parentId: number, parentsData: Owner[]) {
+    const foundParent = parentsData.find(parent => parent.id === parentId);
+    if (foundParent) {
+      return foundParent.name;
+    }
+    return null;
+  }
+
 }

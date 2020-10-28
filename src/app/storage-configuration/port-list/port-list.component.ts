@@ -24,9 +24,8 @@ export class PortListComponent extends StorageEntityList {
   ngOnInit() {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex('id')
-        .withAltLabel('ID')
-        .withLabel('System')
+        .withIndex('parentName')
+        .withLabel('Channel Board')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -36,7 +35,7 @@ export class PortListComponent extends StorageEntityList {
       SasiColumnBuilder.getInstance()
         .withIndex('name')
         .withAltLabel('Name')
-        .withLabel('DKC')
+        .withLabel('Name')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
@@ -113,6 +112,5 @@ export class PortListComponent extends StorageEntityList {
     this.options.highlightColumn = false;
     this.options.sortService = new SimpleSortImpl();
     this.options.sortColumnNames = ['name'];
-    this.loadData();
   }
 }

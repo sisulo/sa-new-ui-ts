@@ -24,33 +24,20 @@ export class DkcListComponent extends StorageEntityList {
   ngOnInit() {
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex('id')
-        .withAltLabel('ID')
-        .withLabel('System')
-        .withComponent(SeTextFormatterComponent)
-        .withAltSortEnable(false)
-        .withIsAggregated(false)
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
         .withIndex('name')
-        .withAltLabel('Name')
         .withLabel('DKC')
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
     );
-
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
-    // this.options.grIndexComponentFormatter = SeTextFormatterComponent;
     this.options.isDataGrouped = false;
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
     this.options.sortService = new SimpleSortImpl();
+    this.options.nameColumnSize = '';
     this.options.sortColumnNames = ['name'];
-    this.loadData();
   }
 }

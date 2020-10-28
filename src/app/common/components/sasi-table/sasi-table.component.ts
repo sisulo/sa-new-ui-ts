@@ -461,10 +461,12 @@ export class SasiTableComponent implements OnInit, OnChanges {
     } else {
       this.collapsedRows = this.collapsedRows; // this must be reset because save on the collapsedRows doesn't work
     }
-    this.sortData(this.data);
     this.style = this.domSanitizer.bypassSecurityTrustStyle(
       'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
       ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');
+    console.log('Style: ' + this.style);
+
+    this.sortData(this.data);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -490,7 +492,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
   }
 
   getGridColumnCount() {
-    return this.options.getDataColumns().length;
+    return this.options.getDataColumns().length || 1;
   }
 
   getNameColumnSize() {

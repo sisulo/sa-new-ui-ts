@@ -109,7 +109,6 @@ export class StorageLocationComponent implements OnInit {
     this.options.isDataGrouped = true;
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
-    // this.options.aggregateValuesService = new SumValueServiceImpl();
     this.options.sortService = new GroupSortImpl(true);
     this.options.sortColumnNames = ['sortId', 'name'];
     this.loadData();
@@ -142,11 +141,7 @@ export class StorageLocationComponent implements OnInit {
             });
           });
         });
-        this.datacenterList = this.data.map(datacenter => {
-          return {
-            value: datacenter.storageEntity.id, label: datacenter.storageEntity.name
-          };
-        });
+        this.datacenterList = this.data.map(datacenter => datacenter.storageEntity);
       });
     }
   }

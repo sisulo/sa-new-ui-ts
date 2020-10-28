@@ -1,6 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {MetricService} from '../../metric.service';
-import {StorageEntityType} from '../../common/models/dtos/owner.dto';
+import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
+import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
+import {Observable} from 'rxjs';
+
+interface StorageEntityList {
+  value: number;
+  label: string;
+}
 
 @Component({
   selector: 'app-port-connectivity',
@@ -9,18 +16,49 @@ import {StorageEntityType} from '../../common/models/dtos/owner.dto';
 })
 export class PortConnectivityComponent implements OnInit {
 
-  systemsList: { id, label }[] = [];
+  systemsList: Owner[] = [];
+  dkcList: Owner[] = [];
+  controllerList: Owner[] = [];
+  channelBoardList: Owner[] = [];
+  portList: Owner[] = [];
   selectedSystem: number;
+  typeEnum = StorageEntityType;
 
   constructor(private metricService: MetricService) {
   }
 
   ngOnInit() {
-    this.metricService.getSystemsDetail(StorageEntityType.SYSTEM).subscribe(response => {
-      response.forEach(dc => {
-        dc.storageEntity.children.forEach(system => this.systemsList.push({id: system.id, label: system.name}));
-      });
-    });
+    this.loadData();
+  }
+
+  loadData(force: boolean = true) {
+    this.fetchStorageEntities(StorageEntityType.DKC, this.selectedSystem)
+      .subscribe(data => this.dkcList = data);
+    this.fetchStorageEntities(StorageEntityType.SYSTEM, null)
+      .subscribe(data => this.systemsList = data);
+    this.fetchStorageEntities(StorageEntityType.CONTROLLER, this.selectedSystem)
+      .subscribe(data => this.controllerList = data);
+    this.fetchStorageEntities(StorageEntityType.CHANNEL_BOARD, this.selectedSystem)
+      .subscribe(data => this.channelBoardList = data);
+    this.fetchStorageEntities(StorageEntityType.PORT, this.selectedSystem)
+      .subscribe(data => this.portList = data);
+
+  }
+
+  fetchStorageEntities(type, systemId: number): Observable<Owner[]> {
+    return new Observable(subscriber =>
+      this.metricService.getSystemsDetail(type, systemId)
+        .subscribe(data => {
+          if (data.length > 0) {
+            subscriber.next(ExtractStorageEntityUtils.extractByType(data, type));
+          } else {
+            subscriber.next([]);
+          }
+        }));
+  }
+
+  getSystemListCurrent(id): Owner[] {
+    return this.systemsList.filter(system => system.id === id);
   }
 
 }

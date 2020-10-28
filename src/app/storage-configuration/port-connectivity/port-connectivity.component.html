@@ -1,14 +1,16 @@
+<h3>
+  Port connections
+</h3>
 <div class="box" *ngIf="systemsList.length > 0">
-  <div class="box-header">
-    <h3 class="box-title">System</h3>
-  </div>
   <div class="box-body">
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <label for="system">System:</label>
-          <ng-select id="system" [items]="systemsList"
-                     bindValue="id" bindLabel="label" [(ngModel)]="selectedSystem">
+          <ng-select id="system"
+                     bindValue="id" bindLabel="name" [items]="systemsList"
+                     (change)="loadData(true)"
+                     [(ngModel)]="selectedSystem">
           </ng-select>
         </div>
       </div>
@@ -23,8 +25,10 @@
   <div class="box-body">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-12">
-          <app-dkc-list [selectedSystem]="selectedSystem"></app-dkc-list>
+        <div class="col-md-3">
+          <app-dkc-list [data]="dkcList"
+                        [displayAddButton]="getSystemListCurrent(selectedSystem).length > 0"
+                        [parentsData]="systemsList"></app-dkc-list>
         </div>
       </div>
     </div>
@@ -38,8 +42,10 @@
   <div class="box-body">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-12">
-          <app-controller-list [selectedSystem]="selectedSystem"></app-controller-list>
+        <div class="col-md-3">
+          <app-controller-list [data]="controllerList"
+                               [displayAddButton]="dkcList.length > 0"
+                               [parentsData]="dkcList"></app-controller-list>
         </div>
       </div>
     </div>
@@ -53,8 +59,10 @@
   <div class="box-body">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-12">
-          <app-channel-board-list [selectedSystem]="selectedSystem"></app-channel-board-list>
+        <div class="col-md-6">
+          <app-channel-board-list [data]="channelBoardList"
+                                  [displayAddButton]="controllerList.length > 0"
+                                  [parentsData]="controllerList"></app-channel-board-list>
         </div>
       </div>
     </div>
@@ -68,10 +76,23 @@
   <div class="box-body">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-12">
-          <app-port-list [selectedSystem]="selectedSystem"></app-port-list>
+        <div class="col-md-9">
+          <app-port-list [data]="portList"
+                         [displayAddButton]="channelBoardList > 0"
+                         [parentsData]="channelBoardList"></app-port-list>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<app-storage-entity-form *ngIf="this.selectedSystem !== undefined" [dataCenterList]="[]"
+                         [parentSystemList]="getSystemListCurrent(this.selectedSystem)"
+                         [dkcList]="dkcList"
+                         [channelBoardList]="channelBoardList"
+                         [controllerList]="controllerList"
+                         [selectedParent]="selectedSystem"
+                         (dataSaved)="loadData($event)"></app-storage-entity-form>
+<!--<app-storage-entity-form [dataCenterList]="[]"-->
+<!--                         [systemList]="[]"-->
+<!--                         (dataSaved)="loadData($event)"></app-storage-entity-form>-->

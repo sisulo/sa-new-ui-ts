@@ -18,7 +18,6 @@ export class ExtractStorageEntityUtils {
         const result: any[] = [];
         return owners.reduce((acc, current) => {
           acc.push(...ExtractStorageEntityUtils.extractStorageEntity(current.children, type));
-          console.log(acc);
           return acc;
         }, result);
       }
