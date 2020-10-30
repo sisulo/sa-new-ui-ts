@@ -13,13 +13,14 @@ export class TimestampToDateComponent implements OnInit {
   @Input() public label;
   @Input() public column: SasiColumn;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
   }
 
   getValue() {
     const startTime = new Date(this.data.startTime);
-    return [startTime.getUTCDate(), startTime.getUTCMonth(), startTime.getUTCFullYear()].join('.');
+    return [startTime.getUTCDate(), startTime.getUTCMonth() + 1, startTime.getUTCFullYear()].join('.');
   }
 }

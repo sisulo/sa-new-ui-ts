@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {MetricService} from '../../metric.service';
 import {StorageEntityRequestDto} from '../../common/models/dtos/storage-entity-request.dto';
@@ -42,7 +42,7 @@ interface FormStaticData {
   templateUrl: './storage-entity-form.component.html',
   styleUrls: ['./storage-entity-form.component.css']
 })
-export class StorageEntityFormComponent implements OnInit {
+export class StorageEntityFormComponent implements OnInit, OnChanges {
   @Input()
   dataCenterList: Owner[];
   @Input()
@@ -72,40 +72,11 @@ export class StorageEntityFormComponent implements OnInit {
   staticData: FormStaticData[] = [];
 
   constructor(private metricService: MetricService,
-              private formBusService: FormBusService) {
+              private formBusService: FormBusService,
+              private chd: ChangeDetectorRef) {
   }
 
   ngOnInit() {
-    this.staticData[StorageEntityType.DKC] = {
-      storageEntityLabel: 'DKC',
-      parentNameLabel: 'System',
-      parents: this.parentSystemList
-    };
-    this.staticData[StorageEntityType.CONTROLLER] = {
-      storageEntityLabel: 'Controller',
-      parentNameLabel: 'DKC',
-      parents: this.dkcList
-    };
-    this.staticData[StorageEntityType.CHANNEL_BOARD] = {
-      storageEntityLabel: 'Channel Board',
-      parentNameLabel: 'Controller',
-      parents: this.dkcList
-    };
-    this.staticData[StorageEntityType.PORT] = {
-      storageEntityLabel: 'Port',
-      parentNameLabel: 'Channel Board',
-      parents: this.dkcList
-    };
-    this.staticData[StorageEntityType.SYSTEM] = {
-      storageEntityLabel: 'System',
-      parentNameLabel: 'Datacenter',
-      parents: this.dataCenterList
-    };
-    this.staticData[StorageEntityType.DATACENTER] = {
-      storageEntityLabel: 'Datacenter',
-      parentNameLabel: '',
-      parents: []
-    };
     this.formBusService.storageEntityFormStream.subscribe(data => {
       this.data = data;
       if (data.type === StorageEntityType.DKC) {
@@ -120,6 +91,44 @@ export class StorageEntityFormComponent implements OnInit {
     this.initFormControls();
   }
 
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    console.log(this.dkcList);
+    this.initStaticData();
+  }
+
+  initStaticData() {
+    this.staticData[StorageEntityType.DKC] = {
+      storageEntityLabel: 'DKC',
+      parentNameLabel: 'System',
+      parents: this.parentSystemList
+    };
+    this.staticData[StorageEntityType.CONTROLLER] = {
+      storageEntityLabel: 'Controller',
+      parentNameLabel: 'DKC',
+      parents: this.dkcList
+    };
+    this.staticData[StorageEntityType.CHANNEL_BOARD] = {
+      storageEntityLabel: 'Channel Board',
+      parentNameLabel: 'Controller',
+      parents: this.controllerList
+    };
+    this.staticData[StorageEntityType.PORT] = {
+      storageEntityLabel: 'Port',
+      parentNameLabel: 'Channel Board',
+      parents: this.channelBoardList
+    };
+    this.staticData[StorageEntityType.SYSTEM] = {
+      storageEntityLabel: 'System',
+      parentNameLabel: 'Datacenter',
+      parents: this.dataCenterList
+    };
+    this.staticData[StorageEntityType.DATACENTER] = {
+      storageEntityLabel: 'Datacenter',
+      parentNameLabel: '',
+      parents: []
+    };
+  }
   initFormControls() {
     if (this.data.type === StorageEntityType.SYSTEM) {
       this.form = new FormGroup({

@@ -78,7 +78,7 @@
       <div class="row">
         <div class="col-md-9">
           <app-port-list [data]="portList"
-                         [displayAddButton]="channelBoardList > 0"
+                         [displayAddButton]="channelBoardList.length > 0"
                          [parentsData]="channelBoardList"></app-port-list>
         </div>
       </div>
@@ -86,7 +86,7 @@
   </div>
 </div>
 
-<app-storage-entity-form *ngIf="this.selectedSystem !== undefined" [dataCenterList]="[]"
+<app-storage-entity-form *ngIf="this.selectedSystem != null" [dataCenterList]="[]"
                          [parentSystemList]="getSystemListCurrent(this.selectedSystem)"
                          [dkcList]="dkcList"
                          [channelBoardList]="channelBoardList"

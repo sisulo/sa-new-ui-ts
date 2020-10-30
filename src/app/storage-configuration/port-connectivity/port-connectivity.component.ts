@@ -32,16 +32,19 @@ export class PortConnectivityComponent implements OnInit {
   }
 
   loadData(force: boolean = true) {
-    this.fetchStorageEntities(StorageEntityType.DKC, this.selectedSystem)
-      .subscribe(data => this.dkcList = data);
+
     this.fetchStorageEntities(StorageEntityType.SYSTEM, null)
       .subscribe(data => this.systemsList = data);
-    this.fetchStorageEntities(StorageEntityType.CONTROLLER, this.selectedSystem)
-      .subscribe(data => this.controllerList = data);
-    this.fetchStorageEntities(StorageEntityType.CHANNEL_BOARD, this.selectedSystem)
-      .subscribe(data => this.channelBoardList = data);
-    this.fetchStorageEntities(StorageEntityType.PORT, this.selectedSystem)
-      .subscribe(data => this.portList = data);
+    if (this.selectedSystem != null) {
+      this.fetchStorageEntities(StorageEntityType.DKC, this.selectedSystem)
+        .subscribe(data => this.dkcList = data);
+      this.fetchStorageEntities(StorageEntityType.CONTROLLER, this.selectedSystem)
+        .subscribe(data => this.controllerList = data);
+      this.fetchStorageEntities(StorageEntityType.CHANNEL_BOARD, this.selectedSystem)
+        .subscribe(data => this.channelBoardList = data);
+      this.fetchStorageEntities(StorageEntityType.PORT, this.selectedSystem)
+        .subscribe(data => this.portList = data);
+    }
 
   }
 

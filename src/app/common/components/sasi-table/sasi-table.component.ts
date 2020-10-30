@@ -464,7 +464,6 @@ export class SasiTableComponent implements OnInit, OnChanges {
     this.style = this.domSanitizer.bypassSecurityTrustStyle(
       'grid-template-columns: ' + this.getColControlSize() + ' ' + this.getAlertColumnSize() +
       ' ' + this.getNameColumnSize() + ' repeat(' + this.getGridColumnCount() + ', 1fr);');
-    console.log('Style: ' + this.style);
 
     this.sortData(this.data);
   }
