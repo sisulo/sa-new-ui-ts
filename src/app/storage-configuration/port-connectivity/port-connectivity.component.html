@@ -10,7 +10,8 @@
           <ng-select id="system"
                      bindValue="id" bindLabel="name" [items]="systemsList"
                      (change)="loadData(true)"
-                     [(ngModel)]="selectedSystem">
+                     [(ngModel)]="selectedSystem"
+                     placeholder="Search...">
           </ng-select>
         </div>
       </div>
