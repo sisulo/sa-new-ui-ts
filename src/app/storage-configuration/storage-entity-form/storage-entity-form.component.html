@@ -65,7 +65,6 @@
                    [class.has-error]="rack.invalid && (rack.dirty || rack.touched || submitted)">
                 <label for="rack">Rack: </label>
                 <input id="rack" class="form-control" type="text" formControlName="rack">
-
               </div>
               <div class="col-md-12 form-group">
                 <label for="managementIp">Management IP: </label>
@@ -77,39 +76,51 @@
               </div>
             </div>
             <div *ngIf="speed !== null">
-              <div class="col-md-12 form-group">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="speed.invalid && (speed.dirty || speed.touched || submitted)">
                 <label for="speed">Speed: </label>
                 <input id="speed" class="form-control" type="text" formControlName="speed">
+                <span *ngIf="speed.invalid && speed.errors.pattern !== null" class="help-block">Speed must be a number</span>
               </div>
             </div>
             <div *ngIf="note !== null">
-              <div class="col-md-12 form-group">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="note.invalid && (note.dirty || note.touched || submitted)">
                 <label for="note">Description: </label>
                 <input id="note" class="form-control" type="text" formControlName="note">
+                <span *ngIf="note.invalid && note.errors.maxlength !== null" class="help-block">Description too long</span>
               </div>
             </div>
             <div *ngIf="cables !== null">
-              <div class="col-md-12 form-group">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="cables.invalid && (cables.dirty || cables.touched || submitted)">
                 <label for="cables">Cables: </label>
                 <input id="cables" class="form-control" type="text" formControlName="cables">
+                <span *ngIf="cables.invalid && cables.errors.maxlength !== null" class="help-block">Cables too long</span>
               </div>
             </div>
             <div *ngIf="switch !== null">
-              <div class="col-md-12 form-group">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="switch.invalid && (switch.dirty || switch.touched || submitted)">
                 <label for="switch">Switch: </label>
                 <input id="switch" class="form-control" type="text" formControlName="switch">
+                <span *ngIf="switch.invalid && switch.errors.maxlength !== null" class="help-block">Switch too long</span>
               </div>
             </div>
             <div *ngIf="slot !== null">
-              <div class="col-md-12 form-group">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="slot.invalid && (slot.dirty || slot.touched || submitted)">
                 <label for="slot">Slot/Port: </label>
                 <input id="slot" class="form-control" type="text" formControlName="slot">
+                <span *ngIf="slot.invalid && slot.errors.maxlength !== null" class="help-block">Slot too long</span>
               </div>
             </div>
             <div *ngIf="wwn !== null">
-              <div class="col-md-12 form-group">
+              <div class="col-md-12 form-group"
+                   [class.has-error]="wwn.invalid && (wwn.dirty || wwn.touched || submitted)">
                 <label for="wwn">WWN: </label>
                 <input id="wwn" class="form-control" type="text" formControlName="wwn">
+                <span *ngIf="wwn.invalid && wwn.errors.maxlength !== null" class="help-block">WWN too long</span>
               </div>
             </div>
           </div>

@@ -92,8 +92,6 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-    console.log(this.dkcList);
     this.initStaticData();
   }
 
@@ -161,20 +159,20 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
       this.form = new FormGroup({
         'name': new FormControl(this.data.name, [Validators.required]),
         'parent': new FormControl(this.data.parentId, [Validators.required]),
-        'speed': new FormControl(this.data.speed),
-        'note': new FormControl(this.data.note),
+        'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
+        'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
         'forceAsNew': new FormControl(this.forceAsNew),
       });
     } else if (this.data.type === StorageEntityType.PORT) {
       this.form = new FormGroup({
         'name': new FormControl(this.data.name, [Validators.required]),
         'parent': new FormControl(this.data.parentId, [Validators.required]),
-        'speed': new FormControl(this.data.speed),
-        'note': new FormControl(this.data.note),
-        'cables': new FormControl(this.data.cables),
-        'wwn': new FormControl(this.data.wwn),
-        'slot': new FormControl(this.data.slot),
-        'switch': new FormControl(this.data.switch),
+        'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
+        'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
+        'cables': new FormControl(this.data.cables, [Validators.maxLength(50)]),
+        'wwn': new FormControl(this.data.wwn, [Validators.maxLength(100)]),
+        'slot': new FormControl(this.data.slot, [Validators.maxLength(30)]),
+        'switch': new FormControl(this.data.switch, [Validators.maxLength(30)]),
         'forceAsNew': new FormControl(this.forceAsNew),
       });
     }

@@ -1,21 +1,16 @@
-import {Component, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MetricService} from '../../metric.service';
 import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
-import {Observable} from 'rxjs';
-import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
-
-interface StorageEntityList {
-  value: number;
-  label: string;
-}
+import {Observable, Subscription} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-port-connectivity',
   templateUrl: './port-connectivity.component.html',
   styleUrls: ['./port-connectivity.component.css']
 })
-export class PortConnectivityComponent implements OnInit {
+export class PortConnectivityComponent implements OnInit, OnDestroy {
 
   systemsList: Owner[] = [];
   dkcList: Owner[] = [];
@@ -24,12 +19,32 @@ export class PortConnectivityComponent implements OnInit {
   portList: Owner[] = [];
   selectedSystem: number;
   typeEnum = StorageEntityType;
+  private sub: Subscription;
 
-  constructor(private metricService: MetricService) {
+  constructor(private metricService: MetricService,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
+    this.sub = this.route.queryParams.subscribe(
+      params => {
+        console.log(params);
+        if (params['id'] !== undefined) {
+          this.selectedSystem = parseInt(params['id'], 10);
+          this.loadData();
+        }
+      }
+    );
     this.loadData();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  openSelectedSystem() {
+    this.router.navigate(['/storage-config/port-connectivity'], {queryParams: {id: this.selectedSystem}});
   }
 
   loadData(force: boolean = true) {
