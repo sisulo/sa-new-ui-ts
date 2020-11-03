@@ -1,11 +1,11 @@
 <h3>
   Port connections
 </h3>
-<div class="box" *ngIf="systemsList.length > 0">
-  <div class="box-body">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <div class="box" *ngIf="systemsList.length > 0">
+        <div class="box-body">
           <label for="system">System:</label>
           <ng-select id="system"
                      bindValue="id" bindLabel="name" [items]="systemsList"
@@ -17,10 +17,8 @@
       </div>
     </div>
   </div>
-</div>
-<div class="container-fluid">
   <div class="row">
-    <div class="col-lg-3 col-md-6">
+    <div class="col-sm-5 col-md-3 col-lg-3" >
       <div class="box" *ngIf="selectedSystem !== undefined">
         <div class="box-header">
           <h3 class="box-title">DKC</h3>
@@ -32,7 +30,7 @@
         </div>
       </div>
     </div>
-    <div class="col-lg-5 col-md-6">
+    <div class="col-sm-7 col-md-6 col-lg-6">
       <div class="box" *ngIf="selectedSystem !== undefined">
         <div class="box-header">
           <h3 class="box-title">Controllers</h3>
@@ -44,20 +42,21 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-6 col-md-9">
-      <div class="box" *ngIf="selectedSystem !== undefined">
-        <div class="box-header">
-          <h3 class="box-title">Channel Boards</h3>
-        </div>
-        <div class="box-body">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-12">
-                <app-channel-board-list [data]="channelBoardList"
-                                        [displayAddButton]="controllerList.length > 0"
-                                        [parentsData]="controllerList"></app-channel-board-list>
+    <div class="row">
+
+      <div class="col-sm-12 col-md-9 col-lg-9">
+        <div class="box" *ngIf="selectedSystem !== undefined">
+          <div class="box-header">
+            <h3 class="box-title">Channel Boards</h3>
+          </div>
+          <div class="box-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+                  <app-channel-board-list [data]="channelBoardList"
+                                          [displayAddButton]="controllerList.length > 0"
+                                          [parentsData]="controllerList"></app-channel-board-list>
+                </div>
               </div>
             </div>
           </div>
@@ -66,21 +65,15 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-sm-12 col-md-12 col-lg-12">
       <div class="box" *ngIf="selectedSystem !== undefined">
         <div class="box-header">
           <h3 class="box-title">Ports</h3>
         </div>
         <div class="box-body">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-9">
-                <app-port-list [data]="portList"
-                               [displayAddButton]="channelBoardList.length > 0"
-                               [parentsData]="channelBoardList"></app-port-list>
-              </div>
-            </div>
-          </div>
+          <app-port-list [data]="portList"
+                         [displayAddButton]="channelBoardList.length > 0"
+                         [parentsData]="channelBoardList"></app-port-list>
         </div>
       </div>
     </div>

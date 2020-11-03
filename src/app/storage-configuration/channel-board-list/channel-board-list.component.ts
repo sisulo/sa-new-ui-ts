@@ -9,6 +9,7 @@ import {AlertFormatterComponent} from '../../global-statistics/formatters/alert-
 import {RowTableComponent} from '../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
+import {SpeedFormatterComponent} from '../speed-formatter/speed-formatter.component';
 
 export abstract class StorageEntityList implements OnInit {
   @Input()
@@ -84,7 +85,7 @@ export class ChannelBoardListComponent extends StorageEntityList {
       SasiColumnBuilder.getInstance()
         .withIndex('speed')
         .withLabel('Speed')
-        .withComponent(SeTextFormatterComponent)
+        .withComponent(SpeedFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
@@ -100,7 +101,7 @@ export class ChannelBoardListComponent extends StorageEntityList {
     );
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
-    // this.options.grIndexComponentFormatter = SeTextFormatterComponent;
+    // this.options.grIndexComponentFormatter = SpeedFormatterComponent;
     this.options.isDataGrouped = false;
     this.options.highlightRow = true;
     this.options.highlightColumn = false;

@@ -1,0 +1,6 @@
+<div class="open-form col-md-12" (click)="openForm()">
+
+  <div *ngIf="data != null && data != undefined && getValue() != undefined" class="metric-value" >
+    <span >{{getValue()}} Gbps</span>
+  </div>
+</div>

@@ -8,6 +8,7 @@ import {AlertFormatterComponent} from '../../global-statistics/formatters/alert-
 import {RowTableComponent} from '../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {StorageEntityList} from '../channel-board-list/channel-board-list.component';
+import {SpeedFormatterComponent} from '../speed-formatter/speed-formatter.component';
 
 @Component({
   selector: 'app-port-list',
@@ -47,7 +48,7 @@ export class PortListComponent extends StorageEntityList {
         .withIndex('speed')
         .withAltLabel('Speed')
         .withLabel('Speed')
-        .withComponent(SeTextFormatterComponent)
+        .withComponent(SpeedFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
         .build()
@@ -85,16 +86,6 @@ export class PortListComponent extends StorageEntityList {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex('wwn')
-        .withAltLabel('WWN')
-        .withLabel('WWN')
-        .withComponent(SeTextFormatterComponent)
-        .withAltSortEnable(false)
-        .withIsAggregated(false)
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
         .withIndex('note')
         .withAltLabel('Description')
         .withLabel('Description')
@@ -103,10 +94,20 @@ export class PortListComponent extends StorageEntityList {
         .withIsAggregated(false)
         .build()
     );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('wwn')
+        .withAltLabel('WWN')
+        .withLabel('WWN')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .withIsAggregated(false)
+        .build()
+    );
 
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
-    // this.options.grIndexComponentFormatter = SeTextFormatterComponent;
+    // this.options.grIndexComponentFormatter = SpeedFormatterComponent;
     this.options.isDataGrouped = false;
     this.options.highlightRow = true;
     this.options.highlightColumn = false;

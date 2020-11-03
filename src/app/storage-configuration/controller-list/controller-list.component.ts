@@ -44,7 +44,7 @@ export class ControllerListComponent extends StorageEntityList {
 
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
-    // this.options.grIndexComponentFormatter = SeTextFormatterComponent;
+    // this.options.grIndexComponentFormatter = SpeedFormatterComponent;
     this.options.isDataGrouped = false;
     this.options.highlightRow = true;
     this.options.highlightColumn = false;

@@ -17,11 +17,13 @@ import {ChannelBoardListComponent} from './channel-board-list/channel-board-list
 import {PortListComponent} from './port-list/port-list.component';
 import {StorageEntity2SasiGroupTablePipe} from './storage-entity-2-sasi-table/storage-entity-2-sasi-group-table.pipe';
 import {StorageEntityDetail2SasiTablePipe} from './storage-entity-2-sasi-table/storage-entity-detail-2-sasi-table.pipe';
+import {SpeedFormatterComponent} from './speed-formatter/speed-formatter.component';
 
 @NgModule({
   declarations: [
     StorageLocationComponent,
     SeTextFormatterComponent,
+    SpeedFormatterComponent,
     SerialNumberFormatterComponent,
     StorageEntityFormComponent,
     PortConnectivityComponent,

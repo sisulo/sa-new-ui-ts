@@ -78,7 +78,7 @@
             <div *ngIf="speed !== null">
               <div class="col-md-12 form-group"
                    [class.has-error]="speed.invalid && (speed.dirty || speed.touched || submitted)">
-                <label for="speed">Speed: </label>
+                <label for="speed">Speed [Gbps]: </label>
                 <input id="speed" class="form-control" type="text" formControlName="speed">
                 <span *ngIf="speed.invalid && speed.errors.pattern !== null" class="help-block">Speed must be a number</span>
               </div>
