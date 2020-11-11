@@ -23,10 +23,11 @@
                     class="help-block">{{getStaticData(data.type).parentNameLabel}} must be chosen</span>
             </div>
             <div class="col-md-12 form-group"
-                 [class.has-error]="name.invalid && (name.dirty || name.touched || submitted)">
+                 [class.has-error]="(name.invalid && (name.dirty || name.touched || submitted)) || form.invalid && name.errors.duplicatedPortName !== null && (name.dirty || name.touched || submitted)">
               <label for="name">{{getStaticData(data.type).storageEntityLabel}} Name: </label>
               <input type="text" class="form-control" formControlName="name" id="name">
-              <span *ngIf="name.invalid && (name.dirty || name.touched || submitted)" class="help-block">Name must be set</span>
+              <span *ngIf="name.invalid && name.errors.required !== undefined && (name.dirty || name.touched || submitted)" class="help-block">Name must be set</span>
+              <span *ngIf="name.invalid && name.errors.duplicatedPortName !== undefined && (name.dirty || name.touched || submitted)" class="help-block">Duplicated port name</span>
             </div>
             <div *ngIf="data.type === staticType.SYSTEM">
 

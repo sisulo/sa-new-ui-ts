@@ -54,6 +54,8 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   @Input()
   parentSystemList: Owner[];
   @Input()
+  portList: Owner[];
+  @Input()
   private systemList: SystemData[];
   @Input()
   private selectedParent: number;
@@ -165,7 +167,7 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
       });
     } else if (this.data.type === StorageEntityType.PORT) {
       this.form = new FormGroup({
-        'name': new FormControl(this.data.name, [Validators.required]),
+        'name': new FormControl(this.data.name, [Validators.required, duplicatedPort(this.portList)]),
         'parent': new FormControl(this.data.parentId, [Validators.required]),
         'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
         'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
@@ -356,5 +358,12 @@ export function duplicatedSerialNumber(systemList: SystemData[]): ValidatorFn {
       }
     });
     return foundSystem ? {duplicatedSerialNumber: {value: control.value}} : null;
+  };
+}
+export function duplicatedPort(portList: Owner[]): ValidatorFn {
+  return (control: FormGroup): ValidationErrors | null => {
+    const portName = control.value;
+    const foundSystem = portList.find(port => port.name === portName);
+    return foundSystem ? {duplicatedPortName: {value: control.value}} : null;
   };
 }
