@@ -7,18 +7,27 @@
       <div class="box" *ngIf="systemsList.length > 0">
         <div class="box-body">
           <label for="system">System:</label>
-          <ng-select id="system"
-                     bindValue="id" bindLabel="name" [items]="systemsList"
-                     (change)="openSelectedSystem()"
-                     [(ngModel)]="selectedSystem"
-                     placeholder="Search...">
-          </ng-select>
+          <div class="row">
+            <div class="col-md-8">
+              <ng-select class="left" id="system"
+                         bindValue="id" bindLabel="name" [items]="systemsList"
+                         (change)="openSelectedSystem()"
+                         [(ngModel)]="selectedSystem"
+                         placeholder="Search...">
+              </ng-select>
+            </div>
+            <div class="col-md-4">
+              <button type="button" class="btn btn-default" *ngIf="selectedSystem !== undefined" (click)="openForm()">
+                Duplicate system
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-5 col-md-3 col-lg-3" >
+    <div class="col-sm-5 col-md-3 col-lg-3">
       <div class="box" *ngIf="selectedSystem !== undefined">
         <div class="box-header">
           <h3 class="box-title">DKC</h3>
@@ -81,6 +90,7 @@
 </div>
 
 <app-storage-entity-form *ngIf="this.selectedSystem != null" [dataCenterList]="[]"
+                         [systemList]="systemsList"
                          [parentSystemList]="getSystemListCurrent(this.selectedSystem)"
                          [dkcList]="dkcList"
                          [channelBoardList]="channelBoardList"

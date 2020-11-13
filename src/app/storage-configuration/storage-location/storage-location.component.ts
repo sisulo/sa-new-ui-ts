@@ -10,6 +10,7 @@ import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
 import {StorageEntityType} from '../../common/models/dtos/owner.dto';
+import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
 
 export class SystemData {
   serial: string;
@@ -131,18 +132,10 @@ export class StorageLocationComponent implements OnInit {
     if (force) {
       this.metricService.getSystemsDetail().subscribe(data => {
         this.data = data;
-        this.data.forEach(datacenter => {
-          datacenter.storageEntity.children.forEach(system => {
-            this.systemList.push({
-              systemName: system.name,
-              id: system.id,
-              serial: system.serialNumber,
-              prefix: system.detail.prefixReferenceId
-            });
-          });
-        });
-        this.datacenterList = this.data.map(datacenter => datacenter.storageEntity);
+        this.systemList = ExtractStorageEntityUtils.extractByType(data, StorageEntityType.SYSTEM);
+        this.datacenterList = ExtractStorageEntityUtils.extractByType(data, StorageEntityType.DATACENTER);
       });
     }
   }
+
 }

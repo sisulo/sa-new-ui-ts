@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {MetricService} from '../../metric.service';
 import {StorageEntityRequestDto} from '../../common/models/dtos/storage-entity-request.dto';
@@ -8,6 +8,8 @@ import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from 
 import {SystemData} from '../storage-location/storage-location.component';
 import {ChangeStatusRequestDto} from '../../common/models/dtos/change-status-request.dto';
 import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
+import {DuplicateStorageEntityDto} from '../../common/models/dtos/duplicate-storage-entity.dto';
+import {Router} from '@angular/router';
 
 export class StorageEntityVo {
   id: number;
@@ -29,6 +31,7 @@ export class StorageEntityVo {
   switch: string;
   slot: string;
   wwn: string;
+  duplicateOperation = false;
 }
 
 interface FormStaticData {
@@ -56,7 +59,7 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   @Input()
   portList: Owner[];
   @Input()
-  private systemList: SystemData[];
+  private systemList: Owner[];
   @Input()
   private selectedParent: number;
   @Input()
@@ -75,7 +78,7 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
 
   constructor(private metricService: MetricService,
               private formBusService: FormBusService,
-              private chd: ChangeDetectorRef) {
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -129,22 +132,34 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
       parents: []
     };
   }
+
   initFormControls() {
     if (this.data.type === StorageEntityType.SYSTEM) {
-      this.form = new FormGroup({
-        'id': new FormControl(this.data.id),
-        'parent': new FormControl(this.data.parentId, [Validators.required]),
-        'name': new FormControl(this.data.name, [Validators.required]),
-        'prefixReferenceId': new FormControl(this.data.prefixReferenceId),
-        'serialNumber': new FormControl(this.data.serialNumber),
-        'arrayModel': new FormControl(this.data.arrayModel),
-        'dkc': new FormControl(this.data.dkc),
-        'room': new FormControl(this.data.room, [Validators.maxLength(32)]),
-        'rack': new FormControl(this.data.rack, [Validators.maxLength(32)]),
-        'managementIp': new FormControl(this.data.managementIp),
-        'sortId': new FormControl(this.data.sortId),
-        'forceAsNew': new FormControl(this.forceAsNew),
-      }, [duplicatedSerialNumber(this.systemList)]);
+      if (this.data.duplicateOperation) {
+        this.form = new FormGroup({
+          'id': new FormControl(this.data.id),
+          'parent': new FormControl(this.data.parentId, [Validators.required]),
+          'name': new FormControl(this.data.name, [Validators.required]),
+          'prefixReferenceId': new FormControl(this.data.prefixReferenceId),
+          'serialNumber': new FormControl(this.data.serialNumber),
+          'forceAsNew': new FormControl(true),
+        }, [duplicatedSerialNumber(this.systemList)]);
+      } else {
+        this.form = new FormGroup({
+          'id': new FormControl(this.data.id),
+          'parent': new FormControl(this.data.parentId, [Validators.required]),
+          'name': new FormControl(this.data.name, [Validators.required]),
+          'prefixReferenceId': new FormControl(this.data.prefixReferenceId),
+          'serialNumber': new FormControl(this.data.serialNumber),
+          'arrayModel': new FormControl(this.data.arrayModel),
+          'dkc': new FormControl(this.data.dkc),
+          'room': new FormControl(this.data.room, [Validators.maxLength(32)]),
+          'rack': new FormControl(this.data.rack, [Validators.maxLength(32)]),
+          'managementIp': new FormControl(this.data.managementIp),
+          'sortId': new FormControl(this.data.sortId),
+          'forceAsNew': new FormControl(this.forceAsNew),
+        }, [duplicatedSerialNumber(this.systemList)]);
+      }
     } else if (this.data.type === StorageEntityType.DATACENTER) {
       this.form = new FormGroup({
         'name': new FormControl(this.data.name, [Validators.required]),
@@ -202,6 +217,22 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
 
   get rack() {
     return this.form.get('rack');
+  }
+
+  get arrayModel() {
+    return this.form.get('arrayModel');
+  }
+
+  get dkc() {
+    return this.form.get('dkc');
+  }
+
+  get managementIp() {
+    return this.form.get('managementIp');
+  }
+
+  get sortId() {
+    return this.form.get('sortId');
   }
 
   get speed() {
@@ -313,8 +344,11 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
     );
   }
 
-  private success() {
+  private success(idSystem: number = null) {
     this.closeForm();
+    if (idSystem !== null) {
+      this.router.navigate(['/storage-config/port-connectivity'], {queryParams: {id: idSystem}});
+    }
     this.dataSaved.emit(true);
   }
 
@@ -342,24 +376,42 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   getStaticData(type: StorageEntityType) {
     return this.staticData[type];
   }
+
+  duplicate() {
+    const request = new DuplicateStorageEntityDto();
+    request.types = [
+      StorageEntityType[StorageEntityType.DKC],
+      StorageEntityType[StorageEntityType.CONTROLLER],
+      StorageEntityType[StorageEntityType.CHANNEL_BOARD],
+      StorageEntityType[StorageEntityType.PORT]
+    ];
+    request.name = this.form.value.name;
+    request.serialNumber = this.form.value.serialNumber;
+    this.metricService.duplicateStorageEntity(request, this.data.id).subscribe(
+      (response) => this.success(response.storageEntity.id)
+    );
+  }
 }
 
-export function duplicatedSerialNumber(systemList: SystemData[]): ValidatorFn {
+export function duplicatedSerialNumber(systemList: Owner[]): ValidatorFn {
   return (control: FormGroup): ValidationErrors | null => {
     const serialNumber = control.get('serialNumber').value;
     const id = control.get('id').value;
     const prefix = control.get('prefixReferenceId').value;
     const forceAsNew = control.get('forceAsNew').value;
+    console.log(systemList);
     const foundSystem = systemList.find(system => {
       if (forceAsNew) {
-        return system.serial === serialNumber && system.prefix === prefix;
+        return system.detail !== undefined && system.serialNumber === serialNumber && system.detail.prefixReferenceId === prefix;
       } else {
-        return system.serial === serialNumber && system.prefix === prefix && system.id !== id;
+        return system.detail !== undefined && system.serialNumber === serialNumber && system.detail.prefixReferenceId === prefix && system.id !== id;
       }
     });
+    console.log(foundSystem);
     return foundSystem ? {duplicatedSerialNumber: {value: control.value}} : null;
   };
 }
+
 export function duplicatedPort(portList: Owner[]): ValidatorFn {
   return (control: FormGroup): ValidationErrors | null => {
     const portName = control.value;

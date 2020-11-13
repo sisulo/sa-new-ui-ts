@@ -12,7 +12,6 @@ export class FormBusService {
   storageEntityFormStream = this.storageEntityForm.asObservable();
 
   sendFormData(data: StorageEntityVo) {
-    console.log(data);
     this.storageEntityForm.next(data);
   }
 

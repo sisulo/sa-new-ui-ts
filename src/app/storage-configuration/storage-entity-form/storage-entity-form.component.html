@@ -12,7 +12,7 @@
         </div>
         <form role="form" [formGroup]="form">
           <div class="box-body">
-            <div class="col-md-12 form-group" *ngIf="data.type !== staticType.DATACENTER"
+            <div class="col-md-12 form-group" *ngIf="data.type !== staticType.DATACENTER && !data.duplicateOperation"
                  [class.has-error]="parent.invalid && (parent.dirty || parent.touched || submitted)">
               <label for="parent">{{getStaticData(data.type).parentNameLabel}}:</label>
               <ng-select id="parent" [items]="getStaticData(data.type).parents"
@@ -23,16 +23,16 @@
                     class="help-block">{{getStaticData(data.type).parentNameLabel}} must be chosen</span>
             </div>
             <div class="col-md-12 form-group"
-                 [class.has-error]="(name.invalid && (name.dirty || name.touched || submitted)) || form.invalid && name.errors.duplicatedPortName !== null && (name.dirty || name.touched || submitted)">
+                 [class.has-error]="(name.invalid && (name.dirty || name.touched || submitted)) || form.invalid && name.errors !== null && name.errors.duplicatedPortName !== null && (name.dirty || name.touched || submitted)">
               <label for="name">{{getStaticData(data.type).storageEntityLabel}} Name: </label>
               <input type="text" class="form-control" formControlName="name" id="name">
-              <span *ngIf="name.invalid && name.errors.required !== undefined && (name.dirty || name.touched || submitted)" class="help-block">Name must be set</span>
-              <span *ngIf="name.invalid && name.errors.duplicatedPortName !== undefined && (name.dirty || name.touched || submitted)" class="help-block">Duplicated port name</span>
+              <span *ngIf="name.invalid && name.errors !== null && name.errors.required !== undefined && (name.dirty || name.touched || submitted)" class="help-block">Name must be set</span>
+              <span *ngIf="name.invalid && name.errors !== null && name.errors.duplicatedPortName !== undefined && (name.dirty || name.touched || submitted)" class="help-block">Duplicated port name</span>
             </div>
             <div *ngIf="data.type === staticType.SYSTEM">
 
               <div class="col-md-12 form-group" *ngIf="data.type !== staticType.DATACENTER"
-                   [class.has-error]="form.invalid && form.errors.duplicatedSerialNumber !== null && (serial.dirty || serial.touched || submitted)"
+                   [class.has-error]="form.invalid && form.errors !== null && form.errors.duplicatedSerialNumber !== null && (serial.dirty || serial.touched || submitted)"
               >
                 <div class="">
                   <label for="serial">Physical Serial Number: </label>
@@ -45,33 +45,33 @@
                          name="serialNumber"/>
                 </div>
                 <div class="col-md-12">
-                  <span *ngIf="form.invalid && form.errors.duplicatedSerialNumber !== null" class="help-block">Same serial number is already used</span>
+                  <span *ngIf="form.invalid && form.errors !== null && form.errors.duplicatedSerialNumber !== null" class="help-block">Same serial number is already used</span>
                 </div>
               </div>
-              <div class="col-md-12 form-group">
-                <label for="model">Array Model: </label>
-                <input id="model" class="form-control" type="text" formControlName="arrayModel">
+              <div *ngIf="arrayModel !== null" class="col-md-12 form-group">
+                <label for="arrayModel">Array Model: </label>
+                <input id="arrayModel" class="form-control" type="text" formControlName="arrayModel">
               </div>
-              <div class="col-md-12 form-group">
+              <div *ngIf="dkc !== null" class="col-md-12 form-group">
                 <label for="dkc">Virtual DKCs: </label>
                 <input id="dkc" class="form-control" type="text" formControlName="dkc">
               </div>
-              <div class="col-md-12 form-group"
+              <div *ngIf="room !== null" class="col-md-12 form-group"
                    [class.has-error]="room.invalid && (room.dirty || room.touched || submitted)">
                 <label for="room">Room: </label>
                 <input id="room" class="form-control" type="text" formControlName="room">
                 <span *ngIf="room.invalid && room.errors.maxlength !== null" class="help-block">Length must be less than 32 characters</span>
               </div>
-              <div class="col-md-12 form-group"
+              <div *ngIf="rack !== null" class="col-md-12 form-group"
                    [class.has-error]="rack.invalid && (rack.dirty || rack.touched || submitted)">
                 <label for="rack">Rack: </label>
                 <input id="rack" class="form-control" type="text" formControlName="rack">
               </div>
-              <div class="col-md-12 form-group">
+              <div *ngIf="managementIp !== null" class="col-md-12 form-group">
                 <label for="managementIp">Management IP: </label>
                 <input id="managementIp" class="form-control" type="text" formControlName="managementIp">
               </div>
-              <div class="col-md-12 form-group">
+              <div *ngIf="sortId !== null" class="col-md-12 form-group">
                 <label for="sortId">Sort ID: </label>
                 <input id="sortId" class="form-control" type="text" formControlName="sortId">
               </div>
@@ -131,10 +131,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" (click)="closeForm()">Close</button>
-        <button [class.disabled]="data.id === undefined" type="button" class="btn btn-danger"
+        <button *ngIf="data.duplicateOperation" [class.disabled]="data.id === undefined || form.invalid" type="button" class="btn btn-primary"
+          (click)="form.valid ? duplicate(): submitted = true">
+          Duplicate
+        </button>
+        <button *ngIf="!data.duplicateOperation" [class.disabled]="data.id === undefined" type="button" class="btn btn-danger"
                 (click)="confirmDisplayWindow()">Deactivate
         </button>
-        <div class="btn-group">
+        <div class="btn-group" *ngIf="!data.duplicateOperation">
           <button [class.disabled]="form.invalid" type="button" class="btn btn-primary"
                   (click)="form.valid ? saveChanges() : submitted = true">Save
           </button>

@@ -14,6 +14,7 @@ import {StorageEntityRequestDto} from './common/models/dtos/storage-entity-reque
 import {StorageEntityDetailRequestDto} from './common/models/dtos/storage-entity-detail-request.dto';
 import {ChangeStatusRequestDto} from './common/models/dtos/change-status-request.dto';
 import {StorageEntityType} from './common/models/dtos/owner.dto';
+import {DuplicateStorageEntityDto} from './common/models/dtos/duplicate-storage-entity.dto';
 
 export enum PeriodType {
   DAY = 'DAY',
@@ -274,5 +275,10 @@ export class MetricService {
 
   calculateDate(date: Date, minusDays: number) {
     return date.getTime() - (minusDays * 24 * 60 * 60 * 1000);
+  }
+
+  duplicateStorageEntity(request: DuplicateStorageEntityDto, id: number) {
+    const url = this.buildUrl(environment.metricsBaseUrl, `/v2/storage-entities/${id}/duplicate`);
+    return this.http.post<StorageEntityResponseDto>(url, request);
   }
 }

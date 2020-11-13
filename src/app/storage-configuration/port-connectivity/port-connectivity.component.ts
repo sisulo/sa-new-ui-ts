@@ -4,6 +4,8 @@ import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
 import {Observable, Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
+import {FormBusService} from '../form-bus.service';
+import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 
 @Component({
   selector: 'app-port-connectivity',
@@ -23,13 +25,13 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
 
   constructor(private metricService: MetricService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private formBusService: FormBusService) {
   }
 
   ngOnInit() {
     this.sub = this.route.queryParams.subscribe(
       params => {
-        console.log(params);
         if (params['id'] !== undefined) {
           this.selectedSystem = parseInt(params['id'], 10);
           this.loadData();
@@ -39,6 +41,15 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
     this.loadData();
   }
 
+  openForm() {
+    const data = new StorageEntityVo();
+    const system = this.systemsList.find(item => item.id === this.selectedSystem);
+    data.id = system.id;
+    data.parentId = system.parentId;
+    data.type = StorageEntityType[system.type];
+    data.duplicateOperation = true;
+    this.formBusService.sendFormData(data);
+  }
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
