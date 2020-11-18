@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {SasiColumnBuilder, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {SystemData} from '../storage-location/storage-location.component';
@@ -18,6 +18,10 @@ export abstract class StorageEntityList implements OnInit {
   displayAddButton = false;
   @Input()
   parentsData: Owner[] = [];
+  @Input()
+  importEnabled = false;
+  @Output()
+  importFinished = new EventEmitter();
   options: SasiTableOptions = new SasiTableOptions();
   datacenterList = [];
   systemList: SystemData[] = [];

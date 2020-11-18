@@ -51,21 +51,21 @@
         </div>
       </div>
     </div>
-    <div class="row">
+  </div>
+  <div class="row">
 
-      <div class="col-sm-12 col-md-9 col-lg-9">
-        <div class="box" *ngIf="selectedSystem !== undefined">
-          <div class="box-header">
-            <h3 class="box-title">Channel Boards</h3>
-          </div>
-          <div class="box-body">
-            <div class="container-fluid">
-              <div class="row">
-                <div class="col-md-12">
-                  <app-channel-board-list [data]="channelBoardList"
-                                          [displayAddButton]="controllerList.length > 0"
-                                          [parentsData]="controllerList"></app-channel-board-list>
-                </div>
+    <div class="col-sm-12 col-md-9 col-lg-9">
+      <div class="box" *ngIf="selectedSystem !== undefined">
+        <div class="box-header">
+          <h3 class="box-title">Channel Boards</h3>
+        </div>
+        <div class="box-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <app-channel-board-list [data]="channelBoardList"
+                                        [displayAddButton]="controllerList.length > 0"
+                                        [parentsData]="controllerList"></app-channel-board-list>
               </div>
             </div>
           </div>
@@ -82,8 +82,9 @@
         <div class="box-body">
           <app-port-list [data]="portList"
                          [displayAddButton]="channelBoardList.length > 0"
-                         [parentsData]="channelBoardList"></app-port-list>
-          <app-import-csv-data keyColumn="name" [data]="portList" (importFinished)="loadData(true)"></app-import-csv-data>
+                         [parentsData]="channelBoardList"
+                         [importEnabled]="true"
+                         (importFinished)="loadData(true)"></app-port-list>
         </div>
       </div>
     </div>
@@ -99,6 +100,3 @@
                          [portList]="portList"
                          [selectedParent]="selectedSystem"
                          (dataSaved)="loadData($event)"></app-storage-entity-form>
-<!--<app-storage-entity-form [dataCenterList]="[]"-->
-<!--                         [systemList]="[]"-->
-<!--                         (dataSaved)="loadData($event)"></app-storage-entity-form>-->

@@ -1,6 +1,9 @@
 input[type="file"] {
   display: none;
 }
+div.file-name, div.status{
+  font-size: 18px;
+}
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;

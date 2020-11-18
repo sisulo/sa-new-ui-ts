@@ -2,7 +2,8 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
-        <app-sasi-table [data]="data | StorageEntityDetail2SasiTablePipe: null: parentsData" [tableOptions]="options"></app-sasi-table>
+        <app-sasi-table [data]="data | StorageEntityDetail2SasiTablePipe: null: parentsData"
+                        [tableOptions]="options"></app-sasi-table>
       </div>
     </div>
   </div>
@@ -21,6 +22,8 @@
         <button type="button" class="btn btn-default" (click)="openForm(type)">
           Add
         </button>
+        <app-import-csv-data *ngIf="importEnabled" keyColumn="name" [data]="data"
+                             (importFinished)="importFinished.emit()"></app-import-csv-data>
       </div>
     </div>
   </div>

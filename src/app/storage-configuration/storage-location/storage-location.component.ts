@@ -133,9 +133,8 @@ export class StorageLocationComponent implements OnInit {
       this.metricService.getSystemsDetail().subscribe(data => {
         this.data = data;
         this.systemList = ExtractStorageEntityUtils.extractByType(data, StorageEntityType.SYSTEM);
-        this.datacenterList = ExtractStorageEntityUtils.extractByType(data, StorageEntityType.DATACENTER);
+        this.datacenterList = this.data.map(datacenter => datacenter.storageEntity);
       });
     }
   }
-
 }

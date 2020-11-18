@@ -16,7 +16,10 @@ export class ImportCsvDataComponent implements OnInit {
   header: string[] = [];
   fileName: string = null;
   dataVo: any[] = [];
-  dataCount = 0;
+  successfullyUpdated = 0;
+  failUpdated = 0;
+  notFoundCount = 0;
+  foundCount = 0;
   @Output()
   importFinished = new EventEmitter();
 
@@ -32,9 +35,6 @@ export class ImportCsvDataComponent implements OnInit {
       return;
     }
     const file: File = files.item(0);
-    console.log(file.name);
-    console.log(file.size);
-    console.log(file.type);
     this.fileName = file.name;
     // File reader method
     const reader: FileReader = new FileReader();
@@ -52,33 +52,38 @@ export class ImportCsvDataComponent implements OnInit {
         });
         return vo;
       });
+      this.foundCount = this.dataVo.filter(vo => this.data.find(owner => owner[this.keyColumn] === vo[this.keyColumn]) !== undefined).length;
+      this.notFoundCount = this.dataVo.filter(vo => this.data.find(owner => owner[this.keyColumn] === vo[this.keyColumn]) === undefined).length;
     };
   }
 
   reset() {
     this.fileName = null;
-    this.dataCount = 0;
+    this.successfullyUpdated = 0;
+    this.failUpdated = 0;
   }
 
   updateData() {
     this.dataVo.map(vo => {
       const foundData = this.data.find(owner => owner[this.keyColumn] === vo[this.keyColumn]);
       if (foundData === undefined) {
-        throw new Error(vo[this.keyColumn] + ' not found');
+        console.error(vo[this.keyColumn] + ' not found');
       }
       const dto = new StorageEntityDetailRequestDto();
       this.header.forEach(column => {
         dto[column] = vo[column];
       });
       return this.metricService.updateStorageEntity(foundData.id, dto).subscribe(data => {
-          this.dataCount++;
-          if (this.dataVo.length === this.dataCount) {
+          this.successfullyUpdated++;
+          if (this.dataVo.length === this.successfullyUpdated) {
             this.importFinished.emit();
             this.reset();
           }
 
         }
-      );
+        , err => {
+          this.failUpdated++;
+        });
     });
 
   }
