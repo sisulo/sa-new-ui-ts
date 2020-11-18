@@ -1,0 +1,9 @@
+<label class="btn btn-default custom-file-upload" *ngIf="fileName === null">
+  <input class="form-control mb-5" type="file" class="upload" (change)="changeListener($event.target.files)">
+  Choose file
+</label>
+<div *ngIf="fileName !== null">
+  Imported file: {{fileName}}
+  <button class="btn btn-default" (click)="updateData()">Import</button>
+  <button class="btn btn-danger" (click)="reset()">Cancel</button>
+</div>

@@ -18,6 +18,7 @@ import {PortListComponent} from './port-list/port-list.component';
 import {StorageEntity2SasiGroupTablePipe} from './storage-entity-2-sasi-table/storage-entity-2-sasi-group-table.pipe';
 import {StorageEntityDetail2SasiTablePipe} from './storage-entity-2-sasi-table/storage-entity-detail-2-sasi-table.pipe';
 import {SpeedFormatterComponent} from './speed-formatter/speed-formatter.component';
+import { ImportCsvDataComponent } from './import-csv-data/import-csv-data.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {SpeedFormatterComponent} from './speed-formatter/speed-formatter.compone
     ChannelBoardListComponent,
     PortListComponent,
     StorageEntity2SasiGroupTablePipe,
-    StorageEntityDetail2SasiTablePipe
+    StorageEntityDetail2SasiTablePipe,
+    ImportCsvDataComponent
   ],
   entryComponents: [
     SeTextFormatterComponent,

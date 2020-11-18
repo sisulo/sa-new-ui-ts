@@ -83,6 +83,7 @@
           <app-port-list [data]="portList"
                          [displayAddButton]="channelBoardList.length > 0"
                          [parentsData]="channelBoardList"></app-port-list>
+          <app-import-csv-data keyColumn="name" [data]="portList" (importFinished)="loadData(true)"></app-import-csv-data>
         </div>
       </div>
     </div>
