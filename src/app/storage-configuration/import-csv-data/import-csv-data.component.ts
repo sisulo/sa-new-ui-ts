@@ -41,7 +41,7 @@ export class ImportCsvDataComponent implements OnInit {
     reader.readAsText(file);
     reader.onload = (e) => {
       const csv: string = reader.result as string;
-      const allTextLines = csv.split(/\r|\n|\r/);
+      const allTextLines = csv.split(/\r\n|\n|\r/);
       // Table Headings
       this.header = allTextLines[0].split(',');
       const csvData = allTextLines.slice(1, allTextLines.length).map(line => line.split(','));
