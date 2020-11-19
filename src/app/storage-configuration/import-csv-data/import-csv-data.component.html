@@ -9,12 +9,12 @@
   </div>
   <div class="col-md-1 status">
     <div>
-      <span tooltip="Rows found in the table" class="text-success"><i class="fa fa-check-circle"></i></span> {{foundCount}}
+      <span tooltip="Rows found in the table" class="text-success"><i class="fa fa-check-circle"></i></span> {{validData.length}}
     </div>
     <div>
       <span tooltip="Rows not found by key in table and cannot be imported" class="text-danger"><i
         class="fa fa-times-circle"></i></span>
-      {{notFoundCount}}
+      {{dataVo.length - validData.length}}
     </div>
   </div>
   <div class="col-md-12">

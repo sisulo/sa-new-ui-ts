@@ -19,7 +19,7 @@ export class ImportCsvDataComponent implements OnInit {
   successfullyUpdated = 0;
   failUpdated = 0;
   notFoundCount = 0;
-  foundCount = 0;
+  validData = [];
   @Output()
   importFinished = new EventEmitter();
 
@@ -52,8 +52,7 @@ export class ImportCsvDataComponent implements OnInit {
         });
         return vo;
       });
-      this.foundCount = this.dataVo.filter(vo => this.data.find(owner => owner[this.keyColumn] === vo[this.keyColumn]) !== undefined).length;
-      this.notFoundCount = this.dataVo.filter(vo => this.data.find(owner => owner[this.keyColumn] === vo[this.keyColumn]) === undefined).length;
+      this.validData = this.dataVo.filter(vo => this.data.find(owner => owner[this.keyColumn] === vo[this.keyColumn]) !== undefined);
     };
   }
 
@@ -64,26 +63,28 @@ export class ImportCsvDataComponent implements OnInit {
   }
 
   updateData() {
-    this.dataVo.map(vo => {
+    this.validData.forEach(vo => {
       const foundData = this.data.find(owner => owner[this.keyColumn] === vo[this.keyColumn]);
       if (foundData === undefined) {
         console.error(vo[this.keyColumn] + ' not found');
-      }
-      const dto = new StorageEntityDetailRequestDto();
-      this.header.forEach(column => {
-        dto[column] = vo[column];
-      });
-      return this.metricService.updateStorageEntity(foundData.id, dto).subscribe(data => {
-          this.successfullyUpdated++;
-          if (this.dataVo.length === this.successfullyUpdated) {
-            this.importFinished.emit();
-            this.reset();
-          }
-
-        }
-        , err => {
-          this.failUpdated++;
+        return;
+      } else {
+        const dto = new StorageEntityDetailRequestDto();
+        this.header.forEach(column => {
+          dto[column] = vo[column];
         });
+        this.metricService.updateStorageEntity(foundData.id, dto).subscribe(data => {
+            this.successfullyUpdated++;
+            if (this.validData.length === this.successfullyUpdated) {
+              this.importFinished.emit();
+              this.reset();
+            }
+
+          }
+          , err => {
+            this.failUpdated++;
+          });
+      }
     });
 
   }
