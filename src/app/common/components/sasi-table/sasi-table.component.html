@@ -10,7 +10,7 @@
       {{headerGroup.name}}
     </div>
     <!-- Labels -->
-    <div class="sasi-table-item sasi-table-controls">
+    <div *ngIf="options.selectableRows || options.isDataGrouped" class="sasi-table-item sasi-table-controls">
       <i *ngIf="options.isDataGrouped" class="fa expand-collapse"
          [@iconRotate]="isCollapseAll()"
          [ngClass]="'fa-angle-down'"

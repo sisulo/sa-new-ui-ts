@@ -18,7 +18,7 @@ export class ControllerListComponent extends StorageEntityList {
 
   constructor(protected metricService: MetricService,
               protected formBus: FormBusService) {
-    super(metricService, formBus, StorageEntityType.CONTROLLER);
+    super(metricService, formBus, StorageEntityType.CONTROLLER, null);
   }
 
   ngOnInit() {
@@ -42,8 +42,9 @@ export class ControllerListComponent extends StorageEntityList {
     );
 
 
-    this.options.colControlFormatter = AlertFormatterComponent;
+    // this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
+    this.options.storageNamePrefix = 'portConnectivity';
     // this.options.grIndexComponentFormatter = SpeedFormatterComponent;
     this.options.isDataGrouped = false;
     this.options.highlightRow = true;

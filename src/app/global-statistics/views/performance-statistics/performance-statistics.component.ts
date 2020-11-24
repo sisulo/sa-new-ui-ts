@@ -112,7 +112,6 @@ export class PerformanceStatisticsComponent implements OnInit, OnDestroy {
         .withHidden(true)
         .build()
     );
-    this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
     this.options.labelColumnWidth = '13.78';
     this.options.valueColumnWidth = '13.78';

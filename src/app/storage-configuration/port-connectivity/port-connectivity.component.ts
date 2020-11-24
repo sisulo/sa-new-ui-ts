@@ -6,6 +6,7 @@ import {Observable, Subscription} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
+import {OnSelectService} from '../../common/components/sasi-table/on-select.service';
 
 @Component({
   selector: 'app-port-connectivity',
@@ -26,7 +27,8 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
   constructor(private metricService: MetricService,
               private route: ActivatedRoute,
               private router: Router,
-              private formBusService: FormBusService) {
+              private formBusService: FormBusService,
+              private selectedSasiRows: OnSelectService) {
   }
 
   ngOnInit() {
@@ -38,6 +40,9 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
         }
       }
     );
+    this.selectedSasiRows.selectRows$.subscribe(rows => {
+      console.log(rows);
+    });
     this.loadData();
   }
 
@@ -48,7 +53,7 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
     data.parentId = system.parentId;
     data.type = StorageEntityType[system.type];
     data.duplicateOperation = true;
-    this.formBusService.sendFormData(data);
+    this.formBusService.sendFormData({data: data, selectedData: []});
   }
   ngOnDestroy() {
     this.sub.unsubscribe();
@@ -71,6 +76,7 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
         .subscribe(data => this.channelBoardList = data);
       this.fetchStorageEntities(StorageEntityType.PORT, this.selectedSystem)
         .subscribe(data => this.portList = data);
+      this.selectedSasiRows.announceSelect([]);
     }
 
   }

@@ -37,7 +37,7 @@ export class SerialNumberFormatterComponent implements OnInit {
     formData.rack = this.getCellValue('rack');
     formData.arrayModel = this.getCellValue('arrayModel');
     formData.managementIp = this.getCellValue('managementIp');
-    this.formBus.sendFormData(formData);
+    this.formBus.sendFormData({data: formData, selectedData: []});
   }
 
   getValue() {

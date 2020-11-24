@@ -12,7 +12,7 @@
         </div>
         <form role="form" [formGroup]="form">
           <div class="box-body">
-            <div class="col-md-12 form-group" *ngIf="data.type !== staticType.DATACENTER && !data.duplicateOperation"
+            <div class="col-md-12 form-group" *ngIf="parent !== null && data.type !== staticType.DATACENTER && !data.duplicateOperation"
                  [class.has-error]="parent.invalid && (parent.dirty || parent.touched || submitted)">
               <label for="parent">{{getStaticData(data.type).parentNameLabel}}:</label>
               <ng-select id="parent" [items]="getStaticData(data.type).parents"
@@ -22,7 +22,7 @@
 
                     class="help-block">{{getStaticData(data.type).parentNameLabel}} must be chosen</span>
             </div>
-            <div class="col-md-12 form-group"
+            <div *ngIf="name !== null" class="col-md-12 form-group"
                  [class.has-error]="(name.invalid && (name.dirty || name.touched || submitted)) || form.invalid && name.errors !== null && name.errors.duplicatedPortName !== null && (name.dirty || name.touched || submitted)">
               <label for="name">{{getStaticData(data.type).storageEntityLabel}} Name: </label>
               <input type="text" class="form-control" formControlName="name" id="name">

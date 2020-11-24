@@ -125,7 +125,7 @@ export class StorageLocationComponent implements OnInit {
   openForm(type: StorageEntityType) {
     const data = new StorageEntityVo();
     data.type = type;
-    this.formBus.sendFormData(data);
+    this.formBus.sendFormData({data: data, selectedData: []});
   }
 
   loadData(force: boolean = true) {

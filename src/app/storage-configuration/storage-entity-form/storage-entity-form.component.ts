@@ -75,6 +75,7 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   form: FormGroup;
   staticType = StorageEntityType;
   staticData: FormStaticData[] = [];
+  selectedRows: Owner[] = [];
 
   constructor(private metricService: MetricService,
               private formBusService: FormBusService,
@@ -82,9 +83,10 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.formBusService.storageEntityFormStream.subscribe(data => {
-      this.data = data;
-      if (data.type === StorageEntityType.DKC) {
+    this.formBusService.storageEntityFormStream$.subscribe(stream => {
+      this.data = stream.data;
+      this.selectedRows = stream.selectedData;
+      if (this.data.type === StorageEntityType.DKC) {
         this.data.parentId = this.selectedParent;
       }
       this.initFormControls();
@@ -173,25 +175,46 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
         'forceAsNew': new FormControl(this.forceAsNew),
       });
     } else if (this.data.type === StorageEntityType.CHANNEL_BOARD) {
-      this.form = new FormGroup({
-        'name': new FormControl(this.data.name, [Validators.required]),
-        'parent': new FormControl(this.data.parentId, [Validators.required]),
-        'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
-        'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
-        'forceAsNew': new FormControl(this.forceAsNew),
-      });
+      if (this.selectedRows.length > 0) {
+        this.form = new FormGroup({
+          'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
+          'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
+          'forceAsNew': new FormControl(this.forceAsNew),
+        });
+      } else {
+
+        this.form = new FormGroup({
+          'name': new FormControl(this.data.name, [Validators.required]),
+          'parent': new FormControl(this.data.parentId, [Validators.required]),
+          'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
+          'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
+          'forceAsNew': new FormControl(this.forceAsNew),
+        });
+      }
     } else if (this.data.type === StorageEntityType.PORT) {
-      this.form = new FormGroup({
-        'name': new FormControl(this.data.name, [Validators.required, duplicatedPort(this.portList)]),
-        'parent': new FormControl(this.data.parentId, [Validators.required]),
-        'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
-        'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
-        'cables': new FormControl(this.data.cables, [Validators.maxLength(50)]),
-        'wwn': new FormControl(this.data.wwn, [Validators.maxLength(100)]),
-        'slot': new FormControl(this.data.slot, [Validators.maxLength(30)]),
-        'switch': new FormControl(this.data.switch, [Validators.maxLength(30)]),
-        'forceAsNew': new FormControl(this.forceAsNew),
-      });
+      if (this.selectedRows.length > 0) {
+        this.form = new FormGroup({
+          'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
+          'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
+          'cables': new FormControl(this.data.cables, [Validators.maxLength(50)]),
+          'wwn': new FormControl(this.data.wwn, [Validators.maxLength(100)]),
+          'slot': new FormControl(this.data.slot, [Validators.maxLength(30)]),
+          'switch': new FormControl(this.data.switch, [Validators.maxLength(30)]),
+          'forceAsNew': new FormControl(this.forceAsNew),
+        });
+      } else {
+        this.form = new FormGroup({
+          'name': new FormControl(this.data.name, [Validators.required, duplicatedPort(this.portList)]),
+          'parent': new FormControl(this.data.parentId, [Validators.required]),
+          'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
+          'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
+          'cables': new FormControl(this.data.cables, [Validators.maxLength(50)]),
+          'wwn': new FormControl(this.data.wwn, [Validators.maxLength(100)]),
+          'slot': new FormControl(this.data.slot, [Validators.maxLength(30)]),
+          'switch': new FormControl(this.data.switch, [Validators.maxLength(30)]),
+          'forceAsNew': new FormControl(this.forceAsNew),
+        });
+      }
     }
   }
 
@@ -262,7 +285,12 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   saveChanges(forceAsNew: boolean = false) {
     const {dto, detailDto} = this.transformDataToDto();
 
-    if (this.data.id !== undefined && !forceAsNew) {
+    if (this.selectedRows.length > 0) {
+      this.selectedRows.forEach(owner => {
+        this.data.id = owner.id;
+        this.updateDetails(detailDto);
+      });
+    } else if (this.data.id !== undefined && !forceAsNew) {
       this.updateDetails(detailDto);
     } else {
       this.form.get('forceAsNew').setValue(true);
@@ -276,11 +304,16 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   private updateDetails(detailDto: StorageEntityDetailRequestDto) {
     this.metricService.updateStorageEntity(this.data.id, detailDto).subscribe(
       () => {
-        const datacenterId = this.form.get('parent').value;
-        if (this.data.id != null && this.data.parentId !== datacenterId) {
-          this.metricService.moveStorageEntity(this.data.id, datacenterId).subscribe(
-            () => this.success()
-          );
+        if (this.form.get('parent') !== null) {
+
+          const datacenterId = this.form.get('parent').value;
+          if (this.data.id != null && this.data.parentId !== datacenterId) {
+            this.metricService.moveStorageEntity(this.data.id, datacenterId).subscribe(
+              () => this.success()
+            );
+          } else {
+            this.success();
+          }
         } else {
           this.success();
         }
@@ -293,6 +326,7 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
 
   private transformDataToDto() {
     const dto = new StorageEntityRequestDto();
+    console.log(this.form.value);
     dto.name = this.form.value.name;
     dto.type = StorageEntityType[this.data.type];
     let detailDto = new StorageEntityDetailRequestDto();
@@ -302,23 +336,27 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
       dto.serialNumber = this.form.value.serialNumber;
 
       detailDto = new StorageEntityDetailRequestDto();
-      detailDto.arrayModel = this.form.value.arrayModel;
-      detailDto.dkc = this.form.value.dkc;
-      detailDto.managementIp = this.form.value.managementIp;
-      detailDto.prefixReferenceId = this.form.value.prefixReferenceId;
-      detailDto.rack = this.form.value.rack;
-      detailDto.room = this.form.value.room;
-      detailDto.name = this.form.value.name;
-      detailDto.serialNumber = this.form.value.serialNumber;
-      detailDto.sortId = this.form.value.sortId;
-      detailDto.note = this.form.value.note;
-      detailDto.speed = this.form.value.speed;
-      detailDto.cables = this.form.value.cables;
-      detailDto.switch = this.form.value.switch;
-      detailDto.slot = this.form.value.slot;
-      detailDto.wwn = this.form.value.wwn;
+      detailDto.arrayModel = this.valueOrUndefined(this.form.value.arrayModel);
+      detailDto.dkc = this.valueOrUndefined(this.form.value.dkc);
+      detailDto.managementIp = this.valueOrUndefined(this.form.value.managementIp);
+      detailDto.prefixReferenceId = this.valueOrUndefined(this.form.value.prefixReferenceId);
+      detailDto.rack = this.valueOrUndefined(this.form.value.rack);
+      detailDto.room = this.valueOrUndefined(this.form.value.room);
+      detailDto.name = this.valueOrUndefined(this.form.value.name);
+      detailDto.serialNumber = this.valueOrUndefined(this.form.value.serialNumber);
+      detailDto.sortId = this.valueOrUndefined(this.form.value.sortId);
+      detailDto.note = this.valueOrUndefined(this.form.value.note);
+      detailDto.speed = this.valueOrUndefined(this.form.value.speed);
+      detailDto.cables = this.valueOrUndefined(this.form.value.cables);
+      detailDto.switch = this.valueOrUndefined(this.form.value.switch);
+      detailDto.slot = this.valueOrUndefined(this.form.value.slot);
+      detailDto.wwn = this.valueOrUndefined(this.form.value.wwn);
     }
     return {dto, detailDto};
+  }
+
+  private valueOrUndefined(value) {
+    return (this.selectedRows.length > 0 && value === null) ? undefined : value;
   }
 
   private saveAsNew(dto: StorageEntityRequestDto, detailDto: StorageEntityDetailRequestDto) {
@@ -355,12 +393,19 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   deactivate() {
     this.confirmWindowDisplay = false;
     if (this.data.id !== undefined) {
-      console.log(this.data.status);
       const newStatus = this.data.status === ComponentStatus.ACTIVE ? ComponentStatus.INACTIVE : ComponentStatus.ACTIVE;
-      console.log(newStatus);
       const dto = new ChangeStatusRequestDto(ComponentStatus[newStatus]);
       this.metricService.updateStatus(this.data.id, dto).subscribe(
         () => this.success()
+      );
+    }
+    if (this.selectedRows.length > 0) {
+      const dto = new ChangeStatusRequestDto(ComponentStatus[ComponentStatus.INACTIVE]);
+      this.selectedRows.forEach(owner => {
+        this.metricService.updateStatus(owner.id, dto).subscribe(
+          () => this.success()
+        );
+        }
       );
     }
   }

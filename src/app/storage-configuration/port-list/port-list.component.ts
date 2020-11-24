@@ -4,11 +4,11 @@ import {SasiColumnBuilder} from '../../common/components/sasi-table/sasi-table.c
 import {MetricService} from '../../metric.service';
 import {FormBusService} from '../form-bus.service';
 import {SeTextFormatterComponent} from '../se-text-formatter/se-text-formatter.component';
-import {AlertFormatterComponent} from '../../global-statistics/formatters/alert-formatter/alert-formatter.component';
 import {RowTableComponent} from '../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {StorageEntityList} from '../channel-board-list/channel-board-list.component';
 import {SpeedFormatterComponent} from '../speed-formatter/speed-formatter.component';
+import {OnSelectService} from '../../common/components/sasi-table/on-select.service';
 
 @Component({
   selector: 'app-port-list',
@@ -18,11 +18,15 @@ import {SpeedFormatterComponent} from '../speed-formatter/speed-formatter.compon
 export class PortListComponent extends StorageEntityList {
 
   constructor(protected metricService: MetricService,
-              protected formBus: FormBusService) {
-    super(metricService, formBus, StorageEntityType.PORT);
+              protected formBus: FormBusService,
+              protected onSelectService: OnSelectService) {
+    super(metricService, formBus, StorageEntityType.PORT, onSelectService);
   }
 
   ngOnInit() {
+    this.onSelectService.selectRows$.subscribe(data =>  {
+      this.selectedRows = this.data.filter(owner => data.some(selectedRow => selectedRow.rowName === owner.name));
+    });
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('parentName')
@@ -105,10 +109,12 @@ export class PortListComponent extends StorageEntityList {
         .build()
     );
 
-    this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
     // this.options.grIndexComponentFormatter = SpeedFormatterComponent;
     this.options.isDataGrouped = false;
+    this.options.selectableRows = true;
+    this.options.storeSelectedRows = false;
+    this.options.storageNamePrefix = 'portList';
     this.options.highlightRow = true;
     this.options.highlightColumn = false;
     this.options.sortService = new SimpleSortImpl();

@@ -65,7 +65,9 @@
               <div class="col-md-12">
                 <app-channel-board-list [data]="channelBoardList"
                                         [displayAddButton]="controllerList.length > 0"
-                                        [parentsData]="controllerList"></app-channel-board-list>
+                                        [parentsData]="controllerList"
+                                        [importEnabled]="true"
+                                        (importFinished)="loadData(true)"></app-channel-board-list>
               </div>
             </div>
           </div>

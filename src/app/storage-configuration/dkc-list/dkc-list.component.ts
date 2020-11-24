@@ -18,7 +18,7 @@ export class DkcListComponent extends StorageEntityList {
 
   constructor(protected metricService: MetricService,
               protected formBus: FormBusService) {
-    super(metricService, formBus, StorageEntityType.DKC);
+    super(metricService, formBus, StorageEntityType.DKC, null);
   }
 
   ngOnInit() {
@@ -31,7 +31,6 @@ export class DkcListComponent extends StorageEntityList {
         .withIsAggregated(false)
         .build()
     );
-    this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowTableComponent;
     this.options.isDataGrouped = false;
     this.options.highlightRow = true;

@@ -6,6 +6,18 @@
 :host /deep/ .sasi-table-cell {
   align-self: center;
 }
+:host /deep/ .sasi-table-controls,
+:host /deep/ .sasi-table-alerts
+{
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+:host /deep/ .sasi-table-controls i,
+:host /deep/ .sasi-table-alerts i{
+  font-size: 1.1rem;
+  align-self: center;
+}
 /**
   TODO this is duplicated in row-group-table. Each grid item should be as separete component and content should be dynamically rendered
  */

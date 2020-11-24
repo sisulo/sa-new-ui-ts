@@ -60,7 +60,7 @@ export class SeTextFormatterComponent implements OnInit {
       formData.wwn = this.getCellValue('wwn');
 
     }
-    this.formBus.sendFormData(formData);
+    this.formBus.sendFormData({data: formData, selectedData: []});
   }
 
   getCellValue(valueName: string) {

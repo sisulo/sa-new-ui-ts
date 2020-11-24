@@ -298,6 +298,7 @@ export class SasiTableOptions {
   public highlightRow: boolean;
   public isDataGrouped: boolean;
   public selectableRows: boolean;
+  public storeSelectedRows: boolean;
   public colControlFormatter;
   public rowComponentFormatter;
   public grIndexComponentFormatter;
@@ -396,6 +397,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
     labelColumnWidth: '',
     isDataGrouped: false,
     selectableRows: false,
+    storeSelectedRows: true,
     colControlFormatter: null,
     cellDecoratorRules: [],
     rowComponentFormatter: null,
@@ -499,7 +501,7 @@ export class SasiTableComponent implements OnInit, OnChanges {
   }
 
   getColControlSize() {
-    return this.options.controlColumnSize;
+    return (this.options.colControlFormatter != null || this.options.selectableRows) ? this.options.controlColumnSize : '';
   }
 
   getAlertColumnSize() {

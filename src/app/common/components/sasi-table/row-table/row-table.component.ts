@@ -41,7 +41,11 @@ export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
 
   ngOnInit() {
     this.subscription = this.onSelectService.selectAll$.subscribe(value => this.selectRow(this.data.getCell('name').value, value));
-    this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    if (this.options.storeSelectedRows) {
+      this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
+    } else {
+      this.localStorageService.set(this.options.storageNamePrefix + '_selected', []);
+    }
     if (this.selectedRows === null) {
       this.selectedRows = [];
     }
@@ -66,6 +70,7 @@ export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
     }
     // @ts-ignore
     this.localStorageService.set(this.options.storageNamePrefix + '_selected', this.selectedRows);
+    this.onSelectService.announceSelect(this.selectedRows);
     this.selectEmit.emit(this.selectedRows);
   }
 

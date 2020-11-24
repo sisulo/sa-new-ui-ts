@@ -22,6 +22,9 @@
         <button type="button" class="btn btn-default" (click)="openForm(type)">
           Add
         </button>
+        <button type="button" class="btn btn-default" *ngIf="selectedRows.length > 0" (click)="openForm(type)">
+          Edit selected
+        </button>
         <app-import-csv-data *ngIf="importEnabled" keyColumn="name" [data]="data"
                              (importFinished)="importFinished.emit()"></app-import-csv-data>
       </div>
