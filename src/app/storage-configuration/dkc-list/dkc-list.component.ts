@@ -18,7 +18,7 @@ export class DkcListComponent extends StorageEntityList {
 
   constructor(protected metricService: MetricService,
               protected formBus: FormBusService) {
-    super(metricService, formBus, StorageEntityType.DKC, null);
+    super(metricService, formBus, StorageEntityType.DKC);
   }
 
   ngOnInit() {

@@ -40,7 +40,12 @@ export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
   }
 
   ngOnInit() {
-    this.subscription = this.onSelectService.selectAll$.subscribe(value => this.selectRow(this.data.getCell('name').value, value));
+    this.subscription = this.onSelectService.selectAll$.subscribe(value => {
+        if (value.prefix === this.options.storageNamePrefix) {
+
+          this.selectRow(this.data.getCell('name').value, value.operation);
+        }
+      });
     if (this.options.storeSelectedRows) {
       this.selectedRows = this.localStorageService.get(this.options.storageNamePrefix + '_selected');
     } else {

@@ -135,7 +135,7 @@
           (click)="form.valid ? duplicate(): submitted = true">
           Duplicate
         </button>
-        <button *ngIf="!data.duplicateOperation" [class.disabled]="data.id === undefined" type="button" class="btn btn-danger"
+        <button *ngIf="!data.duplicateOperation && (data.id !== undefined || selectedRows.length > 0)" type="button" class="btn btn-danger"
                 (click)="confirmDisplayWindow()">Deactivate
         </button>
         <div class="btn-group" *ngIf="!data.duplicateOperation">
@@ -164,7 +164,7 @@
       <div class="modal-header">
       </div>
       <div class="modal-body">
-        Are you sure to deactivate {{data.name}} ?
+        Are you sure to deactivate {{data.name}} including <span class="text-danger">ALL</span> its related entities?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger"

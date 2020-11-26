@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, Type} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, Type} from '@angular/core';
 import {AlertRule} from '../../../global-statistics/alert-rule';
 import {LocalStorageService} from 'ngx-store-9';
 import {animate, state, style, transition, trigger} from '@angular/animations';
@@ -381,6 +381,8 @@ export class SasiTableComponent implements OnInit, OnChanges {
 
   @Input() data: SasiRow[] = [];
   @Input() tableOptions: SasiTableOptions = new SasiTableOptions();
+  @Output()
+  selectedRowsChanged = new EventEmitter<Array<SelectedRow>>();
   collapsedRows: Array<string>;
   selectedRows: Array<SelectedRow>;
 
@@ -444,7 +446,10 @@ export class SasiTableComponent implements OnInit, OnChanges {
   async ngOnInit() {
     this.options = Object.assign(this.defaultOptions, this.tableOptions);
     this.localStorageService.observe(this.options.storageNamePrefix + '_selected').subscribe(
-      data => this.selectedRows = data.newValue
+      data => {
+        this.selectedRows = data.newValue || [];
+        this.selectedRowsChanged.emit(this.selectedRows);
+      }
     );
     this.localStorageService.observe(this.options.storageNamePrefix + '_collapsed').subscribe(
       data => {
@@ -597,7 +602,12 @@ export class SasiTableComponent implements OnInit, OnChanges {
 
   isSelectedAll(): boolean {
     if (!this.options.isDataGrouped) {
-      return false;
+      if (this.selectedRows === undefined) {
+        return false;
+      }
+      return this.data.every(
+        row => this.selectedRows.find(selectedRow => row.getCell('name').value === selectedRow.rowName)
+      );
     }
     // @ts-ignore
     const d = <SasiGroupRow[]>this.data;
@@ -637,9 +647,9 @@ export class SasiTableComponent implements OnInit, OnChanges {
     // // @ts-ignore
     // const d = <SasiGroupRow[]>this.data;
     if (!this.isSelectedAll()) {
-      this.onSelectService.announceSelectAll(true);
+      this.onSelectService.announceSelectAll({operation: true, prefix: this.options.storageNamePrefix});
     } else {
-      this.onSelectService.announceSelectAll(false);
+      this.onSelectService.announceSelectAll({operation: false, prefix: this.options.storageNamePrefix});
     }
   }
 

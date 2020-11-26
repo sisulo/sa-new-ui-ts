@@ -5,12 +5,11 @@ import {SystemData} from '../storage-location/storage-location.component';
 import {MetricService} from '../../metric.service';
 import {FormBusService} from '../form-bus.service';
 import {SeTextFormatterComponent} from '../se-text-formatter/se-text-formatter.component';
-import {AlertFormatterComponent} from '../../global-statistics/formatters/alert-formatter/alert-formatter.component';
 import {RowTableComponent} from '../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 import {SpeedFormatterComponent} from '../speed-formatter/speed-formatter.component';
-import {OnSelectService} from '../../common/components/sasi-table/on-select.service';
+import {SelectedRow} from '../../common/components/sasi-table/row-table/selected-row';
 
 export abstract class StorageEntityList implements OnInit {
   @Input()
@@ -31,16 +30,13 @@ export abstract class StorageEntityList implements OnInit {
 
   protected metricService: MetricService;
   protected formBus: FormBusService;
-  protected onSelectService: OnSelectService;
 
   protected constructor(metricService: MetricService,
                         formBus: FormBusService,
-                        type: StorageEntityType,
-                        onSelectService: OnSelectService) {
+                        type: StorageEntityType) {
     this.metricService = metricService;
     this.formBus = formBus;
     this.type = type;
-    this.onSelectService = onSelectService;
   }
 
   abstract ngOnInit();
@@ -57,6 +53,13 @@ export abstract class StorageEntityList implements OnInit {
     data.type = type;
     this.formBus.sendFormData({data: data, selectedData: this.selectedRows});
   }
+
+  setSelectedRows(rows: Array<SelectedRow>) {
+    if (this.options.selectableRows) {
+      this.selectedRows = this.data.filter(owner => rows.some(selectedRow => selectedRow.rowName === owner.name));
+    }
+  }
+
 }
 
 @Component({
@@ -67,15 +70,11 @@ export abstract class StorageEntityList implements OnInit {
 export class ChannelBoardListComponent extends StorageEntityList {
 
   constructor(protected metricService: MetricService,
-              protected formBus: FormBusService,
-              protected onSelectService: OnSelectService) {
-    super(metricService, formBus, StorageEntityType.CHANNEL_BOARD, onSelectService);
+              protected formBus: FormBusService) {
+    super(metricService, formBus, StorageEntityType.CHANNEL_BOARD);
   }
 
   ngOnInit() {
-    this.onSelectService.selectRows$.subscribe(data =>  {
-      this.selectedRows = this.data.filter(owner => data.some(selectedRow => selectedRow.rowName === owner.name));
-    });
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('parentName')

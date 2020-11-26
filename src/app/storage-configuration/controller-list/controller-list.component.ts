@@ -18,7 +18,7 @@ export class ControllerListComponent extends StorageEntityList {
 
   constructor(protected metricService: MetricService,
               protected formBus: FormBusService) {
-    super(metricService, formBus, StorageEntityType.CONTROLLER, null);
+    super(metricService, formBus, StorageEntityType.CONTROLLER);
   }
 
   ngOnInit() {

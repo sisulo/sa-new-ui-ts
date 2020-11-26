@@ -8,7 +8,6 @@ import {RowTableComponent} from '../../common/components/sasi-table/row-table/ro
 import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {StorageEntityList} from '../channel-board-list/channel-board-list.component';
 import {SpeedFormatterComponent} from '../speed-formatter/speed-formatter.component';
-import {OnSelectService} from '../../common/components/sasi-table/on-select.service';
 
 @Component({
   selector: 'app-port-list',
@@ -18,15 +17,11 @@ import {OnSelectService} from '../../common/components/sasi-table/on-select.serv
 export class PortListComponent extends StorageEntityList {
 
   constructor(protected metricService: MetricService,
-              protected formBus: FormBusService,
-              protected onSelectService: OnSelectService) {
-    super(metricService, formBus, StorageEntityType.PORT, onSelectService);
+              protected formBus: FormBusService) {
+    super(metricService, formBus, StorageEntityType.PORT);
   }
 
   ngOnInit() {
-    this.onSelectService.selectRows$.subscribe(data =>  {
-      this.selectedRows = this.data.filter(owner => data.some(selectedRow => selectedRow.rowName === owner.name));
-    });
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
         .withIndex('parentName')
