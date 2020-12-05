@@ -204,7 +204,8 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
         });
       } else {
         this.form = new FormGroup({
-          'name': new FormControl(this.data.name, [Validators.required, duplicatedPort(this.portList)]),
+          'id': new FormControl(this.data.id),
+          'name': new FormControl(this.data.name, [Validators.required]),
           'parent': new FormControl(this.data.parentId, [Validators.required]),
           'speed': new FormControl(this.data.speed, [Validators.pattern('[0-9]+')]),
           'note': new FormControl(this.data.note, [Validators.maxLength(255)]),
@@ -213,7 +214,7 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
           'slot': new FormControl(this.data.slot, [Validators.maxLength(30)]),
           'switch': new FormControl(this.data.switch, [Validators.maxLength(30)]),
           'forceAsNew': new FormControl(this.forceAsNew),
-        });
+        }, [duplicatedPort(this.portList)]);
       }
     }
   }
@@ -402,9 +403,9 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
     if (this.selectedRows.length > 0) {
       const dto = new ChangeStatusRequestDto(ComponentStatus[ComponentStatus.INACTIVE]);
       this.selectedRows.forEach(owner => {
-        this.metricService.updateStatus(owner.id, dto).subscribe(
-          () => this.success()
-        );
+          this.metricService.updateStatus(owner.id, dto).subscribe(
+            () => this.success()
+          );
         }
       );
     }
@@ -460,7 +461,15 @@ export function duplicatedSerialNumber(systemList: Owner[]): ValidatorFn {
 export function duplicatedPort(portList: Owner[]): ValidatorFn {
   return (control: FormGroup): ValidationErrors | null => {
     const portName = control.value;
-    const foundSystem = portList.find(port => port.name === portName);
+    const id = control.get('id').value;
+    const forceAsNew = control.get('forceAsNew').value;
+    const foundSystem = portList.find(port => {
+      if (forceAsNew) {
+        return port.name === portName;
+      } else {
+        return port.name === portName && port.id !== id;
+      }
+    });
     return foundSystem ? {duplicatedPortName: {value: control.value}} : null;
   };
 }
