@@ -21,6 +21,8 @@ export class SerialNumberFormatterComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.data);
+    console.log(this.rowData);
   }
 
   openForm() {
@@ -41,11 +43,17 @@ export class SerialNumberFormatterComponent implements OnInit {
   }
 
   getValue() {
-    if (this.rowData.cells['serialNumber'] !== undefined || this.rowData.cells['prefixReferenceId'] !== undefined) {
-      return [this.rowData.cells['prefixReferenceId'].value, this.rowData.cells['serialNumber'].value].join(' ');
+    let serialNumber = '';
+    let prefix = '';
+    if (this.rowData.cells['serialNumber'] !== undefined && this.rowData.cells['serialNumber'].value != null) {
+      serialNumber = this.rowData.cells['serialNumber'].value;
     }
-    return null;
+    if (this.rowData.cells['prefixReferenceId'] !== undefined && this.rowData.cells['prefixReferenceId'].value != null) {
+      prefix = this.rowData.cells['prefixReferenceId'].value;
+    }
+    return prefix + ' ' + serialNumber;
   }
+
   getCellValue(valueName: string) {
     if (this.rowData.cells[valueName] !== undefined) {
       return this.rowData.cells[valueName].value;

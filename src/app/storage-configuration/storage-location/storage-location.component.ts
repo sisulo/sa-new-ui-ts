@@ -56,7 +56,7 @@ export class StorageLocationComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex('prefixReferenceId')
+        .withIndex('serialNumber')
         .withLabel('Physical Serial Number')
         .withComponent(SerialNumberFormatterComponent)
         .withAltSortEnable(false)

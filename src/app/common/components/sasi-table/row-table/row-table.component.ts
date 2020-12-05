@@ -1,4 +1,14 @@
-import {ChangeDetectionStrategy, Component, DoCheck, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output
+} from '@angular/core';
 import {SasiRow, SasiTableOptions, slideInOutAnimation} from '../sasi-table.component';
 import {LocalStorageService} from 'ngx-store-9';
 import {SelectedRow} from './selected-row';
@@ -25,7 +35,8 @@ export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
   subscription: Subscription;
 
   constructor(private localStorageService: LocalStorageService,
-              private onSelectService: OnSelectService
+              private onSelectService: OnSelectService,
+              private changesRef: ChangeDetectorRef
   ) {
   }
 
@@ -44,6 +55,7 @@ export class RowTableComponent implements OnInit, OnDestroy, DoCheck {
         if (value.prefix === this.options.storageNamePrefix) {
 
           this.selectRow(this.data.getCell('name').value, value.operation);
+          this.changesRef.detectChanges();
         }
       });
     if (this.options.storeSelectedRows) {

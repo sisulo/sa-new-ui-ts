@@ -433,6 +433,7 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
     ];
     request.name = this.form.value.name;
     request.serialNumber = this.form.value.serialNumber;
+    request.prefixReferenceId = this.form.value.prefixReferenceId;
     this.metricService.duplicateStorageEntity(request, this.data.id).subscribe(
       (response) => this.success(response.storageEntity.id)
     );

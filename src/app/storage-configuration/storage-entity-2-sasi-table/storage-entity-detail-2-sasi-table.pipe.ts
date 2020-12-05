@@ -27,6 +27,7 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
         row.cells['parentId'] = new SasiCell(parentId, {value: parentId});
         row.cells['parentName'] = new SasiCell(parentName, {value: parentName});
         row.cells['status'] = new SasiCell(ComponentStatus[system.status], {value: ComponentStatus[system.status]});
+        row.cells['serialNumber'] = new SasiCell(system.serialNumber, {value: system.serialNumber});
         if (system.detail !== undefined) {
           const detail = system.detail;
           row.cells['arrayModel'] = new SasiCell(detail.arrayModel, {value: detail.arrayModel});
@@ -35,7 +36,6 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
           row.cells['rack'] = new SasiCell(detail.rack, {value: detail.rack});
           row.cells['room'] = new SasiCell(detail.room, {value: detail.room});
           row.cells['prefixReferenceId'] = new SasiCell(detail.prefixReferenceId, {value: detail.prefixReferenceId});
-          row.cells['serialNumber'] = new SasiCell(system.serialNumber, {value: detail.serialNumber});
           row.cells['sortId'] = new SasiCell(detail.sortId, {value: detail.sortId});
           row.cells['speed'] = new SasiCell(detail.speed, {value: detail.speed});
           row.cells['note'] = new SasiCell(detail.note, {value: detail.note});
