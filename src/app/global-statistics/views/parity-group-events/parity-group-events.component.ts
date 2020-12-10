@@ -62,6 +62,16 @@ export class ParityGroupEventsComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
+        .withIndex(SystemMetricType.HDD)
+        .withLabel('Utilization')
+        .withColumnTooltipText('Average/Peak value of the Parity Group utilization within event time interval')
+        .withComponent(UnitFormatterComponent)
+        .withAltSortEnable(true)
+        .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
         .withIndex('date')
         .withLabel('Date')
         .withColumnTooltipText('Date of event when threshold was breached')
@@ -77,16 +87,6 @@ export class ParityGroupEventsComponent implements OnInit {
         .withColumnTooltipText('Time interval when treshold was breached')
         .withComponent(TimeIntervalFormatterComponent)
         .withAltSortEnable(false)
-        .withIsAggregated(false)
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
-        .withIndex(SystemMetricType.HDD)
-        .withLabel('Utilization')
-        .withColumnTooltipText('Average/Peak value of the Parity Group utilization within event time interval')
-        .withComponent(UnitFormatterComponent)
-        .withAltSortEnable(true)
         .withIsAggregated(false)
         .build()
     );
