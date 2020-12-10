@@ -454,14 +454,14 @@ export function duplicatedSerialNumber(systemList: Owner[]): ValidatorFn {
         return system.detail !== undefined && system.serialNumber === serialNumber && system.detail.prefixReferenceId === prefix && system.id !== id;
       }
     });
-    console.log(foundSystem);
+
     return foundSystem ? {duplicatedSerialNumber: {value: control.value}} : null;
   };
 }
 
 export function duplicatedPort(portList: Owner[]): ValidatorFn {
   return (control: FormGroup): ValidationErrors | null => {
-    const portName = control.value;
+    const portName = control.get('name').value;
     const id = control.get('id').value;
     const forceAsNew = control.get('forceAsNew').value;
     const foundSystem = portList.find(port => {
@@ -471,6 +471,7 @@ export function duplicatedPort(portList: Owner[]): ValidatorFn {
         return port.name === portName && port.id !== id;
       }
     });
-    return foundSystem ? {duplicatedPortName: {value: control.value}} : null;
+    console.log(foundSystem);
+    return foundSystem ? {duplicatedPortName: {value: portName}} : null;
   };
 }
