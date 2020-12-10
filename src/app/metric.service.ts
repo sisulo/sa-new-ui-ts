@@ -58,6 +58,7 @@ export class MetricService {
   infrastructure: StorageEntityResponseDto[];
   dataCenterObservable = null;
   currentDate: Date = new Date();
+  DAY_IN_MILISECONDS = 24 * 60 * 60 * 1000;
 
   static generateSaltValue(): string {
     return Math.random().toString(36).substring(2, 15);
@@ -273,8 +274,8 @@ export class MetricService {
     return this.calculateDate(date, days);
   }
 
-  calculateDate(date: Date, minusDays: number) {
-    return date.getTime() - (minusDays * 24 * 60 * 60 * 1000);
+  calculateDate(date: Date, days: number) {
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime() - (days * this.DAY_IN_MILISECONDS);
   }
 
   duplicateStorageEntity(request: DuplicateStorageEntityDto, id: number) {
