@@ -22,8 +22,8 @@ import {RouteLinkFormatterComponent} from './components/route-link-formatter/rou
 import {StorageConvertPipe} from './storage-convert.pipe';
 import {AlertInfoBoxComponent} from './components/info-box/alert-info-box.component';
 import {ColumnComponent} from './components/sasi-table/column/column.component';
-import {ParityGroup2SasiGroupTablePipe} from '../global-statistics/views/parity-group-events/parity-group-2-sasi-group-table.pipe';
-import {ParityGroup2SasiTablePipe} from '../global-statistics/views/parity-group-events/parity-group-2-sasi-table.pipe';
+import {ToggleButtonComponent} from './components/toggle-button/toggle-button.component';
+import {ConfirmWindowComponent} from './confirm-window/confirm-window.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,9 @@ import {ParityGroup2SasiTablePipe} from '../global-statistics/views/parity-group
     RouteLinkFormatterComponent,
     StorageConvertPipe,
     AlertInfoBoxComponent,
-    ColumnComponent
+    ColumnComponent,
+    ToggleButtonComponent,
+    ConfirmWindowComponent
 
   ],
   imports: [
@@ -68,6 +70,8 @@ import {ParityGroup2SasiTablePipe} from '../global-statistics/views/parity-group
     RouteLinkFormatterComponent,
     StorageConvertPipe,
     AlertInfoBoxComponent,
+    ToggleButtonComponent,
+    ConfirmWindowComponent,
   ],
   entryComponents: [
     RowTableComponent,

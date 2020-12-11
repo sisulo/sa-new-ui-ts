@@ -13,8 +13,6 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
 
 
   transform(systems: Owner[], parent: Owner, parentsData: Owner[] = []): SasiRow[] {
-
-
     return systems.map(
       system => {
         const row = new SasiRow();
@@ -23,7 +21,7 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
         const type = StorageEntityType[system.type];
         row.cells['type'] = new SasiCell(type, {value: type});
         const parentId = parent !== null ? parent.id : system.parentId;
-        const parentName = parent != null ? parent.name : this.getParentName(parentId, parentsData);
+        const parentName = parent != null ? parent.name : system.parent.name;
         row.cells['parentId'] = new SasiCell(parentId, {value: parentId});
         row.cells['parentName'] = new SasiCell(parentName, {value: parentName});
         row.cells['status'] = new SasiCell(ComponentStatus[system.status], {value: ComponentStatus[system.status]});
@@ -43,7 +41,6 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
           row.cells['switch'] = new SasiCell(detail.switch, {value: detail.switch});
           row.cells['slot'] = new SasiCell(detail.slot, {value: detail.slot});
           row.cells['wwn'] = new SasiCell(detail.wwn, {value: detail.wwn});
-
         }
         return row;
       }

@@ -8,6 +8,7 @@ import {AlertFormatterComponent} from '../../global-statistics/formatters/alert-
 import {RowTableComponent} from '../../common/components/sasi-table/row-table/row-table.component';
 import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {StorageEntityList} from '../channel-board-list/channel-board-list.component';
+import {StorageEntityStatusComponent} from '../storage-entity-status/storage-entity-status.component';
 
 @Component({
   selector: 'app-controller-list',
@@ -38,6 +39,14 @@ export class ControllerListComponent extends StorageEntityList {
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('status')
+        .withLabel('Active')
+        .withComponent(StorageEntityStatusComponent)
+        .withAltSortEnable(false)
         .build()
     );
 

@@ -1,0 +1,6 @@
+<div class="open-form col-md-12" (click)="openForm()">
+  <div *ngIf="data != null && data != undefined" class="metric-value">
+    <span *ngIf="isActive()" class="text-green"><i class="fa fa-check-circle"></i></span>
+    <span *ngIf="!isActive()" class="text-danger"><i class="fa fa-times-circle"></i></span>
+  </div>
+</div>

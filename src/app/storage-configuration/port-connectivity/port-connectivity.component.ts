@@ -7,6 +7,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 import {OnSelectService} from '../../common/components/sasi-table/on-select.service';
+import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 
 @Component({
   selector: 'app-port-connectivity',
@@ -22,6 +23,7 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
   portList: Owner[] = [];
   selectedSystem: number;
   typeEnum = StorageEntityType;
+  statusStorageEntities: ComponentStatus[] = [ComponentStatus.ACTIVE];
   private sub: Subscription;
 
   constructor(private metricService: MetricService,
@@ -55,6 +57,7 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
     data.duplicateOperation = true;
     this.formBusService.sendFormData({data: data, selectedData: []});
   }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
@@ -65,25 +68,25 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
 
   loadData(force: boolean = true) {
 
-    this.fetchStorageEntities(StorageEntityType.SYSTEM, null)
+    this.fetchStorageEntities(StorageEntityType.SYSTEM, null, [ComponentStatus.ACTIVE])
       .subscribe(data => this.systemsList = data.sort((a, b) => this.compare(a, b)));
     if (this.selectedSystem != null) {
-      this.fetchStorageEntities(StorageEntityType.DKC, this.selectedSystem)
+      this.fetchStorageEntities(StorageEntityType.DKC, this.selectedSystem, this.statusStorageEntities)
         .subscribe(data => this.dkcList = data);
-      this.fetchStorageEntities(StorageEntityType.CONTROLLER, this.selectedSystem)
+      this.fetchStorageEntities(StorageEntityType.CONTROLLER, this.selectedSystem, this.statusStorageEntities)
         .subscribe(data => this.controllerList = data);
-      this.fetchStorageEntities(StorageEntityType.CHANNEL_BOARD, this.selectedSystem)
+      this.fetchStorageEntities(StorageEntityType.CHANNEL_BOARD, this.selectedSystem, this.statusStorageEntities)
         .subscribe(data => this.channelBoardList = data);
-      this.fetchStorageEntities(StorageEntityType.PORT, this.selectedSystem)
+      this.fetchStorageEntities(StorageEntityType.PORT, this.selectedSystem, this.statusStorageEntities)
         .subscribe(data => this.portList = data);
       this.selectedSasiRows.announceSelect([]);
     }
 
   }
 
-  fetchStorageEntities(type, systemId: number): Observable<Owner[]> {
+  fetchStorageEntities(type, systemId: number, status: ComponentStatus[]): Observable<Owner[]> {
     return new Observable(subscriber =>
-      this.metricService.getSystemsDetail(type, systemId)
+      this.metricService.getStorageEntityDetail(type, systemId, status)
         .subscribe(data => {
           if (data.length > 0) {
             subscriber.next(ExtractStorageEntityUtils.extractByType(data, type));
@@ -110,5 +113,14 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
 
   getValue(a) {
     return a.detail != null ? a.detail.sortId : null;
+  }
+
+  toggleStatus() {
+    this.statusStorageEntities = this.isActiveStorageEntities() ? [ComponentStatus.ACTIVE] : [ComponentStatus.ACTIVE, ComponentStatus.INACTIVE];
+    this.loadData();
+  }
+
+  isActiveStorageEntities() {
+    return this.statusStorageEntities.some(status => status === ComponentStatus.INACTIVE);
   }
 }

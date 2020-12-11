@@ -15,6 +15,7 @@ import {StorageEntityDetailRequestDto} from './common/models/dtos/storage-entity
 import {ChangeStatusRequestDto} from './common/models/dtos/change-status-request.dto';
 import {StorageEntityType} from './common/models/dtos/owner.dto';
 import {DuplicateStorageEntityDto} from './common/models/dtos/duplicate-storage-entity.dto';
+import {ComponentStatus} from './common/models/dtos/enums/component.status';
 
 export enum PeriodType {
   DAY = 'DAY',
@@ -178,9 +179,9 @@ export class MetricService {
     return this.http.post<OperationData[]>(url, request, {headers: headersParams});
   }
 
-  getSystemsDetail(entityType: StorageEntityType = StorageEntityType.SYSTEM, id: number = null) {
+  getStorageEntityDetail(entityType: StorageEntityType = StorageEntityType.SYSTEM, id: number = null, paramStatus: ComponentStatus[] = [ComponentStatus.ACTIVE]) {
     const url = this.buildUrl(environment.metricsBaseUrl, '/v2/storage-entities');
-    const callParams: { type, systemId? } = {type: entityType};
+    const callParams: { type, systemId?, status: string[] } = {type: StorageEntityType[entityType], status: paramStatus.map(statusItem => ComponentStatus[statusItem])};
     if (id !== null) {
       callParams.systemId = id.toString();
     }
@@ -281,5 +282,10 @@ export class MetricService {
   duplicateStorageEntity(request: DuplicateStorageEntityDto, id: number) {
     const url = this.buildUrl(environment.metricsBaseUrl, `/v2/storage-entities/${id}/duplicate`);
     return this.http.post<StorageEntityResponseDto>(url, request);
+  }
+
+  delete(id: number) {
+    const url = environment.metricsBaseUrl + `/v2/storage-entities/${id}`;
+    return this.http.delete<any>(url);
   }
 }

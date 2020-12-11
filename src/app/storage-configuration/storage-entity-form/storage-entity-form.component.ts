@@ -5,7 +5,6 @@ import {StorageEntityRequestDto} from '../../common/models/dtos/storage-entity-r
 import {StorageEntityDetailRequestDto} from '../../common/models/dtos/storage-entity-detail-request.dto';
 import {FormBusService} from '../form-bus.service';
 import {FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators} from '@angular/forms';
-import {SystemData} from '../storage-location/storage-location.component';
 import {ChangeStatusRequestDto} from '../../common/models/dtos/change-status-request.dto';
 import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 import {DuplicateStorageEntityDto} from '../../common/models/dtos/duplicate-storage-entity.dto';
@@ -76,6 +75,8 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   staticType = StorageEntityType;
   staticData: FormStaticData[] = [];
   selectedRows: Owner[] = [];
+  private confirmWindowMessage: string;
+  private confirmWindowAction: (boolean) => {};
 
   constructor(private metricService: MetricService,
               private formBusService: FormBusService,
@@ -391,16 +392,16 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
     this.dataSaved.emit(true);
   }
 
-  deactivate() {
+  deactivate(confirmed: boolean) {
     this.confirmWindowDisplay = false;
-    if (this.data.id !== undefined) {
+    if (this.data.id !== undefined && confirmed) {
       const newStatus = this.data.status === ComponentStatus.ACTIVE ? ComponentStatus.INACTIVE : ComponentStatus.ACTIVE;
       const dto = new ChangeStatusRequestDto(ComponentStatus[newStatus]);
       this.metricService.updateStatus(this.data.id, dto).subscribe(
         () => this.success()
       );
     }
-    if (this.selectedRows.length > 0) {
+    if (this.selectedRows.length > 0 && confirmed) {
       const dto = new ChangeStatusRequestDto(ComponentStatus[ComponentStatus.INACTIVE]);
       this.selectedRows.forEach(owner => {
           this.metricService.updateStatus(owner.id, dto).subscribe(
@@ -411,12 +412,33 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
     }
   }
 
-  confirmDisplayWindow() {
+  delete(confirmed: boolean) {
+    this.confirmWindowDisplay = false;
+    if (this.data.id !== undefined && confirmed) {
+      this.metricService.delete(this.data.id).subscribe(
+        () => this.success()
+      );
+    }
+    if (this.selectedRows.length > 0 && confirmed) {
+      this.selectedRows.forEach(owner => {
+          this.metricService.delete(owner.id).subscribe(
+            () => this.success()
+          );
+        }
+      );
+    }
+  }
+
+  confirmDisplayWindow(windowData: { message, action }) {
+    this.confirmWindowMessage = windowData.message;
+    this.confirmWindowAction = windowData.action;
     this.confirmWindowDisplay = true;
   }
 
   closeConfirmationWindow() {
     this.confirmWindowDisplay = false;
+    this.confirmWindowMessage = '';
+    this.confirmWindowAction = null;
   }
 
   getStaticData(type: StorageEntityType) {
@@ -438,6 +460,10 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
       (response) => this.success(response.storageEntity.id)
     );
   }
+
+  getStatusButtonLabel() {
+    return this.data.status === ComponentStatus.INACTIVE ? 'Activate' : 'Deactivate';
+  }
 }
 
 export function duplicatedSerialNumber(systemList: Owner[]): ValidatorFn {
@@ -446,7 +472,6 @@ export function duplicatedSerialNumber(systemList: Owner[]): ValidatorFn {
     const id = control.get('id').value;
     const prefix = control.get('prefixReferenceId').value;
     const forceAsNew = control.get('forceAsNew').value;
-    console.log(systemList);
     const foundSystem = systemList.find(system => {
       if (forceAsNew) {
         return system.detail !== undefined && system.serialNumber === serialNumber && system.detail.prefixReferenceId === prefix;
@@ -471,7 +496,6 @@ export function duplicatedPort(portList: Owner[]): ValidatorFn {
         return port.name === portName && port.id !== id;
       }
     });
-    console.log(foundSystem);
     return foundSystem ? {duplicatedPortName: {value: portName}} : null;
   };
 }

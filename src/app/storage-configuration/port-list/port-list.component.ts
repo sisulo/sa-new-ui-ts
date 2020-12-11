@@ -8,6 +8,7 @@ import {RowTableComponent} from '../../common/components/sasi-table/row-table/ro
 import {SimpleSortImpl} from '../../common/components/sasi-table/simple-sort-impl';
 import {StorageEntityList} from '../channel-board-list/channel-board-list.component';
 import {SpeedFormatterComponent} from '../speed-formatter/speed-formatter.component';
+import {StorageEntityStatusComponent} from '../storage-entity-status/storage-entity-status.component';
 
 @Component({
   selector: 'app-port-list',
@@ -101,6 +102,14 @@ export class PortListComponent extends StorageEntityList {
         .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .withIsAggregated(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('status')
+        .withLabel('Active')
+        .withComponent(StorageEntityStatusComponent)
+        .withAltSortEnable(false)
         .build()
     );
 

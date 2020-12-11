@@ -3,12 +3,12 @@
 </h3>
 <div class="container-fluid">
   <div class="row">
-    <div class="col-sm-4 col-md-4 col-lg-4">
+    <div class="col-sm-7 col-md-7 col-lg-7">
       <div class="box" *ngIf="systemsList.length > 0">
         <div class="box-body">
           <label for="system">System:</label>
           <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-7">
               <ng-select class="left" id="system"
                          bindValue="id" bindLabel="name" [items]="systemsList"
                          (change)="openSelectedSystem()"
@@ -16,10 +16,15 @@
                          placeholder="Search...">
               </ng-select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2">
               <button type="button" class="btn btn-default" *ngIf="selectedSystem !== undefined" (click)="openForm()">
                 Duplicate system
               </button>
+            </div>
+          </div>
+          <div class="row" *ngIf="selectedSystem !== undefined">
+            <div class="col-md-3">
+              Display inactive<app-toggle-button (changed)="toggleStatus()"></app-toggle-button>
             </div>
           </div>
         </div>

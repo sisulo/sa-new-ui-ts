@@ -11,6 +11,8 @@ import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.compon
 import {GroupSortImpl} from '../../common/components/sasi-table/group-sort-impl';
 import {StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
+import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
+import {StorageEntityStatusComponent} from '../storage-entity-status/storage-entity-status.component';
 
 export class SystemData {
   serial: string;
@@ -30,6 +32,7 @@ export class StorageLocationComponent implements OnInit {
   datacenterList = [];
   systemList: SystemData[] = [];
   type = StorageEntityType;
+  storageEntityStatuses: ComponentStatus[] = [ComponentStatus.ACTIVE];
 
   constructor(private metricService: MetricService,
               private formBus: FormBusService) {
@@ -103,6 +106,14 @@ export class StorageLocationComponent implements OnInit {
         .withAltSortEnable(false)
         .build()
     );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('status')
+        .withLabel('Active')
+        .withComponent(StorageEntityStatusComponent)
+        .withAltSortEnable(false)
+        .build()
+    );
 
     this.options.colControlFormatter = AlertFormatterComponent;
     this.options.rowComponentFormatter = RowGroupTableComponent;
@@ -128,13 +139,26 @@ export class StorageLocationComponent implements OnInit {
     this.formBus.sendFormData({data: data, selectedData: []});
   }
 
+  toggleStatus() {
+    if (this.isActiveOnlyStorageEntities()) {
+      this.storageEntityStatuses = [ComponentStatus.ACTIVE, ComponentStatus.INACTIVE];
+    } else {
+      this.storageEntityStatuses = [ComponentStatus.ACTIVE];
+    }
+    this.loadData(true);
+  }
+
   loadData(force: boolean = true) {
     if (force) {
-      this.metricService.getSystemsDetail().subscribe(data => {
+      this.metricService.getStorageEntityDetail(StorageEntityType.SYSTEM, null, this.storageEntityStatuses).subscribe(data => {
         this.data = data;
         this.systemList = ExtractStorageEntityUtils.extractByType(data, StorageEntityType.SYSTEM);
         this.datacenterList = this.data.map(datacenter => datacenter.storageEntity);
       });
     }
+  }
+
+  isActiveOnlyStorageEntities() {
+    return this.storageEntityStatuses.every(item => item === ComponentStatus.ACTIVE);
   }
 }

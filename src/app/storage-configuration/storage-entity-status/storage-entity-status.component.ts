@@ -4,13 +4,14 @@ import {SasiColumn, SasiRow} from '../../common/components/sasi-table/sasi-table
 import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 import {StorageEntityType} from '../../common/models/dtos/owner.dto';
+import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 
 @Component({
-  selector: 'app-serial-number-formatter',
-  templateUrl: './serial-number-formatter.component.html',
-  styleUrls: ['./serial-number-formatter.component.css']
+  selector: 'app-storage-entity-status',
+  templateUrl: './storage-entity-status.component.html',
+  styleUrls: ['./storage-entity-status.component.css']
 })
-export class SerialNumberFormatterComponent implements OnInit {
+export class StorageEntityStatusComponent implements OnInit {
 
   @Input() label;
   @Input() public data: SystemMetric;
@@ -40,16 +41,8 @@ export class SerialNumberFormatterComponent implements OnInit {
     this.formBus.sendFormData({data: formData, selectedData: []});
   }
 
-  getValue() {
-    let serialNumber = '';
-    let prefix = '';
-    if (this.rowData.cells['serialNumber'] !== undefined && this.rowData.cells['serialNumber'].value != null) {
-      serialNumber = this.rowData.cells['serialNumber'].value;
-    }
-    if (this.rowData.cells['prefixReferenceId'] !== undefined && this.rowData.cells['prefixReferenceId'].value != null) {
-      prefix = this.rowData.cells['prefixReferenceId'].value;
-    }
-    return prefix + ' ' + serialNumber;
+  isActive() {
+    return this.getCellValue('status') === 1;
   }
 
   getCellValue(valueName: string) {

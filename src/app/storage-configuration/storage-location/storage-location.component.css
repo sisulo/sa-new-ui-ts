@@ -1,3 +1,6 @@
 :host /deep/ .metric-value {
   font-size: 1.1rem;
 }
+.btn.filter-btn {
+  cursor: pointer;
+}

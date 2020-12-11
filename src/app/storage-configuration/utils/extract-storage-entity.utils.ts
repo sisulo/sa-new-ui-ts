@@ -5,19 +5,20 @@ export class ExtractStorageEntityUtils {
   public static extractByType(data: StorageEntityResponseDto[], type: StorageEntityType) {
     const storageEntities = [];
     data.forEach(
-      dc => storageEntities.push(...ExtractStorageEntityUtils.extractStorageEntity(dc.storageEntity.children, type))
+      dc => storageEntities.push(...ExtractStorageEntityUtils.extractStorageEntity(dc.storageEntity.children, type, dc.storageEntity))
     );
     return storageEntities;
   }
 
-  private static extractStorageEntity(owners: Owner[], type): Owner[] {
+  private static extractStorageEntity(owners: Owner[], type, parent: Owner): Owner[] {
     if (owners !== undefined && owners.length > 0) {
       if (owners[0].type === StorageEntityType[type]) {
+        owners.forEach(ow => ow.parent = parent);
         return owners;
       } else {
         const result: any[] = [];
         return owners.reduce((acc, current) => {
-          acc.push(...ExtractStorageEntityUtils.extractStorageEntity(current.children, type));
+          acc.push(...ExtractStorageEntityUtils.extractStorageEntity(current.children, type, current));
           return acc;
         }, result);
       }
