@@ -395,14 +395,14 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   deactivate(confirmed: boolean) {
     this.confirmWindowDisplay = false;
     if (this.data.id !== undefined && confirmed) {
-      const newStatus = this.data.status === ComponentStatus.ACTIVE ? ComponentStatus.INACTIVE : ComponentStatus.ACTIVE;
+      const newStatus = this.getStatus(this.data.status);
       const dto = new ChangeStatusRequestDto(ComponentStatus[newStatus]);
       this.metricService.updateStatus(this.data.id, dto).subscribe(
         () => this.success()
       );
     }
     if (this.selectedRows.length > 0 && confirmed) {
-      const dto = new ChangeStatusRequestDto(ComponentStatus[ComponentStatus.INACTIVE]);
+      const dto = new ChangeStatusRequestDto(ComponentStatus[this.getStatus(this.selectedRows[0].status)]);
       this.selectedRows.forEach(owner => {
           this.metricService.updateStatus(owner.id, dto).subscribe(
             () => this.success()
@@ -410,6 +410,17 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
         }
       );
     }
+  }
+
+  getStatus(status: ComponentStatus | string) {
+    let resolvedStatus;
+    console.log(status);
+    if (typeof status === 'string') {
+      resolvedStatus = ComponentStatus[status];
+    } else {
+      resolvedStatus = status;
+    }
+    return resolvedStatus === ComponentStatus.ACTIVE ? ComponentStatus.INACTIVE : ComponentStatus.ACTIVE;
   }
 
   delete(confirmed: boolean) {
@@ -462,7 +473,27 @@ export class StorageEntityFormComponent implements OnInit, OnChanges {
   }
 
   getStatusButtonLabel() {
-    return this.data.status === ComponentStatus.INACTIVE ? 'Activate' : 'Deactivate';
+    let status;
+    if (this.selectedRows.length > 0) {
+      status = this.getStatus(this.selectedRows[0].status);
+    } else {
+      status = this.getStatus(this.data.status);
+    }
+    return status === ComponentStatus.ACTIVE ? 'Activate' : 'Deactivate';
+  }
+
+  getConfirmWindowsMessage(deleteAction: boolean = false) {
+    if (deleteAction) {
+      return `Are you sure to delete ${this.getDataName()}, including ALL its related entities and data?`;
+    }
+    return `Are you sure to change status of ${this.getDataName()}, including ALL its related entities?`;
+  }
+
+  getDataName() {
+    if (this.selectedRows.length > 0) {
+      return `${this.selectedRows.length} selected entities`;
+    }
+    return `'${this.data.name}'`;
   }
 }
 
@@ -476,7 +507,10 @@ export function duplicatedSerialNumber(systemList: Owner[]): ValidatorFn {
       if (forceAsNew) {
         return system.detail !== undefined && system.serialNumber === serialNumber && system.detail.prefixReferenceId === prefix;
       } else {
-        return system.detail !== undefined && system.serialNumber === serialNumber && system.detail.prefixReferenceId === prefix && system.id !== id;
+        return system.detail !== undefined
+          && system.serialNumber === serialNumber
+          && system.detail.prefixReferenceId === prefix
+          && system.id !== id;
       }
     });
 

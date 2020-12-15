@@ -135,16 +135,25 @@
           (click)="form.valid ? duplicate(): submitted = true">
           Duplicate
         </button>
-        <button *ngIf="!data.duplicateOperation && (data.id !== undefined || selectedRows.length > 0)" type="button" class="btn btn-danger"
-                (click)="confirmDisplayWindow(
-                {message: 'Are you sure to change status \'' + data.name + '\', including ALL its related entities?', action: deactivate}
+        <div class="btn-group" *ngIf="!data.duplicateOperation && (data.id !== undefined || selectedRows.length > 0)">
+          <button *ngIf="!data.duplicateOperation && (data.id !== undefined || selectedRows.length > 0)" type="button" class="btn btn-danger"
+                  (click)="confirmDisplayWindow(
+                {message: this.getConfirmWindowsMessage(false), action: deactivate}
                 )">{{getStatusButtonLabel()}}
-        </button>
-        <button *ngIf="!data.duplicateOperation && (data.id !== undefined || selectedRows.length > 0)" type="button" class="btn btn-danger"
-                (click)="confirmDisplayWindow(
-                {message: 'Are you sure to delete \'' + data.name + '\', including ALL its related entities and data?', action: delete}
+          </button>
+          <button type="button" [class.disabled]="form.invalid" class="btn btn-danger dropdown-toggle"
+                  data-toggle="dropdown" aria-expanded="true">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a *ngIf="!data.duplicateOperation && (data.id !== undefined || selectedRows.length > 0)"
+                        (click)="confirmDisplayWindow(
+                {message: this.getConfirmWindowsMessage(true), action: delete}
                 )">Delete
-        </button>
+            </a></li>
+          </ul>
+        </div>
         <div class="btn-group" *ngIf="!data.duplicateOperation">
           <button [class.disabled]="form.invalid" type="button" class="btn btn-primary"
                   (click)="form.valid ? saveChanges() : submitted = true">Save
