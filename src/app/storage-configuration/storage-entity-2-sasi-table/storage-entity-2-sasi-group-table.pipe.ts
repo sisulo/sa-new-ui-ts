@@ -12,7 +12,7 @@ export class StorageEntity2SasiGroupTablePipe implements PipeTransform {
   constructor(private rowPipe: StorageEntityDetail2SasiTablePipe) {
   }
 
-  transform(systems: StorageEntityResponseDto[], context?: string): SasiGroupRow[] {
+  transform(systems: StorageEntityResponseDto[], context?: string, lastDataUpdated = []): SasiGroupRow[] {
     return systems.map(
       storageEntity => {
         const row = new SasiGroupRow();
@@ -26,7 +26,7 @@ export class StorageEntity2SasiGroupTablePipe implements PipeTransform {
           status: ComponentStatus[data.status]
         });
         row.groupRow = groupRow;
-        row.rows = this.rowPipe.transform(data.children, data);
+        row.rows = this.rowPipe.transform(data.children, data, [], lastDataUpdated);
         return row;
       }
     );

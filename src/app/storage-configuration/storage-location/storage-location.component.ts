@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MetricService} from '../../metric.service';
+import {MetricService, PeriodType} from '../../metric.service';
 import {StorageEntityResponseDto} from '../../common/models/dtos/storage-entity-response.dto';
 import {SasiColumnBuilder, SasiTableOptions} from '../../common/components/sasi-table/sasi-table.component';
 import {AlertFormatterComponent} from '../../global-statistics/formatters/alert-formatter/alert-formatter.component';
@@ -13,6 +13,7 @@ import {StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
 import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 import {StorageEntityStatusComponent} from '../storage-entity-status/storage-entity-status.component';
+import {SystemMetricType} from '../../common/models/metrics/system-metric-type.enum';
 
 export class SystemData {
   serial: string;
@@ -33,6 +34,7 @@ export class StorageLocationComponent implements OnInit {
   systemList: SystemData[] = [];
   type = StorageEntityType;
   storageEntityStatuses: ComponentStatus[] = [ComponentStatus.ACTIVE];
+  lastDataUpdate = [];
 
   constructor(private metricService: MetricService,
               private formBus: FormBusService) {
@@ -100,6 +102,14 @@ export class StorageLocationComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
+        .withIndex('lastDataUpdate')
+        .withLabel('Last Updated')
+        .withComponent(SeTextFormatterComponent)
+        .withAltSortEnable(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
         .withIndex('sortId')
         .withLabel('Sort ID')
         .withComponent(SeTextFormatterComponent)
@@ -149,11 +159,17 @@ export class StorageLocationComponent implements OnInit {
   }
 
   loadData(force: boolean = true) {
+
     if (force) {
       this.metricService.getStorageEntityDetail(StorageEntityType.SYSTEM, null, this.storageEntityStatuses).subscribe(data => {
-        this.data = data;
-        this.systemList = ExtractStorageEntityUtils.extractByType(data, StorageEntityType.SYSTEM);
-        this.datacenterList = this.data.map(datacenter => datacenter.storageEntity);
+        this.metricService.getPerformanceStatistics(-1, PeriodType.DAY).subscribe(capacityData => {
+          capacityData.forEach(dc => dc.children.forEach(system => {
+            this.lastDataUpdate[system.id] = system.metrics.filter(metric => metric.type === SystemMetricType.WORKLOAD)[0].date;
+          }));
+          this.data = data;
+          this.systemList = ExtractStorageEntityUtils.extractByType(data, StorageEntityType.SYSTEM);
+          this.datacenterList = this.data.map(datacenter => datacenter.storageEntity);
+        });
       });
     }
   }

@@ -12,7 +12,7 @@ import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
 export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
 
 
-  transform(systems: Owner[], parent: Owner, parentsData: Owner[] = []): SasiRow[] {
+  transform(systems: Owner[], parent: Owner, parentsData: Owner[] = [], lastDataUpdate = []): SasiRow[] {
     return systems.map(
       system => {
         const row = new SasiRow();
@@ -26,6 +26,7 @@ export class StorageEntityDetail2SasiTablePipe implements PipeTransform {
         row.cells['parentName'] = new SasiCell(parentName, {value: parentName});
         row.cells['status'] = new SasiCell(ComponentStatus[system.status], {value: ComponentStatus[system.status]});
         row.cells['serialNumber'] = new SasiCell(system.serialNumber, {value: system.serialNumber});
+        row.cells['lastDataUpdate'] = new SasiCell(lastDataUpdate[system.id], {value: lastDataUpdate[system.id]});
         if (system.detail !== undefined) {
           const detail = system.detail;
           row.cells['arrayModel'] = new SasiCell(detail.arrayModel, {value: detail.arrayModel});
