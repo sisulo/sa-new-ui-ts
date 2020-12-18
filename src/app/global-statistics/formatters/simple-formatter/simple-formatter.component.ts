@@ -18,10 +18,10 @@ export class SimpleFormatterComponent extends UnitFormatterComponent implements 
     super();
   }
 
-  ngOnInit() {
-  }
-
   getTooltipMessage(): string {
+    if (!this.isTodayDate()) {
+      return `${this.daysFromToday} days old data`;
+    }
     if (this.column !== undefined) {
       return this.column.tooltipText;
     }

@@ -1,6 +1,6 @@
 <div *ngFor="let row of subData">
   <div class="row">
-    <app-adapter-disbalance-formatter [data]="row.getCell(imbalanceEvents)" [rowData]="row"
+    <app-adapter-disbalance-formatter [data]="row.getCell(imbalanceEvents).rawData" [rowData]="row"
                                       [isPortMetric]="true"></app-adapter-disbalance-formatter>
   </div>
 </div>

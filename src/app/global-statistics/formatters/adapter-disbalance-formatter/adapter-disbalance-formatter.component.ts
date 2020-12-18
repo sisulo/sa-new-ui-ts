@@ -2,13 +2,14 @@ import {Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../../common/models/metrics/system-metric.vo';
 import {SasiColumn, SasiRow} from '../../../common/components/sasi-table/sasi-table.component';
 import {SystemMetricType} from '../../../common/models/metrics/system-metric-type.enum';
+import {UnitFormatterComponent} from '../unit-formatter/unit-formatter.component';
 
 @Component({
   selector: 'app-adapter-disbalance-formatter',
   templateUrl: './adapter-disbalance-formatter.component.html',
   styleUrls: ['./adapter-disbalance-formatter.component.css']
 })
-export class AdapterDisbalanceFormatterComponent implements OnInit {
+export class AdapterDisbalanceFormatterComponent extends UnitFormatterComponent implements OnInit {
 
   @Input() label;
   @Input() public data: SystemMetric;
@@ -21,10 +22,13 @@ export class AdapterDisbalanceFormatterComponent implements OnInit {
   private eventsType = SystemMetricType.IMBALANCE_EVENTS;
 
   constructor() {
+    super();
   }
 
   ngOnInit() {
+    super.ngOnInit();
     if (this.isPortMetric) {
+      console.log(this.data);
       this.absolutType = SystemMetricType.PORT_IMBALANCE_ABSOLUT;
       this.percType = SystemMetricType.PORT_IMBALANCE_PERC;
       this.eventsType = SystemMetricType.PORT_IMBALANCE_EVENTS;

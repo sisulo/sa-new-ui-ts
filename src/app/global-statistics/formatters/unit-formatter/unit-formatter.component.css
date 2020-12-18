@@ -28,8 +28,9 @@
   color: #db8b0b;
 }
 
-.metric-value .metric-unit {
+.metric-unit {
   font-size: 10px;
+  font-weight: 600;
 }
 
 .peak .metric-unit {

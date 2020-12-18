@@ -1,22 +1,21 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {SystemMetric} from '../../../common/models/metrics/system-metric.vo';
 import {SasiColumn} from '../../../common/components/sasi-table/sasi-table.component';
+import {UnitFormatterComponent} from '../unit-formatter/unit-formatter.component';
 
 @Component({
   selector: 'app-time-interval-formatter',
   templateUrl: './time-interval-formatter.component.html',
   styleUrls: ['./time-interval-formatter.component.css']
 })
-export class TimeIntervalFormatterComponent implements OnInit {
+export class TimeIntervalFormatterComponent extends UnitFormatterComponent implements OnInit {
 
   @Input() public data: SystemMetric;
   @Input() public label;
   @Input() public column: SasiColumn;
 
   constructor() {
-  }
-
-  ngOnInit() {
+    super();
   }
 
   getValue() {

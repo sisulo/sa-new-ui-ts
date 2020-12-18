@@ -3,10 +3,10 @@
     <span class="badge bg-black">{{getName()}}</span>
   </div>
   <div *ngIf="data != null && data.value > 0 && isVisible()" class="progress progress-sm col-xs-12 col-sm-12 col-md-12">
-    <div class="progress-value">{{resolveRelativeDisbalance() + ' %'}}</div>
-    <div class="progress-bar progress-bar-danger" [ngStyle]="{width:resolveRelativeDisbalance() + '%'}"></div>
+    <div class="progress-value" tooltip="{{getTooltipMessage()}}" [class.text-danger]="!isTodayDate()">{{resolveRelativeDisbalance() + ' %'}}</div>
+    <div class="progress-bar progress-bar-warning" [ngStyle]="{width:resolveRelativeDisbalance() + '%'}"></div>
   </div>
   <div *ngIf="data != null && data.value > 0 && isVisible()" class="absolute-value-badge col-xs-12 col-sm-12 col-md-12">
-    <span class="badge bg-red">{{resolveAbsoluteDisbalance() + 'MBps'}}</span>
+    <span class="badge bg-yellow">{{resolveAbsoluteDisbalance() + 'MBps'}}</span>
   </div>
 </div>

@@ -10,9 +10,7 @@ import {SystemMetricType} from '../../../common/models/metrics/system-metric-typ
 import {SeTextFormatterComponent} from '../../../storage-configuration/se-text-formatter/se-text-formatter.component';
 import {AlertFormatterComponent} from '../../formatters/alert-formatter/alert-formatter.component';
 import {RowGroupTableComponent} from '../../../common/components/sasi-table/row-group-table/row-group-table.component';
-import {GroupSortAggregateValueImpl} from '../../../common/components/sasi-table/group-sort-aggregate-value.impl';
 import {MetricHandlerUtils} from '../../utils/metric-handler.utils';
-import {TextFormatterComponent} from '../../formatters/text-formatter/text-formatter.component';
 import {TimestampToDateComponent} from '../../formatters/timestamp-to-date/timestamp-to-date.component';
 import {TimeIntervalFormatterComponent} from '../../formatters/time-interval-formatter/time-interval-formatter.component';
 import {DurationFormatterComponent} from '../../formatters/duration-formatter/duration-formatter.component';
