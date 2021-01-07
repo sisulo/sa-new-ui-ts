@@ -102,14 +102,6 @@ export class StorageLocationComponent implements OnInit {
     );
     this.options.columns.push(
       SasiColumnBuilder.getInstance()
-        .withIndex('lastDataUpdate')
-        .withLabel('Last Updated')
-        .withComponent(SeTextFormatterComponent)
-        .withAltSortEnable(false)
-        .build()
-    );
-    this.options.columns.push(
-      SasiColumnBuilder.getInstance()
         .withIndex('sortId')
         .withLabel('Sort ID')
         .withComponent(SeTextFormatterComponent)
@@ -121,6 +113,14 @@ export class StorageLocationComponent implements OnInit {
         .withIndex('status')
         .withLabel('Active')
         .withComponent(StorageEntityStatusComponent)
+        .withAltSortEnable(false)
+        .build()
+    );
+    this.options.columns.push(
+      SasiColumnBuilder.getInstance()
+        .withIndex('lastDataUpdate')
+        .withLabel('Last Updated')
+        .withComponent(SeTextFormatterComponent)
         .withAltSortEnable(false)
         .build()
     );

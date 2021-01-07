@@ -5,3 +5,8 @@
 .metric-value {
   font-size: 1.1rem;
 }
+
+.text-not-today {
+  /*color: #900020;*/
+  color: #ff8f8f;
+}

@@ -37,3 +37,8 @@ div.progress-bar {
   margin: 2px 0 3px 0;
   flex-grow: 1;
 }
+
+.text-not-today {
+  /*color: #900020;*/
+  color: #ff8f8f;
+}

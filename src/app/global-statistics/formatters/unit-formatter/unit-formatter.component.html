@@ -1,8 +1,8 @@
 <div *ngIf="data != null" class="metric-value">
-  <span *ngIf="isAlert()" tooltip="{{getAlertMessage()}}" hide-delay="0" [class.text-danger]="!isTodayDate()"
+  <span *ngIf="isAlert()" tooltip="{{getAlertMessage()}}" hide-delay="0" [class.text-not-today]="!isTodayDate()"
         ngClass="{{getViolatedRuleClass()}}">{{getValue() | formatThousands}} <span
     class="metric-unit">{{data.unit}}</span></span>
-  <span *ngIf="!isAlert()" tooltip="{{getTooltipMessage()}}" hide-delay="0" [class.text-danger]="!isTodayDate()">{{getValue() | formatThousands}} </span><span
+  <span *ngIf="!isAlert()" tooltip="{{getTooltipMessage()}}" hide-delay="0" [class.text-not-today]="!isTodayDate()">{{getValue() | formatThousands}} </span><span
   class="metric-unit">{{data.unit}}</span>
 </div>
 <div *ngIf="data != null" class="peak">
