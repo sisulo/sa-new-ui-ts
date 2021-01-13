@@ -24,7 +24,7 @@ export class UnitFormatterComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.data.date !== undefined && this.data.date !== null) {
+    if (this.data !== null && this.data.date !== undefined && this.data.date !== null) {
       const today = new Date();
       const metricDate = new Date(this.data.date);
       this.todayDate =
@@ -33,10 +33,7 @@ export class UnitFormatterComponent implements OnInit {
         && metricDate.getDate() === today.getDate();
 
       this.daysFromToday = ((today.getTime() - metricDate.getTime()) / 86400000).toFixed(0);
-      // console.log(today.toDateString() + ' ' + metricDate.toDateString() + ' ' + this.todayDate);
-      console.log(metricDate.getFullYear() + '-' + metricDate.getUTCMonth() + '-' + metricDate.getDate() + ' ' + today.getFullYear() + '-' + today.getUTCMonth() + '-' + today.getDate() + ' result: ' + this.todayDate + ', daysFromToday: ' + this.daysFromToday);
     }
-    // console.log(this.data);
   }
 
   isAlert(): boolean {
