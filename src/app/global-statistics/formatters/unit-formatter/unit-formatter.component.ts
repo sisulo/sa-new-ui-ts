@@ -12,9 +12,12 @@ import {AlertRule} from '../../alert-rule';
 })
 export class UnitFormatterComponent implements OnInit {
 
+  private static ONE_DAY_IN_MS = 86400000;
+
   @Input() label = '';
   @Input() public data: SystemMetric;
   @Input() public options: SasiTableOptions;
+
   @Input() public column: SasiColumn;
 
   todayDate = true;
@@ -27,12 +30,8 @@ export class UnitFormatterComponent implements OnInit {
     if (this.data !== null && this.data.date !== undefined && this.data.date !== null) {
       const today = new Date();
       const metricDate = new Date(this.data.date);
-      this.todayDate =
-        metricDate.getFullYear() === today.getFullYear()
-        && metricDate.getUTCMonth() === today.getUTCMonth()
-        && metricDate.getDate() === today.getDate();
-
-      this.daysFromToday = ((today.getTime() - metricDate.getTime()) / 86400000).toFixed(0);
+      this.daysFromToday = ((today.getTime() - metricDate.getTime()) / UnitFormatterComponent.ONE_DAY_IN_MS).toFixed(0);
+      this.todayDate = parseInt(this.daysFromToday, 10) <= 2;
     }
   }
 
