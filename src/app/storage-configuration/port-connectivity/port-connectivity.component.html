@@ -107,3 +107,6 @@
                          [portList]="portList"
                          [selectedParent]="selectedSystem"
                          (dataSaved)="loadData($event)"></app-storage-entity-form>
+
+<ejs-diagram #diagram id="diagram" width="99%" height="580px" [layout]="layout" [dataSourceSettings]="dataSourceSettings" [getNodeDefaults]="nodeDefaults" [getConnectorDefaults]="connectorDefaults">
+</ejs-diagram>

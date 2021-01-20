@@ -20,6 +20,7 @@ import {StorageEntityDetail2SasiTablePipe} from './storage-entity-2-sasi-table/s
 import {SpeedFormatterComponent} from './speed-formatter/speed-formatter.component';
 import { ImportCsvDataComponent } from './import-csv-data/import-csv-data.component';
 import { StorageEntityStatusComponent } from './storage-entity-status/storage-entity-status.component';
+import {DiagramModule} from '@syncfusion/ej2-angular-diagrams';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { StorageEntityStatusComponent } from './storage-entity-status/storage-en
     StorageConfigurationRoutingModule,
     TooltipModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DiagramModule
   ]
 })
 export class StorageConfigurationModule {

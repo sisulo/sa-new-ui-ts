@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MetricService} from '../../metric.service';
 import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
@@ -8,7 +8,13 @@ import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 import {OnSelectService} from '../../common/components/sasi-table/on-select.service';
 import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
-
+import {DataSourceModel, LayoutModel, NodeModel, ConnectorModel} from '@syncfusion/ej2-diagrams';
+import { DataManager } from '@syncfusion/ej2-data';
+export interface EmployeeInfo {
+  Name: string;
+  Role: string;
+  color: string;
+}
 @Component({
   selector: 'app-port-connectivity',
   templateUrl: './port-connectivity.component.html',
@@ -25,14 +31,78 @@ export class PortConnectivityComponent implements OnInit, OnDestroy {
   typeEnum = StorageEntityType;
   statusStorageEntities: ComponentStatus[] = [ComponentStatus.ACTIVE];
   private sub: Subscription;
-
+  public layout: LayoutModel;
+  public dataSourceSettings: DataSourceModel;
+  public data: Object[] = [
+    {
+      'Name': 'Elizabeth',
+      'Role': 'Director'
+    },
+    {
+      'Name': 'Christina',
+      'ReportingPerson': 'Elizabeth',
+      'Role': 'Manager'
+    },
+    {
+      Name: 'Yoshi',
+      ReportingPerson: 'Christina',
+      Role: 'Lead'
+    },
+    {
+      Name: 'Philip',
+      ReportingPerson: 'Christina',
+      Role: 'Lead'
+    },
+    {
+      Name: 'Yang',
+      ReportingPerson: 'Elizabeth',
+      Role: 'Manager'
+    },
+    {
+      Name: 'Roland',
+      ReportingPerson: 'Yang',
+      Role: 'Lead'
+    },
+    {
+      Name: 'Yvonne',
+      ReportingPerson: 'Yang',
+      Role: 'Lead'
+    }
+  ];
   constructor(private metricService: MetricService,
               private route: ActivatedRoute,
               private router: Router,
               private formBusService: FormBusService,
               private selectedSasiRows: OnSelectService) {
+    this.layout = {
+      type: 'HierarchicalTree'
+    } as LayoutModel;
+    this.dataSourceSettings = {
+      id: 'Name',
+      parentId: 'ReportingPerson',
+      dataManager: new DataManager(this.data)
+    } as DataSourceModel;
+  }
+  public nodeDefaults(node: NodeModel): NodeModel {
+    const codes: Object = {
+      Director: 'rgb(0, 139,139)',
+      Manager: 'rgb(30, 30,113)',
+      Lead: 'rgb(0, 100,0)'
+    };
+    node.width = 70;
+    node.height = 30;
+    node.annotations = [
+      { content: (node.data as EmployeeInfo).Name, style: { color: 'white' } }
+    ];
+    node.style.fill = codes[(node.data as EmployeeInfo).Role];
+    return node;
   }
 
+  public connectorDefaults(connector: ConnectorModel): ConnectorModel {
+    connector.type = 'Orthogonal';
+    connector.cornerRadius = 7;
+    return connector;
+  }
   ngOnInit() {
     this.sub = this.route.queryParams.subscribe(
       params => {
