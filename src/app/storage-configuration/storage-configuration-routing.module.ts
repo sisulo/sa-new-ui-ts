@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {StorageLocationComponent} from './storage-location/storage-location.component';
 import {PortConnectivityComponent} from './port-connectivity/port-connectivity.component';
+import {PortConnectivityDiagramComponent} from './port-connectivity-diagram/port-connectivity-diagram.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,13 @@ const routes: Routes = [
       breadcrumb: 'Port Connectivity'
     }
   },
+  {
+    path: 'port-connectivity-diagram/:id',
+    component: PortConnectivityDiagramComponent,
+    data: {
+      breadcrumb: 'Port Connectivity Diagram'
+    }
+  }
 ];
 
 @NgModule({

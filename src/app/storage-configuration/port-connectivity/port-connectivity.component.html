@@ -16,10 +16,15 @@
                          placeholder="Search...">
               </ng-select>
             </div>
-            <div class="col-md-2">
-              <button type="button" class="btn btn-default" *ngIf="selectedSystem !== undefined" (click)="openForm()">
-                Duplicate system
-              </button>
+            <div class="col-sm-12 col-md-5">
+              <div class="col-sm-12 col-md-12">
+                <button type="button" class="btn btn-default" tooltip="Duplicate system" *ngIf="selectedSystem !== undefined" (click)="openForm()">
+                  <i class="fas fa-clone"></i>
+                </button>
+                <a type="button" class="btn btn-default" tooltip="Visualize" *ngIf="selectedSystem !== undefined" [routerLink]="['/storage-config/port-connectivity-diagram', selectedSystem]">
+                  <i class="fas fa-project-diagram"></i>
+                </a>
+              </div>
             </div>
           </div>
           <div class="row" *ngIf="selectedSystem !== undefined">
@@ -108,5 +113,3 @@
                          [selectedParent]="selectedSystem"
                          (dataSaved)="loadData($event)"></app-storage-entity-form>
 
-<ejs-diagram #diagram id="diagram" width="99%" height="580px" [layout]="layout" [dataSourceSettings]="dataSourceSettings" [getNodeDefaults]="nodeDefaults" [getConnectorDefaults]="connectorDefaults">
-</ejs-diagram>

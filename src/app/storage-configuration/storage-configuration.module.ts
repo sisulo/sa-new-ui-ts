@@ -18,9 +18,16 @@ import {PortListComponent} from './port-list/port-list.component';
 import {StorageEntity2SasiGroupTablePipe} from './storage-entity-2-sasi-table/storage-entity-2-sasi-group-table.pipe';
 import {StorageEntityDetail2SasiTablePipe} from './storage-entity-2-sasi-table/storage-entity-detail-2-sasi-table.pipe';
 import {SpeedFormatterComponent} from './speed-formatter/speed-formatter.component';
-import { ImportCsvDataComponent } from './import-csv-data/import-csv-data.component';
-import { StorageEntityStatusComponent } from './storage-entity-status/storage-entity-status.component';
-import {DiagramModule} from '@syncfusion/ej2-angular-diagrams';
+import {ImportCsvDataComponent} from './import-csv-data/import-csv-data.component';
+import {StorageEntityStatusComponent} from './storage-entity-status/storage-entity-status.component';
+import {
+  ComplexHierarchicalTreeService,
+  DataBindingService,
+  DiagramModule,
+  HierarchicalTreeService,
+  MindMapService
+} from '@syncfusion/ej2-angular-diagrams';
+import {PortConnectivityDiagramComponent} from './port-connectivity-diagram/port-connectivity-diagram.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +44,8 @@ import {DiagramModule} from '@syncfusion/ej2-angular-diagrams';
     StorageEntity2SasiGroupTablePipe,
     StorageEntityDetail2SasiTablePipe,
     ImportCsvDataComponent,
-    StorageEntityStatusComponent
+    StorageEntityStatusComponent,
+    PortConnectivityDiagramComponent
   ],
   entryComponents: [
     SeTextFormatterComponent,
@@ -53,6 +61,9 @@ import {DiagramModule} from '@syncfusion/ej2-angular-diagrams';
     FormsModule,
     ReactiveFormsModule,
     DiagramModule
+  ],
+  providers: [
+    HierarchicalTreeService, DataBindingService, ComplexHierarchicalTreeService
   ]
 })
 export class StorageConfigurationModule {

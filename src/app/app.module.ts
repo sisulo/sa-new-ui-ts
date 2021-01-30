@@ -55,7 +55,7 @@ export const httpInterceptorProviders = [
     NgxSpinnerModule,
     StorageConfigurationModule,
   ],
-  providers: [SystemPool2SasiGroupTablePipe, httpInterceptorProviders, HierarchicalTreeService, DataBindingService],
+  providers: [SystemPool2SasiGroupTablePipe, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {
