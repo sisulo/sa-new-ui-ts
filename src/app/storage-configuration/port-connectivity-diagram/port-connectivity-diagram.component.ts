@@ -1,5 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {BasicShapeModel, ConnectorModel, DataSourceModel, LayoutModel, NodeModel} from '@syncfusion/ej2-diagrams';
+import {
+  BasicShapeModel,
+  ConnectorModel,
+  DataSourceModel,
+  LayoutModel,
+  NodeModel,
+  TreeInfo,
+  SnapSettingsModel
+} from '@syncfusion/ej2-diagrams';
 import {DataManager} from '@syncfusion/ej2-data';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../metric.service';
@@ -51,6 +59,7 @@ export class PortConnectivityDiagramComponent implements OnInit {
   public layout: LayoutModel;
   public dataSourceSettings: DataSourceModel;
   public data: Object[] = [];
+  public snapSettings: SnapSettingsModel;
   private selectedSystem: number;
 
 
@@ -68,12 +77,22 @@ export class PortConnectivityDiagramComponent implements OnInit {
           this.selectedSystem = params['id'];
           this.metricService.getStorageEntityDetail(StorageEntityType.PORT, this.selectedSystem, [ComponentStatus.ACTIVE]).subscribe(
             data => {
-              console.log(data);
               this.data = this.transform(data[0].storageEntity);
-              console.log(this.data);
+              this.snapSettings = {
+                constraints: 0
+              };
               this.layout = {
                 type: 'OrganizationalChart',
                 horizontalAlignment: 'Stretch',
+                margin: {
+                  top: 20
+                },
+                getLayoutInfo: (node: Node, tree: TreeInfo) => {
+                  if (!tree.hasSubTree) {
+                    tree.orientation = 'Vertical';
+                    tree.type = 'Right';
+                  }
+                }
                 // verticalSpacing: 100
               } as LayoutModel;
               this.dataSourceSettings = {
@@ -90,6 +109,14 @@ export class PortConnectivityDiagramComponent implements OnInit {
 
   public nodeDefaults(node: NodeModel): NodeModel {
 
+    // node.height = 50;
+    // node.borderColor = 'white';
+    // node.backgroundColor = '#6BA5D7';
+    // node.borderWidth = 1;
+    // node.style = {
+    //   fill: 'transparent',
+    //   strokeWidth: 2
+    // };
     let bgColor = 'black';
     let strokeColor = 'black';
     let shape = 'Rectangle';
@@ -103,8 +130,26 @@ export class PortConnectivityDiagramComponent implements OnInit {
     if (PortConnectivityDiagramComponent.shape[data.type] != null) {
       shape = PortConnectivityDiagramComponent.shape[data.type];
     }
-    // node.width = 70;
-    // node.height = 30;
+    node.expandIcon = {
+      height: 15,
+      width: 15,
+      shape: 'Plus',
+      fill: bgColor,
+      borderColor: strokeColor,
+      offset: {
+        x: .5,
+        y: .85
+      }
+    };
+    node.collapseIcon.offset = {
+      x: .5,
+      y: .85
+    };
+    node.collapseIcon.height = 15;
+    node.collapseIcon.width = 15;
+    node.collapseIcon.shape = 'Minus';
+    node.collapseIcon.fill = bgColor;
+    node.collapseIcon.borderColor = strokeColor;
     node.annotations = [
       {content: (node.data as StorageEntitDiagramData).name, style: {color: 'black'}}
     ];
