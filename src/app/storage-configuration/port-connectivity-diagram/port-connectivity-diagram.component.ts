@@ -76,7 +76,7 @@ export class PortConnectivityDiagramComponent implements OnInit {
 
     let tooltipContent: HTMLElement = null;
     console.log(node.data);
-    if (node.data != null && node.data.detail != null) {
+    if (node.data != null && (node.data as Owner).detail != null) {
       const detail = (node.data as Owner).detail as StorageEntityDetailResponseDto;
       tooltipContent = document.createElement('div');
       const tooltipItems = [
