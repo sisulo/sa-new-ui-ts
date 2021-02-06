@@ -4,15 +4,17 @@ import {
   ConnectorModel,
   DataSourceModel,
   LayoutModel,
+  NodeConstraints,
   NodeModel,
-  TreeInfo,
-  SnapSettingsModel
+  SnapSettingsModel,
+  TreeInfo
 } from '@syncfusion/ej2-diagrams';
 import {DataManager} from '@syncfusion/ej2-data';
 import {ActivatedRoute, Router} from '@angular/router';
 import {MetricService} from '../../metric.service';
 import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
+import {StorageEntityDetailResponseDto} from '../../common/models/dtos/storage-entity-detail-response.dto';
 
 export interface StorageEntitDiagramData {
   id: string;
@@ -27,6 +29,14 @@ export interface StorageEntitDiagramData {
   styleUrls: ['./port-connectivity-diagram.component.css']
 })
 export class PortConnectivityDiagramComponent implements OnInit {
+
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private metricService: MetricService
+  ) {
+  }
 
   static bgColor = {
     DATACENTER: 'rgb(255, 255, 255)',
@@ -62,12 +72,42 @@ export class PortConnectivityDiagramComponent implements OnInit {
   public snapSettings: SnapSettingsModel;
   private selectedSystem: number;
 
+  public static getContent(node: NodeModel): HTMLElement {
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private metricService: MetricService
-  ) {
+    let tooltipContent: HTMLElement = null;
+    console.log(node.data);
+    if (node.data != null && node.data.detail != null) {
+      const detail = (node.data as Owner).detail as StorageEntityDetailResponseDto;
+      tooltipContent = document.createElement('div');
+      const tooltipItems = [
+        PortConnectivityDiagramComponent.getTooltipItem('Array model', detail.arrayModel),
+        PortConnectivityDiagramComponent.getTooltipItem('DKC', detail.dkc),
+        PortConnectivityDiagramComponent.getTooltipItem('Cables', detail.cables),
+        PortConnectivityDiagramComponent.getTooltipItem('Management IP', detail.managementIp),
+        PortConnectivityDiagramComponent.getTooltipItem('Note', detail.note),
+        PortConnectivityDiagramComponent.getTooltipItem('Rack', detail.rack),
+        PortConnectivityDiagramComponent.getTooltipItem('Room', detail.room),
+        PortConnectivityDiagramComponent.getTooltipItem('Speed', detail.speed),
+        PortConnectivityDiagramComponent.getTooltipItem('Slot', detail.slot),
+        PortConnectivityDiagramComponent.getTooltipItem('WWN', detail.wwn),
+        PortConnectivityDiagramComponent.getTooltipItem('Switch', detail.switch),
+      ];
+      const content = tooltipItems.filter(item => item !== '').join('');
+      tooltipContent.innerHTML = '<div style="background-color: #2f2f2f; color: #bfbfbf; border-width:1px;border-style: solid;border-color: #d3d3d3; border-radius: 8px;white-space: nowrap;"><ul style="list-style: none; padding: 2px">' +
+        content
+        + '</ul></div>';
+      if (content === '') {
+        tooltipContent = null;
+      }
+    }
+    return tooltipContent;
+  }
+
+  public static getTooltipItem(name: string, value: any) {
+    if (value !== null) {
+      return '<li> <span style="margin: 10px;"> ' + name + ': ' + value + ' </span> </li>';
+    }
+    return;
   }
 
   ngOnInit() {
@@ -160,6 +200,12 @@ export class PortConnectivityDiagramComponent implements OnInit {
     node.style.fill = bgColor;
     node.style.strokeColor = strokeColor;
     node.style.strokeWidth = 2;
+    const tooltipContent = PortConnectivityDiagramComponent.getContent(node);
+    if (tooltipContent !== null) {
+      node.tooltip = {content: tooltipContent, relativeMode: 'Mouse', position: 'BottomRight'};
+      node.constraints = NodeConstraints.Default | NodeConstraints.Tooltip;
+    }
+
     if (PortConnectivityDiagramComponent.size[data.type] != null) {
       const size = PortConnectivityDiagramComponent.size[data.type];
       node.width = size.width;
@@ -177,7 +223,7 @@ export class PortConnectivityDiagramComponent implements OnInit {
 
   private transform(data: Owner) {
     const result = [];
-    result.push({id: data.id, parentId: data.parentId, name: data.name, type: data.type});
+    result.push({id: data.id, parentId: data.parentId, name: data.name, type: data.type, detail: data.detail});
     if (data.children.length > 0) {
       data.children.forEach(owner => {
         const ownerData = this.transform(owner);
