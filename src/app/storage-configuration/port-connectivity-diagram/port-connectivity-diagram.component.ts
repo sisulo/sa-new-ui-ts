@@ -23,6 +23,11 @@ export interface StorageEntitDiagramData {
   type: StorageEntityType;
 }
 
+interface DiagramShape {
+  type: BasicShapeModel;
+  radiusCorner: number;
+}
+
 @Component({
   selector: 'app-port-connectivity-diagram',
   templateUrl: './port-connectivity-diagram.component.html',
@@ -39,8 +44,8 @@ export class PortConnectivityDiagramComponent implements OnInit {
   }
 
   static bgColor = {
-    DATACENTER: 'rgb(255, 255, 255)',
-    SYSTEM: 'rgb(219, 219, 219)',
+    DATACENTER: 'rgb(219, 219, 219)',
+    SYSTEM: 'rgb(246,190,192)',
     DKC: 'rgb(218, 197, 219)',
     CONTROLLER: 'rgb(214, 233, 213)',
     CHANNEL_BOARD: 'rgb(218, 233, 252)',
@@ -48,22 +53,27 @@ export class PortConnectivityDiagramComponent implements OnInit {
   };
   static strokeColor = {
     DATACENTER: 'rgb(164, 164, 164)',
-    SYSTEM: 'rgb(164, 164, 164)',
+    SYSTEM: 'rgb(243,142,145)',
     DKC: 'rgb(217, 163, 220)',
     CONTROLLER: 'rgb(154, 228, 146)',
     CHANNEL_BOARD: 'rgb(168, 204, 251)',
     PORT: 'rgb(255, 192, 106)'
   };
   static shape = {
-    DATACENTER: 'Rectangle',
-    SYSTEM: 'Rectangle',
-    DKC: 'Rectangle',
-    CONTROLLER: 'Rectangle',
-    CHANNEL_BOARD: 'Rectangle',
-    PORT: 'Octagon'
+    DATACENTER: {type: 'Rectangle', radiusCorner: 10} as DiagramShape,
+    SYSTEM: {type: 'Rectangle', radiusCorner: 10} as DiagramShape,
+    DKC: {type: 'Rectangle', radiusCorner: 10} as DiagramShape,
+    CONTROLLER: {type: 'Rectangle', radiusCorner: 10} as DiagramShape,
+    CHANNEL_BOARD: {type: 'Rectangle', radiusCorner: 10} as DiagramShape,
+    PORT: {type: 'Octagon', radiusCorner: 0}
   };
   static size = {
     PORT: {width: 35, height: 35},
+    DKC: {width: 100, height: 50},
+    CHANNEL_BOARD: {width: 100, height: 50},
+    CONTROLLER: {width: 100, height: 50},
+    SYSTEM: {width: 120, height: 50},
+    DATACENTER: {width: 120, height: 50}
   };
 
   public layout: LayoutModel;
@@ -159,7 +169,7 @@ export class PortConnectivityDiagramComponent implements OnInit {
     // };
     let bgColor = 'black';
     let strokeColor = 'black';
-    let shape = 'Rectangle';
+    let shape = {type: 'Rectangle', radiusCorner: 0} as DiagramShape;
     const data = node.data as StorageEntitDiagramData;
     if (PortConnectivityDiagramComponent.bgColor[data.type] != null) {
       bgColor = PortConnectivityDiagramComponent.bgColor[data.type];
@@ -195,7 +205,8 @@ export class PortConnectivityDiagramComponent implements OnInit {
     ];
     node.shape = {
       type: 'Basic',
-      shape: shape
+      shape: shape.type,
+      cornerRadius: shape.radiusCorner
     } as BasicShapeModel;
     node.style.fill = bgColor;
     node.style.strokeColor = strokeColor;
