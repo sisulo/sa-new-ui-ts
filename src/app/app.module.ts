@@ -23,6 +23,7 @@ import {NgxSpinnerModule} from 'ngx-spinner';
 import {HttpLoading} from './http-loading.interceptor';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import {StorageConfigurationModule} from './storage-configuration/storage-configuration.module';
+import {DataBindingService, DiagramModule, HierarchicalTreeService} from '@syncfusion/ej2-angular-diagrams';
 
 export const httpInterceptorProviders = [
   {provide: HTTP_INTERCEPTORS, useClass: HttpLoading, multi: true},
@@ -52,7 +53,7 @@ export const httpInterceptorProviders = [
     SaCommonModule,
     NgApexchartsModule,
     NgxSpinnerModule,
-    StorageConfigurationModule
+    StorageConfigurationModule,
   ],
   providers: [SystemPool2SasiGroupTablePipe, httpInterceptorProviders],
   bootstrap: [AppComponent]

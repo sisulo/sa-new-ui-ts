@@ -21,6 +21,8 @@
     "@angular/platform-browser-dynamic": "^10.0.10",
     "@angular/router": "^10.0.10",
     "@ng-select/ng-select": "^5.0.1",
+    "@syncfusion/ej2-angular-diagrams": "^18.4.32",
+    "@syncfusion/ej2-data": "^18.4.33",
     "angular2-knob": "^1.1.15",
     "apexcharts": "^3.20.0",
     "core-js": "^3.6.5",

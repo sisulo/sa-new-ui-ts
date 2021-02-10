@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MetricService} from '../../metric.service';
 import {Owner, StorageEntityType} from '../../common/models/dtos/owner.dto';
 import {ExtractStorageEntityUtils} from '../utils/extract-storage-entity.utils';
@@ -8,6 +8,10 @@ import {FormBusService} from '../form-bus.service';
 import {StorageEntityVo} from '../storage-entity-form/storage-entity-form.component';
 import {OnSelectService} from '../../common/components/sasi-table/on-select.service';
 import {ComponentStatus} from '../../common/models/dtos/enums/component.status';
+import {DataSourceModel, LayoutModel, NodeModel, ConnectorModel} from '@syncfusion/ej2-diagrams';
+import {DataManager} from '@syncfusion/ej2-data';
+
+
 
 @Component({
   selector: 'app-port-connectivity',
