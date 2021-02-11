@@ -24,7 +24,7 @@
     "@syncfusion/ej2-angular-diagrams": "^18.4.32",
     "@syncfusion/ej2-data": "^18.4.33",
     "angular2-knob": "^1.1.15",
-    "apexcharts": "^3.20.0",
+    "apexcharts": "^3.24.0",
     "core-js": "^3.6.5",
     "jquery": "^3.5.1",
     "jvectormap-next": "^3.1.1",
